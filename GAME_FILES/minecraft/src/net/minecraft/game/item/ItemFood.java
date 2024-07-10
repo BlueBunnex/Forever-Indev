@@ -4,17 +4,20 @@ import net.minecraft.game.entity.player.EntityPlayer;
 import net.minecraft.game.level.World;
 
 public class ItemFood extends Item {
+	
 	private int healAmount;
 
-	public ItemFood(int var1, int var2) {
-		super(var1);
-		this.healAmount = var2;
+	public ItemFood(String name, int index, int healAmount) {
+		super(name, index);
+		
+		this.healAmount = healAmount;
 		this.maxStackSize = 1;
 	}
 
-	public ItemStack onItemRightClick(ItemStack var1, World var2, EntityPlayer var3) {
-		--var1.stackSize;
-		var3.heal(this.healAmount);
-		return var1;
+	public ItemStack onItemRightClick(ItemStack item, World world, EntityPlayer player) {
+		--item.stackSize;
+		player.heal(this.healAmount);
+		
+		return item;
 	}
 }

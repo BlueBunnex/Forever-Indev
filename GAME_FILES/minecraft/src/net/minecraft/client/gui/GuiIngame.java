@@ -13,14 +13,15 @@ import net.minecraft.game.item.ItemStack;
 import org.lwjgl.opengl.GL11;
 
 public final class GuiIngame extends Gui {
+	
 	private static RenderItem itemRenderer = new RenderItem();
 	private List chatMessageList = new ArrayList();
 	private Random rand = new Random();
 	private Minecraft mc;
 	private int updateCounter = 0;
 
-	public GuiIngame(Minecraft var1) {
-		this.mc = var1;
+	public GuiIngame(Minecraft mc) {
+		this.mc = mc;
 	}
 
 	public final void renderGameOverlay(float var1) {
@@ -197,6 +198,12 @@ public final class GuiIngame extends Gui {
 //				fontRend.drawStringWithShadow((String)null, 2, height - 8 - var12 * 9 - 20, 16777215);
 //			}
 //		}
+		
+		ItemStack currItem = this.mc.thePlayer.inventory.getCurrentItem();
+		if (currItem != null) {
+			String name = currItem.getName();
+			fontRend.drawStringWithShadow(name, (width - name.length() * 6) / 2, height - 48, 16777215);
+		}
 
 	}
 

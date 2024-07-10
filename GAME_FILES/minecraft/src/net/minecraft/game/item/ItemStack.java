@@ -48,6 +48,10 @@ public final class ItemStack {
 		this.stackSize = var1.getByte("Count");
 		this.itemDamage = var1.getShort("Damage");
 	}
+	
+	public String getName() {
+		return Item.itemsList[itemID].name;
+	}
 
 	public final ItemStack splitStack(int var1) {
 		this.stackSize -= var1;

@@ -4,17 +4,17 @@ import net.minecraft.game.entity.EntityPainting;
 import net.minecraft.game.level.World;
 
 public final class ItemPainting extends Item {
-	public ItemPainting(int var1) {
-		super(65);
+	public ItemPainting(String name, int index) {
+		super(name, index);
 		this.maxDamage = 64;
 	}
 
-	public final boolean onItemUse(ItemStack var1, World var2, int var3, int var4, int var5, int var6) {
-		if(var6 == 0) {
+	public final boolean onItemUse(ItemStack item, World world, int var3, int var4, int var5, int var6) {
+		if (var6 == 0) {
 			return false;
-		} else if(var6 == 1) {
+		} else if (var6 == 1) {
 			return false;
-		} else if(var3 > 0 && var4 > 0 && var5 > 0 && var3 < var2.width - 1 && var4 < var2.height - 1 && var5 < var2.length - 1) {
+		} else if (var3 > 0 && var4 > 0 && var5 > 0 && var3 < world.width - 1 && var4 < world.height - 1 && var5 < world.length - 1) {
 			byte var7 = 0;
 			if(var6 == 4) {
 				var7 = 1;
@@ -28,10 +28,11 @@ public final class ItemPainting extends Item {
 				var7 = 3;
 			}
 
-			EntityPainting var8 = new EntityPainting(var2, var3, var4, var5, var7);
-			if(var8.onValidSurface()) {
-				var2.spawnEntityInWorld(var8);
-				--var1.stackSize;
+			EntityPainting var8 = new EntityPainting(world, var3, var4, var5, var7);
+			
+			if (var8.onValidSurface()) {
+				world.spawnEntityInWorld(var8);
+				item.stackSize--;
 			}
 
 			return true;

@@ -6,9 +6,9 @@ import net.minecraft.game.level.block.Block;
 public final class ItemSeeds extends Item {
 	private int blockType;
 
-	public ItemSeeds(int var1, int var2) {
-		super(39);
-		this.blockType = var2;
+	public ItemSeeds(String name, int index, int blockID) {
+		super(name, index);
+		this.blockType = blockID;
 	}
 
 	public final boolean onItemUse(ItemStack var1, World var2, int var3, int var4, int var5, int var6) {

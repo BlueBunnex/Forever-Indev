@@ -713,7 +713,7 @@ public class Block {
 
 		for(int var2 = 0; var2 < 256; ++var2) {
 			if(blocksList[var2] != null) {
-				Item.itemsList[var2] = new ItemBlock(var2 - 256);
+				Item.itemsList[var2] = new ItemBlock("TEMP NAME", var2 - 256);
 			}
 		}
 
