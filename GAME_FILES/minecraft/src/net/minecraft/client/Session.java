@@ -5,6 +5,7 @@ import java.util.List;
 import net.minecraft.game.level.block.Block;
 
 public final class Session {
+	
 	public static List<Block> registeredBlocksList;
 	public String username;
 	public String sessionId;

@@ -426,25 +426,25 @@ public class Block {
 
 	static {
 		// fluids (scary)
-		waterMoving = (new BlockFlowing("Water", 8, 14, Material.water)).setHardness(100.0F).setLightOpacity(3);
-		waterStill = (new BlockStationary("Water", 9, 14, Material.water)).setHardness(100.0F).setLightOpacity(3);
-		lavaMoving = (new BlockFlowing("Lava", 10, 30, Material.lava)).setHardness(0.0F).setLightValue(1.0F).setLightOpacity(255);
-		lavaStill = (new BlockStationary("Lava", 11, 30, Material.lava)).setHardness(100.0F).setLightValue(1.0F).setLightOpacity(255);
+		waterMoving = new BlockFlowing("Water", 8, 14, Material.water).setHardness(100.0F).setLightOpacity(3);
+		waterStill  = new BlockStationary("Water", 9, 14, Material.water).setHardness(100.0F).setLightOpacity(3);
+		lavaMoving  = new BlockFlowing("Lava", 10, 30, Material.lava).setHardness(0.0F).setLightValue(1.0F).setLightOpacity(255);
+		lavaStill   = new BlockStationary("Lava", 11, 30, Material.lava).setHardness(100.0F).setLightValue(1.0F).setLightOpacity(255);
 		
-		waterSource = (new BlockSource(52, waterMoving.blockID)).setHardness(0.0F);
+		waterSource = new BlockSource(52, waterMoving.blockID).setHardness(0.0F);
 		waterSource.stepSound = soundWoodFootstep; // idk either
 		
-		lavaSource = (new BlockSource(53, lavaMoving.blockID)).setHardness(0.0F);
+		lavaSource = new BlockSource(53, lavaMoving.blockID).setHardness(0.0F);
 		lavaSource.stepSound = soundWoodFootstep;
 		
 		// stone
-		stone = (new Block("Stone", 1, 1, Material.rock) {
+		stone = new Block("Stone", 1, 1, Material.rock) {
 			
 			public final int idDropped(int var1, Random random) {
 				return Block.cobblestone.blockID;
 			}
 			
-		}).setHardness(1.5F).setResistance(10.0F);
+		}.setHardness(1.5F).setResistance(10.0F);
 		stone.stepSound = soundStoneFootstep;
 		
 		// grass
@@ -452,27 +452,27 @@ public class Block {
 		grass.stepSound = soundGrassFootstep;
 		
 		// dirt
-		dirt = (new Block("Dirt", 3, 2, Material.ground)).setHardness(0.5F);
+		dirt = new Block("Dirt", 3, 2, Material.ground).setHardness(0.5F);
 		dirt.stepSound = soundGravelFootstep;
 		
 		// cobblestone
-		cobblestone = (new Block("Cobblestone", 4, 16, Material.rock)).setHardness(2.0F).setResistance(10.0F);
+		cobblestone = new Block("Cobblestone", 4, 16, Material.rock).setHardness(2.0F).setResistance(10.0F);
 		cobblestone.stepSound = soundStoneFootstep;
 		
 		// planks
-		planks = (new Block("Planks", 5, 4, Material.wood)).setHardness(2.0F).setResistance(5.0F);
+		planks = new Block("Planks", 5, 4, Material.wood).setHardness(2.0F).setResistance(5.0F);
 		planks.stepSound = soundWoodFootstep;
 		
 		// sapling
-		sapling = (new BlockSapling("Sapling", 6, 15)).setHardness(0.0F);
+		sapling = new BlockSapling("Sapling", 6, 15).setHardness(0.0F);
 		sapling.stepSound = soundGrassFootstep;
 		
 		// bedrock
-		bedrock = (new Block("Bedrock", 7, 17, Material.rock)).setHardness(-1.0F).setResistance(6000000.0F);
+		bedrock = new Block("Bedrock", 7, 17, Material.rock).setHardness(-1.0F).setResistance(6000000.0F);
 		bedrock.stepSound = soundStoneFootstep;
 		
 		// sand
-		sand = (new BlockGravity("Sand", 12, 18)).setHardness(0.5F);
+		sand = new BlockGravity("Sand", 12, 18).setHardness(0.5F);
 		sand.stepSound = soundSandFootstep;
 		
 		// gravel
@@ -486,20 +486,20 @@ public class Block {
 		gravel.stepSound = soundGravelFootstep;
 		
 		// ALL the ores
-		oreDiamond = (new BlockOre("Diamond Ore", 56, 50)).setHardness(3.0F).setResistance(5.0F);
+		oreDiamond = new BlockOre("Diamond Ore", 56, 50).setHardness(3.0F).setResistance(5.0F);
 		oreDiamond.stepSound = soundStoneFootstep;
 		
-		oreGold = (new BlockOre("Gold Ore", 14, 32)).setHardness(3.0F).setResistance(5.0F);
+		oreGold = new BlockOre("Gold Ore", 14, 32).setHardness(3.0F).setResistance(5.0F);
 		oreGold.stepSound = soundStoneFootstep;
 		
-		oreIron = (new BlockOre("Iron Ore", 15, 33)).setHardness(3.0F).setResistance(5.0F);
+		oreIron = new BlockOre("Iron Ore", 15, 33).setHardness(3.0F).setResistance(5.0F);
 		oreIron.stepSound = soundStoneFootstep;
 		
-		oreCoal = (new BlockOre("Coal Ore", 16, 34)).setHardness(3.0F).setResistance(5.0F);
+		oreCoal = new BlockOre("Coal Ore", 16, 34).setHardness(3.0F).setResistance(5.0F);
 		oreCoal.stepSound = soundStoneFootstep;
 		
 		// (wood) log
-		wood = (new BlockLog()).setHardness(2.0F);
+		wood = new BlockLog().setHardness(2.0F);
 		wood.stepSound = soundWoodFootstep;
 		
 		// leaves
@@ -507,60 +507,60 @@ public class Block {
 		leaves.stepSound = soundGrassFootstep;
 		
 		// sponge
-		sponge = (new BlockSponge()).setHardness(0.6F);
+		sponge = new BlockSponge().setHardness(0.6F);
 		sponge.stepSound = soundGrassFootstep;
 		
 		// glass
-		glass = (new BlockGlass("Glass", 20, 49, Material.glass)).setHardness(0.3F);
+		glass = new BlockGlass("Glass", 20, 49, Material.glass).setHardness(0.3F);
 		glass.stepSound = soundGlassFootstep;
 		
 		// ALL the cloth
-		clothRed = (new Block("Red Cloth", 21, 64, Material.cloth)).setHardness(0.8F);
+		clothRed = new Block("Red Cloth", 21, 64, Material.cloth).setHardness(0.8F);
 		clothRed.stepSound = soundClothFootstep;
 		
-		clothOrange = (new Block("Orange Cloth", 22, 65, Material.cloth)).setHardness(0.8F);
+		clothOrange = new Block("Orange Cloth", 22, 65, Material.cloth).setHardness(0.8F);
 		clothOrange.stepSound = soundClothFootstep;
 		
-		clothYellow = (new Block("Yellow Cloth", 23, 66, Material.cloth)).setHardness(0.8F);
+		clothYellow = new Block("Yellow Cloth", 23, 66, Material.cloth).setHardness(0.8F);
 		clothYellow.stepSound = soundClothFootstep;
 		
-		clothChartreuse = (new Block("Chartreuse Cloth", 24, 67, Material.cloth)).setHardness(0.8F);
+		clothChartreuse = new Block("Chartreuse Cloth", 24, 67, Material.cloth).setHardness(0.8F);
 		clothChartreuse.stepSound = soundClothFootstep;
 		
-		clothGreen = (new Block("Green Cloth", 25, 68, Material.cloth)).setHardness(0.8F);
+		clothGreen = new Block("Green Cloth", 25, 68, Material.cloth).setHardness(0.8F);
 		clothGreen.stepSound = soundClothFootstep;
 		
-		clothSpringGreen = (new Block("Spring Green Cloth", 26, 69, Material.cloth)).setHardness(0.8F);
+		clothSpringGreen = new Block("Spring Green Cloth", 26, 69, Material.cloth).setHardness(0.8F);
 		clothSpringGreen.stepSound = soundClothFootstep;
 		
-		clothCyan = (new Block("Cyan Cloth", 27, 70, Material.cloth)).setHardness(0.8F);
+		clothCyan = new Block("Cyan Cloth", 27, 70, Material.cloth).setHardness(0.8F);
 		clothCyan.stepSound = soundClothFootstep;
 		
-		clothCapri = (new Block("Capri Cloth", 28, 71, Material.cloth)).setHardness(0.8F);
+		clothCapri = new Block("Capri Cloth", 28, 71, Material.cloth).setHardness(0.8F);
 		clothCapri.stepSound = soundClothFootstep;
 		
-		clothUltramarine = (new Block("Ultramarine Cloth", 29, 72, Material.cloth)).setHardness(0.8F);
+		clothUltramarine = new Block("Ultramarine Cloth", 29, 72, Material.cloth).setHardness(0.8F);
 		clothUltramarine.stepSound = soundClothFootstep;
 		
-		clothViolet = (new Block("Violet Cloth", 30, 73, Material.cloth)).setHardness(0.8F);
+		clothViolet = new Block("Violet Cloth", 30, 73, Material.cloth).setHardness(0.8F);
 		clothViolet.stepSound = soundClothFootstep;
 		
-		clothPurple = (new Block("Purple Cloth", 31, 74, Material.cloth)).setHardness(0.8F);
+		clothPurple = new Block("Purple Cloth", 31, 74, Material.cloth).setHardness(0.8F);
 		clothPurple.stepSound = soundClothFootstep;
 		
-		clothMagenta = (new Block("Magenta Cloth", 32, 75, Material.cloth)).setHardness(0.8F);
+		clothMagenta = new Block("Magenta Cloth", 32, 75, Material.cloth).setHardness(0.8F);
 		clothMagenta.stepSound = soundClothFootstep;
 		
-		clothRose = (new Block("Rose Cloth", 33, 76, Material.cloth)).setHardness(0.8F);
+		clothRose = new Block("Rose Cloth", 33, 76, Material.cloth).setHardness(0.8F);
 		clothRose.stepSound = soundClothFootstep;
 		
-		clothDarkGray = (new Block("Dark Gray Cloth", 34, 77, Material.cloth)).setHardness(0.8F);
+		clothDarkGray = new Block("Dark Gray Cloth", 34, 77, Material.cloth).setHardness(0.8F);
 		clothDarkGray.stepSound = soundClothFootstep;
 		
-		clothGray = (new Block("Gray Cloth", 35, 78, Material.cloth)).setHardness(0.8F);
+		clothGray = new Block("Gray Cloth", 35, 78, Material.cloth).setHardness(0.8F);
 		clothGray.stepSound = soundClothFootstep;
 		
-		clothWhite = (new Block("White Cloth", 36, 79, Material.cloth)).setHardness(0.8F);
+		clothWhite = new Block("White Cloth", 36, 79, Material.cloth).setHardness(0.8F);
 		clothWhite.stepSound = soundClothFootstep;
 		
 		// ALL plants
@@ -576,28 +576,28 @@ public class Block {
 		mushroomRed = (BlockFlower) new BlockMushroom("Red Mushroom", 40, 28).setHardness(0.0F);
 		mushroomRed.stepSound = soundGrassFootstep;
 		
-		crops = (new BlockCrops("Crops", 59, 88)).setHardness(0.0F);
+		crops = new BlockCrops("Crops", 59, 88).setHardness(0.0F);
 		crops.stepSound = soundGrassFootstep;
 		
 		// ALL ore blocks
-		blockDiamond = (new BlockOreBlock("Diamond Block", 57, 40)).setHardness(5.0F).setResistance(10.0F);
+		blockDiamond = new BlockOreBlock("Diamond Block", 57, 40).setHardness(5.0F).setResistance(10.0F);
 		blockDiamond.stepSound = soundMetalFootstep;
 		
-		blockGold = (new BlockOreBlock("Gold Block", 41, 39)).setHardness(3.0F).setResistance(10.0F);
+		blockGold = new BlockOreBlock("Gold Block", 41, 39).setHardness(3.0F).setResistance(10.0F);
 		blockGold.stepSound = soundMetalFootstep;
 		
-		blockIron = (new BlockOreBlock("Iron Block", 42, 38)).setHardness(5.0F).setResistance(10.0F);
+		blockIron = new BlockOreBlock("Iron Block", 42, 38).setHardness(5.0F).setResistance(10.0F);
 		blockIron.stepSound = soundMetalFootstep;
 		
 		// weird stairs?
-		stairDouble = (new BlockStep(43, true)).setHardness(2.0F).setResistance(10.0F);
+		stairDouble = new BlockStep(43, true).setHardness(2.0F).setResistance(10.0F);
 		stairDouble.stepSound = soundStoneFootstep;
 		
-		stairSingle = (new BlockStep(44, false)).setHardness(2.0F).setResistance(10.0F);
+		stairSingle = new BlockStep(44, false).setHardness(2.0F).setResistance(10.0F);
 		stairSingle.stepSound = soundStoneFootstep;
 		
 		// brick
-		brick = (new Block("Brick", 45, 7, Material.rock)).setHardness(2.0F).setResistance(10.0F);
+		brick = new Block("Brick", 45, 7, Material.rock).setHardness(2.0F).setResistance(10.0F);
 		brick.stepSound = soundStoneFootstep;
 		
 		// TNT
@@ -605,7 +605,7 @@ public class Block {
 		tnt.stepSound = soundGrassFootstep;
 		
 		// bookshelf
-		bookShelf = (new Block("Bookshelf", 47, 35, Material.wood) {
+		bookShelf = new Block("Bookshelf", 47, 35, Material.wood) {
 			
 			public final int getBlockTextureFromSide(int side) {
 				return side <= 1 ? 4 : this.blockIndexInTexture;
@@ -615,15 +615,15 @@ public class Block {
 				return 0;
 			}
 			
-		}).setHardness(1.5F);
+		}.setHardness(1.5F);
 		bookShelf.stepSound = soundWoodFootstep;
 		
 		// mossy cobblestone
-		cobblestoneMossy = (new Block("Mossy Cobblestone", 48, 36, Material.rock)).setHardness(2.0F).setResistance(10.0F);
+		cobblestoneMossy = new Block("Mossy Cobblestone", 48, 36, Material.rock).setHardness(2.0F).setResistance(10.0F);
 		cobblestoneMossy.stepSound = soundStoneFootstep;
 		
 		// obsidian
-		obsidian = (new Block("Obsidian", 49, 37, Material.rock)).setHardness(10.0F).setResistance(10.0F);
+		obsidian = new Block("Obsidian", 49, 37, Material.rock).setHardness(10.0F).setResistance(10.0F);
 		obsidian.stepSound = soundStoneFootstep;
 		
 		// torch
@@ -647,18 +647,18 @@ public class Block {
 		workbench.stepSound = soundWoodFootstep;
 		
 		// farmland
-		tilledField = (new BlockFarmland()).setHardness(0.6F);
+		tilledField = new BlockFarmland().setHardness(0.6F);
 		tilledField.stepSound = soundGravelFootstep;
 		
 		// furnace (idle and active)
-		stoneOvenIdle = (new BlockFurnace("Furnace", 61, false)).setHardness(3.5F);
+		stoneOvenIdle = new BlockFurnace("Furnace", 61, false).setHardness(3.5F);
 		stoneOvenIdle.stepSound = soundStoneFootstep;
 		
-		stoneOvenActive = (new BlockFurnace("Furnace", 62, true)).setHardness(3.5F);
+		stoneOvenActive = new BlockFurnace("Furnace", 62, true).setHardness(3.5F);
 		stoneOvenActive.stepSound = soundStoneFootstep;
 		stoneOvenActive.setLightValue(14.0F / 16.0F);
 
-		// make an Item for every Block
+		// make an item for every block
 		for(int i = 0; i < 256; i++) {
 			if(blocksList[i] != null) {
 				Item.itemsList[i] = new ItemBlock(blocksList[i].name, i - 256);
