@@ -5,17 +5,19 @@ import java.util.List;
 import net.minecraft.game.level.block.Block;
 
 public final class Session {
-	public static List registeredBlocksList;
+	public static List<Block> registeredBlocksList;
 	public String username;
 	public String sessionId;
 
-	public Session(String var1, String var2) {
-		this.username = var1;
-		this.sessionId = var2;
+	public Session(String username, String sessionId) {
+		this.username = username;
+		this.sessionId = sessionId;
 	}
 
 	static {
-		(registeredBlocksList = new ArrayList()).add(Block.stone);
+		registeredBlocksList = new ArrayList<Block>();
+		
+		registeredBlocksList.add(Block.stone);
 		registeredBlocksList.add(Block.cobblestone);
 		registeredBlocksList.add(Block.brick);
 		registeredBlocksList.add(Block.dirt);
@@ -53,11 +55,12 @@ public final class Session {
 		registeredBlocksList.add(Block.oreCoal);
 		registeredBlocksList.add(Block.oreIron);
 		registeredBlocksList.add(Block.oreGold);
-		registeredBlocksList.add(Block.blockSteel);
+		registeredBlocksList.add(Block.blockIron);
 		registeredBlocksList.add(Block.blockGold);
 		registeredBlocksList.add(Block.bookShelf);
 		registeredBlocksList.add(Block.tnt);
 		registeredBlocksList.add(Block.obsidian);
-		System.out.println(registeredBlocksList.size());
+		
+		System.out.println("Total registered blocks: " + registeredBlocksList.size());
 	}
 }

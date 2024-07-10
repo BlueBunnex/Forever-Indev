@@ -33,10 +33,10 @@ public final class BlockLeaves extends BlockLeavesBase {
 	}
 
 	public final int quantityDropped(Random random) {
-		return random.nextInt(10) == 0 ? 1 : 0;
+		return random.nextInt(8) == 0 ? 1 : 0;
 	}
 
 	public final int idDropped(int var1, Random random) {
-		return random.nextInt(2) == 0 ? Block.sapling.blockID : (Item.apple.shiftedIndex - 256);
+		return random.nextInt(2) == 0 ? Block.sapling.blockID : Item.apple.shiftedIndex;
 	}
 }

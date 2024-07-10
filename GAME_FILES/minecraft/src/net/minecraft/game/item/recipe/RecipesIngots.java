@@ -5,7 +5,7 @@ import net.minecraft.game.item.ItemStack;
 import net.minecraft.game.level.block.Block;
 
 public final class RecipesIngots {
-	private Object[][] recipeItems = new Object[][]{{Block.blockGold, Item.ingotGold}, {Block.blockSteel, Item.ingotIron}, {Block.blockDiamond, Item.diamond}};
+	private Object[][] recipeItems = new Object[][]{{Block.blockGold, Item.ingotGold}, {Block.blockIron, Item.ingotIron}, {Block.blockDiamond, Item.diamond}};
 
 	public final void addRecipes(CraftingManager var1) {
 		for(int var2 = 0; var2 < this.recipeItems.length; ++var2) {

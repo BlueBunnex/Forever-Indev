@@ -3,10 +3,9 @@ package net.minecraft.game.level.block;
 import net.minecraft.game.level.World;
 import net.minecraft.game.level.material.Material;
 
-// TODO change to BlockFalling
-public class BlockSand extends Block {
+public class BlockGravity extends Block {
 	
-	public BlockSand(String name, int blockID, int blockIndexInTexture) {
+	public BlockGravity(String name, int blockID, int blockIndexInTexture) {
 		super(name, blockID, blockIndexInTexture, Material.sand);
 	}
 
