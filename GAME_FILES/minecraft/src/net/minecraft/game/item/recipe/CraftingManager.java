@@ -17,10 +17,11 @@ public final class CraftingManager {
 	}
 
 	private CraftingManager() {
-		(new RecipesTools()).addRecipes(this);
-		(new RecipesWeapons()).addRecipes(this);
-		(new RecipesIngots()).addRecipes(this);
+		new RecipesTools().addRecipes(this);
+		new RecipesWeapons().addRecipes(this);
+		new RecipesIngots().addRecipes(this);
 		new RecipesFood();
+		
 		this.addRecipe(new ItemStack(Item.bowlSoup), new Object[]{"Y", "X", "#", Character.valueOf('X'), Block.mushroomBrown, Character.valueOf('Y'), Block.mushroomRed, Character.valueOf('#'), Item.bowlEmpty});
 		this.addRecipe(new ItemStack(Item.bowlSoup), new Object[]{"Y", "X", "#", Character.valueOf('X'), Block.mushroomRed, Character.valueOf('Y'), Block.mushroomBrown, Character.valueOf('#'), Item.bowlEmpty});
 		new RecipesCrafting();
@@ -38,6 +39,9 @@ public final class CraftingManager {
 		this.addRecipe(new ItemStack(Item.flintAndSteel, 1), new Object[]{"A ", " B", Character.valueOf('A'), Item.ingotIron, Character.valueOf('B'), Item.flint});
 		this.addRecipe(new ItemStack(Item.bread, 1), new Object[]{"###", Character.valueOf('#'), Item.wheat});
 		this.addRecipe(new ItemStack(Item.painting, 1), new Object[]{"###", "#X#", "###", Character.valueOf('#'), Block.planks, Character.valueOf('X'), Block.clothGray});
+		
+		this.addRecipe(new ItemStack(Item.sugar, 1), new Object[]{"#", Character.valueOf('#'), Item.sugarBeet});
+		
 		Collections.sort(this.recipes, new RecipeSorter(this));
 		System.out.println(this.recipes.size() + " recipes");
 	}

@@ -1629,4 +1629,8 @@ public final class World {
 
 		floodFillCounter = 0;
 	}
+
+	public boolean containsPos(int x, int y, int z) {
+		return x > 0 && y > 0 && z > 0 && x < this.width - 1 && y < this.height - 1 && z < this.length - 1;
+	}
 }

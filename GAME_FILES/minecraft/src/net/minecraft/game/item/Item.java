@@ -86,6 +86,10 @@ public class Item {
 	public static Item porkCooked;
 	public static Item painting;
 	
+	public static Item apple;
+	public static Item sugarBeet;
+	public static Item sugar;
+	
 	public final int shiftedIndex;
 	protected int maxStackSize = 64;
 	protected int maxDamage = 32;
@@ -157,10 +161,8 @@ public class Item {
 		flintAndSteel = new ItemFlintAndSteel("Flint and Steel", 3);
 		flintAndSteel.iconIndex = 5;
 		
-//		ItemFood var18 = new ItemFood("IDK", 4, 4); // apple?
-//		var1 = 4;
-//		ItemFood var5 = var18;
-//		var5.iconIndex = var1;
+		apple = new ItemFood("Apple", 4, 4);
+		apple.iconIndex = 10;
 		
 		bow = new ItemBow("Bow", 5);
 		bow.iconIndex = 21;
@@ -344,5 +346,11 @@ public class Item {
 		
 		painting = new ItemPainting("Painting", 65);
 		painting.iconIndex = 26;
+		
+		sugarBeet = new Item("Sugar Beet", 66);
+		sugarBeet.iconIndex = 103;
+		
+		sugar = new Item("Sugar", 67);
+		sugar.iconIndex = 104;
 	}
 }
