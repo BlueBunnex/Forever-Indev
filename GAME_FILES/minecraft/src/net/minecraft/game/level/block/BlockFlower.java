@@ -5,10 +5,13 @@ import net.minecraft.game.level.World;
 import net.minecraft.game.level.material.Material;
 import net.minecraft.game.physics.AxisAlignedBB;
 
+// TODO change to BlockPlant?
+// this is used by crops, saplings, mushrooms, as well as flowers
 public class BlockFlower extends Block {
-	protected BlockFlower(int var1, int var2) {
-		super(var1, Material.plants);
-		this.blockIndexInTexture = var2;
+	
+	protected BlockFlower(String name, int blockID, int blockIndexInTexture) {
+		super(name, blockID, blockIndexInTexture, Material.plants);
+		
 		this.setTickOnLoad(true);
 		this.setBlockBounds(0.3F, 0.0F, 0.3F, 0.7F, 0.6F, 0.7F);
 	}

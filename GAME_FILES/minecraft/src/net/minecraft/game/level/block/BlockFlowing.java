@@ -6,27 +6,16 @@ import net.minecraft.game.level.material.Material;
 import net.minecraft.game.physics.AxisAlignedBB;
 
 public final class BlockFlowing extends BlockFluid {
-	private int stillId1;
-	private int movingId1;
+	
 	private Random rand = new Random();
 	private int[] liquidIntArray = new int[]{0, 1, 2, 3};
 
-	protected BlockFlowing(int var1, Material var2) {
-		super(var1, var2);
-		this.blockIndexInTexture = 14;
-		if(var2 == Material.lava) {
-			this.blockIndexInTexture = 30;
-		}
-
-		Block.isBlockFluid[var1] = true;
-		this.movingId1 = var1;
-		this.stillId1 = var1 + 1;
-		this.setBlockBounds(0.01F, -0.09F, 0.01F, 1.01F, 0.90999997F, 1.01F);
-		this.setTickOnLoad(true);
+	protected BlockFlowing(String name, int blockID, int blockIndexInTexture, Material material) {
+		super(name, blockID, blockIndexInTexture, material);
 	}
 
 	public final void onBlockAdded(World var1, int var2, int var3, int var4) {
-		var1.scheduleBlockUpdate(var2, var3, var4, this.movingId1);
+		var1.scheduleBlockUpdate(var2, var3, var4, this.movingId);
 	}
 
 	public final void updateTick(World var1, int var2, int var3, int var4, Random var5) {
@@ -40,9 +29,9 @@ public final class BlockFlowing extends BlockFluid {
 		int var8;
 		int var9;
 		if(var6 && var1.getBlockMaterial(var2, var3 - 1, var4) == this.material) {
-			var5 = var1.floodFill(var2, var3 - 1, var4, this.movingId1, this.stillId1);
+			var5 = var1.floodFill(var2, var3 - 1, var4, this.movingId, this.stillId);
 			if(var5 == 1) {
-				var7 = var1.fluidFlowCheck(var2, var3, var4, this.movingId1, this.stillId1);
+				var7 = var1.fluidFlowCheck(var2, var3, var4, this.movingId, this.stillId);
 				if(var7 != -9999) {
 					if(var7 < 0) {
 						return false;
@@ -135,9 +124,9 @@ public final class BlockFlowing extends BlockFluid {
 			}
 
 			if(!var10) {
-				var1.setTileNoUpdate(var2, var3, var4, this.stillId1);
+				var1.setTileNoUpdate(var2, var3, var4, this.stillId);
 			} else {
-				var1.scheduleBlockUpdate(var2, var3, var4, this.movingId1);
+				var1.scheduleBlockUpdate(var2, var3, var4, this.movingId);
 			}
 
 			return var10;
@@ -158,7 +147,7 @@ public final class BlockFlowing extends BlockFluid {
 		if(!this.canFlow(var1, var5, var6, var7)) {
 			return false;
 		} else {
-			var2 = var1.fluidFlowCheck(var2, var3, var4, this.movingId1, this.stillId1);
+			var2 = var1.fluidFlowCheck(var2, var3, var4, this.movingId, this.stillId);
 			if(var2 != -9999) {
 				if(var2 < 0) {
 					return false;
@@ -185,7 +174,7 @@ public final class BlockFlowing extends BlockFluid {
 	public final boolean shouldSideBeRendered(World var1, int var2, int var3, int var4, int var5) {
 		if(var2 >= 0 && var3 >= 0 && var4 >= 0 && var2 < var1.width && var4 < var1.length) {
 			int var6 = var1.getBlockId(var2, var3, var4);
-			return var6 != this.movingId1 && var6 != this.stillId1 ? (var5 != 1 || var1.getBlockId(var2 - 1, var3, var4) != 0 && var1.getBlockId(var2 + 1, var3, var4) != 0 && var1.getBlockId(var2, var3, var4 - 1) != 0 && var1.getBlockId(var2, var3, var4 + 1) != 0 ? super.shouldSideBeRendered(var1, var2, var3, var4, var5) : true) : false;
+			return var6 != this.movingId && var6 != this.stillId ? (var5 != 1 || var1.getBlockId(var2 - 1, var3, var4) != 0 && var1.getBlockId(var2 + 1, var3, var4) != 0 && var1.getBlockId(var2, var3, var4 - 1) != 0 && var1.getBlockId(var2, var3, var4 + 1) != 0 ? super.shouldSideBeRendered(var1, var2, var3, var4, var5) : true) : false;
 		} else {
 			return false;
 		}

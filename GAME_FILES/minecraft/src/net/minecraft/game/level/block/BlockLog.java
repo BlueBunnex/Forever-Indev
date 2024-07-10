@@ -4,20 +4,20 @@ import java.util.Random;
 import net.minecraft.game.level.material.Material;
 
 public final class BlockLog extends Block {
-	protected BlockLog(int var1) {
-		super(17, Material.wood);
+	protected BlockLog() {
+		super("Log", 17, Material.wood);
 		this.blockIndexInTexture = 20;
 	}
 
-	public final int quantityDropped(Random var1) {
+	public final int quantityDropped(Random random) {
 		return 1;
 	}
 
-	public final int idDropped(int var1, Random var2) {
+	public final int idDropped(int var1, Random random) {
 		return Block.wood.blockID;
 	}
 
-	public final int getBlockTextureFromSide(int var1) {
-		return var1 == 1 ? 21 : (var1 == 0 ? 21 : 20);
+	public final int getBlockTextureFromSide(int side) {
+		return side == 1 ? 21 : (side == 0 ? 21 : 20);
 	}
 }

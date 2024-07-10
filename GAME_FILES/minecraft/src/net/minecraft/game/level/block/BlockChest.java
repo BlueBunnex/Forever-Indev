@@ -12,10 +12,11 @@ import net.minecraft.game.level.block.tileentity.TileEntityChest;
 import net.minecraft.game.level.material.Material;
 
 public final class BlockChest extends BlockContainer {
+	
 	private Random random = new Random();
 
-	protected BlockChest(int var1) {
-		super(54, Material.wood);
+	protected BlockChest() {
+		super("Chest", 54, Material.wood);
 		this.blockIndexInTexture = 26;
 	}
 

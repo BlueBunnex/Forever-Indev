@@ -6,8 +6,8 @@ import net.minecraft.game.level.material.Material;
 public class BlockLeavesBase extends Block {
 	private boolean graphicsLevel = true;
 
-	protected BlockLeavesBase(int var1, int var2, Material var3, boolean var4) {
-		super(var1, var2, var3);
+	protected BlockLeavesBase(String name, int blockID, int blockIndexInTexture, Material material) {
+		super(name, blockID, blockIndexInTexture, material);
 	}
 
 	public final boolean isOpaqueCube() {

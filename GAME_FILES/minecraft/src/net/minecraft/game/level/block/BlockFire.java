@@ -6,19 +6,21 @@ import net.minecraft.game.level.material.Material;
 import net.minecraft.game.physics.AxisAlignedBB;
 
 public final class BlockFire extends Block {
+	
 	private int[] chanceToEncourageFire = new int[256];
 	private int[] abilityToCatchFire = new int[256];
 
-	protected BlockFire(int var1, int var2) {
-		super(51, 31, Material.fire);
+	protected BlockFire() {
+		super("Fire", 51, 31, Material.fire);
+		
 		this.setBurnRate(Block.planks.blockID, 5, 20);
 		this.setBurnRate(Block.wood.blockID, 5, 5);
 		this.setBurnRate(Block.leaves.blockID, 30, 60);
 		this.setBurnRate(Block.bookShelf.blockID, 30, 20);
 		this.setBurnRate(Block.tnt.blockID, 15, 100);
 
-		for(var1 = 0; var1 < 16; ++var1) {
-			this.setBurnRate(Block.clothRed.blockID + var1, 30, 60);
+		for(int i = 0; i < 16; i++) {
+			this.setBurnRate(Block.clothRed.blockID + i, 30, 60);
 		}
 
 		this.setTickOnLoad(true);

@@ -5,15 +5,17 @@ import net.minecraft.game.level.World;
 import net.minecraft.game.level.material.Material;
 
 public final class BlockStationary extends BlockFluid {
-	protected BlockStationary(int var1, Material var2) {
-		super(var1, var2);
-		this.movingId = var1 - 1;
-		this.stillId = var1;
+	
+	protected BlockStationary(String name, int blockID, int blockIndexInTexture, Material material) {
+		super(name, blockID, blockIndexInTexture, material);
+		
+		this.movingId--;
+		this.stillId--;
+		
 		this.setTickOnLoad(false);
 	}
 
-	public final void updateTick(World var1, int var2, int var3, int var4, Random var5) {
-	}
+	public final void updateTick(World var1, int var2, int var3, int var4, Random var5) {}
 
 	public final void onNeighborBlockChange(World var1, int var2, int var3, int var4, int var5) {
 		boolean var6 = false;

@@ -8,7 +8,7 @@ public final class BlockSource extends Block {
 	private int fluid;
 
 	protected BlockSource(int var1, int var2) {
-		super(var1, Block.blocksList[var2].blockIndexInTexture, Material.water);
+		super("BLOCKSOURCE", var1, Block.blocksList[var2].blockIndexInTexture, Material.water);
 		this.fluid = var2;
 		this.setTickOnLoad(true);
 	}

@@ -1,13 +1,13 @@
 package net.minecraft.game.level.block;
 
-import java.util.Random;
 import net.minecraft.game.level.World;
 import net.minecraft.game.level.material.Material;
 
+// TODO change to BlockFalling
 public class BlockSand extends Block {
-	public BlockSand(int var1, int var2) {
-		super(var1, var2, Material.sand);
-		new Random();
+	
+	public BlockSand(String name, int blockID, int blockIndexInTexture) {
+		super(name, blockID, blockIndexInTexture, Material.sand);
 	}
 
 	public final void onBlockAdded(World var1, int var2, int var3, int var4) {

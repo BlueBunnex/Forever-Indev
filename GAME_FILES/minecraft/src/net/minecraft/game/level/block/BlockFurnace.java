@@ -8,12 +8,15 @@ import net.minecraft.game.level.block.tileentity.TileEntityFurnace;
 import net.minecraft.game.level.material.Material;
 
 public final class BlockFurnace extends BlockContainer {
+	
 	private final boolean isActive;
 
-	protected BlockFurnace(int var1, boolean var2) {
-		super(var1, Material.rock);
-		this.isActive = var2;
+	protected BlockFurnace(String name, int blockID, boolean isActive) {
+		super(name, blockID, Material.rock);
+		
 		this.blockIndexInTexture = 45;
+		
+		this.isActive = isActive;
 	}
 
 	public final void onBlockAdded(World var1, int var2, int var3, int var4) {

@@ -3,9 +3,9 @@ package net.minecraft.game.level.block;
 import net.minecraft.game.level.material.Material;
 
 public final class BlockOreBlock extends Block {
-	public BlockOreBlock(int var1, int var2) {
-		super(var1, Material.iron);
-		this.blockIndexInTexture = var2;
+	
+	public BlockOreBlock(String name, int blockID, int blockIndexInTexture) {
+		super(name, blockID, blockIndexInTexture, Material.iron);
 	}
 
 	public final int getBlockTextureFromSide(int var1) {

@@ -8,8 +8,9 @@ import net.minecraft.game.physics.MovingObjectPosition;
 import net.minecraft.game.physics.Vec3D;
 
 public final class BlockTorch extends Block {
-	protected BlockTorch(int var1, int var2) {
-		super(50, 80, Material.circuits);
+	
+	protected BlockTorch() {
+		super("Torch", 50, 80, Material.circuits);
 		this.setTickOnLoad(true);
 	}
 

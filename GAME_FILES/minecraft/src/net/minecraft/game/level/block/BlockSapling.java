@@ -4,8 +4,10 @@ import java.util.Random;
 import net.minecraft.game.level.World;
 
 public final class BlockSapling extends BlockFlower {
-	protected BlockSapling(int var1, int var2) {
-		super(6, 15);
+	
+	protected BlockSapling(String name, int blockID, int blockIndexInTexture) {
+		super(name, blockID, blockIndexInTexture);
+		
 		this.setBlockBounds(10.0F * 0.01F, 0.0F, 10.0F * 0.01F, 0.9F, 0.8F, 0.9F);
 	}
 
