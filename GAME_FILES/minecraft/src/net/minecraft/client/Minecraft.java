@@ -702,7 +702,7 @@ public final class Minecraft implements Runnable {
 							} while(!Keyboard.getEventKeyState());
 
 							if(Keyboard.getEventKey() == Keyboard.KEY_F) {
-								// straight up doesn't work
+								// only works when "in-game," don't feel like fixing right now
 								this.toggleFullscreen();
 								
 							} else {

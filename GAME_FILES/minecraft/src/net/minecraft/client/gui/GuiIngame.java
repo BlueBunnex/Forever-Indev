@@ -191,7 +191,7 @@ public final class GuiIngame extends Gui {
 			fontRend.drawStringWithShadow("Minecraft Indev", 2, 2, 16777215);
 		}
 
-		// draw chat (unimplemented, awesome)
+		// draw chat
 		for(int i = 0; i < this.chatMessageList.size() && i < 10; i++) {
 			
 			ChatLine chatline = this.chatMessageList.get(i);
@@ -199,6 +199,7 @@ public final class GuiIngame extends Gui {
 			fontRend.drawStringWithShadow(chatline.message, 2, height - 8 - i * 9 - 20, 16777215);
 		}
 		
+		// draw item name
 		ItemStack currItem = this.mc.thePlayer.inventory.getCurrentItem();
 		if (currItem != null)
 			drawCenteredString(fontRend, currItem.getName(), width / 2, height - 48, 16777215);

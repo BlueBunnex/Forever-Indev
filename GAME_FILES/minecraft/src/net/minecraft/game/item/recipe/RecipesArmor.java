@@ -8,7 +8,7 @@ public final class RecipesArmor {
 	private String[][] recipePatterns = new String[][]{{"XXX", "X X"}, {"X X", "XXX", "XXX"}, {"XXX", "X X", "X X"}, {"X X", "X X"}};
 	
 	private Object[][] recipeItems = new Object[][]{
-		{Block.clothGray, Block.fire, Item.ingotIron, Item.diamond, Item.ingotGold},
+		{Block.clothWhite, Block.fire, Item.ingotIron, Item.diamond, Item.ingotGold},
 		{Item.helmetLeather, Item.helmetChain, Item.helmetIron, Item.helmetDiamond, Item.helmetGold},
 		{Item.chestplateLeather, Item.chestplateChain, Item.chestplateIron, Item.chestplateDiamond, Item.chestplateGold},
 		{Item.leggingsLeather, Item.leggingsChain, Item.leggingsIron, Item.leggingsDiamond, Item.leggingsGold},

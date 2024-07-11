@@ -22,7 +22,7 @@ public class EntitySheep extends EntityAnimal {
 			int var3 = 1 + this.rand.nextInt(3);
 
 			for(int var4 = 0; var4 < var3; ++var4) {
-				EntityItem var5 = this.entityDropItem(Block.clothGray.blockID, 1, 1.0F);
+				EntityItem var5 = this.entityDropItem(Block.clothWhite.blockID, 1, 1.0F);
 				var5.motionY += this.rand.nextFloat() * 0.05F;
 				var5.motionX += (this.rand.nextFloat() - this.rand.nextFloat()) * 0.1F;
 				var5.motionZ += (this.rand.nextFloat() - this.rand.nextFloat()) * 0.1F;
