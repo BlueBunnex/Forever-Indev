@@ -95,6 +95,7 @@ public class Block {
 	public static final Block tilledField;
 	public static final Block stoneOvenIdle;
 	public static final Block stoneOvenActive;
+	public static final Block coalLamp;
 	
 	public final String name;
 	public final int blockID;
@@ -658,6 +659,10 @@ public class Block {
 		stoneOvenActive = new BlockFurnace("Furnace", 62, true).setHardness(3.5F);
 		stoneOvenActive.stepSound = soundStoneFootstep;
 		stoneOvenActive.setLightValue(14.0F / 16.0F);
+		
+		// coal lamp
+		coalLamp = new Block("Coal Lamp", 63, 81, Material.rock).setHardness(2.0F).setResistance(10.0F).setLightValue(16.0F / 16.0F);
+		coalLamp.stepSound = soundStoneFootstep;
 
 		// make an item for every block
 		for(int i = 0; i < 256; i++) {
