@@ -51,11 +51,22 @@ public class GuiMessage extends GuiScreen {
 	
 	public void onGuiClosed() {
 		
-		if (sendMessage && !message.isBlank()) {
+		if (!sendMessage || message.isBlank())
+			return;
+		
+		if (message.charAt(0) == '/') {
 			
+			// run command if possible
 			String[] parts = message.split(" ");
 			
 			switch (parts[0]) {
+			
+				case "/help":
+					this.mc.ingameGUI.addChatMessage("/help");
+					this.mc.ingameGUI.addChatMessage("    Shows all commands.");
+					this.mc.ingameGUI.addChatMessage("/give [item ID] [opt. item amount]");
+					this.mc.ingameGUI.addChatMessage("    Gives the player the specified item.");
+					break;
 			
 				case "/give":
 					// check if correct arguments have been given
@@ -68,6 +79,10 @@ public class GuiMessage extends GuiScreen {
 					Item item;
 					try {
 						item = Item.itemsList[Integer.parseInt(parts[1])];
+						
+						if (item == null)
+							throw new Exception();
+						
 					} catch (Exception e) {
 						this.mc.ingameGUI.addChatMessage("Could not give: No item with ID " + parts[1] + " exists.");
 						break;
@@ -96,9 +111,13 @@ public class GuiMessage extends GuiScreen {
 					break;
 					
 				default:
-					this.mc.ingameGUI.addChatMessage(message);
+					this.mc.ingameGUI.addChatMessage("Unknown command. Use /help for help.");
 					break;
 			}
+			
+		} else {
+			// send message
+			this.mc.ingameGUI.addChatMessage(message);
 		}
 	}
 	
