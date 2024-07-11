@@ -89,6 +89,7 @@ public class Item {
 	public static Item apple;
 	public static Item sugarBeet;
 	public static Item sugar;
+	public static Item applePie;
 	
 	public final int shiftedIndex;
 	protected int maxStackSize = 64;
@@ -356,5 +357,8 @@ public class Item {
 		
 		sugar = new Item("Sugar", 67);
 		sugar.iconIndex = 104;
+		
+		applePie = new ItemFood("Apple Pie", 68, 8);
+		applePie.iconIndex = 11;
 	}
 }

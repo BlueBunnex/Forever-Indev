@@ -45,19 +45,23 @@ public final class CraftingManager {
 		this.addRecipe(new ItemStack(Item.bowlSoup), new Object[]{"Y", "X", "#", Character.valueOf('X'), Block.mushroomRed, Character.valueOf('Y'), Block.mushroomBrown, Character.valueOf('#'), Item.bowlEmpty});
 		this.addRecipe(new ItemStack(Item.bread, 1), new Object[]{"###", Character.valueOf('#'), Item.wheat});
 		this.addRecipe(new ItemStack(Item.sugar, 1), new Object[]{"#", Character.valueOf('#'), Item.sugarBeet});
+		this.addRecipe(new ItemStack(Item.applePie, 1), new Object[]{"ABC", Character.valueOf('A'), Item.apple, Character.valueOf('B'), Item.wheat, Character.valueOf('C'), Item.sugar});
 		
 		Collections.sort(this.recipes, new RecipeSorter());
 		System.out.println(this.recipes.size() + " recipes");
 	}
 
-	final void addRecipe(ItemStack var1, Object... var2) {
+	final void addRecipe(ItemStack result, Object... recipe) {
+		
 		String var3 = "";
+		
 		int var4 = 0;
 		int var5 = 0;
 		int var6 = 0;
-		if(var2[0] instanceof String[]) {
+		
+		if(recipe[0] instanceof String[]) {
 			++var4;
-			String[] var11 = (String[])var2[0];
+			String[] var11 = (String[]) recipe[0];
 
 			for(int var8 = 0; var8 < var11.length; ++var8) {
 				String var9 = var11[var8];
@@ -66,43 +70,46 @@ public final class CraftingManager {
 				var3 = var3 + var9;
 			}
 		} else {
-			while(var2[var4] instanceof String) {
-				String var7 = (String)var2[var4++];
+			while(recipe[var4] instanceof String) {
+				String var7 = (String) recipe[var4++];
 				++var6;
 				var5 = var7.length();
 				var3 = var3 + var7;
 			}
 		}
 
-		HashMap var12;
-		int var15;
-		for(var12 = new HashMap(); var4 < var2.length; var4 += 2) {
-			Character var13 = (Character)var2[var4];
-			var15 = 0;
-			if(var2[var4 + 1] instanceof Item) {
-				var15 = ((Item)var2[var4 + 1]).shiftedIndex;
-			} else if(var2[var4 + 1] instanceof Block) {
-				var15 = ((Block)var2[var4 + 1]).blockID;
+		HashMap<Character, Integer> ingredientMap = new HashMap<Character, Integer>();
+		
+		for(; var4 < recipe.length; var4 += 2) {
+			
+			int ingredientID = 0;
+			
+			if (recipe[var4 + 1] instanceof Item) {
+				ingredientID = ((Item) recipe[var4 + 1]).shiftedIndex;
+			} else if (recipe[var4 + 1] instanceof Block) {
+				ingredientID = ((Block) recipe[var4 + 1]).blockID;
 			}
 
-			var12.put(var13, Integer.valueOf(var15));
+			ingredientMap.put((Character) recipe[var4], ingredientID);
 		}
 
 		int[] var14 = new int[var5 * var6];
 
-		for(var15 = 0; var15 < var5 * var6; ++var15) {
-			char var10 = var3.charAt(var15);
-			if(var12.containsKey(Character.valueOf(var10))) {
-				var14[var15] = ((Integer)var12.get(Character.valueOf(var10))).intValue();
+		for(int i = 0; i < var5 * var6; i++) {
+			
+			char var10 = var3.charAt(i);
+			if (ingredientMap.containsKey(Character.valueOf(var10))) {
+				var14[i] = ingredientMap.get(Character.valueOf(var10)).intValue();
 			} else {
-				var14[var15] = -1;
+				var14[i] = -1;
 			}
 		}
 
-		this.recipes.add(new CraftingRecipe(var5, var6, var14, var1));
+		this.recipes.add(new CraftingRecipe(var5, var6, var14, result));
 	}
 
 	public final ItemStack findMatchingRecipe(int[] var1) {
+		
 		for(int var2 = 0; var2 < this.recipes.size(); ++var2) {
 			CraftingRecipe var3 = (CraftingRecipe)this.recipes.get(var2);
 			if(var3.matchRecipe(var1)) {
