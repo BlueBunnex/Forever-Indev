@@ -15,7 +15,7 @@ import org.lwjgl.opengl.GL11;
 public final class GuiIngame extends Gui {
 	
 	private static RenderItem itemRenderer = new RenderItem();
-	private List chatMessageList = new ArrayList();
+	private List<ChatLine> chatMessageList = new ArrayList<ChatLine>();
 	private Random rand = new Random();
 	private Minecraft mc;
 	private int updateCounter = 0;
@@ -192,27 +192,35 @@ public final class GuiIngame extends Gui {
 		}
 
 		// draw chat (unimplemented, awesome)
-//		for(var12 = 0; var12 < this.chatMessageList.size() && var12 < 10; ++var12) {
-//			if(((ChatLine)this.chatMessageList.get(var12)).updateCounter < 200) {
-//				this.chatMessageList.get(var12);
-//				fontRend.drawStringWithShadow((String)null, 2, height - 8 - var12 * 9 - 20, 16777215);
-//			}
-//		}
+		for(int i = 0; i < this.chatMessageList.size() && i < 10; i++) {
+			
+			ChatLine chatline = this.chatMessageList.get(i);
+			
+			fontRend.drawStringWithShadow(chatline.message, 2, height - 8 - i * 9 - 20, 16777215);
+		}
 		
 		ItemStack currItem = this.mc.thePlayer.inventory.getCurrentItem();
-		if (currItem != null) {
-			String name = currItem.getName();
-			fontRend.drawStringWithShadow(name, (width - name.length() * 6) / 2, height - 48, 16777215);
-		}
+		if (currItem != null)
+			drawCenteredString(fontRend, currItem.getName(), width / 2, height - 48, 16777215);
 
 	}
-
-	public final void addChatMessage() {
-		++this.updateCounter;
-
-		for(int var1 = 0; var1 < this.chatMessageList.size(); ++var1) {
-			++((ChatLine)this.chatMessageList.get(var1)).updateCounter;
+	
+	public final void updateChatMessages() {
+		this.updateCounter++;
+		
+		for(int i = 0; i < this.chatMessageList.size(); i++) {
+			
+			ChatLine chatline = this.chatMessageList.get(i);
+			
+			if (chatline.updateCounter > 200) {
+				this.chatMessageList.remove(this.chatMessageList.size() - 1);
+			} else {
+				chatline.updateCounter++;
+			}
 		}
+	}
 
+	public final void addChatMessage(String message) {
+		chatMessageList.add(0, new ChatLine(message));
 	}
 }

@@ -19,6 +19,7 @@ import net.minecraft.client.gui.GuiErrorScreen;
 import net.minecraft.client.gui.GuiGameOver;
 import net.minecraft.client.gui.GuiIngame;
 import net.minecraft.client.gui.GuiIngameMenu;
+import net.minecraft.client.gui.GuiMessage;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.gui.container.GuiInventory;
@@ -129,25 +130,25 @@ public final class Minecraft implements Runnable {
 		this.server = var1;
 	}
 
-	public final void displayGuiScreen(GuiScreen var1) {
+	public final void displayGuiScreen(GuiScreen screen) {
 		if(!(this.currentScreen instanceof GuiErrorScreen)) {
 			if(this.currentScreen != null) {
 				this.currentScreen.onGuiClosed();
 			}
 
-			if(var1 == null && this.theWorld == null) {
-				var1 = new GuiMainMenu();
-			} else if(var1 == null && this.thePlayer.health <= 0) {
-				var1 = new GuiGameOver();
+			if (screen == null && this.theWorld == null) {
+				screen = new GuiMainMenu();
+			} else if (screen == null && this.thePlayer.health <= 0) {
+				screen = new GuiGameOver();
 			}
 
-			this.currentScreen = (GuiScreen)var1;
-			if(var1 != null) {
+			this.currentScreen = (GuiScreen) screen;
+			if(screen != null) {
 				this.inputLock();
 				ScaledResolution var2 = new ScaledResolution(this.displayWidth, this.displayHeight);
 				int var3 = var2.getScaledWidth();
 				int var4 = var2.getScaledHeight();
-				((GuiScreen)var1).setWorldAndResolution(this, var3, var4);
+				screen.setWorldAndResolution(this, var3, var4);
 				this.skipRenderWorld = false;
 			} else {
 				this.setIngameFocus();
@@ -392,7 +393,7 @@ public final class Minecraft implements Runnable {
 			if(!this.inventoryScreen) {
 				this.inventoryScreen = true;
 				this.mouseHelper.grabMouseCursor();
-				this.displayGuiScreen((GuiScreen)null);
+				this.displayGuiScreen(null);
 				this.prevFrameTime = this.ticksRan + 10000;
 			}
 		}
@@ -572,7 +573,8 @@ public final class Minecraft implements Runnable {
 	}
 
 	private void runTick() {
-		this.ingameGUI.addChatMessage();
+		this.ingameGUI.updateChatMessages();
+		
 		if(!this.isGamePaused && this.theWorld != null) {
 			this.playerController.onUpdate();
 		}
@@ -583,16 +585,18 @@ public final class Minecraft implements Runnable {
 		}
 
 		if(this.currentScreen == null && this.thePlayer != null && this.thePlayer.health <= 0) {
-			this.displayGuiScreen((GuiScreen)null);
+			this.displayGuiScreen(null);
 		}
 
 		if(this.currentScreen == null || this.currentScreen.allowUserInput) {
-			label286:
-			while(true) {
-				while(true) {
+			
+			jump:
+				
+			while (true) {
+				while (true) {
 					int var1;
 					int var2;
-					while(Mouse.next()) {
+					while (Mouse.next()) {
 						var1 = Mouse.getEventDWheel();
 						if(var1 != 0) {
 							var2 = var1;
@@ -657,23 +661,25 @@ public final class Minecraft implements Runnable {
 						while(true) {
 							do {
 								boolean var3;
-								if(!Keyboard.next()) {
-									if(this.currentScreen == null) {
-										if(Mouse.isButtonDown(0) && (float)(this.ticksRan - this.prevFrameTime) >= this.timer.ticksPerSecond / 4.0F && this.inventoryScreen) {
+								
+								if (!Keyboard.next()) {
+									
+									if (this.currentScreen == null) {
+										if (Mouse.isButtonDown(0) && (float)(this.ticksRan - this.prevFrameTime) >= this.timer.ticksPerSecond / 4.0F && this.inventoryScreen) {
 											this.clickMouse(0);
 											this.prevFrameTime = this.ticksRan;
 										}
 
-										if(Mouse.isButtonDown(1) && (float)(this.ticksRan - this.prevFrameTime) >= this.timer.ticksPerSecond / 4.0F && this.inventoryScreen) {
+										if (Mouse.isButtonDown(1) && (float)(this.ticksRan - this.prevFrameTime) >= this.timer.ticksPerSecond / 4.0F && this.inventoryScreen) {
 											this.clickMouse(1);
 											this.prevFrameTime = this.ticksRan;
 										}
 									}
 
 									var3 = this.currentScreen == null && Mouse.isButtonDown(0) && this.inventoryScreen;
-									boolean var9 = false;
-									if(!this.playerController.isInTestMode && this.leftClickCounter <= 0) {
-										if(var3 && this.objectMouseOver != null && this.objectMouseOver.typeOfHit == 0) {
+									
+									if (!this.playerController.isInTestMode && this.leftClickCounter <= 0) {
+										if (var3 && this.objectMouseOver != null && this.objectMouseOver.typeOfHit == 0) {
 											var2 = this.objectMouseOver.blockX;
 											int var8 = this.objectMouseOver.blockY;
 											int var4 = this.objectMouseOver.blockZ;
@@ -683,7 +689,8 @@ public final class Minecraft implements Runnable {
 											this.playerController.resetBlockRemoving();
 										}
 									}
-									break label286;
+									
+									break jump;
 								}
 
 								EntityPlayerSP var10000 = this.thePlayer;
@@ -694,21 +701,42 @@ public final class Minecraft implements Runnable {
 								var6.movementInput.checkKeyForMovementInput(var2, var3);
 							} while(!Keyboard.getEventKeyState());
 
-							if(Keyboard.getEventKey() == Keyboard.KEY_F11) {
+							if(Keyboard.getEventKey() == Keyboard.KEY_F) {
+								// straight up doesn't work
 								this.toggleFullscreen();
+								
 							} else {
-								if(this.currentScreen != null) {
+								if (this.currentScreen != null) {
 									this.currentScreen.handleKeyboardInput();
+									
 								} else {
-									if(Keyboard.getEventKey() == Keyboard.KEY_ESCAPE) {
+									
+									if (Keyboard.getEventKey() == Keyboard.KEY_ESCAPE) {
 										this.displayInGameMenu();
 									}
 
-									if(Keyboard.getEventKey() == Keyboard.KEY_F7) {
+									else if (Keyboard.getEventKey() == Keyboard.KEY_F7) {
 										this.entityRenderer.grabLargeScreenshot();
 									}
 
-									if(this.playerController instanceof PlayerControllerCreative) {
+									else if (Keyboard.getEventKey() == Keyboard.KEY_F5) {
+										this.options.thirdPersonView = !this.options.thirdPersonView;
+									}
+
+									else if (Keyboard.getEventKey() == this.options.keyBindInventory.keyCode) {
+										this.displayGuiScreen(new GuiInventory(this.thePlayer.inventory));
+									}
+									
+									else if (Keyboard.getEventKey() == this.options.keyBindChat.keyCode) {
+										this.displayGuiScreen(new GuiMessage());
+									}
+
+									else if (Keyboard.getEventKey() == this.options.keyBindDrop.keyCode) {
+										this.thePlayer.dropPlayerItemWithRandomChoice(this.thePlayer.inventory.decrStackSize(this.thePlayer.inventory.currentItem, 1), false);
+									}
+									
+									// no idea what this code does
+									if (this.playerController instanceof PlayerControllerCreative) {
 										if(Keyboard.getEventKey() == this.options.keyBindLoad.keyCode) {
 											this.thePlayer.preparePlayerToSpawn();
 										}
@@ -718,18 +746,7 @@ public final class Minecraft implements Runnable {
 											this.thePlayer.preparePlayerToSpawn();
 										}
 									}
-
-									if(Keyboard.getEventKey() == Keyboard.KEY_F5) {
-										this.options.thirdPersonView = !this.options.thirdPersonView;
-									}
-
-									if(Keyboard.getEventKey() == this.options.keyBindInventory.keyCode) {
-										this.displayGuiScreen(new GuiInventory(this.thePlayer.inventory));
-									}
-
-									if(Keyboard.getEventKey() == this.options.keyBindDrop.keyCode) {
-										this.thePlayer.dropPlayerItemWithRandomChoice(this.thePlayer.inventory.decrStackSize(this.thePlayer.inventory.currentItem, 1), false);
-									}
+									
 								}
 
 								for(var1 = 0; var1 < 9; ++var1) {

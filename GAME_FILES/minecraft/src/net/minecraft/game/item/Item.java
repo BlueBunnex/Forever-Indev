@@ -115,6 +115,10 @@ public class Item {
 	public final int getIconIndex() {
 		return this.iconIndex;
 	}
+	
+	public final String getName() {
+		return name;
+	}
 
 	public boolean onItemUse(ItemStack item, World world, int var3, int var4, int var5, int var6) {
 		return false;

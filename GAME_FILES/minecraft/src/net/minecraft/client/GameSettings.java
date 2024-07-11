@@ -25,7 +25,7 @@ public final class GameSettings {
 	public KeyBinding keyBindJump = new KeyBinding("Jump", 57);
 	public KeyBinding keyBindInventory = new KeyBinding("Inventory", 23);
 	public KeyBinding keyBindDrop = new KeyBinding("Drop", 16);
-	private KeyBinding keyBindChat = new KeyBinding("Chat", 20);
+	public KeyBinding keyBindChat = new KeyBinding("Chat", 20);
 	public KeyBinding keyBindToggleFog = new KeyBinding("Toggle fog", 33);
 	public KeyBinding keyBindSave = new KeyBinding("Save location", 28);
 	public KeyBinding keyBindLoad = new KeyBinding("Load location", 19);
