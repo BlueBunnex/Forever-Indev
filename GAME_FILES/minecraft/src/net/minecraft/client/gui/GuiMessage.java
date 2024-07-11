@@ -58,26 +58,41 @@ public class GuiMessage extends GuiScreen {
 			switch (parts[0]) {
 			
 				case "/give":
-					try {
-						Item item = Item.itemsList[Integer.parseInt(parts[1])];
-						
-						EntityItem itemEntity = new EntityItem(
-								this.mc.theWorld,
-								this.mc.thePlayer.posX,
-								this.mc.thePlayer.posY,
-								this.mc.thePlayer.posZ,
-								new ItemStack(item)
-						);
-						
-						itemEntity.delayBeforeCanPickup = 0;
-						this.mc.theWorld.spawnEntityInWorld(itemEntity);
-						
-						this.mc.ingameGUI.addChatMessage("Gave player 1x " + item.getName());
-					
-					} catch (Exception e) {
-						this.mc.ingameGUI.addChatMessage("Could not give: No item with ID " + parts[1] + " exists.");
+					// check if correct arguments have been given
+					if (parts.length == 1) {
+						this.mc.ingameGUI.addChatMessage("Format: /give [item ID] [opt. item amount]");
+						break;
 					}
 					
+					// parse the item
+					Item item;
+					try {
+						item = Item.itemsList[Integer.parseInt(parts[1])];
+					} catch (Exception e) {
+						this.mc.ingameGUI.addChatMessage("Could not give: No item with ID " + parts[1] + " exists.");
+						break;
+					}
+					
+					// parse the count (optional)
+					int count = 1;
+					if (parts.length > 2) {
+						try {
+							count = Integer.parseInt(parts[2]);
+						} catch (Exception e) {}
+					}
+					
+					EntityItem itemEntity = new EntityItem(
+							this.mc.theWorld,
+							this.mc.thePlayer.posX,
+							this.mc.thePlayer.posY,
+							this.mc.thePlayer.posZ,
+							new ItemStack(item, count)
+					);
+					
+					itemEntity.delayBeforeCanPickup = 0;
+					this.mc.theWorld.spawnEntityInWorld(itemEntity);
+					
+					this.mc.ingameGUI.addChatMessage("Gave player " + count + "x " + item.getName());
 					break;
 					
 				default:
