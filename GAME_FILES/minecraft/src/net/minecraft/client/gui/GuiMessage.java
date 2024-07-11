@@ -1,5 +1,6 @@
 package net.minecraft.client.gui;
 
+import net.minecraft.client.commands.Command;
 import net.minecraft.game.entity.misc.EntityItem;
 import net.minecraft.game.item.Item;
 import net.minecraft.game.item.ItemStack;
@@ -56,64 +57,18 @@ public class GuiMessage extends GuiScreen {
 		
 		if (message.charAt(0) == '/') {
 			
-			// run command if possible
+			// run command if it exists
 			String[] parts = message.split(" ");
 			
-			switch (parts[0]) {
-			
-				case "/help":
-					this.mc.ingameGUI.addChatMessage("/help");
-					this.mc.ingameGUI.addChatMessage("    Shows all commands.");
-					this.mc.ingameGUI.addChatMessage("/give [item ID] [opt. item amount]");
-					this.mc.ingameGUI.addChatMessage("    Gives the player the specified item.");
-					break;
-			
-				case "/give":
-					// check if correct arguments have been given
-					if (parts.length == 1) {
-						this.mc.ingameGUI.addChatMessage("Format: /give [item ID] [opt. item amount]");
-						break;
-					}
-					
-					// parse the item
-					Item item;
-					try {
-						item = Item.itemsList[Integer.parseInt(parts[1])];
-						
-						if (item == null)
-							throw new Exception();
-						
-					} catch (Exception e) {
-						this.mc.ingameGUI.addChatMessage("Could not give: No item with ID " + parts[1] + " exists.");
-						break;
-					}
-					
-					// parse the count (optional)
-					int count = 1;
-					if (parts.length > 2) {
-						try {
-							count = Integer.parseInt(parts[2]);
-						} catch (Exception e) {}
-					}
-					
-					EntityItem itemEntity = new EntityItem(
-							this.mc.theWorld,
-							this.mc.thePlayer.posX,
-							this.mc.thePlayer.posY,
-							this.mc.thePlayer.posZ,
-							new ItemStack(item, count)
-					);
-					
-					itemEntity.delayBeforeCanPickup = 0;
-					this.mc.theWorld.spawnEntityInWorld(itemEntity);
-					
-					this.mc.ingameGUI.addChatMessage("Gave player " + count + "x " + item.getName());
-					break;
-					
-				default:
-					this.mc.ingameGUI.addChatMessage("Unknown command. Use /help for help.");
-					break;
+			for (Command command : Command.COMMANDS) {
+				
+				if (command.getName().equals(parts[0])) {
+					command.runCommand(mc, parts);
+					return;
+				}
 			}
+			
+			this.mc.ingameGUI.addChatMessage("Unknown command. Use /help for help.");
 			
 		} else {
 			// send message
