@@ -7,8 +7,10 @@ import net.minecraft.game.level.World;
 import util.MathHelper;
 
 public class EntitySpider extends EntityMob {
-	public EntitySpider(World var1) {
-		super(var1);
+	
+	public EntitySpider(World world) {
+		super(world);
+		
 		this.texture = "/mob/spider.png";
 		this.setSize(1.4F, 0.9F);
 		this.moveSpeed = 0.8F;
@@ -62,5 +64,17 @@ public class EntitySpider extends EntityMob {
 
 	protected final int scoreValue() {
 		return Item.silk.shiftedIndex;
+	}
+	
+	protected String getLivingSound() {
+		return "mob.spider";
+	}
+
+	protected String getHurtSound() {
+		return "mob.spider";
+	}
+
+	protected String getDeathSound() {
+		return "mob.spiderdeath";
 	}
 }

@@ -8,8 +8,10 @@ import net.minecraft.game.level.World;
 import util.MathHelper;
 
 public class EntitySkeleton extends EntityMob {
-	public EntitySkeleton(World var1) {
-		super(var1);
+	
+	public EntitySkeleton(World world) {
+		super(world);
+		
 		this.texture = "/mob/skeleton.png";
 	}
 
@@ -59,5 +61,17 @@ public class EntitySkeleton extends EntityMob {
 
 	protected final int scoreValue() {
 		return Item.arrow.shiftedIndex;
+	}
+	
+	protected String getLivingSound() {
+		return "mob.skeleton";
+	}
+
+	protected String getHurtSound() {
+		return "mob.skeletonhurt";
+	}
+
+	protected String getDeathSound() {
+		return "mob.skeletondeath";
 	}
 }

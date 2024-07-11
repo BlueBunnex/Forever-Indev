@@ -6,13 +6,14 @@ import net.minecraft.game.item.Item;
 import net.minecraft.game.level.World;
 
 public class EntityCreeper extends EntityMob {
+	
 	private int timeSinceIgnited;
 	private int lastActiveTime;
 	private int fuseTime = 30;
 	private int creeperState = -1;
 
-	public EntityCreeper(World var1) {
-		super(var1);
+	public EntityCreeper(World world) {
+		super(world);
 		this.texture = "/mob/creeper.png";
 	}
 
@@ -69,5 +70,13 @@ public class EntityCreeper extends EntityMob {
 
 	protected final int scoreValue() {
 		return Item.gunpowder.shiftedIndex;
+	}
+	
+	protected String getHurtSound() {
+		return "mob.creeper";
+	}
+
+	protected String getDeathSound() {
+		return "mob.creeperdeath";
 	}
 }
