@@ -5,16 +5,13 @@ import org.lwjgl.opengl.GL11;
 import util.MathHelper;
 
 public final class GuiMainMenu extends GuiScreen {
-	private float updateCounter = 0.0F;
 	
 	private static final String[] SPLASHES = new String[] { "Not-quite indev!", "Chests on the glass door!", "NP is not in P!", "The blue-twintailed girl is right!", "In development hell, did I development sin?", "Bubbles from the gum machine!", "[INSERT SPLASH HERE]", "Full-stop!", "[EXTREMELY LOUD INCORRECT BUZZER]" };
-	private static final String CURRENT_SPLASH = SPLASHES[(int)(Math.random() * (double) SPLASHES.length)];
+	private static final String CURRENT_SPLASH = SPLASHES[(int) (Math.random() * (double) SPLASHES.length)];
 
-	public final void updateScreen() {
-		this.updateCounter += 0.01F;
-	}
+	public final void updateScreen() {}
 
-	protected final void keyTyped(char var1, int var2) {}
+	protected final void keyTyped(char character, int keycode) {}
 
 	public final void initGui() {
 		this.controlList.clear();
@@ -45,7 +42,7 @@ public final class GuiMainMenu extends GuiScreen {
 
 	}
 
-	public final void drawScreen(int var1, int var2, float var3) {
+	public final void drawScreen(int mouseX, int mouseY) {
 		this.drawDefaultBackground();
 		Tessellator var4 = Tessellator.instance;
 		GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.mc.renderEngine.getTexture("/gui/logo.png"));
@@ -70,6 +67,7 @@ public final class GuiMainMenu extends GuiScreen {
 		drawString(this.fontRenderer, var16, this.width - this.fontRenderer.getStringWidth(var16) - 2, 2, 8421504);
 		var16 = "Allocated memory: " + var9 * 100L / var7 + "% (" + var9 / 1024L / 1024L + "MB)";
 		drawString(this.fontRenderer, var16, this.width - this.fontRenderer.getStringWidth(var16) - 2, 12, 8421504);
-		super.drawScreen(var1, var2, var3);
+		
+		super.drawScreen(mouseX, mouseY);
 	}
 }

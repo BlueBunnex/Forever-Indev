@@ -112,14 +112,15 @@ public final class EntityRenderer {
 		}
 	}
 
-	public final void updateCameraAndRender(float var1) {
+	public final void updateCameraAndRender(float renderPartialTicks) {
 		if(this.anaglyphEnable && !Display.isActive()) {
 			this.mc.displayInGameMenu();
 		}
 
 		this.anaglyphEnable = Display.isActive();
-		int var5;
-		int var6;
+		int mouseX;
+		int mouseY;
+		
 		if(this.mc.inventoryScreen) {
 			Mouse.getDX();
 			byte var2 = 0;
@@ -131,10 +132,11 @@ public final class EntityRenderer {
 				var4 = -1;
 			}
 
-			var5 = var2 + this.mc.mouseHelper.deltaX;
-			var6 = var3 - this.mc.mouseHelper.deltaY;
+			mouseX = var2 + this.mc.mouseHelper.deltaX;
+			mouseY = var3 - this.mc.mouseHelper.deltaY;
+			
 			if(var2 != 0 || this.entityRendererInt1 != 0) {
-				System.out.println("xxo: " + var2 + ", " + this.entityRendererInt1 + ": " + this.entityRendererInt1 + ", xo: " + var5);
+				System.out.println("xxo: " + var2 + ", " + this.entityRendererInt1 + ": " + this.entityRendererInt1 + ", xo: " + mouseX);
 			}
 
 			if(this.entityRendererInt1 != 0) {
@@ -153,8 +155,8 @@ public final class EntityRenderer {
 				this.entityRendererInt2 = var3;
 			}
 
-			float var10001 = (float)var5;
-			float var11 = (float)(var6 * var4);
+			float var10001 = (float) mouseX;
+			float var11 = (float) (mouseY * var4);
 			float var9 = var10001;
 			EntityPlayerSP var7 = this.mc.thePlayer;
 			float var13 = var7.rotationPitch;
@@ -176,11 +178,13 @@ public final class EntityRenderer {
 		ScaledResolution var8 = new ScaledResolution(this.mc.displayWidth, this.mc.displayHeight);
 		int var10 = var8.getScaledWidth();
 		int var12 = var8.getScaledHeight();
-		var5 = Mouse.getX() * var10 / this.mc.displayWidth;
-		var6 = var12 - Mouse.getY() * var12 / this.mc.displayHeight - 1;
+		
+		mouseX = Mouse.getX() * var10 / this.mc.displayWidth;
+		mouseY = var12 - Mouse.getY() * var12 / this.mc.displayHeight - 1;
+		
 		if(this.mc.theWorld != null) {
-			this.getMouseOver(var1);
-			this.mc.ingameGUI.renderGameOverlay(var1);
+			this.getMouseOver(renderPartialTicks);
+			this.mc.ingameGUI.renderGameOverlay(renderPartialTicks);
 		} else {
 			GL11.glViewport(0, 0, this.mc.displayWidth, this.mc.displayHeight);
 			GL11.glClearColor(0.0F, 0.0F, 0.0F, 0.0F);
@@ -192,9 +196,9 @@ public final class EntityRenderer {
 			this.setupOverlayRendering();
 		}
 
-		if(this.mc.currentScreen != null) {
+		if (this.mc.currentScreen != null) {
 			GL11.glClear(GL11.GL_DEPTH_BUFFER_BIT);
-			this.mc.currentScreen.drawScreen(var5, var6, var1);
+			this.mc.currentScreen.drawScreen(mouseX, mouseY);
 		}
 
 		Thread.yield();

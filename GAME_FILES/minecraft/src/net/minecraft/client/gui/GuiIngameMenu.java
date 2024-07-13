@@ -12,8 +12,8 @@ public final class GuiIngameMenu extends GuiScreen {
 		this.controlList.add(new GuiButton(5, this.width / 2 - 100, this.height / 4 + 120, "Exit to main menu (SAVE FIRST!)"));
 		
 		if (this.mc.session == null) {
-			((GuiButton) this.controlList.get(2)).enabled = false;
-			((GuiButton) this.controlList.get(3)).enabled = false;
+			this.controlList.get(2).enabled = false;
+			this.controlList.get(3).enabled = false;
 		}
 
 	}
@@ -53,9 +53,9 @@ public final class GuiIngameMenu extends GuiScreen {
 
 	}
 
-	public final void drawScreen(int var1, int var2, float var3) {
+	public final void drawScreen(int mouseX, int mouseY) {
 		this.drawDefaultBackground();
 		drawCenteredString(this.fontRenderer, "Game menu", this.width / 2, 40, 16777215);
-		super.drawScreen(var1, var2, var3);
+		super.drawScreen(mouseX, mouseY);
 	}
 }

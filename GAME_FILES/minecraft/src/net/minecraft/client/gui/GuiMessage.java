@@ -17,13 +17,13 @@ public class GuiMessage extends GuiScreen {
 		sendMessage = false;
 	}
 
-	public final void drawScreen(int var1, int var2, float var3) {
+	public final void drawScreen(int mouseX, int mouseY) {
 		
 		// draw the message
 		drawRect(0, this.height - 82, this.width, this.height - 70, -1442840576);
 		drawCenteredString(this.fontRenderer, message, this.width / 2, this.height - 80, 16777215);
 		
-		super.drawScreen(var1, var2, var3);
+		super.drawScreen(mouseX, mouseY);
 	}
 
 	protected final void keyTyped(char character, int keycode) {

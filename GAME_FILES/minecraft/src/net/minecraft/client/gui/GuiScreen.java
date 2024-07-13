@@ -12,30 +12,29 @@ public class GuiScreen extends Gui {
 	protected Minecraft mc;
 	public int width;
 	public int height;
-	protected List controlList = new ArrayList();
+	protected List<GuiButton> controlList = new ArrayList<GuiButton>();
 	public boolean allowUserInput = false;
 	protected FontRenderer fontRenderer;
 
-	public void drawScreen(int var1, int var2, float var3) {
-		for(int var5 = 0; var5 < this.controlList.size(); ++var5) {
-			GuiButton var4 = (GuiButton)this.controlList.get(var5);
-			var4.drawButton(this.mc, var1, var2);
+	public void drawScreen(int mouseX, int mouseY) {
+		
+		for(int i = 0; i < this.controlList.size(); i++) {
+			this.controlList.get(i).drawButton(this.mc, mouseX, mouseY);
 		}
-
 	}
 
-	protected void keyTyped(char var1, int var2) {
-		if(var2 == 1) {
+	protected void keyTyped(char character, int keycode) {
+		
+		if (keycode == 1) {
 			this.mc.displayGuiScreen(null);
 			this.mc.setIngameFocus();
 		}
-
 	}
 
 	protected void drawSlotInventory(int var1, int var2, int var3) {
 		if(var3 == 0) {
 			for(var3 = 0; var3 < this.controlList.size(); ++var3) {
-				GuiButton var4 = (GuiButton)this.controlList.get(var3);
+				GuiButton var4 = this.controlList.get(var3);
 				if(var4.mousePressed(var1, var2)) {
 					this.mc.sndManager.playSoundFX("random.click", 1.0F, 1.0F);
 					this.actionPerformed(var4);

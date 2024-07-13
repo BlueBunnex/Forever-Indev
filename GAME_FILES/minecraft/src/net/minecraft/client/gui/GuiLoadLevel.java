@@ -12,6 +12,7 @@ import net.minecraft.client.PlayerLoader;
 import net.minecraft.game.level.World;
 
 public class GuiLoadLevel extends GuiScreen implements Runnable {
+	
 	private GuiScreen parent;
 	private boolean finished = false;
 	private boolean loaded = false;
@@ -21,8 +22,8 @@ public class GuiLoadLevel extends GuiScreen implements Runnable {
 	private boolean frozen = false;
 	private File selectedFile;
 
-	public GuiLoadLevel(GuiScreen var1) {
-		this.parent = var1;
+	public GuiLoadLevel(GuiScreen parent) {
+		this.parent = parent;
 	}
 
 	public final void updateScreen() {
@@ -61,21 +62,21 @@ public class GuiLoadLevel extends GuiScreen implements Runnable {
 	}
 
 	protected void setLevels(String[] var1) {
-		for(int var2 = 0; var2 < 5; ++var2) {
-			((GuiButton)this.controlList.get(var2)).enabled = !var1[var2].equals("-");
-			((GuiButton)this.controlList.get(var2)).displayString = var1[var2];
-			((GuiButton)this.controlList.get(var2)).visible = true;
+		for(int i = 0; i < 5; i++) {
+			this.controlList.get(i).enabled = !var1[i].equals("-");
+			this.controlList.get(i).displayString = var1[i];
+			this.controlList.get(i).visible = true;
 		}
 
-		((GuiButton)this.controlList.get(5)).visible = true;
+		this.controlList.get(5).visible = true;
 	}
 
 	public void initGui() {
-		(new Thread(this)).start();
+		new Thread(this).start();
 
-		for(int var1 = 0; var1 < 5; ++var1) {
-			this.controlList.add(new GuiButton(var1, this.width / 2 - 100, this.height / 6 + var1 * 24, "---"));
-			((GuiButton)this.controlList.get(var1)).visible = false;
+		for (int i = 0; i < 5; i++) {
+			this.controlList.add(new GuiButton(i, this.width / 2 - 100, this.height / 6 + i * 24, "---"));
+			this.controlList.get(i).visible = false;
 		}
 
 		this.controlList.add(new GuiButton(5, this.width / 2 - 100, this.height / 6 + 120 + 12, "Load file..."));
@@ -83,58 +84,60 @@ public class GuiLoadLevel extends GuiScreen implements Runnable {
 		((GuiButton)this.controlList.get(5)).visible = false;
 	}
 
-	protected final void actionPerformed(GuiButton var1) {
-		if(!this.frozen) {
-			if(var1.enabled) {
-				if(this.loaded && var1.id < 5) {
-					this.openLevel(var1.id);
-				}
+	protected final void actionPerformed(GuiButton button) {
+		
+		if (this.frozen || !button.enabled)
+			return;
+				
+		if (this.loaded && button.id < 5) {
+			this.openLevel(button.id);
+		}
 
-				if(this.finished || this.loaded && var1.id == 5) {
-					this.frozen = true;
-					GuiLevelDialog var2 = new GuiLevelDialog(this);
-					var2.setDaemon(true);
-					var2.start();
-				}
+		if (this.finished || this.loaded && button.id == 5) {
+			this.frozen = true;
+			GuiLevelDialog var2 = new GuiLevelDialog(this);
+			var2.setDaemon(true);
+			var2.start();
+		}
 
-				if(this.finished || this.loaded && var1.id == 6) {
-					this.mc.displayGuiScreen(this.parent);
-				}
-
-			}
+		if (this.finished || this.loaded && button.id == 6) {
+			this.mc.displayGuiScreen(this.parent);
 		}
 	}
 
 	protected FileDialog saveFileDialog() {
-		return new FileDialog((Dialog)null, "Load level", 0);
+		return new FileDialog((Dialog) null, "Load level", 0);
 	}
 
 	protected void openLevel(int var1) {
-		this.mc.displayGuiScreen((GuiScreen)null);
+		this.mc.displayGuiScreen(null);
 		this.mc.setIngameFocus();
 	}
 
-	public final void drawScreen(int var1, int var2, float var3) {
+	public final void drawScreen(int mouseX, int mouseY) {
 		this.drawDefaultBackground();
 		drawCenteredString(this.fontRenderer, this.title, this.width / 2, 20, 16777215);
 		if(!this.loaded) {
 			drawCenteredString(this.fontRenderer, this.status, this.width / 2, this.height / 2 - 4, 16777215);
 		}
 
-		super.drawScreen(var1, var2, var3);
+		super.drawScreen(mouseX, mouseY);
 	}
 
-	protected void openLevel(File var1) {
+	protected void openLevel(File file) {
 		try {
-			FileInputStream var4 = new FileInputStream(var1);
-			World var2 = (new PlayerLoader(this.mc, this.mc.loadingScreen)).load(var4);
-			var4.close();
-			this.mc.setLevel(var2);
-		} catch (IOException var3) {
-			var3.printStackTrace();
+			FileInputStream in = new FileInputStream(file);
+			World world = (new PlayerLoader(this.mc, this.mc.loadingScreen)).load(in);
+			in.close();
+			this.mc.setLevel(world);
+			
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 
+	// no idea what these two functions do
+	
 	static File a(GuiLoadLevel var0, File var1) {
 		return var0.selectedFile = var1;
 	}

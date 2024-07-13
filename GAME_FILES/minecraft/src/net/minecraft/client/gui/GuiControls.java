@@ -3,14 +3,15 @@ package net.minecraft.client.gui;
 import net.minecraft.client.GameSettings;
 
 public final class GuiControls extends GuiScreen {
+	
 	private GuiScreen parentScreen;
 	private String screenTitle = "Controls";
 	private GameSettings options;
 	private int buttonId = -1;
 
-	public GuiControls(GuiScreen var1, GameSettings var2) {
-		this.parentScreen = var1;
-		this.options = var2;
+	public GuiControls(GuiScreen parentScreen, GameSettings options) {
+		this.parentScreen = parentScreen;
+		this.options = options;
 	}
 
 	public final void initGui() {
@@ -22,11 +23,12 @@ public final class GuiControls extends GuiScreen {
 	}
 
 	protected final void actionPerformed(GuiButton var1) {
-		for(int var2 = 0; var2 < this.options.keyBindings.length; ++var2) {
-			((GuiButton)this.controlList.get(var2)).displayString = this.options.setKeyBindingString(var2);
+		
+		for (int i = 0; i < this.options.keyBindings.length; i++) {
+			this.controlList.get(i).displayString = this.options.setKeyBindingString(i);
 		}
 
-		if(var1.id == 200) {
+		if (var1.id == 200) {
 			this.mc.displayGuiScreen(this.parentScreen);
 		} else {
 			this.buttonId = var1.id;
@@ -34,19 +36,22 @@ public final class GuiControls extends GuiScreen {
 		}
 	}
 
-	protected final void keyTyped(char var1, int var2) {
+	protected final void keyTyped(char character, int keycode) {
+		
 		if(this.buttonId >= 0) {
-			this.options.setKeyBinding(this.buttonId, var2);
-			((GuiButton)this.controlList.get(this.buttonId)).displayString = this.options.setKeyBindingString(this.buttonId);
+			// set bind
+			this.options.setKeyBinding(this.buttonId, keycode);
+			this.controlList.get(this.buttonId).displayString = this.options.setKeyBindingString(this.buttonId);
 			this.buttonId = -1;
 		} else {
-			super.keyTyped(var1, var2);
+			super.keyTyped(character, keycode);
 		}
 	}
 
-	public final void drawScreen(int var1, int var2, float var3) {
+	public final void drawScreen(int mouseX, int mouseY) {
 		this.drawDefaultBackground();
 		drawCenteredString(this.fontRenderer, this.screenTitle, this.width / 2, 20, 16777215);
-		super.drawScreen(var1, var2, var3);
+		
+		super.drawScreen(mouseX, mouseY);
 	}
 }
