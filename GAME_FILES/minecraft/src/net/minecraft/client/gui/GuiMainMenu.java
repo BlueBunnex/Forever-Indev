@@ -1,10 +1,5 @@
-package net.minecraft.client;
+package net.minecraft.client.gui;
 
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.GuiLoadLevel;
-import net.minecraft.client.gui.GuiNewLevel;
-import net.minecraft.client.gui.GuiOptions;
-import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.render.Tessellator;
 import org.lwjgl.opengl.GL11;
 import util.MathHelper;
@@ -12,7 +7,7 @@ import util.MathHelper;
 public final class GuiMainMenu extends GuiScreen {
 	private float updateCounter = 0.0F;
 	
-	private static final String[] SPLASHES = new String[] { "Not-quite indev!", "Chests on the glass door!", "NP is not in P!", "Started by Notch, hearts for him!", "Music by C418!" };
+	private static final String[] SPLASHES = new String[] { "Not-quite indev!", "Chests on the glass door!", "NP is not in P!", "The blue-twintailed girl is right!", "In development hell, did I development sin?", "Bubbles from the gum machine!", "[INSERT SPLASH HERE]", "Full-stop!" };
 	private static final String CURRENT_SPLASH = SPLASHES[(int)(Math.random() * (double) SPLASHES.length)];
 
 	public final void updateScreen() {
