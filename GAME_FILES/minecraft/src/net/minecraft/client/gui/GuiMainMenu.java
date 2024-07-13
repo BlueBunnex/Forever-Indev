@@ -7,7 +7,7 @@ import util.MathHelper;
 public final class GuiMainMenu extends GuiScreen {
 	private float updateCounter = 0.0F;
 	
-	private static final String[] SPLASHES = new String[] { "Not-quite indev!", "Chests on the glass door!", "NP is not in P!", "The blue-twintailed girl is right!", "In development hell, did I development sin?", "Bubbles from the gum machine!", "[INSERT SPLASH HERE]", "Full-stop!" };
+	private static final String[] SPLASHES = new String[] { "Not-quite indev!", "Chests on the glass door!", "NP is not in P!", "The blue-twintailed girl is right!", "In development hell, did I development sin?", "Bubbles from the gum machine!", "[INSERT SPLASH HERE]", "Full-stop!", "[EXTREMELY LOUD INCORRECT BUZZER]" };
 	private static final String CURRENT_SPLASH = SPLASHES[(int)(Math.random() * (double) SPLASHES.length)];
 
 	public final void updateScreen() {
