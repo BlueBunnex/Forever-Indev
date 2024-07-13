@@ -44,6 +44,8 @@ public final class GuiMainMenu extends GuiScreen {
 
 	public final void drawScreen(int mouseX, int mouseY) {
 		this.drawDefaultBackground();
+		
+		// this code scares me
 		Tessellator var4 = Tessellator.instance;
 		GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.mc.renderEngine.getTexture("/gui/logo.png"));
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
@@ -57,16 +59,24 @@ public final class GuiMainMenu extends GuiScreen {
 		GL11.glScalef(var15, var15, var15);
 		drawCenteredString(this.fontRenderer, CURRENT_SPLASH, 0, -8, 16776960);
 		GL11.glPopMatrix();
-		String var16 = "Copyright Mojang Specifications. Do not distribute.";
-		drawString(this.fontRenderer, var16, this.width - this.fontRenderer.getStringWidth(var16) - 2, this.height - 10, 16777215);
-		long var7 = Runtime.getRuntime().maxMemory();
-		long var9 = Runtime.getRuntime().totalMemory();
-		long var11 = Runtime.getRuntime().freeMemory();
-		long var13 = var7 - var11;
-		var16 = "Free memory: " + var13 * 100L / var7 + "% of " + var7 / 1024L / 1024L + "MB";
-		drawString(this.fontRenderer, var16, this.width - this.fontRenderer.getStringWidth(var16) - 2, 2, 8421504);
-		var16 = "Allocated memory: " + var9 * 100L / var7 + "% (" + var9 / 1024L / 1024L + "MB)";
-		drawString(this.fontRenderer, var16, this.width - this.fontRenderer.getStringWidth(var16) - 2, 12, 8421504);
+		
+		// yeah fuck Mojang
+		String text = "Made by Blue. Distribute!";
+		drawString(this.fontRenderer, text, this.width - this.fontRenderer.getStringWidth(text) - 2, this.height - 10, 16777215);
+		
+		// no idea how memory calculations work, this was here
+		// before I got here I just changed the variable names
+		// don't hurt me
+		long maxMem   = Runtime.getRuntime().maxMemory();
+		long totalMem = Runtime.getRuntime().totalMemory();
+		long freeMem  = Runtime.getRuntime().freeMemory();
+		long what     = maxMem - freeMem;
+		
+		text = "Free memory: " + what * 100L / maxMem + "% of " + maxMem / 1024L / 1024L + "MB";
+		drawString(this.fontRenderer, text, this.width - this.fontRenderer.getStringWidth(text) - 2, 2, 8421504);
+		
+		text = "Allocated memory: " + totalMem * 100L / maxMem + "% (" + totalMem / 1024L / 1024L + "MB)";
+		drawString(this.fontRenderer, text, this.width - this.fontRenderer.getStringWidth(text) - 2, 12, 8421504);
 		
 		super.drawScreen(mouseX, mouseY);
 	}
