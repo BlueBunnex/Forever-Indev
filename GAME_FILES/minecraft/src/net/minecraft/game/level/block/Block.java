@@ -75,8 +75,12 @@ public class Block {
 	public static final BlockFlower mushroomRed;
 	public static final Block blockGold;
 	public static final Block blockIron;
-	public static final Block stairDouble;
-	public static final Block stairSingle;
+	
+	public static final Block slabFull;
+	public static final Block slabHalf;
+	public static final Block polishedBlock;
+	public static final Block polishedTiles;
+	
 	public static final Block brick;
 	public static final Block tnt;
 	public static final Block bookShelf;
@@ -591,12 +595,12 @@ public class Block {
 		blockIron = new BlockOreBlock("Iron Block", 42, 38).setHardness(5.0F).setResistance(10.0F);
 		blockIron.stepSound = soundMetalFootstep;
 		
-		// weird stairs?
-		stairDouble = new BlockStep(43, true).setHardness(2.0F).setResistance(10.0F);
-		stairDouble.stepSound = soundStoneFootstep;
+		// slabs
+		slabFull = new BlockSlab("Polished Full Slab", 43, true).setHardness(2.0F).setResistance(10.0F);
+		slabFull.stepSound = soundStoneFootstep;
 		
-		stairSingle = new BlockStep(44, false).setHardness(2.0F).setResistance(10.0F);
-		stairSingle.stepSound = soundStoneFootstep;
+		slabHalf = new BlockSlab("Polished Slab", 44, false).setHardness(2.0F).setResistance(10.0F);
+		slabHalf.stepSound = soundStoneFootstep;
 		
 		// brick
 		brick = new Block("Brick", 45, 7, Material.rock).setHardness(2.0F).setResistance(10.0F);
@@ -629,27 +633,27 @@ public class Block {
 		obsidian.stepSound = soundStoneFootstep;
 		
 		// torch
-		torch = new BlockTorch().setHardness(0.0F).setLightValue(14.0F / 16.0F);
+		torch = new BlockTorch(50).setHardness(0.0F).setLightValue(14.0F / 16.0F);
 		torch.stepSound = soundWoodFootstep;
 		
 		// fire
-		fire = (BlockFire) new BlockFire().setHardness(0.0F).setLightValue(1.0F);
+		fire = (BlockFire) new BlockFire(51).setHardness(0.0F).setLightValue(1.0F);
 		fire.stepSound = soundWoodFootstep; // what
 		
 		// chest
-		crate = new BlockChest().setHardness(2.5F);
+		crate = new BlockChest(54).setHardness(2.5F);
 		crate.stepSound = soundWoodFootstep;
 		
 		// cog (idk man)
-		cog = new BlockGears().setHardness(0.5F);
+		cog = new BlockGears(55).setHardness(0.5F);
 		cog.stepSound = soundMetalFootstep;
 		
 		// workbench / crafting table
-		workbench = new BlockWorkbench().setHardness(2.5F);
+		workbench = new BlockWorkbench(58).setHardness(2.5F);
 		workbench.stepSound = soundWoodFootstep;
 		
 		// farmland
-		tilledField = new BlockFarmland().setHardness(0.6F);
+		tilledField = new BlockFarmland(60).setHardness(0.6F);
 		tilledField.stepSound = soundGravelFootstep;
 		
 		// furnace (idle and active)
@@ -663,6 +667,13 @@ public class Block {
 		// coal lamp
 		coalLamp = new Block("Coal Lamp", 63, 81, Material.rock).setHardness(2.0F).setResistance(10.0F).setLightValue(16.0F / 16.0F);
 		coalLamp.stepSound = soundStoneFootstep;
+		
+		// other polished blocks (besides slabs)
+		polishedBlock = new Block("Polished Block", 82, 96, Material.rock).setHardness(2.0F).setResistance(10.0F);
+		polishedBlock.stepSound = soundStoneFootstep;
+		
+		polishedTiles = new Block("Polished Tiles", 83, 98, Material.rock).setHardness(2.0F).setResistance(10.0F);
+		polishedTiles.stepSound = soundStoneFootstep;
 
 		// make an item for every block
 		for(int i = 0; i < 256; i++) {

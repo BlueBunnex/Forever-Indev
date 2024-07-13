@@ -12,13 +12,14 @@ import net.minecraft.game.item.ItemStack;
 import org.lwjgl.opengl.GL11;
 
 public abstract class GuiContainer extends GuiScreen {
+	
 	private static RenderItem itemRenderer = new RenderItem();
 	private ItemStack itemStack = null;
 	protected int xSize = 176;
 	protected int ySize = 166;
 	protected List inventorySlots = new ArrayList();
 
-	public void drawScreen(int var1, int var2, float var3) {
+	public void drawScreen(int mouseX, int mouseY) {
 		this.drawDefaultBackground();
 		int var13 = (this.width - this.xSize) / 2;
 		int var4 = (this.height - this.ySize) / 2;
@@ -56,7 +57,7 @@ public abstract class GuiContainer extends GuiScreen {
 				itemRenderer.renderItemOverlayIntoGUI(this.fontRenderer, var15, var11, var12);
 			}
 
-			if(var6.isAtCursorPos(var1, var2)) {
+			if(var6.isAtCursorPos(mouseX, mouseY)) {
 				GL11.glDisable(GL11.GL_LIGHTING);
 				GL11.glDisable(GL11.GL_DEPTH_TEST);
 				int var7 = var6.xPos;
@@ -67,10 +68,17 @@ public abstract class GuiContainer extends GuiScreen {
 			}
 		}
 
-		if(this.itemStack != null) {
+		if (this.itemStack != null) {
 			GL11.glTranslatef(0.0F, 0.0F, 32.0F);
-			itemRenderer.renderItemIntoGUI(this.mc.renderEngine, this.itemStack, var1 - var13 - 8, var2 - var4 - 8);
-			itemRenderer.renderItemOverlayIntoGUI(this.fontRenderer, this.itemStack, var1 - var13 - 8, var2 - var4 - 8);
+			
+			int x = mouseX - var13 - 8,
+				y = mouseY - var4 - 8;
+			
+			itemRenderer.renderItemIntoGUI(this.mc.renderEngine, this.itemStack, x, y);
+			itemRenderer.renderItemOverlayIntoGUI(this.fontRenderer, this.itemStack, x, y);
+			
+			// TODO temporary show name of carried item
+			this.fontRenderer.drawString(this.itemStack.getName(), x + 16, y, 4210752);
 		}
 
 		GL11.glDisable(GL11.GL_NORMALIZE);
@@ -83,8 +91,7 @@ public abstract class GuiContainer extends GuiScreen {
 		GL11.glPopMatrix();
 	}
 
-	protected void drawGuiContainerForegroundLayer() {
-	}
+	protected void drawGuiContainerForegroundLayer() {}
 
 	protected abstract void drawGuiContainerBackgroundLayer();
 

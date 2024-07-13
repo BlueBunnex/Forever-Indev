@@ -790,7 +790,7 @@ public final class World {
 			var3 = this.length - 1;
 		}
 
-		return this.blocks[(var2 * this.length + var3) * this.width + var1] == Block.stairSingle.blockID ? (var2 < this.height - 1 ? (byte)(this.data[((var2 + 1) * this.length + var3) * this.width + var1] & 15) : 15) : (byte)(this.data[(var2 * this.length + var3) * this.width + var1] & 15);
+		return this.blocks[(var2 * this.length + var3) * this.width + var1] == Block.slabHalf.blockID ? (var2 < this.height - 1 ? (byte)(this.data[((var2 + 1) * this.length + var3) * this.width + var1] & 15) : 15) : (byte)(this.data[(var2 * this.length + var3) * this.width + var1] & 15);
 	}
 
 	public final byte getBlockMetadata(int var1, int var2, int var3) {

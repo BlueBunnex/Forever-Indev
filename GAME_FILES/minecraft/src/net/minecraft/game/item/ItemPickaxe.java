@@ -7,8 +7,8 @@ public final class ItemPickaxe extends ItemTool {
 	
 	private static Block[] blocksEffectiveAgainst = new Block[] {
 			Block.cobblestone,
-			Block.stairDouble,
-			Block.stairSingle,
+			Block.slabFull,
+			Block.slabHalf,
 			Block.stone,
 			Block.cobblestoneMossy,
 			Block.oreIron,

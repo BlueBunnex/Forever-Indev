@@ -7,8 +7,8 @@ import net.minecraft.game.physics.AxisAlignedBB;
 
 public final class BlockFarmland extends Block {
 	
-	protected BlockFarmland() {
-		super("Farmland", 60, Material.ground);
+	protected BlockFarmland(int blockID) {
+		super("Farmland", blockID, Material.ground);
 		this.blockIndexInTexture = 87;
 		this.setTickOnLoad(true);
 		this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 15.0F / 16.0F, 1.0F);

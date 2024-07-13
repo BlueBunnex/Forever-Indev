@@ -15,8 +15,8 @@ public final class BlockChest extends BlockContainer {
 	
 	private Random random = new Random();
 
-	protected BlockChest() {
-		super("Chest", 54, Material.wood);
+	protected BlockChest(int blockID) {
+		super("Chest", blockID, Material.wood);
 		this.blockIndexInTexture = 26;
 	}
 

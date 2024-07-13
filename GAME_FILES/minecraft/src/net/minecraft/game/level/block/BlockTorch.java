@@ -9,8 +9,8 @@ import net.minecraft.game.physics.Vec3D;
 
 public final class BlockTorch extends Block {
 	
-	protected BlockTorch() {
-		super("Torch", 50, 80, Material.circuits);
+	protected BlockTorch(int blockID) {
+		super("Torch", blockID, 80, Material.circuits);
 		this.setTickOnLoad(true);
 	}
 

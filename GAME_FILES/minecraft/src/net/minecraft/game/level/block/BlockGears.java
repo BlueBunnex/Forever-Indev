@@ -5,8 +5,8 @@ import net.minecraft.game.physics.AxisAlignedBB;
 
 public final class BlockGears extends Block {
 	
-	protected BlockGears() {
-		super("Gear", 55, 62, Material.circuits);
+	protected BlockGears(int blockID) {
+		super("Gear", blockID, 62, Material.circuits);
 	}
 
 	public final AxisAlignedBB getCollisionBoundingBoxFromPool(int var1, int var2, int var3) {

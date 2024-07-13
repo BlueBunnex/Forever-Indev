@@ -638,8 +638,8 @@ public final class Minecraft implements Runnable {
 										var2 = Block.dirt.blockID;
 									}
 
-									if(var2 == Block.stairDouble.blockID) {
-										var2 = Block.stairSingle.blockID;
+									if(var2 == Block.slabFull.blockID) {
+										var2 = Block.slabHalf.blockID;
 									}
 
 									if(var2 == Block.bedrock.blockID) {

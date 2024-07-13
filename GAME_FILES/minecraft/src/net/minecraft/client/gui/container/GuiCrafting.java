@@ -8,6 +8,7 @@ import net.minecraft.game.item.recipe.CraftingManager;
 import org.lwjgl.opengl.GL11;
 
 public final class GuiCrafting extends GuiContainer {
+	
 	private InventoryCrafting inventoryCrafting = new InventoryCrafting(this, 3, 3);
 	private IInventory iInventory = new InventoryCraftResult();
 

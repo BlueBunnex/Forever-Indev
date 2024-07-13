@@ -139,7 +139,7 @@ public final class RenderItem extends Render {
 			GL11.glRotatef(var6, 0.0F, 1.0F, 0.0F);
 			this.loadTexture("/terrain.png");
 			var2 = 0.25F;
-			if(!Block.blocksList[var7.itemID].renderAsNormalBlock() && var7.itemID != Block.stairSingle.blockID) {
+			if(!Block.blocksList[var7.itemID].renderAsNormalBlock() && var7.itemID != Block.slabHalf.blockID) {
 				var2 = 0.5F;
 			}
 

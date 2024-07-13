@@ -78,10 +78,11 @@ public final class GuiInventory extends GuiContainer {
 		this.fontRenderer.drawString("Crafting", 86, 16, 4210752);
 	}
 
-	public final void drawScreen(int var1, int var2, float var3) {
-		super.drawScreen(var1, var2, var3);
-		this.xSize_lo = (float)var1;
-		this.ySize_lo = (float)var2;
+	public final void drawScreen(int mouseX, int mouseY) {
+		super.drawScreen(mouseX, mouseY);
+		
+		this.xSize_lo = (float) mouseX;
+		this.ySize_lo = (float) mouseY;
 	}
 
 	protected final void drawGuiContainerBackgroundLayer() {
