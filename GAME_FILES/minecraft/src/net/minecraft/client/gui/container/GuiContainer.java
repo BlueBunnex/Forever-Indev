@@ -14,7 +14,7 @@ import org.lwjgl.opengl.GL11;
 public abstract class GuiContainer extends GuiScreen {
 	
 	private static RenderItem itemRenderer = new RenderItem();
-	private ItemStack itemStack = null;
+	private ItemStack heldItem = null;
 	protected int xSize = 176;
 	protected int ySize = 166;
 	protected List inventorySlots = new ArrayList();
@@ -33,52 +33,65 @@ public abstract class GuiContainer extends GuiScreen {
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		GL11.glEnable(GL11.GL_NORMALIZE);
 
-		for(int var5 = 0; var5 < this.inventorySlots.size(); ++var5) {
-			Slot var6;
+		for(int i = 0; i < this.inventorySlots.size(); i++) {
+			
+			Slot slot = (Slot) this.inventorySlots.get(i);
+			
+			int x = slot.xPos;
+			int y = slot.yPos;
+			
+			ItemStack itemStack = slot.inventory.getStackInSlot(slot.slotIndex);
+			
 			label24: {
-				var6 = (Slot)this.inventorySlots.get(var5);
-				IInventory var9 = var6.inventory;
-				int var10 = var6.slotIndex;
-				int var11 = var6.xPos;
-				int var12 = var6.yPos;
-				ItemStack var15 = var9.getStackInSlot(var10);
-				if(var15 == null) {
-					int var8 = var6.getBackgroundIconIndex();
-					if(var8 >= 0) {
+				if (itemStack == null) {
+					
+					int var8 = slot.getBackgroundIconIndex();
+					
+					if (var8 >= 0) {
 						GL11.glDisable(GL11.GL_LIGHTING);
 						RenderEngine.bindTexture(this.mc.renderEngine.getTexture("/gui/items.png"));
-						this.drawTexturedModalRect(var11, var12, var8 % 16 << 4, var8 / 16 << 4, 16, 16);
+						this.drawTexturedModalRect(x, y, var8 % 16 << 4, var8 / 16 << 4, 16, 16);
 						GL11.glEnable(GL11.GL_LIGHTING);
 						break label24;
 					}
 				}
 
-				itemRenderer.renderItemIntoGUI(this.mc.renderEngine, var15, var11, var12);
-				itemRenderer.renderItemOverlayIntoGUI(this.fontRenderer, var15, var11, var12);
+				itemRenderer.renderItemIntoGUI(this.mc.renderEngine, itemStack, x, y);
+				itemRenderer.renderItemOverlayIntoGUI(this.fontRenderer, itemStack, x, y);
 			}
 
-			if(var6.isAtCursorPos(mouseX, mouseY)) {
+			// render hovered slot stuff
+			if(slot.isAtCursorPos(mouseX, mouseY)) {
 				GL11.glDisable(GL11.GL_LIGHTING);
 				GL11.glDisable(GL11.GL_DEPTH_TEST);
-				int var7 = var6.xPos;
-				int var14 = var6.yPos;
-				drawGradientRect(var7, var14, var7 + 16, var14 + 16, -2130706433, -2130706433);
+				
+				// highlight hovered slot
+				drawGradientRect(x, y, x + 16, y + 16, -2130706433, -2130706433);
+				
+				// show name of hovered item
+				if (itemStack != null) {
+					drawRect(
+							mouseX - 122,
+							mouseY - 48,
+							mouseX - 118 + this.fontRenderer.getStringWidth(itemStack.getName()),
+							mouseY - 36, -1442840576);
+					this.fontRenderer.drawString(itemStack.getName(), mouseX - 120, mouseY - 46, 16777215);
+				}
+				
 				GL11.glEnable(GL11.GL_LIGHTING);
 				GL11.glEnable(GL11.GL_DEPTH_TEST);
 			}
 		}
 
-		if (this.itemStack != null) {
+		// render held item
+		if (this.heldItem != null) {
 			GL11.glTranslatef(0.0F, 0.0F, 32.0F);
 			
 			int x = mouseX - var13 - 8,
 				y = mouseY - var4 - 8;
 			
-			itemRenderer.renderItemIntoGUI(this.mc.renderEngine, this.itemStack, x, y);
-			itemRenderer.renderItemOverlayIntoGUI(this.fontRenderer, this.itemStack, x, y);
-			
-			// TODO temporary show name of carried item
-			this.fontRenderer.drawString(this.itemStack.getName(), x + 16, y, 4210752);
+			itemRenderer.renderItemIntoGUI(this.mc.renderEngine, this.heldItem, x, y);
+			//itemRenderer.renderItemOverlayIntoGUI(this.fontRenderer, this.heldItem, x, y);
 		}
 
 		GL11.glDisable(GL11.GL_NORMALIZE);
@@ -121,44 +134,44 @@ public abstract class GuiContainer extends GuiScreen {
 			Slot var11 = var10000;
 			if(var11 != null) {
 				ItemStack var12 = var11.inventory.getStackInSlot(var11.slotIndex);
-				if(var12 == null && this.itemStack == null) {
+				if(var12 == null && this.heldItem == null) {
 					return;
 				}
 
-				if(var12 != null && this.itemStack == null) {
+				if(var12 != null && this.heldItem == null) {
 					var6 = var3 == 0 ? var12.stackSize : (var12.stackSize + 1) / 2;
-					this.itemStack = var11.inventory.decrStackSize(var11.slotIndex, var6);
+					this.heldItem = var11.inventory.decrStackSize(var11.slotIndex, var6);
 					if(var12.stackSize == 0) {
 						var11.putStack((ItemStack)null);
 					}
 
 					var11.onPickupFromSlot();
-				} else if(var12 == null && this.itemStack != null && var11.isItemValid(this.itemStack)) {
-					var6 = var3 == 0 ? this.itemStack.stackSize : 1;
+				} else if(var12 == null && this.heldItem != null && var11.isItemValid(this.heldItem)) {
+					var6 = var3 == 0 ? this.heldItem.stackSize : 1;
 					if(var6 > var11.inventory.getInventoryStackLimit()) {
 						var6 = var11.inventory.getInventoryStackLimit();
 					}
 
-					var11.putStack(this.itemStack.splitStack(var6));
-					if(this.itemStack.stackSize == 0) {
-						this.itemStack = null;
+					var11.putStack(this.heldItem.splitStack(var6));
+					if(this.heldItem.stackSize == 0) {
+						this.heldItem = null;
 					}
 				} else {
-					if(var12 == null || this.itemStack == null) {
+					if(var12 == null || this.heldItem == null) {
 						return;
 					}
 
 					ItemStack var9;
-					if(!var11.isItemValid(this.itemStack)) {
-						if(var12.itemID == this.itemStack.itemID) {
-							var9 = this.itemStack;
+					if(!var11.isItemValid(this.heldItem)) {
+						if(var12.itemID == this.heldItem.itemID) {
+							var9 = this.heldItem;
 							if(var9.getItem().getItemStackLimit() > 1) {
 								var6 = var12.stackSize;
 								if(var6 > 0) {
-									int var14 = var6 + this.itemStack.stackSize;
-									var9 = this.itemStack;
+									int var14 = var6 + this.heldItem.stackSize;
+									var9 = this.heldItem;
 									if(var14 <= var9.getItem().getItemStackLimit()) {
-										this.itemStack.stackSize += var6;
+										this.heldItem.stackSize += var6;
 										var12.splitStack(var6);
 										if(var12.stackSize == 0) {
 											var11.putStack((ItemStack)null);
@@ -176,33 +189,33 @@ public abstract class GuiContainer extends GuiScreen {
 						return;
 					}
 
-					if(var12.itemID != this.itemStack.itemID) {
-						if(this.itemStack.stackSize > var11.inventory.getInventoryStackLimit()) {
+					if(var12.itemID != this.heldItem.itemID) {
+						if(this.heldItem.stackSize > var11.inventory.getInventoryStackLimit()) {
 							return;
 						}
 
-						var11.putStack(this.itemStack);
-						this.itemStack = var12;
+						var11.putStack(this.heldItem);
+						this.heldItem = var12;
 					} else {
-						if(var12.itemID != this.itemStack.itemID) {
+						if(var12.itemID != this.heldItem.itemID) {
 							return;
 						}
 
 						if(var3 == 0) {
-							var6 = this.itemStack.stackSize;
+							var6 = this.heldItem.stackSize;
 							if(var6 > var11.inventory.getInventoryStackLimit() - var12.stackSize) {
 								var6 = var11.inventory.getInventoryStackLimit() - var12.stackSize;
 							}
 
-							var9 = this.itemStack;
+							var9 = this.heldItem;
 							if(var6 > var9.getItem().getItemStackLimit() - var12.stackSize) {
-								var9 = this.itemStack;
+								var9 = this.heldItem;
 								var6 = var9.getItem().getItemStackLimit() - var12.stackSize;
 							}
 
-							this.itemStack.splitStack(var6);
-							if(this.itemStack.stackSize == 0) {
-								this.itemStack = null;
+							this.heldItem.splitStack(var6);
+							if(this.heldItem.stackSize == 0) {
+								this.heldItem = null;
 							}
 
 							var12.stackSize += var6;
@@ -216,35 +229,35 @@ public abstract class GuiContainer extends GuiScreen {
 								var6 = var11.inventory.getInventoryStackLimit() - var12.stackSize;
 							}
 
-							var9 = this.itemStack;
+							var9 = this.heldItem;
 							if(var6 > var9.getItem().getItemStackLimit() - var12.stackSize) {
-								var9 = this.itemStack;
+								var9 = this.heldItem;
 								var6 = var9.getItem().getItemStackLimit() - var12.stackSize;
 							}
 
-							this.itemStack.splitStack(var6);
-							if(this.itemStack.stackSize == 0) {
-								this.itemStack = null;
+							this.heldItem.splitStack(var6);
+							if(this.heldItem.stackSize == 0) {
+								this.heldItem = null;
 							}
 
 							var12.stackSize += var6;
 						}
 					}
 				}
-			} else if(this.itemStack != null) {
+			} else if(this.heldItem != null) {
 				int var13 = (this.width - this.xSize) / 2;
 				var6 = (this.height - this.ySize) / 2;
 				if(var1 < var13 || var2 < var6 || var1 >= var13 + this.xSize || var2 >= var6 + this.xSize) {
 					EntityPlayerSP var10 = this.mc.thePlayer;
 					if(var3 == 0) {
-						var10.dropPlayerItem(this.itemStack);
-						this.itemStack = null;
+						var10.dropPlayerItem(this.heldItem);
+						this.heldItem = null;
 					}
 
 					if(var3 == 1) {
-						var10.dropPlayerItem(this.itemStack.splitStack(1));
-						if(this.itemStack.stackSize == 0) {
-							this.itemStack = null;
+						var10.dropPlayerItem(this.heldItem.splitStack(1));
+						if(this.heldItem.stackSize == 0) {
+							this.heldItem = null;
 						}
 					}
 				}
@@ -261,10 +274,9 @@ public abstract class GuiContainer extends GuiScreen {
 	}
 
 	public void onGuiClosed() {
-		if(this.itemStack != null) {
-			this.mc.thePlayer.dropPlayerItem(this.itemStack);
-		}
-
+		
+		if (this.heldItem != null)
+			this.mc.thePlayer.dropPlayerItem(this.heldItem);
 	}
 
 	public void guiCraftingItemsCheck() {
