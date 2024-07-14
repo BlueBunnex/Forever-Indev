@@ -21,15 +21,17 @@ public abstract class GuiContainer extends GuiScreen {
 
 	public void drawScreen(int mouseX, int mouseY) {
 		this.drawDefaultBackground();
-		int var13 = (this.width - this.xSize) / 2;
-		int var4 = (this.height - this.ySize) / 2;
+		
+		int cornerX = (this.width - this.xSize) / 2;
+		int cornerY = (this.height - this.ySize) / 2;
+		
 		this.drawGuiContainerBackgroundLayer();
 		GL11.glPushMatrix();
 		GL11.glRotatef(180.0F, 1.0F, 0.0F, 0.0F);
 		RenderHelper.enableStandardItemLighting();
 		GL11.glPopMatrix();
 		GL11.glPushMatrix();
-		GL11.glTranslatef((float)var13, (float)var4, 0.0F);
+		GL11.glTranslatef((float) cornerX, (float) cornerY, 0.0F);
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		GL11.glEnable(GL11.GL_NORMALIZE);
 
@@ -71,11 +73,12 @@ public abstract class GuiContainer extends GuiScreen {
 				// show name of hovered item
 				if (itemStack != null) {
 
+					GL11.glTranslatef(0.0F, 0.0F, 16.0F);
 					drawStringWithBackground(
 							this.fontRenderer,
 							itemStack.getName() + " (#" + itemStack.getItem().shiftedIndex + ")",
-							mouseX - 120, // TODO fix mouseX being weird at different screen sizes
-							mouseY - 46,
+							mouseX - cornerX + 6,
+							mouseY - cornerY - 6,
 							itemStack.getItem().getRarity().color
 					);
 				}
@@ -89,8 +92,8 @@ public abstract class GuiContainer extends GuiScreen {
 		if (this.heldItem != null) {
 			GL11.glTranslatef(0.0F, 0.0F, 32.0F);
 			
-			int x = mouseX - var13 - 8,
-				y = mouseY - var4 - 8;
+			int x = mouseX - cornerX - 8,
+				y = mouseY - cornerY - 8;
 			
 			itemRenderer.renderItemIntoGUI(this.mc.renderEngine, this.heldItem, x, y);
 			itemRenderer.renderItemOverlayIntoGUI(this.fontRenderer, this.heldItem, x, y);
