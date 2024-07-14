@@ -533,15 +533,18 @@ public abstract class Entity {
 		return this.height / 2.0F;
 	}
 
-	public final EntityItem dropItemWithOffset(int var1, int var2) {
-		return this.entityDropItem(var1, 1, 0.0F);
+	public final EntityItem dropItemWithOffset(int itemID, int stackSize) {
+		return this.entityDropItem(itemID, stackSize, 0.0F);
 	}
 
-	public final EntityItem entityDropItem(int var1, int var2, float var3) {
-		EntityItem var4 = new EntityItem(this.worldObj, this.posX, this.posY + var3, this.posZ, new ItemStack(var1, var2));
-		var4.delayBeforeCanPickup = 10;
-		this.worldObj.spawnEntityInWorld(var4);
-		return var4;
+	public final EntityItem entityDropItem(int itemID, int stackSize, float yOff) {
+		
+		EntityItem item = new EntityItem(this.worldObj, this.posX, this.posY + yOff, this.posZ, new ItemStack(itemID, stackSize));
+		
+		item.delayBeforeCanPickup = 10;
+		this.worldObj.spawnEntityInWorld(item);
+		
+		return item;
 	}
 
 	public boolean isEntityAlive() {

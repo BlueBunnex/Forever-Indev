@@ -62,7 +62,7 @@ public class EntitySpider extends EntityMob {
 		return "Spider";
 	}
 
-	protected final int scoreValue() {
+	protected final int getDroppedItemID() {
 		return Item.silk.shiftedIndex;
 	}
 	

@@ -28,7 +28,7 @@ public class EntityZombie extends EntityMob {
 		return "Zombie";
 	}
 
-	protected final int scoreValue() {
+	protected final int getDroppedItemID() {
 		return Item.feather.shiftedIndex;
 	}
 	

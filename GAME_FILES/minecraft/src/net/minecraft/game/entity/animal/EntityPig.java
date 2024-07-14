@@ -5,8 +5,9 @@ import net.minecraft.game.item.Item;
 import net.minecraft.game.level.World;
 
 public class EntityPig extends EntityAnimal {
-	public EntityPig(World var1) {
-		super(var1);
+	
+	public EntityPig(World world) {
+		super(world);
 		this.texture = "/mob/pig.png";
 		this.setSize(0.9F, 0.9F);
 	}
@@ -35,7 +36,7 @@ public class EntityPig extends EntityAnimal {
 		return "mob.pigdeath";
 	}
 
-	protected final int scoreValue() {
+	protected final int getDroppedItemID() {
 		return Item.porkRaw.shiftedIndex;
 	}
 }

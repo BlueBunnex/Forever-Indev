@@ -59,7 +59,7 @@ public class EntitySkeleton extends EntityMob {
 		return "Skeleton";
 	}
 
-	protected final int scoreValue() {
+	protected final int getDroppedItemID() {
 		return Item.arrow.shiftedIndex;
 	}
 	

@@ -216,7 +216,8 @@ public class EntityLiving extends Entity {
 		}
 	}
 
-	public boolean attackEntityFrom(Entity var1, int var2) {
+	public boolean attackEntityFrom(Entity attacker, int damage) {
+		
 		if(!this.worldObj.survivalWorld) {
 			return false;
 		} else {
@@ -226,22 +227,22 @@ public class EntityLiving extends Entity {
 			} else {
 				this.limbYaw = 1.5F;
 				if((float)this.heartsLife > (float)this.heartsHalvesLife / 2.0F) {
-					if(this.prevHealth - var2 >= this.health) {
+					if(this.prevHealth - damage >= this.health) {
 						return false;
 					}
 
-					this.health = this.prevHealth - var2;
+					this.health = this.prevHealth - damage;
 				} else {
 					this.prevHealth = this.health;
 					this.heartsLife = this.heartsHalvesLife;
-					this.health -= var2;
+					this.health -= damage;
 					this.hurtTime = this.maxHurtTime = 10;
 				}
 
 				this.attackedAtYaw = 0.0F;
-				if(var1 != null) {
-					float var6 = var1.posX - this.posX;
-					float var3 = var1.posZ - this.posZ;
+				if(attacker != null) {
+					float var6 = attacker.posX - this.posX;
+					float var3 = attacker.posZ - this.posZ;
 					this.attackedAtYaw = (float)(Math.atan2((double)var3, (double)var6) * 180.0D / (double)((float)Math.PI)) - this.rotationYaw;
 					float var5 = MathHelper.sqrt_float(var6 * var6 + var3 * var3);
 					this.motionX /= 2.0F;
@@ -259,7 +260,7 @@ public class EntityLiving extends Entity {
 
 				if(this.health <= 0) {
 					this.worldObj.playSoundAtEntity(this, this.getDeathSound(), 1.0F, (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F);
-					this.onDeath(var1);
+					this.onDeath(attacker);
 				} else {
 					this.worldObj.playSoundAtEntity(this, this.getHurtSound(), 1.0F, (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F);
 				}
@@ -281,19 +282,24 @@ public class EntityLiving extends Entity {
 		return "random.hurt";
 	}
 
-	public void onDeath(Entity var1) {
-		int var4 = this.scoreValue();
-		if(var4 > 0) {
+	public void onDeath(Entity attacker) {
+		
+		int itemID = this.getDroppedItemID();
+		
+		if(itemID > 0) {
 			int var2 = this.rand.nextInt(3);
 
-			for(int var3 = 0; var3 < var2; ++var3) {
-				this.dropItemWithOffset(var4, 1);
+			for(int i = 0; i < var2; i++) {
+				this.dropItemWithOffset(itemID, 1);
 			}
 		}
-
 	}
 
-	protected int scoreValue() {
+	/**
+	 * 
+	 * @return ItemID of item this entity drops, or 0 for no drop.
+	 */
+	protected int getDroppedItemID() {
 		return 0;
 	}
 

@@ -70,10 +70,11 @@ public abstract class GuiContainer extends GuiScreen {
 				// highlight hovered slot
 				drawRect(x, y, x + 16, y + 16, -2130706433);
 				
-				// show name of hovered item
+				// show tooltip for hovered item
+				// TODO render tooltip on top of everything else (OpenGL scary)
 				if (itemStack != null) {
 
-					GL11.glTranslatef(0.0F, 0.0F, 16.0F);
+					//GL11.glTranslatef(0.0F, 0.0F, 16.0F);
 					drawStringWithBackground(
 							this.fontRenderer,
 							itemStack.getName() + " (#" + itemStack.getItem().shiftedIndex + ")",

@@ -68,7 +68,7 @@ public class EntityCreeper extends EntityMob {
 		return ((float)this.lastActiveTime + (float)(this.timeSinceIgnited - this.lastActiveTime) * var1) / (float)(this.fuseTime - 2);
 	}
 
-	protected final int scoreValue() {
+	protected final int getDroppedItemID() {
 		return Item.gunpowder.shiftedIndex;
 	}
 	
