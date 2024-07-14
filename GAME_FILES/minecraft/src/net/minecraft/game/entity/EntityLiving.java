@@ -12,9 +12,9 @@ public class EntityLiving extends Entity {
 	public float renderYawOffset = 0.0F;
 	public float prevRenderYawOffset = 0.0F;
 	private float rotationYawHead;
-	private float prevRotationYawHead;
+	//private float prevRotationYawHead;
 	protected String texture = "/char.png";
-	private int scoreValue = 0;
+	//private int scoreValue = 0;
 	public int health;
 	public int prevHealth;
 	private int livingSoundTime;
@@ -33,7 +33,7 @@ public class EntityLiving extends Entity {
 	protected float moveForward;
 	private float randomYawVelocity;
 	protected boolean isJumping;
-	private float defaultPitch;
+	//private float defaultPitch;
 	protected float moveSpeed;
 
 	public EntityLiving(World var1) {
@@ -41,7 +41,7 @@ public class EntityLiving extends Entity {
 		Math.random();
 		this.entityAge = 0;
 		this.isJumping = false;
-		this.defaultPitch = 0.0F;
+		//this.defaultPitch = 0.0F;
 		this.moveSpeed = 0.7F;
 		this.health = 10;
 		this.preventEntitySpawning = true;
@@ -198,7 +198,7 @@ public class EntityLiving extends Entity {
 			this.prevRotationPitch += 360.0F;
 		}
 
-		this.prevRotationYawHead += var5;
+		//this.prevRotationYawHead += var5;
 	}
 
 	protected final void setSize(float var1, float var2) {
@@ -286,10 +286,10 @@ public class EntityLiving extends Entity {
 		
 		int itemID = this.getDroppedItemID();
 		
-		if(itemID > 0) {
-			int var2 = this.rand.nextInt(3);
+		if (itemID > 0) {
+			int count = getDroppedItemCount();
 
-			for(int i = 0; i < var2; i++) {
+			for(int i = 0; i < count; i++) {
 				this.dropItemWithOffset(itemID, 1);
 			}
 		}
@@ -297,10 +297,18 @@ public class EntityLiving extends Entity {
 
 	/**
 	 * 
-	 * @return ItemID of item this entity drops, or 0 for no drop.
+	 * @return ItemID of item this entity drops, or 0 for no drop. Defaults to 0.
 	 */
 	protected int getDroppedItemID() {
 		return 0;
+	}
+	
+	/**
+	 * Defaults to [0,3)
+	 * @return
+	 */
+	protected int getDroppedItemCount() {
+		return this.rand.nextInt(3);
 	}
 
 	protected final void fall(float var1) {

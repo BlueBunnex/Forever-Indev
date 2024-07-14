@@ -39,4 +39,8 @@ public class EntityPig extends EntityAnimal {
 	protected final int getDroppedItemID() {
 		return Item.porkRaw.shiftedIndex;
 	}
+	
+	protected final int getDroppedItemCount() {
+		return this.rand.nextInt(2) + 1;
+	}
 }

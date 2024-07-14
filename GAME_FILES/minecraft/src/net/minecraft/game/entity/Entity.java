@@ -455,13 +455,13 @@ public abstract class Entity {
 
 	}
 
-	private void addVelocity(float var1, float var2, float var3) {
-		this.motionX += var1;
-		this.motionY = this.motionY;
-		this.motionZ += var3;
+	private void addVelocity(float motionX, float motionY, float motionZ) {
+		this.motionX += motionX;
+		this.motionY += motionY; // this line wasn't in the original code, weird
+		this.motionZ += motionZ;
 	}
 
-	public boolean attackEntityFrom(Entity var1, int var2) {
+	public boolean attackEntityFrom(Entity attacker, int damage) {
 		return false;
 	}
 
