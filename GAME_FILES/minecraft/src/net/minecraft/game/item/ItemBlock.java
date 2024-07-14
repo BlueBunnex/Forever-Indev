@@ -8,10 +8,11 @@ import net.minecraft.game.physics.AxisAlignedBB;
 public final class ItemBlock extends Item {
 	private int blockID;
 
-	public ItemBlock(String name, int index) {
-		super(name, index);
-		this.blockID = index + 256;
-		this.setIconIndex(Block.blocksList[index + 256].getBlockTextureFromSide(2));
+	public ItemBlock(String name, Rarity rarity, int index) {
+		super(name, rarity, index - 256);
+		
+		this.blockID = index;
+		this.setIconIndex(Block.blocksList[index].getBlockTextureFromSide(2));
 	}
 
 	public final boolean onItemUse(ItemStack item, World world, int var3, int var4, int var5, int var6) {

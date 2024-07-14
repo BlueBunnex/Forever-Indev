@@ -205,7 +205,7 @@ public final class GuiIngame extends Gui {
 		// draw item name
 		ItemStack currItem = this.mc.thePlayer.inventory.getCurrentItem();
 		if (currItem != null)
-			drawCenteredString(fontRend, currItem.getName(), width / 2, height - 48, 16777215);
+			drawCenteredStringWithBackground(fontRend, currItem.getName(), width / 2, height - 48, currItem.getItem().getRarity().color);
 
 	}
 	

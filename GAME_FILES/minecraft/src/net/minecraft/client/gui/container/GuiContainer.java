@@ -61,21 +61,23 @@ public abstract class GuiContainer extends GuiScreen {
 			}
 
 			// render hovered slot stuff
-			if(slot.isAtCursorPos(mouseX, mouseY)) {
+			if (slot.isAtCursorPos(mouseX, mouseY)) {
 				GL11.glDisable(GL11.GL_LIGHTING);
 				GL11.glDisable(GL11.GL_DEPTH_TEST);
 				
 				// highlight hovered slot
-				drawGradientRect(x, y, x + 16, y + 16, -2130706433, -2130706433);
+				drawRect(x, y, x + 16, y + 16, -2130706433);
 				
 				// show name of hovered item
 				if (itemStack != null) {
-					drawRect(
-							mouseX - 122,
-							mouseY - 48,
-							mouseX - 118 + this.fontRenderer.getStringWidth(itemStack.getName()),
-							mouseY - 36, -1442840576);
-					this.fontRenderer.drawString(itemStack.getName(), mouseX - 120, mouseY - 46, 16777215);
+
+					drawStringWithBackground(
+							this.fontRenderer,
+							itemStack.getName() + " (#" + itemStack.getItem().shiftedIndex + ")",
+							mouseX - 120, // TODO fix mouseX being weird at different screen sizes
+							mouseY - 46,
+							itemStack.getItem().getRarity().color
+					);
 				}
 				
 				GL11.glEnable(GL11.GL_LIGHTING);
@@ -91,7 +93,7 @@ public abstract class GuiContainer extends GuiScreen {
 				y = mouseY - var4 - 8;
 			
 			itemRenderer.renderItemIntoGUI(this.mc.renderEngine, this.heldItem, x, y);
-			//itemRenderer.renderItemOverlayIntoGUI(this.fontRenderer, this.heldItem, x, y);
+			itemRenderer.renderItemOverlayIntoGUI(this.fontRenderer, this.heldItem, x, y);
 		}
 
 		GL11.glDisable(GL11.GL_NORMALIZE);

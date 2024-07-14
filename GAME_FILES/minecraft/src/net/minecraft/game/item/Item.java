@@ -96,9 +96,11 @@ public class Item {
 	protected int maxDamage = 32;
 	protected int iconIndex;
 	protected String name;
-
-	protected Item(String name, int index) {
+	protected Rarity rarity;
+	
+	protected Item(String name, Rarity rarity, int index) {
 		this.name = name;
+		this.rarity = rarity;
 		
 		this.shiftedIndex = index + 256;
 		
@@ -106,6 +108,10 @@ public class Item {
 			System.out.println("ITEM CONFLICT @ " + index);
 
 		itemsList[index + 256] = this;
+	}
+
+	protected Item(String name, int index) {
+		this(name, Rarity.COMMON, index);
 	}
 
 	public final Item setIconIndex(int iconIndex) {
@@ -119,6 +125,10 @@ public class Item {
 	
 	public final String getName() {
 		return name;
+	}
+	
+	public final Rarity getRarity() {
+		return rarity;
 	}
 
 	public boolean onItemUse(ItemStack item, World world, int var3, int var4, int var5, int var6) {
@@ -180,6 +190,7 @@ public class Item {
 		
 		diamond = new Item("Diamond", 8);
 		diamond.iconIndex = 55;
+		diamond.rarity = Rarity.RARE;
 		
 		ingotIron = new Item("Iron Ingot", 9);
 		ingotIron.iconIndex = 23;
@@ -216,15 +227,23 @@ public class Item {
 		
 		swordDiamond = new ItemSword("Diamond Sword", 20, 3);
 		swordDiamond.iconIndex = 67;
+		swordDiamond.rarity = Rarity.RARE;
 		
 		shovelDiamond = new ItemSpade("Diamond Shovel", 21, 3);
 		shovelDiamond.iconIndex = 83;
+		shovelDiamond.rarity = Rarity.RARE;
 		
 		pickaxeDiamond = new ItemPickaxe("Diamond Pickaxe", 22, 3);
 		pickaxeDiamond.iconIndex = 99;
+		pickaxeDiamond.rarity = Rarity.RARE;
 		
 		axeDiamond = new ItemAxe("Diamond Axe", 23, 3);
 		axeDiamond.iconIndex = 115;
+		axeDiamond.rarity = Rarity.RARE;
+		
+		hoeDiamond = new ItemHoe("Diamond Hoe", 37, 3);
+		hoeDiamond.iconIndex = 131;
+		hoeDiamond.rarity = Rarity.RARE;
 		
 		stick = new Item("Stick", 24);
 		stick.iconIndex = 53;
@@ -264,9 +283,6 @@ public class Item {
 		
 		hoeIron = new ItemHoe("Iron Hoe", 36, 2);
 		hoeIron.iconIndex = 130;
-		
-		hoeDiamond = new ItemHoe("Diamond Hoe", 37, 3);
-		hoeDiamond.iconIndex = 131;
 		
 		hoeGold = new ItemHoe("Gold Hoe", 38, 4);
 		hoeGold.iconIndex = 132;
@@ -318,15 +334,19 @@ public class Item {
 		
 		helmetDiamond = new ItemArmor("Diamond Helmet", 54, 3, 3, 0);
 		helmetDiamond.iconIndex = 3;
+		helmetDiamond.rarity = Rarity.RARE;
 		
 		chestplateDiamond = new ItemArmor("Diamond Chestplate", 55, 3, 3, 1);
 		chestplateDiamond.iconIndex = 19;
+		chestplateDiamond.rarity = Rarity.RARE;
 		
 		leggingsDiamond = new ItemArmor("Diamond Leggings", 56, 3, 3, 2);
 		leggingsDiamond.iconIndex = 35;
+		leggingsDiamond.rarity = Rarity.RARE;
 		
 		bootsDiamond = new ItemArmor("Diamond Boots", 57, 3, 3, 3);
 		bootsDiamond.iconIndex = 51;
+		bootsDiamond.rarity = Rarity.RARE;
 		
 		helmetGold = new ItemArmor("Gold Helmet", 58, 1, 4, 0);
 		helmetGold.iconIndex = 4;

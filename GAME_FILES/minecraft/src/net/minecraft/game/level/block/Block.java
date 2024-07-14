@@ -7,6 +7,7 @@ import net.minecraft.game.entity.player.InventoryPlayer;
 import net.minecraft.game.item.Item;
 import net.minecraft.game.item.ItemBlock;
 import net.minecraft.game.item.ItemStack;
+import net.minecraft.game.item.Rarity;
 import net.minecraft.game.level.World;
 import net.minecraft.game.level.material.Material;
 import net.minecraft.game.physics.AxisAlignedBB;
@@ -101,7 +102,8 @@ public class Block {
 	public static final Block stoneOvenActive;
 	public static final Block coalLamp;
 	
-	public final String name;
+	protected String name;
+	protected Rarity rarity; 
 	public final int blockID;
 	public final Material material;
 	
@@ -118,6 +120,8 @@ public class Block {
 	public float blockParticleGravity;
 
 	protected Block(String name, int blockID, Material material) {
+		rarity = Rarity.COMMON;
+		
 		this.stepSound = soundPowderFootstep;
 		this.blockParticleGravity = 1.0F;
 		if(blocksList[blockID] != null) {
@@ -476,6 +480,7 @@ public class Block {
 		// bedrock
 		bedrock = new Block("Bedrock", 7, 17, Material.rock).setHardness(-1.0F).setResistance(6000000.0F);
 		bedrock.stepSound = soundStoneFootstep;
+		bedrock.rarity = Rarity.LEGENDARY;
 		
 		// sand
 		sand = new BlockGravity("Sand", 12, 18).setHardness(0.5F);
@@ -494,6 +499,7 @@ public class Block {
 		// ALL the ores
 		oreDiamond = new BlockOre("Diamond Ore", 56, 50).setHardness(3.0F).setResistance(5.0F);
 		oreDiamond.stepSound = soundStoneFootstep;
+		oreDiamond.rarity = Rarity.RARE;
 		
 		oreGold = new BlockOre("Gold Ore", 14, 32).setHardness(3.0F).setResistance(5.0F);
 		oreGold.stepSound = soundStoneFootstep;
@@ -588,6 +594,7 @@ public class Block {
 		// ALL ore blocks
 		blockDiamond = new BlockOreBlock("Diamond Block", 57, 40).setHardness(5.0F).setResistance(10.0F);
 		blockDiamond.stepSound = soundMetalFootstep;
+		blockDiamond.rarity = Rarity.RARE;
 		
 		blockGold = new BlockOreBlock("Gold Block", 41, 39).setHardness(3.0F).setResistance(10.0F);
 		blockGold.stepSound = soundMetalFootstep;
@@ -631,6 +638,7 @@ public class Block {
 		// obsidian
 		obsidian = new Block("Obsidian", 49, 37, Material.rock).setHardness(10.0F).setResistance(10.0F);
 		obsidian.stepSound = soundStoneFootstep;
+		obsidian.rarity = Rarity.RARE;
 		
 		// torch
 		torch = new BlockTorch(50).setHardness(0.0F).setLightValue(14.0F / 16.0F);
@@ -639,6 +647,7 @@ public class Block {
 		// fire
 		fire = (BlockFire) new BlockFire(51).setHardness(0.0F).setLightValue(1.0F);
 		fire.stepSound = soundWoodFootstep; // what
+		fire.rarity = Rarity.LEGENDARY;
 		
 		// chest
 		crate = new BlockChest(54).setHardness(2.5F);
@@ -647,6 +656,7 @@ public class Block {
 		// cog (idk man)
 		cog = new BlockGears(55).setHardness(0.5F);
 		cog.stepSound = soundMetalFootstep;
+		cog.rarity = Rarity.LEGENDARY;
 		
 		// workbench / crafting table
 		workbench = new BlockWorkbench(58).setHardness(2.5F);
@@ -677,8 +687,9 @@ public class Block {
 
 		// make an item for every block
 		for(int i = 0; i < 256; i++) {
-			if(blocksList[i] != null) {
-				Item.itemsList[i] = new ItemBlock(blocksList[i].name, i - 256);
+			
+			if (blocksList[i] != null) {
+				Item.itemsList[i] = new ItemBlock(blocksList[i].name, blocksList[i].rarity, i);
 			}
 		}
 

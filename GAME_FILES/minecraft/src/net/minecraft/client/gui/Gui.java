@@ -55,12 +55,26 @@ public class Gui {
 		GL11.glEnable(GL11.GL_TEXTURE_2D);
 	}
 
-	public static void drawCenteredString(FontRenderer var0, String var1, int var2, int var3, int var4) {
-		var0.drawStringWithShadow(var1, var2 - var0.getStringWidth(var1) / 2, var3, var4);
+	public static void drawCenteredString(FontRenderer fontRend, String string, int x, int y, int color) {
+		fontRend.drawStringWithShadow(string, x - fontRend.getStringWidth(string) / 2, y, color);
 	}
 
-	public static void drawString(FontRenderer var0, String var1, int var2, int var3, int var4) {
-		var0.drawStringWithShadow(var1, var2, var3, var4);
+	public static void drawString(FontRenderer fontRend, String string, int x, int y, int color) {
+		fontRend.drawStringWithShadow(string, x, y, color);
+	}
+	
+	public static void drawCenteredStringWithBackground(FontRenderer fontRend, String string, int x, int y, int color) {
+		drawStringWithBackground(fontRend, string, x - fontRend.getStringWidth(string) / 2, y, color);
+	}
+	
+	public static void drawStringWithBackground(FontRenderer fontRend, String string, int x, int y, int color) {
+		drawRect(
+				x - 2,
+				y - 2,
+				x + 1 + fontRend.getStringWidth(string),
+				y + 9, -1442840576);
+		
+		fontRend.drawString(string, x, y, color);
 	}
 
 	public final void drawTexturedModalRect(int var1, int var2, int var3, int var4, int var5, int var6) {
