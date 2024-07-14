@@ -18,6 +18,16 @@
         #download { color: white; background: #384; padding: 0.5em 1em; display: inline-block; }
         nav a { color: inherit; font-weight: 700; }
     </style>
+    <script type="module">
+        const page = new URLSearchParams(window.location.search).get('page');
+
+        if (page === "gallery") {
+            document.getElementById('main').innerHTML = "gallery";
+        } else
+        if (page === "crafting") {
+            document.getElementById('main').innerHTML = "crafting";
+        }
+    </script>
 </head>
 <body>
 
@@ -27,32 +37,35 @@
 
     <nav style="display: flex; gap: 2em; align-items: center;">
         <a id="download" href="https://github.com/BlueBunnex/Forever-Indev">Go to Github</a>
-        <a href="">Gallery</a>
-        <a href="">Crafting Recipes</a>
+        <a href="/">Home</a>
+        <a href="/?page=gallery">Gallery</a>
+        <a href="/?page=crafting">Crafting Recipes</a>
     </nav>
 
-    <h2>What is it</h2>
-    <p>A fork of the last version of Minecraft Indev. Made with the help of <a href="https://github.com/MCPHackers/RetroMCP-Java">RetroMCP</a>.</p>
-
-    <h2>Features</h2>
+    <main id="main">
+        <h2>What is it</h2>
+        <p>A fork of the last version of Minecraft Indev. Made with the help of <a href="https://github.com/MCPHackers/RetroMCP-Java">RetroMCP</a>.</p>
     
-    <h3>Quality of life</h3>
-    <ul>
-        <li>Added chat and commands</li>
-        <li>Added ability to return to main menu from game</li>
-    </ul>
-    
-    <h3>New decoration blocks</h3>
-    <ul>
-        <li>Added coal lamp (one coal surrounded by eight glass)</li>
-        <li>Added polished block, slab, and tiles</li>
-    </ul>
-    
-    <h3>New crops & cooking recipes</h3>
-    <ul>
-        <li>Added sugar beets and sugar</li>
-        <li>Added apple pie (crafted with apple, wheat, and sugar)</li>
-    </ul>
+        <h2>Features</h2>
+        
+        <h3>Quality of life</h3>
+        <ul>
+            <li>Added chat and commands</li>
+            <li>Added ability to return to main menu from game</li>
+        </ul>
+        
+        <h3>New decoration blocks</h3>
+        <ul>
+            <li>Added coal lamp (one coal surrounded by eight glass)</li>
+            <li>Added polished block, slab, and tiles</li>
+        </ul>
+        
+        <h3>New crops & cooking recipes</h3>
+        <ul>
+            <li>Added sugar beets and sugar</li>
+            <li>Added apple pie (crafted with apple, wheat, and sugar)</li>
+        </ul>
+    </main>
     
 </body>
 </html>
