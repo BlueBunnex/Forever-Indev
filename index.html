@@ -17,6 +17,8 @@
 
         #download { color: white; background: #384; padding: 0.5em 1em; display: inline-block; }
         nav a { color: inherit; font-weight: 700; }
+
+        img { width: 100%; }
     </style>
     <script type="module">
         const page = new URLSearchParams(window.location.search).get('page');
@@ -26,13 +28,40 @@
         } else
         if (page === "crafting") {
             document.getElementById('main').innerHTML = `
-                <p><strong>Polished Block</strong> (four cobblestone in a square)</p>
-                <p><strong>Polished Slab</strong> (three polished blocks side-by-side)</p>
-                <p><strong>Polished Tiles</strong> (four polished blocks in a square)</p>
-                <p><strong>Coal Lamp</strong> (one coal surrounded by eight glass)</p>
-                <p><strong>Sugar Beet</strong> (not crafted; found randomly by hoeing the ground)</p>
-                <p><strong>Sugar</strong> (one sugar beet)</p>
-                <p><strong>Apple Pie</strong> (crafted with apple, wheat, and sugar side-by-side in that order)</p>
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap 1em;">
+                    <div>
+                        <strong>Polished Block</strong> (recipe 1)
+                        <img src="screenshots/recipe_polishedblock1.png">
+                    </div>
+                    <div>
+                        <strong>Polished Block</strong> (recipe 2)
+                        <img src="screenshots/recipe_polishedblock2.png">
+                    </div>
+                    <div>
+                        <strong>Polished Slab</strong>
+                        <img src="screenshots/recipe_polishedslab.png">
+                    </div>
+                    <div>
+                        <strong>Polished Tiles</strong>
+                        <img src="screenshots/recipe_polishedtiles.png">
+                    </div>
+                    <div>
+                        <strong>Coal Lamp</strong>
+                        <img src="screenshots/recipe_coallamp.png">
+                    </div>
+                    <div>
+                        <strong>Sugar Beet</strong> (not crafted; found by hoeing grass)
+                        <img src="screenshots/recipe_sugarbeet.png">
+                    </div>
+                    <div>
+                        <strong>Sugar</strong>
+                        <img src="screenshots/recipe_sugar.png">
+                    </div>
+                    <div>
+                        <strong>Apple Pie</strong> (order is important)
+                        <img src="screenshots/recipe_applepie.png">
+                    </div>
+                </div>
             `;
         }
     </script>
@@ -60,6 +89,7 @@
         <ul>
             <li>Added chat and commands</li>
             <li>Added ability to return to main menu from game</li>
+            <li>Added item tooltips on inventory hover</li>
         </ul>
         
         <h3>New decoration blocks</h3>
