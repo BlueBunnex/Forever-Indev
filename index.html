@@ -22,10 +22,18 @@
         const page = new URLSearchParams(window.location.search).get('page');
 
         if (page === "gallery") {
-            document.getElementById('main').innerHTML = "gallery";
+            document.getElementById('main').innerHTML = "No images yet :(";
         } else
         if (page === "crafting") {
-            document.getElementById('main').innerHTML = "crafting";
+            document.getElementById('main').innerHTML = `
+                <p><strong>Polished Block</strong> (four cobblestone in a square)</p>
+                <p><strong>Polished Slab</strong> (three polished blocks side-by-side)</p>
+                <p><strong>Polished Tiles</strong> (four polished blocks in a square)</p>
+                <p><strong>Coal Lamp</strong> (one coal surrounded by eight glass)</p>
+                <p><strong>Sugar Beet</strong> (not crafted; found randomly by hoeing the ground)</p>
+                <p><strong>Sugar</strong> (one sugar beet)</p>
+                <p><strong>Apple Pie</strong> (crafted with apple, wheat, and sugar side-by-side in that order)</p>
+            `;
         }
     </script>
 </head>
@@ -37,9 +45,9 @@
 
     <nav style="display: flex; gap: 2em; align-items: center;">
         <a id="download" href="https://github.com/BlueBunnex/Forever-Indev">Go to Github</a>
-        <a href="/">Home</a>
-        <a href="/?page=gallery">Gallery</a>
-        <a href="/?page=crafting">Crafting Recipes</a>
+        <a href="?">Home</a>
+        <a href="?page=gallery">Gallery</a>
+        <a href="?page=crafting">Crafting Recipes</a>
     </nav>
 
     <main id="main">
@@ -56,14 +64,14 @@
         
         <h3>New decoration blocks</h3>
         <ul>
-            <li>Added coal lamp (one coal surrounded by eight glass)</li>
+            <li>Added coal lamp</li>
             <li>Added polished block, slab, and tiles</li>
         </ul>
         
         <h3>New crops & cooking recipes</h3>
         <ul>
             <li>Added sugar beets and sugar</li>
-            <li>Added apple pie (crafted with apple, wheat, and sugar)</li>
+            <li>Added apple pie</li>
         </ul>
     </main>
     
