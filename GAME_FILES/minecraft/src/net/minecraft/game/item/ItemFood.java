@@ -15,7 +15,7 @@ public class ItemFood extends Item {
 	}
 
 	public ItemStack onItemRightClick(ItemStack item, World world, EntityPlayer player) {
-		--item.stackSize;
+		item.stackSize--;
 		player.heal(this.healAmount);
 		
 		return item;

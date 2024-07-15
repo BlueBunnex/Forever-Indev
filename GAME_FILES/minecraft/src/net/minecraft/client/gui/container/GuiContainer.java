@@ -114,38 +114,40 @@ public abstract class GuiContainer extends GuiScreen {
 
 	protected abstract void drawGuiContainerBackgroundLayer();
 
-	protected final void drawSlotInventory(int var1, int var2, int var3) {
-		if(var3 == 0 || var3 == 1) {
-			int var6 = var2;
-			int var4 = var1;
+	protected final void drawSlotInventory(int mouseX, int mouseY, int mouseClick) {
+		
+		if (mouseClick == 0 || mouseClick == 1) {
+			int var4 = mouseX;
+			int var6 = mouseY;
 			GuiContainer var5 = this;
 			int var7 = 0;
 
-			Slot var10000;
-			while(true) {
+			// find clicked slot, if any
+			Slot clicked;
+			while (true) {
 				if(var7 >= var5.inventorySlots.size()) {
-					var10000 = null;
+					clicked = null;
 					break;
 				}
 
 				Slot var8 = var5.inventorySlots.get(var7);
 				if(var8.isAtCursorPos(var4, var6)) {
-					var10000 = var8;
+					clicked = var8;
 					break;
 				}
 
 				++var7;
 			}
 
-			Slot var11 = var10000;
-			if(var11 != null) {
+			Slot var11 = clicked;
+			if (var11 != null) {
 				ItemStack var12 = var11.inventory.getStackInSlot(var11.slotIndex);
 				if(var12 == null && this.heldItem == null) {
 					return;
 				}
 
 				if(var12 != null && this.heldItem == null) {
-					var6 = var3 == 0 ? var12.stackSize : (var12.stackSize + 1) / 2;
+					var6 = mouseClick == 0 ? var12.stackSize : (var12.stackSize + 1) / 2;
 					this.heldItem = var11.inventory.decrStackSize(var11.slotIndex, var6);
 					if(var12.stackSize == 0) {
 						var11.putStack((ItemStack)null);
@@ -153,7 +155,7 @@ public abstract class GuiContainer extends GuiScreen {
 
 					var11.onPickupFromSlot();
 				} else if(var12 == null && this.heldItem != null && var11.isItemValid(this.heldItem)) {
-					var6 = var3 == 0 ? this.heldItem.stackSize : 1;
+					var6 = mouseClick == 0 ? this.heldItem.stackSize : 1;
 					if(var6 > var11.inventory.getInventoryStackLimit()) {
 						var6 = var11.inventory.getInventoryStackLimit();
 					}
@@ -207,7 +209,7 @@ public abstract class GuiContainer extends GuiScreen {
 							return;
 						}
 
-						if(var3 == 0) {
+						if (mouseClick == 0) {
 							var6 = this.heldItem.stackSize;
 							if(var6 > var11.inventory.getInventoryStackLimit() - var12.stackSize) {
 								var6 = var11.inventory.getInventoryStackLimit() - var12.stackSize;
@@ -226,7 +228,7 @@ public abstract class GuiContainer extends GuiScreen {
 
 							var12.stackSize += var6;
 						} else {
-							if(var3 != 1) {
+							if (mouseClick != 1) {
 								return;
 							}
 
@@ -250,17 +252,18 @@ public abstract class GuiContainer extends GuiScreen {
 						}
 					}
 				}
-			} else if(this.heldItem != null) {
+				
+			} else if (this.heldItem != null) {
 				int var13 = (this.width - this.xSize) / 2;
 				var6 = (this.height - this.ySize) / 2;
-				if(var1 < var13 || var2 < var6 || var1 >= var13 + this.xSize || var2 >= var6 + this.xSize) {
+				if(mouseX < var13 || mouseY < var6 || mouseX >= var13 + this.xSize || mouseY >= var6 + this.xSize) {
 					EntityPlayerSP var10 = this.mc.thePlayer;
-					if(var3 == 0) {
+					if (mouseClick == 0) {
 						var10.dropPlayerItem(this.heldItem);
 						this.heldItem = null;
 					}
 
-					if(var3 == 1) {
+					if (mouseClick == 1) {
 						var10.dropPlayerItem(this.heldItem.splitStack(1));
 						if(this.heldItem.stackSize == 0) {
 							this.heldItem = null;

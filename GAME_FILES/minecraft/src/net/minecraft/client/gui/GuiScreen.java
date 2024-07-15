@@ -31,11 +31,15 @@ public class GuiScreen extends Gui {
 		}
 	}
 
-	protected void drawSlotInventory(int var1, int var2, int var3) {
-		if(var3 == 0) {
-			for(var3 = 0; var3 < this.controlList.size(); ++var3) {
-				GuiButton var4 = this.controlList.get(var3);
-				if(var4.mousePressed(var1, var2)) {
+	protected void drawSlotInventory(int mouseX, int mouseY, int mouseClick) {
+		
+		if(mouseClick == 0) {
+			
+			for(int i = 0; i < this.controlList.size(); i++) {
+				
+				GuiButton var4 = this.controlList.get(i);
+				
+				if (var4.mousePressed(mouseX, mouseY)) {
 					this.mc.sndManager.playSoundFX("random.click", 1.0F, 1.0F);
 					this.actionPerformed(var4);
 				}

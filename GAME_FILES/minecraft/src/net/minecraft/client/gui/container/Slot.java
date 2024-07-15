@@ -4,6 +4,7 @@ import net.minecraft.game.IInventory;
 import net.minecraft.game.item.ItemStack;
 
 public class Slot {
+	
 	public final int slotIndex;
 	public final int xPos;
 	public final int yPos;
@@ -18,23 +19,26 @@ public class Slot {
 		this.yPos = y;
 	}
 
-	public final boolean isAtCursorPos(int var1, int var2) {
-		int var3 = (this.guiHandler.width - this.guiHandler.xSize) / 2;
-		int var4 = (this.guiHandler.height - this.guiHandler.ySize) / 2;
-		var1 -= var3;
-		var2 -= var4;
-		return var1 >= this.xPos - 1 && var1 < this.xPos + 16 + 1 && var2 >= this.yPos - 1 && var2 < this.yPos + 16 + 1;
+	public final boolean isAtCursorPos(int x, int y) {
+		int cornerX = (this.guiHandler.width - this.guiHandler.xSize) / 2;
+		int cornerY = (this.guiHandler.height - this.guiHandler.ySize) / 2;
+		x -= cornerX;
+		y -= cornerY;
+		return
+				x >= this.xPos - 1
+			 && x < this.xPos + 16 + 1
+			 && y >= this.yPos - 1
+			 && y < this.yPos + 16 + 1;
 	}
 
-	public void onPickupFromSlot() {
-	}
+	public void onPickupFromSlot() {}
 
 	public boolean isItemValid(ItemStack var1) {
 		return true;
 	}
 
-	public final void putStack(ItemStack var1) {
-		this.inventory.setInventorySlotContents(this.slotIndex, var1);
+	public final void putStack(ItemStack stack) {
+		this.inventory.setInventorySlotContents(this.slotIndex, stack);
 	}
 
 	public int getBackgroundIconIndex() {

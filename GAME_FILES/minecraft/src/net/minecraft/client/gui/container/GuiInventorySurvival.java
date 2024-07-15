@@ -32,8 +32,8 @@ public final class GuiInventorySurvival extends GuiContainer {
 		this.inventorySlots.add(new SlotCrafting(this, this.inventoryCrafting, this.craftResult, 0, 144, 36));
 
 		// armor
-		for (y = 0; y < 4; y++) {
-			this.inventorySlots.add(new SlotArmor(this, this, inventory, inventory.getSizeInventory() - 1 - y, 8, 8 + y * 18, y));
+		for (int armorType = 0; armorType < 4; armorType++) {
+			this.inventorySlots.add(new SlotArmor(this, inventory, inventory.getSizeInventory() - 1 - armorType, 8, 8 + armorType * 18, armorType));
 		}
 
 		// inventory

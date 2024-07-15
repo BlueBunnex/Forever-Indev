@@ -34,6 +34,9 @@ public final class GuiInventoryCreative extends GuiContainer {
 		for (x = 0; x < 9; x++) {
 			this.inventorySlots.add(new Slot(this, inventory, x, 65 + x * 18, 64));
 		}
+		
+		// TODO temporary test slot infinite
+		this.inventorySlots.add(new Slot(this, new InventoryInfinite(), 0, 65, 100));
 	}
 
 	protected final void drawGuiContainerForegroundLayer() {
