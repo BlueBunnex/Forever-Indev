@@ -15,9 +15,10 @@ public final class GuiMainMenu extends GuiScreen {
 
 	public final void initGui() {
 		this.controlList.clear();
-		this.controlList.add(new GuiButton(1, this.width / 2 - 100, this.height / 4 + 72, "Generate new level..."));
-		this.controlList.add(new GuiButton(2, this.width / 2 - 100, this.height / 4 + 96, "Load level.."));
-		this.controlList.add(new GuiButton(0, this.width / 2 - 100, this.height / 4 + 120, "Options..."));
+		this.controlList.add(new GuiButton(1, this.width / 2 - 100, this.height / 4 + 48, "Generate new level..."));
+		this.controlList.add(new GuiButton(2, this.width / 2 - 100, this.height / 4 + 72, "Load level.."));
+		this.controlList.add(new GuiButton(0, this.width / 2 - 100, this.height / 4 + 96, "Options..."));
+		this.controlList.add(new GuiButton(3, this.width / 2 - 100, this.height / 4 + 132, "Exit Game"));
 		
 		// disable load level for some reason
 		if (this.mc.session == null)
@@ -38,6 +39,9 @@ public final class GuiMainMenu extends GuiScreen {
 				if (this.mc.session != null)
 					this.mc.displayGuiScreen(new GuiLoadLevel(this));
 				break;
+			case 3:
+				this.mc.shutdownMinecraftApplet();
+				break;
 		}
 
 	}
@@ -45,19 +49,22 @@ public final class GuiMainMenu extends GuiScreen {
 	public final void drawScreen(int mouseX, int mouseY) {
 		this.drawDefaultBackground();
 		
-		// this code scares me
-		Tessellator var4 = Tessellator.instance;
+		// draw the logo
 		GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.mc.renderEngine.getTexture("/gui/logo.png"));
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-		var4.setColorOpaque_I(16777215);
+		Tessellator.instance.setColorOpaque_I(16777215);
 		this.drawTexturedModalRect((this.width - 256) / 2, 30, 0, 0, 256, 64);
+		
+		// draw splash text
 		GL11.glPushMatrix();
 		GL11.glTranslatef((float) (this.width / 2 + 110), 85.0F, 0.0F);
 		GL11.glRotatef(-20.0F, 0.0F, 0.0F, 1.0F);
-		float var15 = 1.8F - MathHelper.abs(MathHelper.sin((float)(System.currentTimeMillis() % 1000L) / 1000.0F * (float)Math.PI * 2.0F) * 0.1F);
-		var15 = var15 * 100.0F / (float)(this.fontRenderer.getStringWidth(CURRENT_SPLASH) + 32);
-		GL11.glScalef(var15, var15, var15);
+		
+		float scale = 1.8F - MathHelper.abs(MathHelper.sin((float)(System.currentTimeMillis() % 1000L) / 1000.0F * (float)Math.PI * 2.0F) * 0.1F);
+		scale = scale * 100.0F / (float)(this.fontRenderer.getStringWidth(CURRENT_SPLASH) + 32);
+		GL11.glScalef(scale, scale, 1);
 		drawCenteredString(this.fontRenderer, CURRENT_SPLASH, 0, -8, 16776960);
+		
 		GL11.glPopMatrix();
 		
 		// yeah fuck Mojang
