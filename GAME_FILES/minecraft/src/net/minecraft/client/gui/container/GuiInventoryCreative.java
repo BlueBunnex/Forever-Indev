@@ -4,11 +4,17 @@ import net.minecraft.client.RenderHelper;
 import net.minecraft.client.render.RenderEngine;
 import net.minecraft.client.render.entity.RenderManager;
 import net.minecraft.game.IInventory;
+import net.minecraft.game.item.Item;
 import net.minecraft.game.item.ItemStack;
 import net.minecraft.game.item.recipe.CraftingManager;
+
+import java.util.ArrayList;
+
 import org.lwjgl.opengl.GL11;
 
 public final class GuiInventoryCreative extends GuiContainer {
+	
+	private static IInventory infinite;
 	
 	private float xSize_lo;
 	private float ySize_lo;
@@ -35,8 +41,10 @@ public final class GuiInventoryCreative extends GuiContainer {
 			this.inventorySlots.add(new Slot(this, inventory, x, 65 + x * 18, 64));
 		}
 		
-		// TODO temporary test slot infinite
-		this.inventorySlots.add(new Slot(this, new InventoryInfinite(), 0, 65, 100));
+		// creative inventory
+		for (int i=0; i<infinite.getSizeInventory(); i++) {
+			this.inventorySlots.add(new Slot(this, infinite, i, 65 + i % 9 * 18, 100 + i / 9 * 18));
+		}
 	}
 
 	protected final void drawGuiContainerForegroundLayer() {
@@ -63,14 +71,17 @@ public final class GuiInventoryCreative extends GuiContainer {
 		GL11.glEnable(GL11.GL_COLOR_MATERIAL);
 		GL11.glPushMatrix();
 		
-		GL11.glTranslatef((float)(var1 + 51), (float)(var2 + 75), 50.0F);
+		GL11.glTranslatef((float)(var1 + 34), (float)(var2 + 75), 50.0F);
 		GL11.glScalef(-30.0F, 30.0F, 30.0F);
 		GL11.glRotatef(180.0F, 0.0F, 0.0F, 1.0F);
 		float var3 = this.mc.thePlayer.renderYawOffset;
 		float var4 = this.mc.thePlayer.rotationYaw;
 		float var5 = this.mc.thePlayer.rotationPitch;
-		float var6 = (float)(var1 + 51) - this.xSize_lo;
+		
+		// this is used to calculate the point where the player model should look
+		float var6 = (float)(var1 + 34) - this.xSize_lo;
 		float var7 = (float)(var2 + 75 - 50) - this.ySize_lo;
+		
 		GL11.glRotatef(135.0F, 0.0F, 1.0F, 0.0F);
 		
 		RenderHelper.enableStandardItemLighting();
@@ -89,5 +100,17 @@ public final class GuiInventoryCreative extends GuiContainer {
 		RenderHelper.disableStandardItemLighting();
 		
 		GL11.glDisable(GL11.GL_NORMALIZE);
+	}
+	
+	static {
+		ArrayList<Item> allItems = new ArrayList<Item>();
+		
+		for (Item item : Item.itemsList) {
+			
+			if (item != null)
+				allItems.add(item);
+		}
+		
+		infinite = new InventoryInfinite(allItems.toArray(new Item[0]));
 	}
 }

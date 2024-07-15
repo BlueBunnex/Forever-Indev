@@ -8,11 +8,8 @@ public class InventoryInfinite implements IInventory {
 	
 	private Item[] itemList;
 	
-	public InventoryInfinite() {
-		// testing, will add parameters later
-		
-		itemList = new Item[1];
-		itemList[0] = Item.applePie;
+	public InventoryInfinite(Item[] itemList) {
+		this.itemList = itemList;
 	}
 
 	public int getSizeInventory() {
