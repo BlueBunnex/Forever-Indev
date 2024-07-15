@@ -18,6 +18,7 @@ import net.minecraft.game.level.material.Material;
 import util.MathHelper;
 
 public class EntityPlayer extends EntityLiving {
+	
 	public InventoryPlayer inventory = new InventoryPlayer(this);
 	public byte unusedByte = 0;
 	public int getScore = 0;
@@ -25,14 +26,15 @@ public class EntityPlayer extends EntityLiving {
 	public float cameraYaw;
 	private int damageRemainder = 0;
 
-	public EntityPlayer(World var1) {
-		super(var1);
-		if(var1 != null) {
-			var1.playerEntity = this;
-			var1.releaseEntitySkin(this);
+	public EntityPlayer(World world) {
+		super(world);
+		
+		if (world != null) {
+			world.playerEntity = this;
+			world.releaseEntitySkin(this);
 		}
 
-		this.setPositionAndRotation((float)var1.xSpawn, (float)var1.ySpawn, (float)var1.zSpawn, 0.0F, 0.0F);
+		this.setPositionAndRotation((float) world.xSpawn, (float) world.ySpawn, (float) world.zSpawn, 0.0F, 0.0F);
 		this.yOffset = 1.62F;
 		this.health = 20;
 		this.fireResistance = 20;
@@ -109,8 +111,7 @@ public class EntityPlayer extends EntityLiving {
 		this.yOffset = 0.1F;
 	}
 
-	public final void setEntityDead() {
-	}
+	public final void setEntityDead() {}
 
 	public final void dropPlayerItem(ItemStack var1) {
 		this.dropPlayerItemWithRandomChoice(var1, false);

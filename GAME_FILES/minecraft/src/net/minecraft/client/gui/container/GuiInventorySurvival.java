@@ -8,38 +8,45 @@ import net.minecraft.game.item.ItemStack;
 import net.minecraft.game.item.recipe.CraftingManager;
 import org.lwjgl.opengl.GL11;
 
-public final class GuiInventory extends GuiContainer {
+public final class GuiInventorySurvival extends GuiContainer {
+	
 	private InventoryCrafting inventoryCrafting = new InventoryCrafting(this, 2, 2);
-	private IInventory iInventory = new InventoryCraftResult();
+	private IInventory craftResult = new InventoryCraftResult();
+	
 	private float xSize_lo;
 	private float ySize_lo;
 
-	public GuiInventory(IInventory var1) {
+	public GuiInventorySurvival(IInventory inventory) {
+		
 		this.allowUserInput = true;
-		this.inventorySlots.add(new SlotCrafting(this, this.inventoryCrafting, this.iInventory, 0, 144, 36));
 
-		int var2;
-		int var3;
-		for(var2 = 0; var2 < 2; ++var2) {
-			for(var3 = 0; var3 < 2; ++var3) {
-				this.inventorySlots.add(new Slot(this, this.inventoryCrafting, var3 + (var2 << 1), 88 + var3 * 18, 26 + var2 * 18));
+		int x;
+		int y;
+		
+		// crafting
+		for (y = 0; y < 2; y++) {
+			for (x = 0; x < 2; x++) {
+				this.inventorySlots.add(new Slot(this, this.inventoryCrafting, x + (y << 1), 88 + x * 18, 26 + y * 18));
+			}
+		}
+		this.inventorySlots.add(new SlotCrafting(this, this.inventoryCrafting, this.craftResult, 0, 144, 36));
+
+		// armor
+		for (y = 0; y < 4; y++) {
+			this.inventorySlots.add(new SlotArmor(this, this, inventory, inventory.getSizeInventory() - 1 - y, 8, 8 + y * 18, y));
+		}
+
+		// inventory
+		for (y = 0; y < 3; y++) {
+			for (x = 0; x < 9; x++) {
+				this.inventorySlots.add(new Slot(this, inventory, x + (y + 1) * 9, 8 + x * 18, 84 + y * 18));
 			}
 		}
 
-		for(var2 = 0; var2 < 4; ++var2) {
-			this.inventorySlots.add(new SlotArmor(this, this, var1, var1.getSizeInventory() - 1 - var2, 8, 8 + var2 * 18, var2));
+		// hotbar
+		for (x = 0; x < 9; x++) {
+			this.inventorySlots.add(new Slot(this, inventory, x, 8 + x * 18, 142));
 		}
-
-		for(var2 = 0; var2 < 3; ++var2) {
-			for(var3 = 0; var3 < 9; ++var3) {
-				this.inventorySlots.add(new Slot(this, var1, var3 + (var2 + 1) * 9, 8 + var3 * 18, 84 + var2 * 18));
-			}
-		}
-
-		for(var2 = 0; var2 < 9; ++var2) {
-			this.inventorySlots.add(new Slot(this, var1, var2, 8 + var2 * 18, 142));
-		}
-
 	}
 
 	public final void onGuiClosed() {
@@ -71,7 +78,7 @@ public final class GuiInventory extends GuiContainer {
 			}
 		}
 
-		this.iInventory.setInventorySlotContents(0, CraftingManager.getInstance().findMatchingRecipe(var1));
+		this.craftResult.setInventorySlotContents(0, CraftingManager.getInstance().findMatchingRecipe(var1));
 	}
 
 	protected final void drawGuiContainerForegroundLayer() {
@@ -86,7 +93,7 @@ public final class GuiInventory extends GuiContainer {
 	}
 
 	protected final void drawGuiContainerBackgroundLayer() {
-		int var1 = this.mc.renderEngine.getTexture("/gui/inventory.png");
+		int var1 = this.mc.renderEngine.getTexture("/gui/inventorySurvival.png");
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		RenderEngine.bindTexture(var1);
 		var1 = (this.width - this.xSize) / 2;

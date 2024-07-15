@@ -17,16 +17,18 @@ import net.minecraft.game.level.World;
 import net.minecraft.game.level.block.tileentity.TileEntityFurnace;
 
 public class EntityPlayerSP extends EntityPlayer {
+	
+	public boolean isCreativeMode = false;
 	public MovementInput movementInput;
 	private Minecraft mc;
 
-	public EntityPlayerSP(Minecraft var1, World var2, Session var3) {
-		super(var2);
-		this.mc = var1;
-		if(var3 != null) {
-			this.skinUrl = "http://www.minecraft.net/skin/" + var3.username + ".png";
-		}
-
+	public EntityPlayerSP(Minecraft mc, World world, Session session) {
+		super(world);
+		
+		this.mc = mc;
+		
+		if(session != null)
+			this.skinUrl = "http://www.minecraft.net/skin/" + session.username + ".png";
 	}
 
 	public final void updatePlayerActionState() {

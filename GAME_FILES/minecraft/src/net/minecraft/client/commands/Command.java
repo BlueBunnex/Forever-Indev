@@ -4,7 +4,7 @@ import net.minecraft.client.Minecraft;
 
 public abstract class Command {
 	
-	public static final Command[] COMMANDS = new Command[] { new CommandHelp(), new CommandGive() };
+	public static final Command[] COMMANDS = new Command[] { new CommandHelp(), new CommandGive(), new CommandGamemode() };
 	
 	public abstract String getName();
 

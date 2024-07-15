@@ -10,12 +10,12 @@ public class Slot {
 	public final IInventory inventory;
 	private final GuiContainer guiHandler;
 
-	public Slot(GuiContainer var1, IInventory var2, int var3, int var4, int var5) {
-		this.guiHandler = var1;
-		this.inventory = var2;
-		this.slotIndex = var3;
-		this.xPos = var4;
-		this.yPos = var5;
+	public Slot(GuiContainer guiHandler, IInventory inventory, int slotIndex, int x, int y) {
+		this.guiHandler = guiHandler;
+		this.inventory = inventory;
+		this.slotIndex = slotIndex;
+		this.xPos = x;
+		this.yPos = y;
 	}
 
 	public final boolean isAtCursorPos(int var1, int var2) {

@@ -23,7 +23,8 @@ import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.gui.GuiMessage;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.client.gui.container.GuiInventory;
+import net.minecraft.client.gui.container.GuiInventoryCreative;
+import net.minecraft.client.gui.container.GuiInventorySurvival;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.player.EntityPlayerSP;
 import net.minecraft.client.player.MovementInputFromOptions;
@@ -725,7 +726,12 @@ public final class Minecraft implements Runnable {
 									}
 
 									else if (Keyboard.getEventKey() == this.options.keyBindInventory.keyCode) {
-										this.displayGuiScreen(new GuiInventory(this.thePlayer.inventory));
+										
+										if (this.thePlayer.isCreativeMode) {
+											this.displayGuiScreen(new GuiInventoryCreative(this.thePlayer.inventory));
+										} else {
+											this.displayGuiScreen(new GuiInventorySurvival(this.thePlayer.inventory));
+										}
 									}
 									
 									else if (Keyboard.getEventKey() == this.options.keyBindChat.keyCode) {

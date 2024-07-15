@@ -17,7 +17,7 @@ public abstract class GuiContainer extends GuiScreen {
 	private ItemStack heldItem = null;
 	protected int xSize = 176;
 	protected int ySize = 166;
-	protected List inventorySlots = new ArrayList();
+	protected List<Slot> inventorySlots = new ArrayList<Slot>();
 
 	public void drawScreen(int mouseX, int mouseY) {
 		this.drawDefaultBackground();
@@ -37,7 +37,7 @@ public abstract class GuiContainer extends GuiScreen {
 
 		for(int i = 0; i < this.inventorySlots.size(); i++) {
 			
-			Slot slot = (Slot) this.inventorySlots.get(i);
+			Slot slot = this.inventorySlots.get(i);
 			
 			int x = slot.xPos;
 			int y = slot.yPos;
@@ -128,7 +128,7 @@ public abstract class GuiContainer extends GuiScreen {
 					break;
 				}
 
-				Slot var8 = (Slot)var5.inventorySlots.get(var7);
+				Slot var8 = var5.inventorySlots.get(var7);
 				if(var8.isAtCursorPos(var4, var6)) {
 					var10000 = var8;
 					break;

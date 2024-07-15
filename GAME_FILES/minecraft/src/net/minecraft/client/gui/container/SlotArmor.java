@@ -7,7 +7,7 @@ import net.minecraft.game.item.ItemStack;
 final class SlotArmor extends Slot {
 	private int armorType;
 
-	SlotArmor(GuiInventory var1, GuiContainer var2, IInventory var3, int var4, int var5, int var6, int var7) {
+	SlotArmor(GuiInventorySurvival var1, GuiContainer var2, IInventory var3, int var4, int var5, int var6, int var7) {
 		super(var2, var3, var4, 8, var6);
 		this.armorType = var7;
 	}
