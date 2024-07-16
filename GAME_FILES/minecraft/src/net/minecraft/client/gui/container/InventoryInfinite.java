@@ -17,6 +17,9 @@ public class InventoryInfinite implements IInventory {
 	}
 
 	public ItemStack getStackInSlot(int i) {
+		if (i >= getSizeInventory() || i < 0)
+			return null;
+			
 		return new ItemStack(itemList[i]);
 	}
 

@@ -5,7 +5,8 @@ import net.minecraft.game.item.ItemStack;
 
 public class Slot {
 	
-	public final int slotIndex;
+	public int slotIndex;
+	
 	public final int xPos;
 	public final int yPos;
 	public final IInventory inventory;

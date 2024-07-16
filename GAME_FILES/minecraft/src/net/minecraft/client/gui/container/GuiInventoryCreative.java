@@ -1,14 +1,14 @@
 package net.minecraft.client.gui.container;
 
 import net.minecraft.client.RenderHelper;
+import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.render.RenderEngine;
 import net.minecraft.client.render.entity.RenderManager;
 import net.minecraft.game.IInventory;
 import net.minecraft.game.item.Item;
-import net.minecraft.game.item.ItemStack;
-import net.minecraft.game.item.recipe.CraftingManager;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.lwjgl.opengl.GL11;
 
@@ -16,46 +16,74 @@ public final class GuiInventoryCreative extends GuiContainer {
 	
 	private static IInventory infinite;
 	
-	private float xSize_lo;
-	private float ySize_lo;
+	private float mouseX;
+	private float mouseY;
+	private List<Slot> creativeSlots = new ArrayList<Slot>();
 
 	public GuiInventoryCreative(IInventory inventory) {
 		
-		this.xSize = 231;
-		this.ySize = 86;
+		this.xSize = 247;
+		this.ySize = 144;
 		
 		this.allowUserInput = true;
 
-		int x;
-		int y;
+		int x, y;
 
 		// inventory
 		for (y = 0; y < 3; y++) {
 			for (x = 0; x < 9; x++) {
-				this.inventorySlots.add(new Slot(this, inventory, x + (y + 1) * 9, 65 + x * 18, 6 + y * 18));
+				this.inventorySlots.add(new Slot(this, inventory, x + (y + 1) * 9, 81 + x * 18, 64 + y * 18));
 			}
+		}
+		
+		// armor
+		for (int armorType = 0; armorType < 4; armorType++) {
+			this.inventorySlots.add(new SlotArmor(this, inventory, inventory.getSizeInventory() - 1 - armorType, 9, 66 + armorType * 18, armorType));
 		}
 
 		// hotbar
 		for (x = 0; x < 9; x++) {
-			this.inventorySlots.add(new Slot(this, inventory, x, 65 + x * 18, 64));
+			this.inventorySlots.add(new Slot(this, inventory, x, 81 + x * 18, 122));
 		}
 		
 		// creative inventory
-		for (int i=0; i<infinite.getSizeInventory(); i++) {
-			this.inventorySlots.add(new Slot(this, infinite, i, 65 + i % 9 * 18, 100 + i / 9 * 18));
+		for (int i=0; i<36; i++) {
+			
+			Slot slot = new Slot(this, infinite, i, 9 + i % 12 * 18, 6 + i / 12 * 18);
+			this.inventorySlots.add(slot);
+			this.creativeSlots.add(slot);
+		}
+		
+		this.controlList.clear();
+		this.controlList.add(new GuiButton(0, 226, 5, 16, 20, "^"));
+		this.controlList.add(new GuiButton(1, 226, 27, 16, 20, "v"));
+	}
+	
+	protected final void actionPerformed(GuiButton button) {
+		
+		switch (button.id) {
+			case 0:
+				for (Slot slot : creativeSlots) {
+					slot.slotIndex -= 36;
+				}
+				break;
+			case 1:
+				for (Slot slot : creativeSlots) {
+					slot.slotIndex += 36;
+				}
+				break;
 		}
 	}
 
-	protected final void drawGuiContainerForegroundLayer() {
-		//this.fontRenderer.drawString("All Items", 86, 16, 4210752);
-	}
+//	protected final void drawGuiContainerForegroundLayer() {
+//		this.fontRenderer.drawString("All Items", 86, 16, 4210752);
+//	}
 
 	public final void drawScreen(int mouseX, int mouseY) {
 		super.drawScreen(mouseX, mouseY);
 		
-		this.xSize_lo = (float) mouseX;
-		this.ySize_lo = (float) mouseY;
+		this.mouseX = (float) mouseX;
+		this.mouseY = (float) mouseY;
 	}
 
 	protected final void drawGuiContainerBackgroundLayer() {
@@ -71,7 +99,9 @@ public final class GuiInventoryCreative extends GuiContainer {
 		GL11.glEnable(GL11.GL_COLOR_MATERIAL);
 		GL11.glPushMatrix();
 		
-		GL11.glTranslatef((float)(var1 + 34), (float)(var2 + 75), 50.0F);
+		int playerX = var1 + 52;
+		int playerY = var2 + 132;
+		GL11.glTranslatef((float) playerX, (float) playerY, 50.0F);
 		GL11.glScalef(-30.0F, 30.0F, 30.0F);
 		GL11.glRotatef(180.0F, 0.0F, 0.0F, 1.0F);
 		float var3 = this.mc.thePlayer.renderYawOffset;
@@ -79,8 +109,8 @@ public final class GuiInventoryCreative extends GuiContainer {
 		float var5 = this.mc.thePlayer.rotationPitch;
 		
 		// this is used to calculate the point where the player model should look
-		float var6 = (float)(var1 + 34) - this.xSize_lo;
-		float var7 = (float)(var2 + 75 - 50) - this.ySize_lo;
+		float var6 = (float) playerX - this.mouseX;
+		float var7 = (float) playerY - 50 - this.mouseY;
 		
 		GL11.glRotatef(135.0F, 0.0F, 1.0F, 0.0F);
 		

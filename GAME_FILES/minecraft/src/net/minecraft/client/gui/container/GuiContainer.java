@@ -26,6 +26,7 @@ public abstract class GuiContainer extends GuiScreen {
 		int cornerY = (this.height - this.ySize) / 2;
 		
 		this.drawGuiContainerBackgroundLayer();
+		
 		GL11.glPushMatrix();
 		GL11.glRotatef(180.0F, 1.0F, 0.0F, 0.0F);
 		RenderHelper.enableStandardItemLighting();
@@ -108,6 +109,11 @@ public abstract class GuiContainer extends GuiScreen {
 		GL11.glEnable(GL11.GL_LIGHTING);
 		GL11.glEnable(GL11.GL_DEPTH_TEST);
 		GL11.glPopMatrix();
+		
+		// draw buttons on top of any container stuff
+		RenderHelper.disableStandardItemLighting();
+		GL11.glTranslatef((float) cornerX, (float) cornerY, 0.0F);
+		super.drawScreen(mouseX - cornerX, mouseY - cornerY);
 	}
 
 	protected void drawGuiContainerForegroundLayer() {}
@@ -116,6 +122,12 @@ public abstract class GuiContainer extends GuiScreen {
 
 	protected final void drawSlotInventory(int mouseX, int mouseY, int mouseClick) {
 		
+		// account for window offset that happens when drawing
+		int cornerX = (this.width - this.xSize) / 2;
+		int cornerY = (this.height - this.ySize) / 2;
+		super.drawSlotInventory(mouseX - cornerX, mouseY - cornerY, mouseClick);
+		
+		// item slot stuff
 		if (mouseClick == 0 || mouseClick == 1) {
 			int var4 = mouseX;
 			int var6 = mouseY;
@@ -276,10 +288,10 @@ public abstract class GuiContainer extends GuiScreen {
 	}
 
 	protected final void keyTyped(char var1, int var2) {
+		
 		if(var2 == 1 || var2 == this.mc.options.keyBindInventory.keyCode) {
-			this.mc.displayGuiScreen((GuiScreen)null);
+			this.mc.displayGuiScreen(null);
 		}
-
 	}
 
 	public void onGuiClosed() {
