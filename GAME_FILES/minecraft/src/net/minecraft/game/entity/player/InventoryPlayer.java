@@ -192,19 +192,32 @@ public final class InventoryPlayer implements IInventory {
 		return 64;
 	}
 
+	public final int getPlayerArmorValue(int armorType) {
+		
+		if (this.armorInventory[armorType] == null || !(this.armorInventory[armorType].getItem() instanceof ItemArmor))
+			return 0;
+		
+		int maxDam = this.armorInventory[armorType].getItem().getMaxDamage();
+		int damage = this.armorInventory[armorType].itemDamage;
+		
+		return (int) Math.ceil((maxDam - damage) * 4 / maxDam);
+	}
+	
+	// no idea how this code works
 	public final int getPlayerArmorValue() {
 		int var1 = 0;
 		int var2 = 0;
 		int var3 = 0;
 
-		for(int var4 = 0; var4 < this.armorInventory.length; ++var4) {
-			if(this.armorInventory[var4] != null && this.armorInventory[var4].getItem() instanceof ItemArmor) {
-				int var5 = this.armorInventory[var4].isItemStackDamageable();
-				int var6 = this.armorInventory[var4].itemDamage;
+		for(int i = 0; i < this.armorInventory.length; i++) {
+			
+			if(this.armorInventory[i] != null && this.armorInventory[i].getItem() instanceof ItemArmor) {
+				int var5 = this.armorInventory[i].isItemStackDamageable();
+				int var6 = this.armorInventory[i].itemDamage;
 				var6 = var5 - var6;
 				var2 += var6;
 				var3 += var5;
-				var5 = ((ItemArmor)this.armorInventory[var4].getItem()).damageReduceAmount;
+				var5 = ((ItemArmor) this.armorInventory[i].getItem()).damageReduceAmount;
 				var1 += var5;
 			}
 		}

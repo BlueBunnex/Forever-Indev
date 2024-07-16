@@ -49,78 +49,90 @@ public final class GuiIngame extends Gui {
 		if(this.mc.thePlayer.heartsLife < 10) {
 			var20 = false;
 		}
-
-		int playerHealth     = this.mc.thePlayer.health,
-			playerPrevHealth = this.mc.thePlayer.prevHealth;
 		
 		this.rand.setSeed((long)(this.updateCounter * 312871));
-		int var10;
-		int var12;
 		
 		// draw HUD
 		if (this.mc.playerController.shouldDrawHUD()) {
 			
-			EntityPlayerSP var8 = this.mc.thePlayer;
-			var10 = var8.inventory.getPlayerArmorValue();
-
-			int var11;
-			int var13;
-			for(var11 = 0; var11 < 10; ++var11) {
-				var12 = height - 32;
-				if(var10 > 0) {
-					var13 = width / 2 + 91 - (var11 << 3) - 9;
-					if((var11 << 1) + 1 < var10) {
-						this.drawTexturedModalRect(var13, var12, 34, 9, 9, 9);
-					}
-
-					if((var11 << 1) + 1 == var10) {
-						this.drawTexturedModalRect(var13, var12, 25, 9, 9, 9);
-					}
-
-					if((var11 << 1) + 1 > var10) {
-						this.drawTexturedModalRect(var13, var12, 16, 9, 9, 9);
+			int playerHealth     = this.mc.thePlayer.health,
+				playerPrevHealth = this.mc.thePlayer.prevHealth;
+			
+			int x, y;
+			
+			// render armor damage
+			if (this.mc.thePlayer.inventory.getPlayerArmorValue() > 0) {
+				
+				for (int i=0; i<4; i++) {
+					
+					x = width / 2 + 91 - (i << 3) - 9;
+					y = height - 32;
+					
+					switch (this.mc.thePlayer.inventory.getPlayerArmorValue(i)) {
+						case 4:
+							this.drawTexturedModalRect(x, y, 52, 9, 9, 9);
+							break;
+						case 3:
+							this.drawTexturedModalRect(x, y, 43, 9, 9, 9);
+							break;
+						case 2:
+							this.drawTexturedModalRect(x, y, 34, 9, 9, 9);
+							break;
+						case 1:
+							y += this.rand.nextInt(2);
+							this.drawTexturedModalRect(x, y, 25, 9, 9, 9);
+							break;
+						case 0:
+						default:
+							this.drawTexturedModalRect(x, y, 16, 9, 9, 9);
+							break;
 					}
 				}
+			}
+			
+			for(int i = 0; i < 10; i++) {
 
 				byte var26 = 0;
-				if(var20) {
+				if (var20) {
 					var26 = 1;
 				}
 
-				int var14 = width / 2 - 91 + (var11 << 3);
-				if(playerHealth <= 4) {
-					var12 += this.rand.nextInt(2);
+				x = width / 2 - 91 + (i << 3);
+				y = height - 32;
+				if (playerHealth <= 4) {
+					y += this.rand.nextInt(2);
 				}
 
-				this.drawTexturedModalRect(var14, var12, 16 + var26 * 9, 0, 9, 9);
-				if(var20) {
-					if((var11 << 1) + 1 < playerPrevHealth) {
-						this.drawTexturedModalRect(var14, var12, 70, 0, 9, 9);
+				this.drawTexturedModalRect(x, y, 16 + var26 * 9, 0, 9, 9);
+				if (var20) {
+					if((i << 1) + 1 < playerPrevHealth) {
+						this.drawTexturedModalRect(x, y, 70, 0, 9, 9);
 					}
 
-					if((var11 << 1) + 1 == playerPrevHealth) {
-						this.drawTexturedModalRect(var14, var12, 79, 0, 9, 9);
+					if((i << 1) + 1 == playerPrevHealth) {
+						this.drawTexturedModalRect(x, y, 79, 0, 9, 9);
 					}
 				}
 
-				if((var11 << 1) + 1 < playerHealth) {
-					this.drawTexturedModalRect(var14, var12, 52, 0, 9, 9);
+				if ((i << 1) + 1 < playerHealth) {
+					this.drawTexturedModalRect(x, y, 52, 0, 9, 9);
 				}
 
-				if((var11 << 1) + 1 == playerHealth) {
-					this.drawTexturedModalRect(var14, var12, 61, 0, 9, 9);
+				if ((i << 1) + 1 == playerHealth) {
+					this.drawTexturedModalRect(x, y, 61, 0, 9, 9);
 				}
 			}
 
-			if(this.mc.thePlayer.isInsideOfWater()) {
-				var11 = (int)Math.ceil((double)(this.mc.thePlayer.air - 2) * 10.0D / 300.0D);
-				var12 = (int)Math.ceil((double)this.mc.thePlayer.air * 10.0D / 300.0D) - var11;
+			if (this.mc.thePlayer.isInsideOfWater()) {
+				// dunno how this code works
+				int a = (int) Math.ceil((double)(this.mc.thePlayer.air - 2) * 10.0D / 300.0D);
+				int b = (int) Math.ceil((double)this.mc.thePlayer.air       * 10.0D / 300.0D) - a;
 
-				for(var13 = 0; var13 < var11 + var12; ++var13) {
-					if(var13 < var11) {
-						this.drawTexturedModalRect(width / 2 - 91 + (var13 << 3), height - 32 - 9, 16, 18, 9, 9);
+				for (int c = 0; c < a + b; c++) {
+					if (c < a) {
+						this.drawTexturedModalRect(width / 2 - 91 + (c << 3), height - 32 - 9, 16, 18, 9, 9);
 					} else {
-						this.drawTexturedModalRect(width / 2 - 91 + (var13 << 3), height - 32 - 9, 25, 18, 9, 9);
+						this.drawTexturedModalRect(width / 2 - 91 + (c << 3), height - 32 - 9, 25, 18, 9, 9);
 					}
 				}
 			}
@@ -134,12 +146,16 @@ public final class GuiIngame extends Gui {
 		RenderHelper.enableStandardItemLighting();
 		GL11.glPopMatrix();
 
-		for(var10 = 0; var10 < 9; ++var10) {
-			int var25 = width / 2 - 90 + var10 * 20 + 2;
+		// render hotbar
+		for(int i = 0; i < 9; i++) {
+			
+			int var25 = width / 2 - 90 + i * 20 + 2;
 			int var21 = height - 16 - 3;
-			ItemStack var22 = this.mc.thePlayer.inventory.mainInventory[var10];
+			
+			ItemStack var22 = this.mc.thePlayer.inventory.mainInventory[i];
+			
 			if(var22 != null) {
-				float var9 = (float)var22.animationsToGo - var1;
+				float var9 = (float) var22.animationsToGo - var1;
 				if(var9 > 0.0F) {
 					GL11.glPushMatrix();
 					float var26 = 1.0F + var9 / 5.0F;
