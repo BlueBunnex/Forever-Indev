@@ -6,8 +6,8 @@ import net.minecraft.game.level.material.Material;
 
 public final class BlockGrass extends Block {
 	
-	protected BlockGrass() {
-		super("Grass", 2, Material.ground);
+	protected BlockGrass(int blockID) {
+		super("Grass", blockID, Material.ground);
 		this.blockIndexInTexture = 3;
 		this.setTickOnLoad(true);
 	}

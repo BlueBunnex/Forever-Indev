@@ -8,8 +8,8 @@ import net.minecraft.game.level.material.Material;
 
 public final class BlockLeaves extends BlockLeavesBase {
 	
-	protected BlockLeaves() {
-		super("Leaves", 18, 52, Material.leaves);
+	protected BlockLeaves(int blockID) {
+		super("Leaves", blockID, 52, Material.leaves);
 		this.setTickOnLoad(true);
 	}
 

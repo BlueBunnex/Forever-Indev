@@ -435,20 +435,20 @@ public class Block {
 	}
 
 	static {
-		// fluids (scary)
-		waterMoving = new BlockFlowing("Water", 8, 14, Material.water).setHardness(100.0F).setLightOpacity(3);
-		waterStill  = new BlockStationary("Water", 9, 14, Material.water).setHardness(100.0F).setLightOpacity(3);
-		lavaMoving  = new BlockFlowing("Lava", 10, 30, Material.lava).setHardness(0.0F).setLightValue(1.0F).setLightOpacity(255);
-		lavaStill   = new BlockStationary("Lava", 11, 30, Material.lava).setHardness(100.0F).setLightValue(1.0F).setLightOpacity(255);
+		// grass
+		grass = (BlockGrass) new BlockGrass(1).setHardness(0.6F);
+		grass.stepSound = soundGrassFootstep;
 		
-		waterSource = new BlockSource(52, waterMoving.blockID).setHardness(0.0F);
-		waterSource.stepSound = soundWoodFootstep; // idk either
+		// dirt
+		dirt = new Block("Dirt", 2, 2, Material.ground).setHardness(0.5F);
+		dirt.stepSound = soundGravelFootstep;
 		
-		lavaSource = new BlockSource(53, lavaMoving.blockID).setHardness(0.0F);
-		lavaSource.stepSound = soundWoodFootstep;
+		// farmland
+		tilledField = new BlockFarmland(3).setHardness(0.6F);
+		tilledField.stepSound = soundGravelFootstep;
 		
 		// stone
-		stone = new Block("Stone", 1, 1, Material.rock) {
+		stone = new Block("Stone", 4, 1, Material.rock) {
 			
 			public final int idDropped(int var1, Random random) {
 				return Block.cobblestone.blockID;
@@ -457,37 +457,20 @@ public class Block {
 		}.setHardness(1.5F).setResistance(10.0F);
 		stone.stepSound = soundStoneFootstep;
 		
-		// grass
-		grass = (BlockGrass) new BlockGrass().setHardness(0.6F);
-		grass.stepSound = soundGrassFootstep;
-		
-		// dirt
-		dirt = new Block("Dirt", 3, 2, Material.ground).setHardness(0.5F);
-		dirt.stepSound = soundGravelFootstep;
-		
 		// cobblestone
-		cobblestone = new Block("Cobblestone", 4, 16, Material.rock).setHardness(2.0F).setResistance(10.0F);
+		cobblestone = new Block("Cobblestone", 5, 16, Material.rock).setHardness(2.0F).setResistance(10.0F);
 		cobblestone.stepSound = soundStoneFootstep;
 		
-		// planks
-		planks = new Block("Planks", 5, 4, Material.wood).setHardness(2.0F).setResistance(5.0F);
-		planks.stepSound = soundWoodFootstep;
-		
-		// sapling
-		sapling = new BlockSapling("Sapling", 6, 15).setHardness(0.0F);
-		sapling.stepSound = soundGrassFootstep;
-		
-		// bedrock
-		bedrock = new Block("Bedrock", 7, 17, Material.rock).setHardness(-1.0F).setResistance(6000000.0F);
-		bedrock.stepSound = soundStoneFootstep;
-		bedrock.rarity = Rarity.LEGENDARY;
+		// mossy cobblestone
+		cobblestoneMossy = new Block("Mossy Cobblestone", 6, 36, Material.rock).setHardness(2.0F).setResistance(10.0F);
+		cobblestoneMossy.stepSound = soundStoneFootstep;
 		
 		// sand
-		sand = new BlockGravity("Sand", 12, 18).setHardness(0.5F);
+		sand = new BlockGravity("Sand", 7, 18).setHardness(0.5F);
 		sand.stepSound = soundSandFootstep;
 		
 		// gravel
-		gravel = new BlockGravity("Gravel", 13, 19) {
+		gravel = new BlockGravity("Gravel", 8, 19) {
 			
 			public final int idDropped(int var1, Random random) {
 				return random.nextInt(10) == 0 ? Item.flint.shiftedIndex : this.blockID;
@@ -496,35 +479,51 @@ public class Block {
 		}.setHardness(0.6F);
 		gravel.stepSound = soundGravelFootstep;
 		
+		// obsidian
+		obsidian = new Block("Obsidian", 9, 37, Material.rock).setHardness(10.0F).setResistance(10.0F);
+		obsidian.stepSound = soundStoneFootstep;
+		obsidian.rarity = Rarity.RARE;
+		
 		// ALL the ores
-		oreDiamond = new BlockOre("Diamond Ore", 56, 50).setHardness(3.0F).setResistance(5.0F);
+		oreCoal = new BlockOre("Coal Ore", 10, 34).setHardness(3.0F).setResistance(5.0F);
+		oreCoal.stepSound = soundStoneFootstep;
+		
+		oreIron = new BlockOre("Iron Ore", 11, 33).setHardness(3.0F).setResistance(5.0F);
+		oreIron.stepSound = soundStoneFootstep;
+		
+		oreGold = new BlockOre("Gold Ore", 12, 32).setHardness(3.0F).setResistance(5.0F);
+		oreGold.stepSound = soundStoneFootstep;
+		
+		oreDiamond = new BlockOre("Diamond Ore", 13, 50).setHardness(3.0F).setResistance(5.0F);
 		oreDiamond.stepSound = soundStoneFootstep;
 		oreDiamond.rarity = Rarity.RARE;
 		
-		oreGold = new BlockOre("Gold Ore", 14, 32).setHardness(3.0F).setResistance(5.0F);
-		oreGold.stepSound = soundStoneFootstep;
+		// ALL ore blocks
+		blockIron = new BlockOreBlock("Iron Block", 14, 38).setHardness(5.0F).setResistance(10.0F);
+		blockIron.stepSound = soundMetalFootstep;
 		
-		oreIron = new BlockOre("Iron Ore", 15, 33).setHardness(3.0F).setResistance(5.0F);
-		oreIron.stepSound = soundStoneFootstep;
+		blockGold = new BlockOreBlock("Gold Block", 15, 39).setHardness(3.0F).setResistance(10.0F);
+		blockGold.stepSound = soundMetalFootstep;
 		
-		oreCoal = new BlockOre("Coal Ore", 16, 34).setHardness(3.0F).setResistance(5.0F);
-		oreCoal.stepSound = soundStoneFootstep;
+		blockDiamond = new BlockOreBlock("Diamond Block", 16, 40).setHardness(5.0F).setResistance(10.0F);
+		blockDiamond.stepSound = soundMetalFootstep;
+		blockDiamond.rarity = Rarity.RARE;
+		
+		// sapling
+		sapling = new BlockSapling("Sapling", 17, 15).setHardness(0.0F);
+		sapling.stepSound = soundGrassFootstep;
 		
 		// (wood) log
-		wood = new BlockLog().setHardness(2.0F);
+		wood = new BlockLog(18).setHardness(2.0F);
 		wood.stepSound = soundWoodFootstep;
 		
+		// planks
+		planks = new Block("Planks", 19, 4, Material.wood).setHardness(2.0F).setResistance(5.0F);
+		planks.stepSound = soundWoodFootstep;
+		
 		// leaves
-		leaves = new BlockLeaves().setHardness(0.2F).setLightOpacity(1);
+		leaves = new BlockLeaves(20).setHardness(0.2F).setLightOpacity(1);
 		leaves.stepSound = soundGrassFootstep;
-		
-		// sponge
-		sponge = new BlockSponge().setHardness(0.6F);
-		sponge.stepSound = soundGrassFootstep;
-		
-		// glass
-		glass = new BlockGlass("Glass", 20, 49, Material.glass).setHardness(0.3F);
-		glass.stepSound = soundGlassFootstep;
 		
 		// ALL the cloth
 		clothRed = new Block("Red Cloth", 21, 64, Material.cloth).setHardness(0.8F);
@@ -588,37 +587,32 @@ public class Block {
 		mushroomRed = (BlockFlower) new BlockMushroom("Red Mushroom", 40, 28).setHardness(0.0F);
 		mushroomRed.stepSound = soundGrassFootstep;
 		
-		crops = new BlockCrops("Crops", 59, 88).setHardness(0.0F);
+		crops = new BlockCrops("Crops", 41, 88).setHardness(0.0F);
 		crops.stepSound = soundGrassFootstep;
 		
-		// ALL ore blocks
-		blockDiamond = new BlockOreBlock("Diamond Block", 57, 40).setHardness(5.0F).setResistance(10.0F);
-		blockDiamond.stepSound = soundMetalFootstep;
-		blockDiamond.rarity = Rarity.RARE;
+		// polished
+		polishedBlock = new Block("Polished Block", 42, 96, Material.rock).setHardness(2.0F).setResistance(10.0F);
+		polishedBlock.stepSound = soundStoneFootstep;
 		
-		blockGold = new BlockOreBlock("Gold Block", 41, 39).setHardness(3.0F).setResistance(10.0F);
-		blockGold.stepSound = soundMetalFootstep;
-		
-		blockIron = new BlockOreBlock("Iron Block", 42, 38).setHardness(5.0F).setResistance(10.0F);
-		blockIron.stepSound = soundMetalFootstep;
-		
-		// slabs
-		slabFull = new BlockSlab("Polished Full Slab", 43, true).setHardness(2.0F).setResistance(10.0F);
-		slabFull.stepSound = soundStoneFootstep;
+		polishedTiles = new Block("Polished Tiles", 43, 98, Material.rock).setHardness(2.0F).setResistance(10.0F);
+		polishedTiles.stepSound = soundStoneFootstep;
 		
 		slabHalf = new BlockSlab("Polished Slab", 44, false).setHardness(2.0F).setResistance(10.0F);
 		slabHalf.stepSound = soundStoneFootstep;
 		
+		slabFull = new BlockSlab("Polished Full Slab", 45, true).setHardness(2.0F).setResistance(10.0F);
+		slabFull.stepSound = soundStoneFootstep;
+		
 		// brick
-		brick = new Block("Brick", 45, 7, Material.rock).setHardness(2.0F).setResistance(10.0F);
+		brick = new Block("Brick", 46, 7, Material.rock).setHardness(2.0F).setResistance(10.0F);
 		brick.stepSound = soundStoneFootstep;
 		
 		// TNT
-		tnt = new BlockTNT().setHardness(0.0F);
+		tnt = new BlockTNT(47).setHardness(0.0F);
 		tnt.stepSound = soundGrassFootstep;
 		
 		// bookshelf
-		bookShelf = new Block("Bookshelf", 47, 35, Material.wood) {
+		bookShelf = new Block("Bookshelf", 48, 35, Material.wood) {
 			
 			public final int getBlockTextureFromSide(int side) {
 				return side <= 1 ? 4 : this.blockIndexInTexture;
@@ -631,59 +625,64 @@ public class Block {
 		}.setHardness(1.5F);
 		bookShelf.stepSound = soundWoodFootstep;
 		
-		// mossy cobblestone
-		cobblestoneMossy = new Block("Mossy Cobblestone", 48, 36, Material.rock).setHardness(2.0F).setResistance(10.0F);
-		cobblestoneMossy.stepSound = soundStoneFootstep;
+		// glass
+		glass = new BlockGlass("Glass", 49, 49, Material.glass).setHardness(0.3F);
+		glass.stepSound = soundGlassFootstep;
 		
-		// obsidian
-		obsidian = new Block("Obsidian", 49, 37, Material.rock).setHardness(10.0F).setResistance(10.0F);
-		obsidian.stepSound = soundStoneFootstep;
-		obsidian.rarity = Rarity.RARE;
+		// sponge
+		sponge = new BlockSponge(50).setHardness(0.6F);
+		sponge.stepSound = soundGrassFootstep;
 		
 		// torch
-		torch = new BlockTorch(50).setHardness(0.0F).setLightValue(14.0F / 16.0F);
+		torch = new BlockTorch(51).setHardness(0.0F).setLightValue(14.0F / 16.0F);
 		torch.stepSound = soundWoodFootstep;
 		
-		// fire
-		fire = (BlockFire) new BlockFire(51).setHardness(0.0F).setLightValue(1.0F);
-		fire.stepSound = soundWoodFootstep; // what
-		fire.rarity = Rarity.LEGENDARY;
-		
 		// chest
-		crate = new BlockChest(54).setHardness(2.5F);
+		crate = new BlockChest(52).setHardness(2.5F);
 		crate.stepSound = soundWoodFootstep;
 		
-		// cog (idk man)
-		cog = new BlockGears(55).setHardness(0.5F);
-		cog.stepSound = soundMetalFootstep;
-		cog.rarity = Rarity.LEGENDARY;
-		
 		// workbench / crafting table
-		workbench = new BlockWorkbench(58).setHardness(2.5F);
+		workbench = new BlockWorkbench(53).setHardness(2.5F);
 		workbench.stepSound = soundWoodFootstep;
 		
-		// farmland
-		tilledField = new BlockFarmland(60).setHardness(0.6F);
-		tilledField.stepSound = soundGravelFootstep;
-		
 		// furnace (idle and active)
-		stoneOvenIdle = new BlockFurnace("Furnace", 61, false).setHardness(3.5F);
+		stoneOvenIdle = new BlockFurnace("Furnace", 54, false).setHardness(3.5F);
 		stoneOvenIdle.stepSound = soundStoneFootstep;
 		
-		stoneOvenActive = new BlockFurnace("Furnace", 62, true).setHardness(3.5F);
+		stoneOvenActive = new BlockFurnace("Active Furnace", 55, true).setHardness(3.5F);
 		stoneOvenActive.stepSound = soundStoneFootstep;
 		stoneOvenActive.setLightValue(14.0F / 16.0F);
 		
 		// coal lamp
-		coalLamp = new Block("Coal Lamp", 63, 81, Material.rock).setHardness(2.0F).setResistance(10.0F).setLightValue(16.0F / 16.0F);
+		coalLamp = new Block("Coal Lamp", 56, 81, Material.rock).setHardness(2.0F).setResistance(10.0F).setLightValue(16.0F / 16.0F);
 		coalLamp.stepSound = soundStoneFootstep;
 		
-		// other polished blocks (besides slabs)
-		polishedBlock = new Block("Polished Block", 82, 96, Material.rock).setHardness(2.0F).setResistance(10.0F);
-		polishedBlock.stepSound = soundStoneFootstep;
+		// fluids (scary)
+		waterMoving = new BlockFlowing("Water", 57, 14, Material.water).setHardness(100.0F).setLightOpacity(3);
+		waterStill  = new BlockStationary("Water", 58, 14, Material.water).setHardness(100.0F).setLightOpacity(3);
+		lavaMoving  = new BlockFlowing("Lava", 59, 30, Material.lava).setHardness(0.0F).setLightValue(1.0F).setLightOpacity(255);
+		lavaStill   = new BlockStationary("Lava", 60, 30, Material.lava).setHardness(100.0F).setLightValue(1.0F).setLightOpacity(255);
 		
-		polishedTiles = new Block("Polished Tiles", 83, 98, Material.rock).setHardness(2.0F).setResistance(10.0F);
-		polishedTiles.stepSound = soundStoneFootstep;
+		waterSource = new BlockSource(61, waterMoving.blockID).setHardness(0.0F);
+		waterSource.stepSound = soundWoodFootstep; // idk either
+		
+		lavaSource = new BlockSource(62, lavaMoving.blockID).setHardness(0.0F);
+		lavaSource.stepSound = soundWoodFootstep;
+		
+		// bedrock
+		bedrock = new Block("Bedrock", 63, 17, Material.rock).setHardness(-1.0F).setResistance(6000000.0F);
+		bedrock.stepSound = soundStoneFootstep;
+		bedrock.rarity = Rarity.LEGENDARY;
+		
+		// cog (idk man)
+		cog = new BlockGears(64).setHardness(0.5F);
+		cog.stepSound = soundMetalFootstep;
+		cog.rarity = Rarity.LEGENDARY;
+		
+		// fire
+		fire = (BlockFire) new BlockFire(65).setHardness(0.0F).setLightValue(1.0F);
+		fire.stepSound = soundWoodFootstep; // what
+		fire.rarity = Rarity.LEGENDARY;
 
 		// make an item for every block
 		for(int i = 0; i < 256; i++) {
