@@ -6,43 +6,39 @@ import net.minecraft.game.level.World;
 import net.minecraft.game.level.block.Block;
 
 public class Item {
+	
 	protected static Random rand = new Random();
 	public static Item[] itemsList = new Item[1024];
 	
-	public static Item coal;
-	public static Item ingotIron;
-	public static Item ingotGold;
-	public static Item diamond;
-	
-	public static Item shovelWood;
-	public static Item shovelStone;
-	public static Item shovelIron;
-	public static Item shovelGold;
-	public static Item shovelDiamond;
-	
-	public static Item pickaxeWood;
-	public static Item pickaxeStone;
-	public static Item pickaxeIron;
-	public static Item pickaxeGold;
-	public static Item pickaxeDiamond;
-	
-	public static Item axeWood;
-	public static Item axeStone;
-	public static Item axeIron;
-	public static Item axeGold;
-	public static Item axeDiamond;
-	
 	public static Item swordWood;
-	public static Item swordStone;
-	public static Item swordIron;
-	public static Item swordGold;
-	public static Item swordDiamond;
-	
+	public static Item pickaxeWood;
+	public static Item axeWood;
+	public static Item shovelWood;
 	public static Item hoeWood;
+	
+	public static Item swordStone;
+	public static Item pickaxeStone;
+	public static Item axeStone;
+	public static Item shovelStone;
 	public static Item hoeStone;
+	
+	public static Item swordIron;
+	public static Item pickaxeIron;
+	public static Item axeIron;
+	public static Item shovelIron;
 	public static Item hoeIron;
-	public static Item hoeDiamond;
+	
+	public static Item swordGold;
+	public static Item pickaxeGold;
+	public static Item axeGold;
+	public static Item shovelGold;
 	public static Item hoeGold;
+	
+	public static Item swordDiamond;
+	public static Item pickaxeDiamond;
+	public static Item axeDiamond;
+	public static Item shovelDiamond;
+	public static Item hoeDiamond;
 	
 	public static Item helmetLeather;
 	public static Item chestplateLeather;
@@ -59,16 +55,20 @@ public class Item {
 	public static Item leggingsIron;
 	public static Item bootsIron;
 	
-	public static Item helmetDiamond;
-	public static Item chestplateDiamond;
-	public static Item leggingsDiamond;
-	public static Item bootsDiamond;
-	
 	public static Item helmetGold;
 	public static Item chestplateGold;
 	public static Item leggingsGold;
 	public static Item bootsGold;
 	
+	public static Item helmetDiamond;
+	public static Item chestplateDiamond;
+	public static Item leggingsDiamond;
+	public static Item bootsDiamond;
+	
+	public static Item coal;
+	public static Item ingotIron;
+	public static Item ingotGold;
+	public static Item diamond;
 	public static Item flintAndSteel;
 	public static Item bow;
 	public static Item arrow;
@@ -85,7 +85,6 @@ public class Item {
 	public static Item porkRaw;
 	public static Item porkCooked;
 	public static Item painting;
-	
 	public static Item apple;
 	public static Item sugarBeet;
 	public static Item sugar;
@@ -164,221 +163,226 @@ public class Item {
 	}
 
 	static {
-		shovelIron = new ItemSpade("Iron Shovel", 0, 2);
-		shovelIron.iconIndex = 82;
-		
-		pickaxeIron = new ItemPickaxe("Iron Pickaxe", 1, 2);
-		pickaxeIron.iconIndex = 98;
-		
-		axeIron = new ItemAxe("Iron Axe", 2, 2);
-		axeIron.iconIndex = 114;
-		
-		flintAndSteel = new ItemFlintAndSteel("Flint and Steel", 3);
-		flintAndSteel.iconIndex = 5;
-		
-		apple = new ItemFood("Apple", 4, 4);
-		apple.iconIndex = 10;
-		
-		bow = new ItemBow("Bow", 5);
-		bow.iconIndex = 21;
-		
-		arrow = new Item("Arrow", 6);
-		arrow.iconIndex = 37;
-		
-		coal = new Item("Coal", 7);
-		coal.iconIndex = 7;
-		
-		diamond = new Item("Diamond", 8);
-		diamond.iconIndex = 55;
-		diamond.rarity = Rarity.RARE;
-		
-		ingotIron = new Item("Iron Ingot", 9);
-		ingotIron.iconIndex = 23;
-		
-		ingotGold = new Item("Gold Ingot", 10);
-		ingotGold.iconIndex = 39;
-		
-		swordIron = new ItemSword("Iron Sword", 11, 2);
-		swordIron.iconIndex = 66;
-		
-		swordWood = new ItemSword("Wood Sword", 12, 0);
+		// swords and tools
+		swordWood = new ItemSword("Wood Sword", 0, 0);
 		swordWood.iconIndex = 64;
 		
-		shovelWood = new ItemSpade("Wood Shovel", 13, 0);
-		shovelWood.iconIndex = 80;
-		
-		pickaxeWood = new ItemPickaxe("Wood Pickaxe", 14, 0);
+		pickaxeWood = new ItemPickaxe("Wood Pickaxe", 1, 0);
 		pickaxeWood.iconIndex = 96;
 		
-		axeWood = new ItemAxe("Wood Axe", 15, 0);
+		axeWood = new ItemAxe("Wood Axe", 2, 0);
 		axeWood.iconIndex = 112;
 		
-		swordStone = new ItemSword("Stone Sword", 16, 1);
+		shovelWood = new ItemSpade("Wood Shovel", 3, 0);
+		shovelWood.iconIndex = 80;
+		
+		hoeWood = new ItemHoe("Wood Hoe", 4, 0);
+		hoeWood.iconIndex = 128;
+		
+		swordStone = new ItemSword("Stone Sword", 5, 1);
 		swordStone.iconIndex = 65;
 		
-		shovelStone = new ItemSpade("Stone Shovel", 17, 1);
-		shovelStone.iconIndex = 81;
-		
-		pickaxeStone = new ItemPickaxe("Stone Pickaxe", 18, 1);
+		pickaxeStone = new ItemPickaxe("Stone Pickaxe", 6, 1);
 		pickaxeStone.iconIndex = 97;
 		
-		axeStone = new ItemAxe("Stone Axe", 19, 1);
+		axeStone = new ItemAxe("Stone Axe", 7, 1);
 		axeStone.iconIndex = 113;
+		
+		shovelStone = new ItemSpade("Stone Shovel", 8, 1);
+		shovelStone.iconIndex = 81;
+		
+		hoeStone = new ItemHoe("Stone Hoe", 9, 1);
+		hoeStone.iconIndex = 129;
+		
+		swordIron = new ItemSword("Iron Sword", 10, 2);
+		swordIron.iconIndex = 66;
+		
+		pickaxeIron = new ItemPickaxe("Iron Pickaxe", 11, 2);
+		pickaxeIron.iconIndex = 98;
+		
+		axeIron = new ItemAxe("Iron Axe", 12, 2);
+		axeIron.iconIndex = 114;
+		
+		shovelIron = new ItemSpade("Iron Shovel", 13, 2);
+		shovelIron.iconIndex = 82;
+		
+		hoeIron = new ItemHoe("Iron Hoe", 14, 2);
+		hoeIron.iconIndex = 130;
+		
+		swordGold = new ItemSword("Gold Sword", 15, 0);
+		swordGold.iconIndex = 68;
+		
+		pickaxeGold = new ItemPickaxe("Gold Pickaxe", 16, 0);
+		pickaxeGold.iconIndex = 100;
+		
+		axeGold = new ItemAxe("Gold Axe", 17, 0);
+		axeGold.iconIndex = 116;
+		
+		shovelGold = new ItemSpade("Gold Shovel", 18, 0);
+		shovelGold.iconIndex = 84;
+		
+		hoeGold = new ItemHoe("Gold Hoe", 19, 4);
+		hoeGold.iconIndex = 132;
 		
 		swordDiamond = new ItemSword("Diamond Sword", 20, 3);
 		swordDiamond.iconIndex = 67;
 		swordDiamond.rarity = Rarity.RARE;
 		
-		shovelDiamond = new ItemSpade("Diamond Shovel", 21, 3);
-		shovelDiamond.iconIndex = 83;
-		shovelDiamond.rarity = Rarity.RARE;
-		
-		pickaxeDiamond = new ItemPickaxe("Diamond Pickaxe", 22, 3);
+		pickaxeDiamond = new ItemPickaxe("Diamond Pickaxe", 21, 3);
 		pickaxeDiamond.iconIndex = 99;
 		pickaxeDiamond.rarity = Rarity.RARE;
 		
-		axeDiamond = new ItemAxe("Diamond Axe", 23, 3);
+		axeDiamond = new ItemAxe("Diamond Axe", 22, 3);
 		axeDiamond.iconIndex = 115;
 		axeDiamond.rarity = Rarity.RARE;
 		
-		hoeDiamond = new ItemHoe("Diamond Hoe", 37, 3);
+		shovelDiamond = new ItemSpade("Diamond Shovel", 23, 3);
+		shovelDiamond.iconIndex = 83;
+		shovelDiamond.rarity = Rarity.RARE;
+		
+		hoeDiamond = new ItemHoe("Diamond Hoe", 24, 3);
 		hoeDiamond.iconIndex = 131;
 		hoeDiamond.rarity = Rarity.RARE;
 		
-		stick = new Item("Stick", 24);
-		stick.iconIndex = 53;
-		
-		bowlEmpty = new Item("Empty Bowl", 25);
-		bowlEmpty.iconIndex = 71;
-		
-		bowlSoup = new ItemSoup("Mushroom Stew", 26, 10);
-		bowlSoup.iconIndex = 72;
-		
-		swordGold = new ItemSword("Gold Sword", 27, 0);
-		swordGold.iconIndex = 68;
-		
-		shovelGold = new ItemSpade("Gold Shovel", 28, 0);
-		shovelGold.iconIndex = 84;
-		
-		pickaxeGold = new ItemPickaxe("Gold Pickaxe", 29, 0);
-		pickaxeGold.iconIndex = 100;
-		
-		axeGold = new ItemAxe("Gold Axe", 30, 0);
-		axeGold.iconIndex = 116;
-		
-		silk = new Item("Silk", 31);
-		silk.iconIndex = 8;
-		
-		feather = new Item("Feather", 32);
-		feather.iconIndex = 24;
-		
-		gunpowder = new Item("Sulphur", 33);
-		gunpowder.iconIndex = 40;
-		
-		hoeWood = new ItemHoe("Wood Hoe", 34, 0);
-		hoeWood.iconIndex = 128;
-		
-		hoeStone = new ItemHoe("Stone Hoe", 35, 1);
-		hoeStone.iconIndex = 129;
-		
-		hoeIron = new ItemHoe("Iron Hoe", 36, 2);
-		hoeIron.iconIndex = 130;
-		
-		hoeGold = new ItemHoe("Gold Hoe", 38, 4);
-		hoeGold.iconIndex = 132;
-		
-		seeds = new ItemSeeds("Wheat Seeds", 39, Block.crops.blockID);
-		seeds.iconIndex = 9;
-		
-		wheat = new Item("Wheat", 40);
-		wheat.iconIndex = 25;
-		
-		bread = new ItemFood("Bread", 41, 5);
-		bread.iconIndex = 41;
-		
-		helmetLeather = new ItemArmor("Leather Helmet", 42, 0, 0, 0);
+		// armor
+		helmetLeather = new ItemArmor("Leather Helmet", 25, 0, 0, 0);
 		helmetLeather.iconIndex = 0;
 		
-		chestplateLeather = new ItemArmor("Leather Chestplate", 43, 0, 0, 1);
+		chestplateLeather = new ItemArmor("Leather Chestplate", 26, 0, 0, 1);
 		chestplateLeather.iconIndex = 16;
 		
-		leggingsLeather = new ItemArmor("Leather Leggings", 44, 0, 0, 2);
+		leggingsLeather = new ItemArmor("Leather Leggings", 27, 0, 0, 2);
 		leggingsLeather.iconIndex = 32;
 		
-		bootsLeather = new ItemArmor("Leather Boots", 45, 0, 0, 3);
+		bootsLeather = new ItemArmor("Leather Boots", 28, 0, 0, 3);
 		bootsLeather.iconIndex = 48;
 		
-		helmetChain = new ItemArmor("Chain Helmet", 46, 1, 1, 0);
+		helmetChain = new ItemArmor("Chain Helmet", 29, 1, 1, 0);
 		helmetChain.iconIndex = 1;
 		
-		chestplateChain = new ItemArmor("Chain Chestplate", 47, 1, 1, 1);
+		chestplateChain = new ItemArmor("Chain Chestplate", 30, 1, 1, 1);
 		chestplateChain.iconIndex = 17;
 		
-		leggingsChain = new ItemArmor("Chain Leggings", 48, 1, 1, 2);
+		leggingsChain = new ItemArmor("Chain Leggings", 31, 1, 1, 2);
 		leggingsChain.iconIndex = 33;
 		
-		bootsChain = new ItemArmor("Chain Boots", 49, 1, 1, 3);
+		bootsChain = new ItemArmor("Chain Boots", 32, 1, 1, 3);
 		bootsChain.iconIndex = 49;
 		
-		helmetIron = new ItemArmor("Iron Helmet", 50, 2, 2, 0);
+		helmetIron = new ItemArmor("Iron Helmet", 33, 2, 2, 0);
 		helmetIron.iconIndex = 2;
 		
-		chestplateIron = new ItemArmor("Iron Chestplate", 51, 2, 2, 1);
+		chestplateIron = new ItemArmor("Iron Chestplate", 34, 2, 2, 1);
 		chestplateIron.iconIndex = 18;
 		
-		leggingsIron = new ItemArmor("Iron Leggings", 52, 2, 2, 2);
+		leggingsIron = new ItemArmor("Iron Leggings", 35, 2, 2, 2);
 		leggingsIron.iconIndex = 34;
 		
-		bootsIron = new ItemArmor("Iron Boots", 53, 2, 2, 3);
+		bootsIron = new ItemArmor("Iron Boots", 36, 2, 2, 3);
 		bootsIron.iconIndex = 50;
 		
-		helmetDiamond = new ItemArmor("Diamond Helmet", 54, 3, 3, 0);
+		helmetGold = new ItemArmor("Gold Helmet", 37, 1, 4, 0);
+		helmetGold.iconIndex = 4;
+		
+		chestplateGold = new ItemArmor("Gold Chestplate", 38, 1, 4, 1);
+		chestplateGold.iconIndex = 20;
+		
+		leggingsGold = new ItemArmor("Gold Leggings", 39, 1, 4, 2);
+		leggingsGold.iconIndex = 36;
+		
+		bootsGold = new ItemArmor("Gold Boots", 40, 1, 4, 3);
+		bootsGold.iconIndex = 52;
+		
+		helmetDiamond = new ItemArmor("Diamond Helmet", 41, 3, 3, 0);
 		helmetDiamond.iconIndex = 3;
 		helmetDiamond.rarity = Rarity.RARE;
 		
-		chestplateDiamond = new ItemArmor("Diamond Chestplate", 55, 3, 3, 1);
+		chestplateDiamond = new ItemArmor("Diamond Chestplate", 42, 3, 3, 1);
 		chestplateDiamond.iconIndex = 19;
 		chestplateDiamond.rarity = Rarity.RARE;
 		
-		leggingsDiamond = new ItemArmor("Diamond Leggings", 56, 3, 3, 2);
+		leggingsDiamond = new ItemArmor("Diamond Leggings", 43, 3, 3, 2);
 		leggingsDiamond.iconIndex = 35;
 		leggingsDiamond.rarity = Rarity.RARE;
 		
-		bootsDiamond = new ItemArmor("Diamond Boots", 57, 3, 3, 3);
+		bootsDiamond = new ItemArmor("Diamond Boots", 44, 3, 3, 3);
 		bootsDiamond.iconIndex = 51;
 		bootsDiamond.rarity = Rarity.RARE;
 		
-		helmetGold = new ItemArmor("Gold Helmet", 58, 1, 4, 0);
-		helmetGold.iconIndex = 4;
+		// other, tools?
+		flintAndSteel = new ItemFlintAndSteel("Flint and Steel", 45);
+		flintAndSteel.iconIndex = 5;
 		
-		chestplateGold = new ItemArmor("Gold Chestplate", 59, 1, 4, 1);
-		chestplateGold.iconIndex = 20;
+		bow = new ItemBow("Bow", 46);
+		bow.iconIndex = 21;
 		
-		leggingsGold = new ItemArmor("Gold Leggings", 60, 1, 4, 2);
-		leggingsGold.iconIndex = 36;
+		arrow = new Item("Arrow", 47);
+		arrow.iconIndex = 37;
 		
-		bootsGold = new ItemArmor("Gold Boots", 61, 1, 4, 3);
-		bootsGold.iconIndex = 52;
+		// food and crops and stuff idk
+		apple = new ItemFood("Apple", 48, 4);
+		apple.iconIndex = 10;
 		
-		flint = new Item("Flint", 62);
-		flint.iconIndex = 6;
+		applePie = new ItemFood("Apple Pie", 49, 8);
+		applePie.iconIndex = 11;
 		
-		porkRaw = new ItemFood("Raw Porkchop", 63, 3);
+		bowlEmpty = new Item("Bowl", 50);
+		bowlEmpty.iconIndex = 71;
+		
+		bowlSoup = new ItemSoup("Mushroom Stew", 51, 10);
+		bowlSoup.iconIndex = 72;
+		
+		seeds = new ItemSeeds("Wheat Seeds", 52, Block.crops.blockID);
+		seeds.iconIndex = 9;
+		
+		wheat = new Item("Wheat", 53);
+		wheat.iconIndex = 25;
+		
+		bread = new ItemFood("Bread", 54, 5);
+		bread.iconIndex = 41;
+		
+		porkRaw = new ItemFood("Raw Porkchop", 55, 3);
 		porkRaw.iconIndex = 87;
 		
-		porkCooked = new ItemFood("Cooked Porkchop", 64, 8);
+		porkCooked = new ItemFood("Cooked Porkchop", 56, 8);
 		porkCooked.iconIndex = 88;
 		
-		painting = new ItemPainting("Painting", 65);
-		painting.iconIndex = 26;
-		
-		sugarBeet = new Item("Sugar Beet", 66);
+		sugarBeet = new Item("Sugar Beet", 57);
 		sugarBeet.iconIndex = 103;
 		
-		sugar = new Item("Sugar", 67);
+		sugar = new Item("Sugar", 58);
 		sugar.iconIndex = 104;
 		
-		applePie = new ItemFood("Apple Pie", 68, 8);
-		applePie.iconIndex = 11;
+		// misc I guess
+		coal = new Item("Coal", 59);
+		coal.iconIndex = 7;
+		
+		ingotIron = new Item("Iron Ingot", 60);
+		ingotIron.iconIndex = 23;
+		
+		ingotGold = new Item("Gold Ingot", 61);
+		ingotGold.iconIndex = 39;
+		
+		diamond = new Item("Diamond", 62);
+		diamond.iconIndex = 55;
+		diamond.rarity = Rarity.RARE;
+		
+		stick = new Item("Stick", 63);
+		stick.iconIndex = 53;
+		
+		silk = new Item("Silk", 64);
+		silk.iconIndex = 8;
+		
+		feather = new Item("Feather", 65);
+		feather.iconIndex = 24;
+		
+		gunpowder = new Item("Sulphur", 66);
+		gunpowder.iconIndex = 40;
+		
+		flint = new Item("Flint", 67);
+		flint.iconIndex = 6;
+		
+		painting = new ItemPainting("Painting", 68);
+		painting.iconIndex = 26;
 	}
 }
