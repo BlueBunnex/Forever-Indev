@@ -61,12 +61,13 @@ public final class GuiIngame extends Gui {
 			int x, y;
 			
 			// render armor damage
+			x = width / 2 - 101;
+			
 			if (this.mc.thePlayer.inventory.getPlayerArmorValue() > 0) {
 				
 				for (int i=0; i<4; i++) {
 					
-					x = width / 2 + 91 - (i << 3) - 9;
-					y = height - 32;
+					y = height - 9 - (i << 3);
 					
 					int armorPieceDura = this.mc.thePlayer.inventory.getPlayerArmorValue(i);
 					
@@ -77,7 +78,8 @@ public final class GuiIngame extends Gui {
 				}
 			}
 			
-			for(int i = 0; i < 10; i++) {
+			// render health
+			for (int i = 0; i < 10; i++) {
 
 				byte var26 = 0;
 				if (var20) {
