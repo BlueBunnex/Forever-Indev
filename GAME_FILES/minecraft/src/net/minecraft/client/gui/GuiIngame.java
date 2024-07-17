@@ -68,25 +68,12 @@ public final class GuiIngame extends Gui {
 					x = width / 2 + 91 - (i << 3) - 9;
 					y = height - 32;
 					
-					switch (this.mc.thePlayer.inventory.getPlayerArmorValue(i)) {
-						case 4:
-							this.drawTexturedModalRect(x, y, 52, 9, 9, 9);
-							break;
-						case 3:
-							this.drawTexturedModalRect(x, y, 43, 9, 9, 9);
-							break;
-						case 2:
-							this.drawTexturedModalRect(x, y, 34, 9, 9, 9);
-							break;
-						case 1:
-							y += this.rand.nextInt(2);
-							this.drawTexturedModalRect(x, y, 25, 9, 9, 9);
-							break;
-						case 0:
-						default:
-							this.drawTexturedModalRect(x, y, 16, 9, 9, 9);
-							break;
-					}
+					int armorPieceDura = this.mc.thePlayer.inventory.getPlayerArmorValue(i);
+					
+					if (armorPieceDura == 1)
+						y += this.rand.nextInt(2);
+					
+					this.drawTexturedModalRect(x, y, 16 + armorPieceDura * 9, 18 + (3 - i) * 9, 9, 9);
 				}
 			}
 			
@@ -123,16 +110,17 @@ public final class GuiIngame extends Gui {
 				}
 			}
 
+			// render air bubbles on GUI
 			if (this.mc.thePlayer.isInsideOfWater()) {
-				// dunno how this code works
+				
 				int a = (int) Math.ceil((double)(this.mc.thePlayer.air - 2) * 10.0D / 300.0D);
 				int b = (int) Math.ceil((double)this.mc.thePlayer.air       * 10.0D / 300.0D) - a;
 
 				for (int c = 0; c < a + b; c++) {
 					if (c < a) {
-						this.drawTexturedModalRect(width / 2 - 91 + (c << 3), height - 32 - 9, 16, 18, 9, 9);
+						this.drawTexturedModalRect(width / 2 - 91 + (c << 3), height - 32 - 9, 16, 9, 9, 9);
 					} else {
-						this.drawTexturedModalRect(width / 2 - 91 + (c << 3), height - 32 - 9, 25, 18, 9, 9);
+						this.drawTexturedModalRect(width / 2 - 91 + (c << 3), height - 32 - 9, 25, 9, 9, 9);
 					}
 				}
 			}

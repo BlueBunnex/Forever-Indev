@@ -200,7 +200,7 @@ public final class InventoryPlayer implements IInventory {
 		int maxDam = this.armorInventory[armorType].getItem().getMaxDamage();
 		int damage = this.armorInventory[armorType].itemDamage;
 		
-		return (int) Math.ceil((maxDam - damage) * 4 / maxDam);
+		return (int) Math.ceil((maxDam - damage) * 4.0 / maxDam);
 	}
 	
 	// no idea how this code works
