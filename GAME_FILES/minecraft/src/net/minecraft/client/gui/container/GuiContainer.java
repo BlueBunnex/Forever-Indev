@@ -36,7 +36,9 @@ public abstract class GuiContainer extends GuiScreen {
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		GL11.glEnable(GL11.GL_NORMALIZE);
 
-		for(int i = 0; i < this.inventorySlots.size(); i++) {
+		Slot hovered = null;
+		
+		for (int i = 0; i < this.inventorySlots.size(); i++) {
 			
 			Slot slot = this.inventorySlots.get(i);
 			
@@ -46,48 +48,63 @@ public abstract class GuiContainer extends GuiScreen {
 			ItemStack itemStack = slot.inventory.getStackInSlot(slot.slotIndex);
 			
 			label24: {
+				// render item background (armor slots)
 				if (itemStack == null) {
 					
-					int var8 = slot.getBackgroundIconIndex();
+					int background = slot.getBackgroundIconIndex();
 					
-					if (var8 >= 0) {
+					if (background >= 0) {
 						GL11.glDisable(GL11.GL_LIGHTING);
 						RenderEngine.bindTexture(this.mc.renderEngine.getTexture("/gui/items.png"));
-						this.drawTexturedModalRect(x, y, var8 % 16 << 4, var8 / 16 << 4, 16, 16);
+						this.drawTexturedModalRect(x, y, background % 16 << 4, background / 16 << 4, 16, 16);
 						GL11.glEnable(GL11.GL_LIGHTING);
 						break label24;
 					}
 				}
 
+				// render item
 				itemRenderer.renderItemIntoGUI(this.mc.renderEngine, itemStack, x, y);
 				itemRenderer.renderItemOverlayIntoGUI(this.fontRenderer, itemStack, x, y);
 			}
 
-			// render hovered slot stuff
-			if (slot.isAtCursorPos(mouseX, mouseY)) {
-				GL11.glDisable(GL11.GL_LIGHTING);
-				GL11.glDisable(GL11.GL_DEPTH_TEST);
-				
-				// highlight hovered slot
-				drawRect(x, y, x + 16, y + 16, -2130706433);
-				
-				// show tooltip for hovered item
-				// TODO render tooltip on top of everything else (OpenGL scary)
-				if (itemStack != null) {
+			if (slot.isAtCursorPos(mouseX, mouseY))
+				hovered = slot;
+		}
+		
+		// draw buttons
+		RenderHelper.disableStandardItemLighting();
+		super.drawScreen(mouseX - cornerX, mouseY - cornerY);
+		
+		// render hovered slot glow and tooltip
+		if (hovered != null) {
+			
+			int x = hovered.xPos;
+			int y = hovered.yPos;
+			
+			ItemStack itemStack = hovered.inventory.getStackInSlot(hovered.slotIndex);
+			
+			GL11.glDisable(GL11.GL_LIGHTING);
+			GL11.glDisable(GL11.GL_DEPTH_TEST);
+			
+			// highlight hovered slot
+			drawRect(x, y, x + 16, y + 16, -2130706433);
+			
+			// show tooltip for hovered item
+			if (itemStack != null) {
 
-					//GL11.glTranslatef(0.0F, 0.0F, 16.0F);
-					drawStringWithBackground(
-							this.fontRenderer,
-							itemStack.getName() + " (#" + itemStack.getItem().shiftedIndex + ")",
-							mouseX - cornerX + 6,
-							mouseY - cornerY - 6,
-							itemStack.getItem().getRarity().color
-					);
-				}
-				
-				GL11.glEnable(GL11.GL_LIGHTING);
-				GL11.glEnable(GL11.GL_DEPTH_TEST);
+				//GL11.glTranslatef(0.0F, 0.0F, 16.0F);
+				drawStringWithBackground(
+						this.fontRenderer,
+						itemStack.getName() + " (#" + itemStack.getItem().shiftedIndex + ")",
+						mouseX - cornerX + 6,
+						mouseY - cornerY - 6,
+						itemStack.getItem().getRarity().color
+				);
+				GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 			}
+			
+			GL11.glEnable(GL11.GL_LIGHTING);
+			GL11.glEnable(GL11.GL_DEPTH_TEST);
 		}
 
 		// render held item
@@ -101,6 +118,7 @@ public abstract class GuiContainer extends GuiScreen {
 			itemRenderer.renderItemOverlayIntoGUI(this.fontRenderer, this.heldItem, x, y);
 		}
 
+		// not sure what this does
 		GL11.glDisable(GL11.GL_NORMALIZE);
 		RenderHelper.disableStandardItemLighting();
 		GL11.glDisable(GL11.GL_LIGHTING);
@@ -109,11 +127,6 @@ public abstract class GuiContainer extends GuiScreen {
 		GL11.glEnable(GL11.GL_LIGHTING);
 		GL11.glEnable(GL11.GL_DEPTH_TEST);
 		GL11.glPopMatrix();
-		
-		// draw buttons on top of any container stuff
-		RenderHelper.disableStandardItemLighting();
-		GL11.glTranslatef((float) cornerX, (float) cornerY, 0.0F);
-		super.drawScreen(mouseX - cornerX, mouseY - cornerY);
 	}
 
 	protected void drawGuiContainerForegroundLayer() {}
