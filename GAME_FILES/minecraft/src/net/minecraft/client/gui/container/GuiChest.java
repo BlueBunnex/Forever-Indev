@@ -1,45 +1,61 @@
 package net.minecraft.client.gui.container;
 
+import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.render.RenderEngine;
 import net.minecraft.game.IInventory;
+import net.minecraft.game.InventoryLargeChest;
+import net.minecraft.game.InventorySorter;
+
 import org.lwjgl.opengl.GL11;
 
 public final class GuiChest extends GuiContainer {
-	private IInventory upperChestInventory;
-	private IInventory lowerChestInventory;
+	
+	private IInventory playerInventory;
+	private IInventory chestInventory;
 	private int inventoryRows = 0;
 
-	public GuiChest(IInventory var1, IInventory var2) {
-		this.upperChestInventory = var1;
-		this.lowerChestInventory = var2;
+	public GuiChest(IInventory playerInventory, IInventory chestInventory) {
+		
+		this.playerInventory = playerInventory;
+		this.chestInventory = chestInventory;
+		
 		this.allowUserInput = false;
-		this.inventoryRows = var2.getSizeInventory() / 9;
+		this.inventoryRows = chestInventory.getSizeInventory() / 9;
 		this.ySize = 114 + this.inventoryRows * 18;
 		int var3 = (this.inventoryRows - 4) * 18;
 
-		int var4;
-		int var5;
-		for(var4 = 0; var4 < this.inventoryRows; ++var4) {
-			for(var5 = 0; var5 < 9; ++var5) {
-				this.inventorySlots.add(new Slot(this, var2, var5 + var4 * 9, 8 + var5 * 18, 18 + var4 * 18));
+		// add rendered inventory slots
+		int x, y;
+		for (y = 0; y < this.inventoryRows; y++) {
+			for (x = 0; x < 9; x++) {
+				this.inventorySlots.add(new Slot(this, chestInventory, x + y * 9, 8 + x * 18, 18 + y * 18));
 			}
 		}
 
-		for(var4 = 0; var4 < 3; ++var4) {
-			for(var5 = 0; var5 < 9; ++var5) {
-				this.inventorySlots.add(new Slot(this, var1, var5 + (var4 + 1) * 9, 8 + var5 * 18, 103 + var4 * 18 + var3));
+		for (y = 0; y < 3; y++) {
+			for (x = 0; x < 9; x++) {
+				this.inventorySlots.add(new Slot(this, playerInventory, x + (y + 1) * 9, 8 + x * 18, 103 + y * 18 + var3));
 			}
 		}
 
-		for(var4 = 0; var4 < 9; ++var4) {
-			this.inventorySlots.add(new Slot(this, var1, var4, 8 + var4 * 18, var3 + 161));
+		for (x = 0; x < 9; x++) {
+			this.inventorySlots.add(new Slot(this, playerInventory, x, 8 + x * 18, var3 + 161));
 		}
 
+		// add sort button
+		this.controlList.clear();
+		this.controlList.add(new GuiButton(0, 180, 5, 50, 20, "sort"));
+	}
+	
+	protected final void actionPerformed(GuiButton button) {
+		
+		// sort
+		InventorySorter.sort(chestInventory);
 	}
 
 	protected final void drawGuiContainerForegroundLayer() {
-		this.fontRenderer.drawString(this.lowerChestInventory.getInvName(), 8, 6, 4210752);
-		this.fontRenderer.drawString(this.upperChestInventory.getInvName(), 8, this.ySize - 96 + 2, 4210752);
+		this.fontRenderer.drawString(this.chestInventory.getInvName(), 8, 6, 4210752);
+		this.fontRenderer.drawString(this.playerInventory.getInvName(), 8, this.ySize - 96 + 2, 4210752);
 	}
 
 	protected final void drawGuiContainerBackgroundLayer() {
