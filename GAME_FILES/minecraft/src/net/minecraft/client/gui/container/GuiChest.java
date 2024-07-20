@@ -1,9 +1,9 @@
 package net.minecraft.client.gui.container;
 
 import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.GuiButtonText;
 import net.minecraft.client.render.RenderEngine;
 import net.minecraft.game.IInventory;
-import net.minecraft.game.InventoryLargeChest;
 import net.minecraft.game.InventorySorter;
 
 import org.lwjgl.opengl.GL11;
@@ -44,7 +44,7 @@ public final class GuiChest extends GuiContainer {
 
 		// add sort button
 		this.controlList.clear();
-		this.controlList.add(new GuiButton(0, 180, 5, 50, 20, "sort"));
+		this.controlList.add(new GuiButtonText(0, 180, 5, 50, 20, "sort"));
 	}
 	
 	protected final void actionPerformed(GuiButton button) {

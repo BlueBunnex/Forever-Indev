@@ -22,8 +22,8 @@ public final class GuiNameLevel extends GuiScreen {
 	public final void initGui() {
 		this.controlList.clear();
 		Keyboard.enableRepeatEvents(true);
-		this.controlList.add(new GuiButton(0, this.width / 2 - 100, this.height / 4 + 120, "Save"));
-		this.controlList.add(new GuiButton(1, this.width / 2 - 100, this.height / 4 + 144, "Cancel"));
+		this.controlList.add(new GuiButtonText(0, this.width / 2 - 100, this.height / 4 + 120, "Save"));
+		this.controlList.add(new GuiButtonText(1, this.width / 2 - 100, this.height / 4 + 144, "Cancel"));
 		((GuiButton)this.controlList.get(0)).enabled = this.name.trim().length() > 1;
 	}
 

@@ -19,21 +19,25 @@ public final class GuiControls extends GuiScreen {
 			this.controlList.add(new GuiSmallButton(var1, this.width / 2 - 155 + var1 % 2 * 160, this.height / 6 + 24 * (var1 >> 1), this.options.setKeyBindingString(var1)));
 		}
 
-		this.controlList.add(new GuiButton(200, this.width / 2 - 100, this.height / 6 + 168, "Done"));
+		this.controlList.add(new GuiButtonText(200, this.width / 2 - 100, this.height / 6 + 168, "Done"));
 	}
 
-	protected final void actionPerformed(GuiButton var1) {
+	protected final void actionPerformed(GuiButton button) {
+		
+		// done was pressed
+		if (button.id == 200) {
+			this.mc.displayGuiScreen(this.parentScreen);
+			return;
+		}
+		
+		GuiButtonText textButton = (GuiButtonText) button;
 		
 		for (int i = 0; i < this.options.keyBindings.length; i++) {
-			this.controlList.get(i).displayString = this.options.setKeyBindingString(i);
+			((GuiButtonText) this.controlList.get(i)).displayString = this.options.setKeyBindingString(i);
 		}
 
-		if (var1.id == 200) {
-			this.mc.displayGuiScreen(this.parentScreen);
-		} else {
-			this.buttonId = var1.id;
-			var1.displayString = "> " + this.options.setKeyBindingString(var1.id) + " <";
-		}
+		this.buttonId = textButton.id;
+		textButton.displayString = "> " + this.options.setKeyBindingString(textButton.id) + " <";
 	}
 
 	protected final void keyTyped(char character, int keycode) {
@@ -41,7 +45,7 @@ public final class GuiControls extends GuiScreen {
 		if(this.buttonId >= 0) {
 			// set bind
 			this.options.setKeyBinding(this.buttonId, keycode);
-			this.controlList.get(this.buttonId).displayString = this.options.setKeyBindingString(this.buttonId);
+			((GuiButtonText) this.controlList.get(this.buttonId)).displayString = this.options.setKeyBindingString(this.buttonId);
 			this.buttonId = -1;
 		} else {
 			super.keyTyped(character, keycode);

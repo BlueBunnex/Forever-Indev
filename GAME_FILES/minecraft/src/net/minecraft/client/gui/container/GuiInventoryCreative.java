@@ -2,6 +2,7 @@ package net.minecraft.client.gui.container;
 
 import net.minecraft.client.RenderHelper;
 import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.GuiButtonText;
 import net.minecraft.client.render.RenderEngine;
 import net.minecraft.client.render.entity.RenderManager;
 import net.minecraft.game.IInventory;
@@ -55,8 +56,8 @@ public final class GuiInventoryCreative extends GuiContainer {
 		}
 		
 		this.controlList.clear();
-		this.controlList.add(new GuiButton(0, 226, 5, 16, 20, "^"));
-		this.controlList.add(new GuiButton(1, 226, 27, 16, 20, "v"));
+		this.controlList.add(new GuiButtonText(0, 226, 5, 16, 20, "^"));
+		this.controlList.add(new GuiButtonText(1, 226, 27, 16, 20, "v"));
 	}
 	
 	protected final void actionPerformed(GuiButton button) {

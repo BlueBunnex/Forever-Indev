@@ -15,14 +15,14 @@ public final class GuiMainMenu extends GuiScreen {
 
 	public final void initGui() {
 		this.controlList.clear();
-		this.controlList.add(new GuiButton(1, this.width / 2 - 100, this.height / 4 + 48, "Generate new level..."));
-		this.controlList.add(new GuiButton(2, this.width / 2 - 100, this.height / 4 + 72, "Load level.."));
-		this.controlList.add(new GuiButton(0, this.width / 2 - 100, this.height / 4 + 96, "Options..."));
-		this.controlList.add(new GuiButton(3, this.width / 2 - 100, this.height / 4 + 132, "Exit Game"));
+		this.controlList.add(new GuiButtonText(1, this.width / 2 - 100, this.height / 4 + 48, "Generate new level..."));
+		this.controlList.add(new GuiButtonText(2, this.width / 2 - 100, this.height / 4 + 72, "Load level.."));
+		this.controlList.add(new GuiButtonText(0, this.width / 2 - 100, this.height / 4 + 96, "Options..."));
+		this.controlList.add(new GuiButtonText(3, this.width / 2 - 100, this.height / 4 + 132, "Exit Game"));
 		
 		// disable load level for some reason
 		if (this.mc.session == null)
-			((GuiButton)this.controlList.get(1)).enabled = false;
+			this.controlList.get(1).enabled = false;
 
 	}
 

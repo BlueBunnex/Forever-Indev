@@ -62,10 +62,13 @@ public class GuiLoadLevel extends GuiScreen implements Runnable {
 	}
 
 	protected void setLevels(String[] var1) {
+		
 		for(int i = 0; i < 5; i++) {
-			this.controlList.get(i).enabled = !var1[i].equals("-");
-			this.controlList.get(i).displayString = var1[i];
-			this.controlList.get(i).visible = true;
+			GuiButtonText button = (GuiButtonText) this.controlList.get(i);
+			
+			button.enabled = !var1[i].equals("-");
+			button.displayString = var1[i];
+			button.visible = true;
 		}
 
 		this.controlList.get(5).visible = true;
@@ -75,13 +78,14 @@ public class GuiLoadLevel extends GuiScreen implements Runnable {
 		new Thread(this).start();
 
 		for (int i = 0; i < 5; i++) {
-			this.controlList.add(new GuiButton(i, this.width / 2 - 100, this.height / 6 + i * 24, "---"));
+			this.controlList.add(new GuiButtonText(i, this.width / 2 - 100, this.height / 6 + i * 24, "---"));
 			this.controlList.get(i).visible = false;
 		}
 
-		this.controlList.add(new GuiButton(5, this.width / 2 - 100, this.height / 6 + 120 + 12, "Load file..."));
-		this.controlList.add(new GuiButton(6, this.width / 2 - 100, this.height / 6 + 168, "Cancel"));
-		((GuiButton)this.controlList.get(5)).visible = false;
+		this.controlList.add(new GuiButtonText(5, this.width / 2 - 100, this.height / 6 + 120 + 12, "Load file..."));
+		this.controlList.add(new GuiButtonText(6, this.width / 2 - 100, this.height / 6 + 168, "Cancel"));
+		
+		this.controlList.get(5).visible = false;
 	}
 
 	protected final void actionPerformed(GuiButton button) {

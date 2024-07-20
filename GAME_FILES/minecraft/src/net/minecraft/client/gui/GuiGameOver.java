@@ -7,8 +7,8 @@ public final class GuiGameOver extends GuiScreen {
 	
 	public final void initGui() {
 		this.controlList.clear();
-		this.controlList.add(new GuiButton(1, this.width / 2 - 100, this.height / 4 + 72, "Generate new level..."));
-		this.controlList.add(new GuiButton(2, this.width / 2 - 100, this.height / 4 + 96, "Load level.."));
+		this.controlList.add(new GuiButtonText(1, this.width / 2 - 100, this.height / 4 + 72, "Generate new level..."));
+		this.controlList.add(new GuiButtonText(2, this.width / 2 - 100, this.height / 4 + 96, "Load level.."));
 		
 		if (this.mc.session == null)
 			this.controlList.get(1).enabled = false;
