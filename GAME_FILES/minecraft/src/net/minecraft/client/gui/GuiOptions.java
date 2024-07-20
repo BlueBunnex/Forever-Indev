@@ -3,6 +3,7 @@ package net.minecraft.client.gui;
 import net.minecraft.client.GameSettings;
 
 public final class GuiOptions extends GuiScreen {
+	
 	private GuiScreen parentScreen;
 	private String screenTitle = "Options";
 	private GameSettings options;
@@ -13,8 +14,8 @@ public final class GuiOptions extends GuiScreen {
 	}
 
 	public final void initGui() {
-		for(int var1 = 0; var1 < this.options.numberOfOptions; ++var1) {
-			this.controlList.add(new GuiSmallButton(var1, this.width / 2 - 155 + var1 % 2 * 160, this.height / 6 + 24 * (var1 >> 1), this.options.setOptionString(var1)));
+		for(int i = 0; i < this.options.numberOfOptions; i++) {
+			this.controlList.add(new GuiButtonText(i, this.width / 2 - 155 + i % 2 * 160, this.height / 6 + 24 * (i >> 1), 150, 20, this.options.setOptionString(i)));
 		}
 
 		this.controlList.add(new GuiButtonText(100, this.width / 2 - 100, this.height / 6 + 120 + 12, "Controls..."));
