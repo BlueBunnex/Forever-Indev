@@ -2,7 +2,6 @@ package net.minecraft.game.item.recipe;
 
 import net.minecraft.game.item.Item;
 import net.minecraft.game.item.ItemStack;
-import net.minecraft.game.level.block.Block;
 
 public final class RecipesArmor {
 	
@@ -14,21 +13,27 @@ public final class RecipesArmor {
 	};
 	
 	private Object[][] recipeItems = new Object[][] {
-		{ Item.ingotIron, Item.diamond, Item.ingotGold },
-		{ Item.helmetIron, Item.helmetDiamond, Item.helmetGold },
-		{ Item.chestplateIron, Item.chestplateDiamond, Item.chestplateGold },
-		{ Item.leggingsIron, Item.leggingsDiamond, Item.leggingsGold },
-		{ Item.bootsIron, Item.bootsDiamond, Item.bootsGold }
+		{ Item.ingotIron,      Item.ingotGold,      Item.diamond },
+		{ Item.helmetIron,     Item.helmetGold,     Item.helmetDiamond },
+		{ Item.chestplateIron, Item.chestplateGold, Item.chestplateDiamond },
+		{ Item.leggingsIron,   Item.leggingsGold,   Item.leggingsDiamond },
+		{ Item.bootsIron,      Item.bootsGold,      Item.bootsDiamond }
 	};
 
-	public final void addRecipes(CraftingManager var1) {
+	public final void addRecipes(CraftingManager crafting) {
 		
-		for (int var2 = 0; var2 < this.recipeItems[0].length; ++var2) {
-			Object var3 = this.recipeItems[0][var2];
+		for (int resType = 0; resType < this.recipeItems[0].length; resType++) {
+			
+			Object resource = this.recipeItems[0][resType];
 
-			for (int var4 = 0; var4 < this.recipeItems.length - 1; ++var4) {
-				Item var5 = (Item) this.recipeItems[var4 + 1][var2];
-				var1.addRecipe(new ItemStack(var5), new Object[]{this.recipePatterns[var4], Character.valueOf('X'), var3});
+			for (int armorType = 0; armorType < this.recipePatterns.length; armorType++) {
+				
+				crafting.addRecipe(
+						// result
+						new ItemStack((Item) this.recipeItems[armorType + 1][resType]),
+						// recipe descriptor
+						new Object[] { this.recipePatterns[armorType], Character.valueOf('X'), resource }
+				);
 			}
 		}
 	}
