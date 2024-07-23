@@ -40,16 +40,6 @@ public class Item {
 	public static Item shovelDiamond;
 	public static Item hoeDiamond;
 	
-	public static Item helmetLeather;
-	public static Item chestplateLeather;
-	public static Item leggingsLeather;
-	public static Item bootsLeather;
-	
-	public static Item helmetChain;
-	public static Item chestplateChain;
-	public static Item leggingsChain;
-	public static Item bootsChain;
-	
 	public static Item helmetIron;
 	public static Item chestplateIron;
 	public static Item leggingsIron;
@@ -245,30 +235,6 @@ public class Item {
 		hoeDiamond.rarity = Rarity.RARE;
 		
 		// armor
-		helmetLeather = new ItemArmor("Leather Helmet", 25, 0, 0, 0);
-		helmetLeather.iconIndex = 0;
-		
-		chestplateLeather = new ItemArmor("Leather Chestplate", 26, 0, 0, 1);
-		chestplateLeather.iconIndex = 16;
-		
-		leggingsLeather = new ItemArmor("Leather Leggings", 27, 0, 0, 2);
-		leggingsLeather.iconIndex = 32;
-		
-		bootsLeather = new ItemArmor("Leather Boots", 28, 0, 0, 3);
-		bootsLeather.iconIndex = 48;
-		
-		helmetChain = new ItemArmor("Chain Helmet", 29, 1, 1, 0);
-		helmetChain.iconIndex = 1;
-		
-		chestplateChain = new ItemArmor("Chain Chestplate", 30, 1, 1, 1);
-		chestplateChain.iconIndex = 17;
-		
-		leggingsChain = new ItemArmor("Chain Leggings", 31, 1, 1, 2);
-		leggingsChain.iconIndex = 33;
-		
-		bootsChain = new ItemArmor("Chain Boots", 32, 1, 1, 3);
-		bootsChain.iconIndex = 49;
-		
 		helmetIron = new ItemArmor("Iron Helmet", 33, 2, 2, 0);
 		helmetIron.iconIndex = 2;
 		
