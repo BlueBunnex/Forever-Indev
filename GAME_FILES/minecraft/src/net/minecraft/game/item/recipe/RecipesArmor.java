@@ -5,14 +5,20 @@ import net.minecraft.game.item.ItemStack;
 import net.minecraft.game.level.block.Block;
 
 public final class RecipesArmor {
-	private String[][] recipePatterns = new String[][]{{"XXX", "X X"}, {"X X", "XXX", "XXX"}, {"XXX", "X X", "X X"}, {"X X", "X X"}};
 	
-	private Object[][] recipeItems = new Object[][]{
-		{Block.clothWhite, Block.fire, Item.ingotIron, Item.diamond, Item.ingotGold},
-		{Item.helmetLeather, Item.helmetChain, Item.helmetIron, Item.helmetDiamond, Item.helmetGold},
-		{Item.chestplateLeather, Item.chestplateChain, Item.chestplateIron, Item.chestplateDiamond, Item.chestplateGold},
-		{Item.leggingsLeather, Item.leggingsChain, Item.leggingsIron, Item.leggingsDiamond, Item.leggingsGold},
-		{Item.bootsLeather, Item.bootsChain, Item.bootsIron, Item.bootsDiamond, Item.bootsGold}
+	private String[][] recipePatterns = new String[][] {
+		{"XXX", "X X"},
+		{"X X", "XXX", "XXX"},
+		{"XXX", "X X", "X X"},
+		{"X X", "X X"}
+	};
+	
+	private Object[][] recipeItems = new Object[][] {
+		{ Item.ingotIron, Item.diamond, Item.ingotGold },
+		{ Item.helmetIron, Item.helmetDiamond, Item.helmetGold },
+		{ Item.chestplateIron, Item.chestplateDiamond, Item.chestplateGold },
+		{ Item.leggingsIron, Item.leggingsDiamond, Item.leggingsGold },
+		{ Item.bootsIron, Item.bootsDiamond, Item.bootsGold }
 	};
 
 	public final void addRecipes(CraftingManager var1) {
