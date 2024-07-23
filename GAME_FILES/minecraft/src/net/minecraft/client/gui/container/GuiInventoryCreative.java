@@ -20,8 +20,15 @@ public final class GuiInventoryCreative extends GuiContainer {
 	private float mouseX;
 	private float mouseY;
 	private List<Slot> creativeSlots = new ArrayList<Slot>();
+	
+	private int page;
+	private int numPages;
+	private GuiButton decPageButton, incPageButton;
 
 	public GuiInventoryCreative(IInventory inventory) {
+		
+		this.page = 1;
+		this.numPages = (int) Math.ceil(infinite.getSizeInventory() / 36.0);
 		
 		this.xSize = 247;
 		this.ySize = 144;
@@ -56,29 +63,36 @@ public final class GuiInventoryCreative extends GuiContainer {
 		}
 		
 		this.controlList.clear();
-		this.controlList.add(new GuiButtonText(0, 226, 5, 16, 20, "^"));
-		this.controlList.add(new GuiButtonText(1, 226, 27, 16, 20, "v"));
+		this.controlList.add(decPageButton = new GuiButtonText(0, 226, 5, 16, 20, "^"));
+		this.controlList.add(incPageButton = new GuiButtonText(1, 226, 27, 16, 20, "v"));
+		
+		decPageButton.enabled = false;
 	}
 	
 	protected final void actionPerformed(GuiButton button) {
 		
 		switch (button.id) {
 			case 0:
-				for (Slot slot : creativeSlots) {
+				for (Slot slot : this.creativeSlots) {
 					slot.slotIndex -= 36;
 				}
+				this.page--;
 				break;
 			case 1:
-				for (Slot slot : creativeSlots) {
+				for (Slot slot : this.creativeSlots) {
 					slot.slotIndex += 36;
 				}
+				this.page++;
 				break;
 		}
+		
+		decPageButton.enabled = !(this.page == 1);
+		incPageButton.enabled = !(this.page == this.numPages);
 	}
 
-//	protected final void drawGuiContainerForegroundLayer() {
-//		this.fontRenderer.drawString("All Items", 86, 16, 4210752);
-//	}
+	protected final void drawGuiContainerForegroundLayer() {
+		this.fontRenderer.drawString(this.page + "/" + this.numPages, 225, 52, 4210752);
+	}
 
 	public final void drawScreen(int mouseX, int mouseY) {
 		super.drawScreen(mouseX, mouseY);
