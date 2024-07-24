@@ -680,13 +680,18 @@ public final class Minecraft implements Runnable {
 
 									var3 = this.currentScreen == null && Mouse.isButtonDown(0) && this.inventoryScreen;
 									
-									if (!this.playerController.isInTestMode && this.leftClickCounter <= 0) {
+									// breaking block
+									if (this.leftClickCounter <= 0) {
+										
 										if (var3 && this.objectMouseOver != null && this.objectMouseOver.typeOfHit == 0) {
-											var2 = this.objectMouseOver.blockX;
-											int var8 = this.objectMouseOver.blockY;
-											int var4 = this.objectMouseOver.blockZ;
-											this.playerController.sendBlockRemoving(var2, var8, var4, this.objectMouseOver.sideHit);
-											this.effectRenderer.addBlockHitEffects(var2, var8, var4, this.objectMouseOver.sideHit);
+											
+											int x = this.objectMouseOver.blockX;
+											int y = this.objectMouseOver.blockY;
+											int z = this.objectMouseOver.blockZ;
+											
+											this.playerController.sendBlockRemoving(x, y, z, this.objectMouseOver.sideHit);
+											this.effectRenderer.addBlockHitEffects(x, y, z, this.objectMouseOver.sideHit);
+											
 										} else {
 											this.playerController.resetBlockRemoving();
 										}
@@ -772,49 +777,42 @@ public final class Minecraft implements Runnable {
 			}
 		}
 
-		if(this.currentScreen != null) {
+		if (this.currentScreen != null) {
 			this.prevFrameTime = this.ticksRan + 10000;
 		}
 
-		if(this.currentScreen != null) {
-			GuiScreen var7 = this.currentScreen;
+		if (this.currentScreen != null) {
+			
+			// have to hold the current screen, since mouse and keyboard
+			// handling can both change the currentScreen instance var
+			GuiScreen screen = this.currentScreen;
 
-			while(Mouse.next()) {
-				var7.handleMouseInput();
+			while (Mouse.next()) {
+				screen.handleMouseInput();
 			}
 
-			while(Keyboard.next()) {
-				var7.handleKeyboardInput();
+			while (Keyboard.next()) {
+				screen.handleKeyboardInput();
 			}
 
-			if(this.currentScreen != null) {
+			if (this.currentScreen != null) {
 				this.currentScreen.updateScreen();
 			}
 		}
 
-		if(this.theWorld != null) {
+		if (this.theWorld != null) {
+			
 			this.theWorld.difficultySetting = this.options.difficulty;
-			if(!this.isGamePaused) {
+			
+			if (!this.isGamePaused) {
 				this.entityRenderer.updateRenderer();
-			}
-
-			if(!this.isGamePaused) {
 				this.renderGlobal.updateClouds();
-			}
-
-			if(!this.isGamePaused) {
 				this.theWorld.updateEntities();
-			}
-
-			if(!this.isGamePaused) {
 				this.theWorld.tick();
-			}
-
-			if(!this.isGamePaused) {
-				this.theWorld.randomDisplayUpdates((int)this.thePlayer.posX, (int)this.thePlayer.posY, (int)this.thePlayer.posZ);
-			}
-
-			if(!this.isGamePaused) {
+				this.theWorld.randomDisplayUpdates(
+						(int) this.thePlayer.posX,
+						(int) this.thePlayer.posY,
+						(int) this.thePlayer.posZ);
 				this.effectRenderer.updateEffects();
 			}
 		}

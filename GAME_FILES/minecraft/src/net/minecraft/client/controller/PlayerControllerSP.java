@@ -11,6 +11,7 @@ import net.minecraft.game.level.block.Block;
 import net.minecraft.game.level.block.StepSound;
 
 public final class PlayerControllerSP extends PlayerController {
+	
 	private int curBlockX = -1;
 	private int curBlockY = -1;
 	private int curBlockZ = -1;
@@ -24,32 +25,36 @@ public final class PlayerControllerSP extends PlayerController {
 		super(var1);
 	}
 
-	public final boolean sendBlockRemoved(int var1, int var2, int var3) {
-		int var4 = this.mc.theWorld.getBlockId(var1, var2, var3);
-		byte var5 = this.mc.theWorld.getBlockMetadata(var1, var2, var3);
-		boolean var6 = super.sendBlockRemoved(var1, var2, var3);
-		EntityPlayerSP var7 = this.mc.thePlayer;
-		ItemStack var9 = var7.inventory.getCurrentItem();
-		if(var9 != null) {
-			Item.itemsList[var9.itemID].onBlockDestroyed(var9);
-			if(var9.stackSize == 0) {
+	public final boolean sendBlockRemoved(int x, int y, int z) {
+		
+		ItemStack heldItem = this.mc.thePlayer.inventory.getCurrentItem();
+		
+		if(heldItem != null) {
+			Item.itemsList[heldItem.itemID].onBlockDestroyed(heldItem);
+			if(heldItem.stackSize == 0) {
 				this.mc.thePlayer.destroyCurrentEquippedItem();
 			}
 		}
+		
+		byte var5 = this.mc.theWorld.getBlockMetadata(x, y, z);
+		int blockID = this.mc.theWorld.getBlockId(x, y, z);
+		
+		boolean var6 = super.sendBlockRemoved(x, y, z);
 
-		if(var6 && this.mc.thePlayer.canHarvestBlock(Block.blocksList[var4])) {
-			Block.blocksList[var4].dropBlockAsItem(this.mc.theWorld, var1, var2, var3, var5);
+		if(var6 && this.mc.thePlayer.canHarvestBlock(Block.blocksList[blockID])) {
+			Block.blocksList[blockID].dropBlockAsItem(this.mc.theWorld, x, y, z, var5);
 		}
 
 		return var6;
 	}
 
-	public final void clickBlock(int var1, int var2, int var3) {
-		int var4 = this.mc.theWorld.getBlockId(var1, var2, var3);
-		if(var4 > 0 && Block.blocksList[var4].blockStrength(this.mc.thePlayer) >= 1.0F) {
-			this.sendBlockRemoved(var1, var2, var3);
+	public final void clickBlock(int x, int y, int z) {
+		
+		int blockID = this.mc.theWorld.getBlockId(x, y, z);
+		
+		if (blockID > 0 && Block.blocksList[blockID].blockStrength(this.mc.thePlayer) >= 1.0F) {
+			this.sendBlockRemoved(x, y, z);
 		}
-
 	}
 
 	public final void resetBlockRemoving() {
@@ -57,22 +62,35 @@ public final class PlayerControllerSP extends PlayerController {
 		this.blockHitWait = 0;
 	}
 
-	public final void sendBlockRemoving(int var1, int var2, int var3, int var4) {
+	public final void sendBlockRemoving(int x, int y, int z, int side) {
+		
 		if(this.blockHitWait > 0) {
+			
 			--this.blockHitWait;
+			
+		} else if (this.mc.thePlayer.isCreativeMode) {
+			
+			this.sendBlockRemoved(x, y, z);
+			this.blockHitWait = 5;
+			
 		} else {
-			super.sendBlockRemoving(var1, var2, var3, var4);
-			if(var1 == this.curBlockX && var2 == this.curBlockY && var3 == this.curBlockZ) {
-				var4 = this.mc.theWorld.getBlockId(var1, var2, var3);
-				if(var4 != 0) {
-					Block var6 = Block.blocksList[var4];
+			
+			super.sendBlockRemoving(x, y, z, side);
+			
+			if (x == this.curBlockX && y == this.curBlockY && z == this.curBlockZ) {
+				
+				int blockID = this.mc.theWorld.getBlockId(x, y, z);
+				
+				if(blockID != 0) {
+					
+					Block var6 = Block.blocksList[blockID];
 					this.curBlockDamage += var6.blockStrength(this.mc.thePlayer);
 					if(this.blockDestroySoundCounter % 4.0F == 0.0F && var6 != null) {
 						SoundManager var10000 = this.mc.sndManager;
 						String var10001 = var6.stepSound.stepSoundDir2();
-						float var10002 = (float)var1 + 0.5F;
-						float var10003 = (float)var2 + 0.5F;
-						float var10004 = (float)var3 + 0.5F;
+						float var10002 = (float) x + 0.5F;
+						float var10003 = (float) y + 0.5F;
+						float var10004 = (float) z + 0.5F;
 						StepSound var5 = var6.stepSound;
 						float var10005 = (var5.soundVolume + 1.0F) / 8.0F;
 						var5 = var6.stepSound;
@@ -81,7 +99,7 @@ public final class PlayerControllerSP extends PlayerController {
 
 					++this.blockDestroySoundCounter;
 					if(this.curBlockDamage >= 1.0F) {
-						this.sendBlockRemoved(var1, var2, var3);
+						this.sendBlockRemoved(x, y, z);
 						this.curBlockDamage = 0.0F;
 						this.prevBlockDamage = 0.0F;
 						this.blockDestroySoundCounter = 0.0F;
@@ -89,13 +107,14 @@ public final class PlayerControllerSP extends PlayerController {
 					}
 
 				}
+				
 			} else {
 				this.curBlockDamage = 0.0F;
 				this.prevBlockDamage = 0.0F;
 				this.blockDestroySoundCounter = 0.0F;
-				this.curBlockX = var1;
-				this.curBlockY = var2;
-				this.curBlockZ = var3;
+				this.curBlockX = x;
+				this.curBlockY = y;
+				this.curBlockZ = z;
 			}
 		}
 	}
@@ -113,9 +132,9 @@ public final class PlayerControllerSP extends PlayerController {
 		return 4.0F;
 	}
 
-	public final void onWorldChange(World var1) {
-		super.onWorldChange(var1);
-		this.mobSpawner = new MobSpawner(var1);
+	public final void onWorldChange(World world) {
+		super.onWorldChange(world);
+		this.mobSpawner = new MobSpawner(world);
 	}
 
 	public final void onUpdate() {

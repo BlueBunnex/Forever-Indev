@@ -293,45 +293,48 @@ public final class World {
 		this.notifyBlocksOfNeighborChange(var4, var5, var6, var7);
 	}
 
-	public final boolean setBlock(int var1, int var2, int var3, int var4) {
-		if(var1 > 0 && var2 > 0 && var3 > 0 && var1 < this.width - 1 && var2 < this.height - 1 && var3 < this.length - 1) {
-			if(var4 == this.blocks[(var2 * this.length + var3) * this.width + var1]) {
-				return false;
-			} else {
-				if(var4 == 0 && (var1 == 0 || var3 == 0 || var1 == this.width - 1 || var3 == this.length - 1) && var2 >= this.groundLevel && var2 < this.waterLevel) {
-					var4 = Block.waterMoving.blockID;
-				}
-
-				byte var5 = this.blocks[(var2 * this.length + var3) * this.width + var1];
-				this.blocks[(var2 * this.length + var3) * this.width + var1] = (byte)var4;
-				this.setBlockMetadata(var1, var2, var3, 0);
-				if(var5 != 0) {
-					Block.blocksList[var5].onBlockRemoval(this, var1, var2, var3);
-				}
-
-				if(var4 != 0) {
-					Block.blocksList[var4].onBlockAdded(this, var1, var2, var3);
-				}
-
-				if(Block.lightOpacity[var5] != Block.lightOpacity[var4] || Block.lightValue[var5] != 0 || Block.lightValue[var4] != 0) {
-					this.lightUpdates.updateSkylight(var1, var3, 1, 1);
-					this.lightUpdates.updateBlockLight(var1, var2, var3, var1 + 1, var2 + 1, var3 + 1);
-				}
-
-				for(var4 = 0; var4 < this.worldAccesses.size(); ++var4) {
-					((IWorldAccess)this.worldAccesses.get(var4)).markBlockAndNeighborsNeedsUpdate(var1, var2, var3);
-				}
-
-				return true;
-			}
-		} else {
+	public final boolean setBlock(int x, int y, int z, int blockID) {
+		
+		// if block is outside domain
+		if (!(x > 0 && y > 0 && z > 0 && x < this.width - 1 && y < this.height - 1 && z < this.length - 1))
 			return false;
+		
+		// if block is same as current block
+		if (blockID == this.blocks[(y * this.length + z) * this.width + x])
+			return false;
+		
+		// do the actual stuff
+		if (blockID == 0 && (x == 0 || z == 0 || x == this.width - 1 || z == this.length - 1) && y >= this.groundLevel && y < this.waterLevel) {
+			blockID = Block.waterMoving.blockID;
 		}
+
+		byte var5 = this.blocks[(y * this.length + z) * this.width + x];
+		this.blocks[(y * this.length + z) * this.width + x] = (byte) blockID;
+		this.setBlockMetadata(x, y, z, 0);
+		if(var5 != 0) {
+			Block.blocksList[var5].onBlockRemoval(this, x, y, z);
+		}
+
+		if (blockID != 0) {
+			Block.blocksList[blockID].onBlockAdded(this, x, y, z);
+		}
+
+		if (Block.lightOpacity[var5] != Block.lightOpacity[blockID] || Block.lightValue[var5] != 0 || Block.lightValue[blockID] != 0) {
+			this.lightUpdates.updateSkylight(x, z, 1, 1);
+			this.lightUpdates.updateBlockLight(x, y, z, x + 1, y + 1, z + 1);
+		}
+
+		for (int i = 0; i < this.worldAccesses.size(); i++) {
+			((IWorldAccess) this.worldAccesses.get(i)).markBlockAndNeighborsNeedsUpdate(x, y, z);
+		}
+
+		return true;
 	}
 
-	public final boolean setBlockWithNotify(int var1, int var2, int var3, int var4) {
-		if(this.setBlock(var1, var2, var3, var4)) {
-			this.notifyBlocksOfNeighborChange(var1, var2, var3, var4);
+	public final boolean setBlockWithNotify(int x, int y, int z, int var4) {
+		
+		if(this.setBlock(x, y, z, var4)) {
+			this.notifyBlocksOfNeighborChange(x, y, z, var4);
 			return true;
 		} else {
 			return false;
