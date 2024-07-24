@@ -106,19 +106,8 @@ public abstract class GuiContainer extends GuiScreen {
 			GL11.glEnable(GL11.GL_LIGHTING);
 			GL11.glEnable(GL11.GL_DEPTH_TEST);
 		}
-
-		// render held item
-		if (this.heldItem != null) {
-			GL11.glTranslatef(0.0F, 0.0F, 32.0F);
-			
-			int x = mouseX - cornerX - 8,
-				y = mouseY - cornerY - 8;
-			
-			itemRenderer.renderItemIntoGUI(this.mc.renderEngine, this.heldItem, x, y);
-			itemRenderer.renderItemOverlayIntoGUI(this.fontRenderer, this.heldItem, x, y);
-		}
-
-		// not sure what this does
+		
+		// render foreground layer
 		GL11.glDisable(GL11.GL_NORMALIZE);
 		RenderHelper.disableStandardItemLighting();
 		GL11.glDisable(GL11.GL_LIGHTING);
@@ -127,6 +116,24 @@ public abstract class GuiContainer extends GuiScreen {
 		GL11.glEnable(GL11.GL_LIGHTING);
 		GL11.glEnable(GL11.GL_DEPTH_TEST);
 		GL11.glPopMatrix();
+
+		// render held item on top of everything
+		if (this.heldItem != null) {
+			GL11.glPushMatrix();
+			GL11.glRotatef(180.0F, 1.0F, 0.0F, 0.0F);
+			GL11.glEnable(GL11.GL_NORMALIZE);
+			RenderHelper.enableStandardItemLighting();
+			GL11.glPopMatrix();
+			
+			GL11.glPushMatrix();
+			GL11.glTranslatef(0.0F, 0.0F, 32.0F);
+			
+			int x = mouseX - 8,
+				y = mouseY - 8;
+			
+			itemRenderer.renderItemIntoGUI(this.mc.renderEngine, this.heldItem, x, y);
+			itemRenderer.renderItemOverlayIntoGUI(this.fontRenderer, this.heldItem, x, y);
+		}
 	}
 
 	protected void drawGuiContainerForegroundLayer() {}
