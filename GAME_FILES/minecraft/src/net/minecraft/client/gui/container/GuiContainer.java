@@ -27,10 +27,13 @@ public abstract class GuiContainer extends GuiScreen {
 		
 		this.drawGuiContainerBackgroundLayer();
 		
+		// TODO learn what these GL commands actually do,
+		//      and then clean this entire function up
 		GL11.glPushMatrix();
 		GL11.glRotatef(180.0F, 1.0F, 0.0F, 0.0F);
 		RenderHelper.enableStandardItemLighting();
 		GL11.glPopMatrix();
+		
 		GL11.glPushMatrix();
 		GL11.glTranslatef((float) cornerX, (float) cornerY, 0.0F);
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
@@ -47,7 +50,7 @@ public abstract class GuiContainer extends GuiScreen {
 			
 			ItemStack itemStack = slot.inventory.getStackInSlot(slot.slotIndex);
 			
-			label24: {
+			jump: {
 				// render item background (armor slots)
 				if (itemStack == null) {
 					
@@ -58,7 +61,8 @@ public abstract class GuiContainer extends GuiScreen {
 						RenderEngine.bindTexture(this.mc.renderEngine.getTexture("/gui/items.png"));
 						this.drawTexturedModalRect(x, y, background % 16 << 4, background / 16 << 4, 16, 16);
 						GL11.glEnable(GL11.GL_LIGHTING);
-						break label24;
+						
+						break jump;
 					}
 				}
 
@@ -112,13 +116,14 @@ public abstract class GuiContainer extends GuiScreen {
 		RenderHelper.disableStandardItemLighting();
 		GL11.glDisable(GL11.GL_LIGHTING);
 		GL11.glDisable(GL11.GL_DEPTH_TEST);
-		this.drawGuiContainerForegroundLayer();
+		this.drawGuiContainerForegroundLayer(); // I suspect this function can call enableStandardItemLighting
 		GL11.glEnable(GL11.GL_LIGHTING);
 		GL11.glEnable(GL11.GL_DEPTH_TEST);
 		GL11.glPopMatrix();
-
+		
 		// render held item on top of everything
 		if (this.heldItem != null) {
+			
 			GL11.glPushMatrix();
 			GL11.glRotatef(180.0F, 1.0F, 0.0F, 0.0F);
 			GL11.glEnable(GL11.GL_NORMALIZE);
@@ -126,14 +131,18 @@ public abstract class GuiContainer extends GuiScreen {
 			GL11.glPopMatrix();
 			
 			GL11.glPushMatrix();
-			GL11.glTranslatef(0.0F, 0.0F, 32.0F);
 			
 			int x = mouseX - 8,
 				y = mouseY - 8;
 			
 			itemRenderer.renderItemIntoGUI(this.mc.renderEngine, this.heldItem, x, y);
 			itemRenderer.renderItemOverlayIntoGUI(this.fontRenderer, this.heldItem, x, y);
+			
+			GL11.glPopMatrix();
 		}
+		
+		// make sure standard item lighting is disabled so the sky doesn't render weird
+		RenderHelper.disableStandardItemLighting();
 	}
 
 	protected void drawGuiContainerForegroundLayer() {}

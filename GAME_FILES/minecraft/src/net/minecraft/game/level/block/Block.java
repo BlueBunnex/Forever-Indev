@@ -688,7 +688,7 @@ public class Block {
 		fire.rarity = Rarity.LEGENDARY;
 		
 		// various brick types
-		mudBrick = new Block("Mud Brick", 66, 99, Material.rock).setHardness(2.0F).setResistance(10.0F);
+		mudBrick = new Block("Mud Brick", 66, 99, Material.ground).setHardness(1.0F).setResistance(10.0F);
 		mudBrick.stepSound = soundStoneFootstep;
 		
 		cobbledBrick = new Block("Cobbled Brick", 67, 100, Material.rock).setHardness(2.0F).setResistance(10.0F);
