@@ -10,11 +10,10 @@ public class GuiMessage extends GuiScreen {
 	private static final String ALLOWED_CHARS = " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*()-=_+,.<>;':\"/?[{]}\\|`~";
 	
 	private String message;
-	private boolean sendMessage;
+	private boolean sendMessage = false;
 
-	public GuiMessage() {
-		message = "";
-		sendMessage = false;
+	public GuiMessage(boolean isCommand) {
+		message = isCommand ? "/" : "";
 	}
 
 	public final void drawScreen(int mouseX, int mouseY) {

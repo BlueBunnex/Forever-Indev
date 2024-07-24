@@ -740,7 +740,13 @@ public final class Minecraft implements Runnable {
 									}
 									
 									else if (Keyboard.getEventKey() == this.options.keyBindChat.keyCode) {
-										this.displayGuiScreen(new GuiMessage());
+										// open chat normally
+										this.displayGuiScreen(new GuiMessage(false));
+									}
+									
+									else if (Keyboard.getEventKey() == Keyboard.KEY_SLASH) {
+										// open chat with a slash
+										this.displayGuiScreen(new GuiMessage(true));
 									}
 
 									else if (Keyboard.getEventKey() == this.options.keyBindDrop.keyCode) {
