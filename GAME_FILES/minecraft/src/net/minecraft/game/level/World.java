@@ -53,7 +53,6 @@ public final class World {
 	private int updateLCG = 0;
 	private int playTime = 0;
 	public EntityLiving playerEntity;
-	public boolean survivalWorld = true;
 	public int skyBrightness = 15;
 	public int skylightSubtracted = 15;
 	public Pathfinder pathFinder = new Pathfinder(this);

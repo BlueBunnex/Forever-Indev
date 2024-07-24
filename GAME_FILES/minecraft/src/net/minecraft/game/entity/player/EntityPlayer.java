@@ -169,51 +169,51 @@ public class EntityPlayer extends EntityLiving {
 		return 0.12F;
 	}
 
-	public final boolean attackEntityFrom(Entity var1, int var2) {
-		if(!this.worldObj.survivalWorld) {
+	public boolean attackEntityFrom(Entity attacker, int damage) {
+	
+		this.entityAge = 0;
+		
+		if (this.health <= 0) {
+			return false;
+		} else if ((float)this.heartsLife > (float)this.heartsHalvesLife / 2.0F) {
 			return false;
 		} else {
-			this.entityAge = 0;
-			if(this.health <= 0) {
-				return false;
-			} else if((float)this.heartsLife > (float)this.heartsHalvesLife / 2.0F) {
+			
+			if (attacker instanceof EntityMob || attacker instanceof EntityArrow) {
+				if (this.worldObj.difficultySetting == 0) {
+					damage = 0;
+				}
+
+				if(this.worldObj.difficultySetting == 1) {
+					damage = damage / 3 + 1;
+				}
+
+				if(this.worldObj.difficultySetting == 3) {
+					damage = damage * 3 / 2;
+				}
+			}
+
+			int var3 = 25 - this.inventory.getPlayerArmorValue();
+			var3 = damage * var3 + this.damageRemainder;
+			int var4 = damage;
+			InventoryPlayer var6 = this.inventory;
+
+			for(int var5 = 0; var5 < var6.armorInventory.length; ++var5) {
+				if(var6.armorInventory[var5] != null && var6.armorInventory[var5].getItem() instanceof ItemArmor) {
+					var6.armorInventory[var5].damageItem(var4);
+					if(var6.armorInventory[var5].stackSize == 0) {
+						var6.armorInventory[var5] = null;
+					}
+				}
+			}
+
+			damage = var3 / 25;
+			this.damageRemainder = var3 % 25;
+			
+			if(damage == 0) {
 				return false;
 			} else {
-				if(var1 instanceof EntityMob || var1 instanceof EntityArrow) {
-					if(this.worldObj.difficultySetting == 0) {
-						var2 = 0;
-					}
-
-					if(this.worldObj.difficultySetting == 1) {
-						var2 = var2 / 3 + 1;
-					}
-
-					if(this.worldObj.difficultySetting == 3) {
-						var2 = var2 * 3 / 2;
-					}
-				}
-
-				int var3 = 25 - this.inventory.getPlayerArmorValue();
-				var3 = var2 * var3 + this.damageRemainder;
-				int var4 = var2;
-				InventoryPlayer var6 = this.inventory;
-
-				for(int var5 = 0; var5 < var6.armorInventory.length; ++var5) {
-					if(var6.armorInventory[var5] != null && var6.armorInventory[var5].getItem() instanceof ItemArmor) {
-						var6.armorInventory[var5].damageItem(var4);
-						if(var6.armorInventory[var5].stackSize == 0) {
-							var6.armorInventory[var5] = null;
-						}
-					}
-				}
-
-				var2 = var3 / 25;
-				this.damageRemainder = var3 % 25;
-				if(var2 == 0) {
-					return false;
-				} else {
-					return super.attackEntityFrom(var1, var2);
-				}
+				return super.attackEntityFrom(attacker, damage);
 			}
 		}
 	}

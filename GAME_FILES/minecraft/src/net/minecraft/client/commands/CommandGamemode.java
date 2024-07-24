@@ -14,6 +14,8 @@ public class CommandGamemode extends Command {
 			int gamemode = Integer.parseInt(args[1]);
 			mc.thePlayer.isCreativeMode = gamemode == 1;
 			
+			mc.ingameGUI.addChatMessage("Set gamemode to " + (gamemode == 1 ? "creative." : "survival."));
+			
 		} catch (Exception e) {
 			mc.ingameGUI.addChatMessage("Invalid argument. Use 0 for survival, 1 for creative.");
 			return;

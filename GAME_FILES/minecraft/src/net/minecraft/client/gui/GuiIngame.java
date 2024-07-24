@@ -55,9 +55,6 @@ public final class GuiIngame extends Gui {
 		// draw HUD
 		if (this.mc.playerController.shouldDrawHUD()) {
 			
-			int playerHealth     = this.mc.thePlayer.health,
-				playerPrevHealth = this.mc.thePlayer.prevHealth;
-			
 			int x, y;
 			
 			// render armor damage
@@ -79,36 +76,42 @@ public final class GuiIngame extends Gui {
 			}
 			
 			// render health
-			for (int i = 0; i < 10; i++) {
-
-				byte var26 = 0;
-				if (var20) {
-					var26 = 1;
-				}
-
-				x = width / 2 - 91 + (i << 3);
-				y = height - 32;
-				if (playerHealth <= 4) {
-					y += this.rand.nextInt(2);
-				}
-
-				this.drawTexturedModalRect(x, y, 16 + var26 * 9, 0, 9, 9);
-				if (var20) {
-					if((i << 1) + 1 < playerPrevHealth) {
-						this.drawTexturedModalRect(x, y, 70, 0, 9, 9);
+			if (!this.mc.thePlayer.isCreativeMode) {
+				
+				int playerHealth     = this.mc.thePlayer.health,
+					playerPrevHealth = this.mc.thePlayer.prevHealth;
+				
+				for (int i = 0; i < 10; i++) {
+	
+					byte var26 = 0;
+					if (var20) {
+						var26 = 1;
 					}
-
-					if((i << 1) + 1 == playerPrevHealth) {
-						this.drawTexturedModalRect(x, y, 79, 0, 9, 9);
+	
+					x = width / 2 - 91 + (i << 3);
+					y = height - 32;
+					if (playerHealth <= 4) {
+						y += this.rand.nextInt(2);
 					}
-				}
-
-				if ((i << 1) + 1 < playerHealth) {
-					this.drawTexturedModalRect(x, y, 52, 0, 9, 9);
-				}
-
-				if ((i << 1) + 1 == playerHealth) {
-					this.drawTexturedModalRect(x, y, 61, 0, 9, 9);
+	
+					this.drawTexturedModalRect(x, y, 16 + var26 * 9, 0, 9, 9);
+					if (var20) {
+						if((i << 1) + 1 < playerPrevHealth) {
+							this.drawTexturedModalRect(x, y, 70, 0, 9, 9);
+						}
+	
+						if((i << 1) + 1 == playerPrevHealth) {
+							this.drawTexturedModalRect(x, y, 79, 0, 9, 9);
+						}
+					}
+	
+					if ((i << 1) + 1 < playerHealth) {
+						this.drawTexturedModalRect(x, y, 52, 0, 9, 9);
+					}
+	
+					if ((i << 1) + 1 == playerHealth) {
+						this.drawTexturedModalRect(x, y, 61, 0, 9, 9);
+					}
 				}
 			}
 

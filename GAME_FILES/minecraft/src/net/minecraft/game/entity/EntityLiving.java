@@ -218,55 +218,53 @@ public class EntityLiving extends Entity {
 
 	public boolean attackEntityFrom(Entity attacker, int damage) {
 		
-		if(!this.worldObj.survivalWorld) {
+		this.entityAge = 0;
+		
+		if(this.health <= 0) {
 			return false;
 		} else {
-			this.entityAge = 0;
-			if(this.health <= 0) {
-				return false;
+			this.limbYaw = 1.5F;
+			if((float)this.heartsLife > (float)this.heartsHalvesLife / 2.0F) {
+				if(this.prevHealth - damage >= this.health) {
+					return false;
+				}
+
+				this.health = this.prevHealth - damage;
 			} else {
-				this.limbYaw = 1.5F;
-				if((float)this.heartsLife > (float)this.heartsHalvesLife / 2.0F) {
-					if(this.prevHealth - damage >= this.health) {
-						return false;
-					}
-
-					this.health = this.prevHealth - damage;
-				} else {
-					this.prevHealth = this.health;
-					this.heartsLife = this.heartsHalvesLife;
-					this.health -= damage;
-					this.hurtTime = this.maxHurtTime = 10;
-				}
-
-				this.attackedAtYaw = 0.0F;
-				if(attacker != null) {
-					float var6 = attacker.posX - this.posX;
-					float var3 = attacker.posZ - this.posZ;
-					this.attackedAtYaw = (float)(Math.atan2((double)var3, (double)var6) * 180.0D / (double)((float)Math.PI)) - this.rotationYaw;
-					float var5 = MathHelper.sqrt_float(var6 * var6 + var3 * var3);
-					this.motionX /= 2.0F;
-					this.motionY /= 2.0F;
-					this.motionZ /= 2.0F;
-					this.motionX -= var6 / var5 * 0.4F;
-					this.motionY += 0.4F;
-					this.motionZ -= var3 / var5 * 0.4F;
-					if(this.motionY > 0.4F) {
-						this.motionY = 0.4F;
-					}
-				} else {
-					this.attackedAtYaw = (float)((int)(Math.random() * 2.0D) * 180);
-				}
-
-				if(this.health <= 0) {
-					this.worldObj.playSoundAtEntity(this, this.getDeathSound(), 1.0F, (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F);
-					this.onDeath(attacker);
-				} else {
-					this.worldObj.playSoundAtEntity(this, this.getHurtSound(), 1.0F, (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F);
-				}
-
-				return true;
+				this.prevHealth = this.health;
+				this.heartsLife = this.heartsHalvesLife;
+				this.health -= damage;
+				this.hurtTime = this.maxHurtTime = 10;
 			}
+
+			this.attackedAtYaw = 0.0F;
+			if(attacker != null) {
+				float var6 = attacker.posX - this.posX;
+				float var3 = attacker.posZ - this.posZ;
+				this.attackedAtYaw = (float)(Math.atan2((double)var3, (double)var6) * 180.0D / (double)((float)Math.PI)) - this.rotationYaw;
+				float var5 = MathHelper.sqrt_float(var6 * var6 + var3 * var3);
+				this.motionX /= 2.0F;
+				this.motionY /= 2.0F;
+				this.motionZ /= 2.0F;
+				this.motionX -= var6 / var5 * 0.4F;
+				this.motionY += 0.4F;
+				this.motionZ -= var3 / var5 * 0.4F;
+				if(this.motionY > 0.4F) {
+					this.motionY = 0.4F;
+				}
+			} else {
+				this.attackedAtYaw = (float)((int)(Math.random() * 2.0D) * 180);
+			}
+
+			if(this.health <= 0) {
+				this.worldObj.playSoundAtEntity(this, this.getDeathSound(), 1.0F, (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F);
+				this.onDeath(attacker);
+			} else {
+				this.worldObj.playSoundAtEntity(this, this.getHurtSound(), 1.0F, (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F);
+			}
+
+			return true;
+			
 		}
 	}
 

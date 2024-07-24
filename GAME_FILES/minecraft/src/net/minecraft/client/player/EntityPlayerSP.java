@@ -30,6 +30,14 @@ public class EntityPlayerSP extends EntityPlayer {
 		if(session != null)
 			this.skinUrl = "http://www.minecraft.net/skin/" + session.username + ".png";
 	}
+	
+	public boolean attackEntityFrom(Entity attacker, int damage) {
+		
+		if (!isCreativeMode)
+			return super.attackEntityFrom(attacker, damage);
+		
+		return false;
+	}
 
 	public final void updatePlayerActionState() {
 		this.moveStrafing = this.movementInput.moveStrafe;
