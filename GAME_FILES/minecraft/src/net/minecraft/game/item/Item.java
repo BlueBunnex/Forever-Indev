@@ -71,6 +71,7 @@ public class Item {
 	public static Item seeds;
 	public static Item wheat;
 	public static Item bread;
+	public static Item sweetBread;
 	public static Item flint;
 	public static Item porkRaw;
 	public static Item porkCooked;
@@ -306,6 +307,9 @@ public class Item {
 		
 		bread = new ItemFood("Bread", 54, 5);
 		bread.iconIndex = 41;
+		
+		sweetBread = new ItemFood("Sweet Bread", 69, 7);
+		sweetBread.iconIndex = 57;
 		
 		porkRaw = new ItemFood("Raw Porkchop", 55, 3);
 		porkRaw.iconIndex = 87;

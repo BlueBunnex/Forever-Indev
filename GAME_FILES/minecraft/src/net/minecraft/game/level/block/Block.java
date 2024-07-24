@@ -102,6 +102,9 @@ public class Block {
 	public static final Block stoneOvenActive;
 	public static final Block coalLamp;
 	
+	public static final Block mudBrick;
+	public static final Block cobbledBrick;
+	
 	protected String name;
 	protected Rarity rarity; 
 	public final int blockID;
@@ -604,7 +607,7 @@ public class Block {
 		slabFull.stepSound = soundStoneFootstep;
 		
 		// brick
-		brick = new Block("Brick", 46, 7, Material.rock).setHardness(2.0F).setResistance(10.0F);
+		brick = new Block("Fired Brick", 46, 7, Material.rock).setHardness(2.0F).setResistance(10.0F);
 		brick.stepSound = soundStoneFootstep;
 		
 		// TNT
@@ -683,6 +686,14 @@ public class Block {
 		fire = (BlockFire) new BlockFire(65).setHardness(0.0F).setLightValue(1.0F);
 		fire.stepSound = soundWoodFootstep; // what
 		fire.rarity = Rarity.LEGENDARY;
+		
+		// various brick types
+		mudBrick = new Block("Mud Brick", 66, 99, Material.rock).setHardness(2.0F).setResistance(10.0F);
+		mudBrick.stepSound = soundStoneFootstep;
+		
+		cobbledBrick = new Block("Cobbled Brick", 67, 100, Material.rock).setHardness(2.0F).setResistance(10.0F);
+		cobbledBrick.stepSound = soundStoneFootstep;
+		
 
 		// make an item for every block
 		for(int i = 0; i < 256; i++) {

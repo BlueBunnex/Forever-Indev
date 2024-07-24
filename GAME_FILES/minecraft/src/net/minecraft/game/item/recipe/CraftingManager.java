@@ -28,6 +28,11 @@ public final class CraftingManager {
 //		new RecipesFood();
 //		new RecipesCrafting();
 		
+		this.addRecipe(new ItemStack(Item.sweetBread, 1), new Object[]{"X", "#", Character.valueOf('X'), Item.sugar, Character.valueOf('#'), Item.bread});
+		
+		// cobbled brick may take the cobblestone version of the polished block crafting
+		// mud brick would be same shape but for dirt
+		
 		this.addRecipe(new ItemStack(Block.polishedBlock, 4), new Object[]{"##", "##", Character.valueOf('#'), Block.cobblestone});
 		this.addRecipe(new ItemStack(Block.polishedBlock, 4), new Object[]{"##", "##", Character.valueOf('#'), Block.stone});
 		this.addRecipe(new ItemStack(Block.slabHalf, 6), new Object[]{"###", Character.valueOf('#'), Block.polishedBlock});
