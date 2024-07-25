@@ -94,7 +94,7 @@ public abstract class GuiContainer extends GuiScreen {
 			drawRect(x, y, x + 16, y + 16, -2130706433);
 			
 			// show tooltip for hovered item
-			if (itemStack != null) {
+			if (itemStack != null && this.heldItem == null) {
 
 				//GL11.glTranslatef(0.0F, 0.0F, 16.0F);
 				drawStringWithBackground(
@@ -125,12 +125,14 @@ public abstract class GuiContainer extends GuiScreen {
 		if (this.heldItem != null) {
 			
 			GL11.glPushMatrix();
-			GL11.glRotatef(180.0F, 1.0F, 0.0F, 0.0F);
+			GL11.glRotatef(180.0F, 1.0F, 0.0F, 0.0F); // so block item light comes from above
 			GL11.glEnable(GL11.GL_NORMALIZE);
-			RenderHelper.enableStandardItemLighting();
+			GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F); // so item items don't render dark
+			RenderHelper.enableStandardItemLighting(); // so block items don't render dark...?
 			GL11.glPopMatrix();
 			
 			GL11.glPushMatrix();
+			GL11.glTranslatef(0.0F, 0.0F, 32.0F); // so blocks don't clip into other block items
 			
 			int x = mouseX - 8,
 				y = mouseY - 8;
