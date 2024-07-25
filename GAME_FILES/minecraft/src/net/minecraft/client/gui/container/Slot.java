@@ -45,9 +45,8 @@ public class Slot {
 	 */
 	public ItemStack onClickedWithHeldStack(ItemStack heldStack, int mouseClick) {
 		
-		// mouseClick == 0 ? var12.stackSize : (var12.stackSize + 1) / 2
-		
-		if (!this.isItemValid(heldStack))
+		// if heldStack cannot be put into this slot, don't do anything
+		if (heldStack != null && !this.isItemValid(heldStack))
 			return heldStack;
 		
 		ItemStack currContained = this.inventory.getStackInSlot(slotIndex);
@@ -56,16 +55,38 @@ public class Slot {
 		if (currContained == null && heldStack == null)
 			return null;
 		
-		// merging stacks
-		if (currContained != null && heldStack != null && currContained.itemID == heldStack.itemID) {
-			currContained.stackSize += heldStack.stackSize;
-			return null;
+		if (mouseClick == 0) {
+			
+			// merging stacks
+			if (currContained != null && heldStack != null && currContained.itemID == heldStack.itemID) {
+				
+				int stackLimit = currContained.getItem().getItemStackLimit();
+				
+				// both stacks add to more than stack limit?
+				if (currContained.stackSize + heldStack.stackSize > stackLimit) {
+					heldStack.stackSize = currContained.stackSize + heldStack.stackSize - stackLimit;
+					currContained.stackSize = stackLimit;
+					return heldStack;
+					
+				// both stacks can merge without exceeding stack limit?
+				} else {
+					currContained.stackSize += heldStack.stackSize;
+					return null;
+				}
+			}
+			
+			// picking up, placing in, or swapping
+			this.inventory.setInventorySlotContents(this.slotIndex, heldStack);
+			this.onPickupFromSlot();
+			
+			return currContained;
+			
+		} else {
+			// TODO item splitting (held=null) and single-placing (slot=null)
+			//(var12.stackSize + 1) / 2
+			
+			return heldStack;
 		}
-		
-		this.inventory.setInventorySlotContents(this.slotIndex, heldStack);
-		this.onPickupFromSlot();
-		
-		return currContained;
 	}
 
 	public int getBackgroundIconIndex() {

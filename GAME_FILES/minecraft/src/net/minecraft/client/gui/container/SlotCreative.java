@@ -21,7 +21,13 @@ public class SlotCreative extends Slot {
 	public ItemStack onClickedWithHeldStack(ItemStack heldStack, int mouseClick) {
 		
 		if (heldStack == null) {
-			return ALL_ITEMS.getStackInSlot(this.slotIndex);
+			
+			ItemStack toReturn = ALL_ITEMS.getStackInSlot(this.slotIndex);
+			
+			if (mouseClick == 1)
+				toReturn.stackSize = 64;
+			
+			return toReturn;
 			
 		// if the heldStack is the same as the one in this slot, increase its size by one
 		} else if (heldStack.itemID == this.inventory.getStackInSlot(this.slotIndex).itemID) {
