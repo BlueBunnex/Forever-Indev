@@ -18,6 +18,22 @@ public class SlotCreative extends Slot {
 		return ALL_ITEMS.getSizeInventory();
 	}
 	
+	public void putStack(ItemStack stack) {
+		
+		System.out.println("test");
+		
+		// if the stack is the same as the one in this slot, increase its size by one
+		if (stack.itemID == this.inventory.getStackInSlot(this.slotIndex).itemID) {
+			
+			if (stack.stackSize < stack.getItem().getItemStackLimit())
+				stack.stackSize++;
+			
+		// otherwise clear the stack
+		} else {
+			stack.stackSize = 0;
+		}
+	}
+	
 	private static class InventoryInfinite implements IInventory {
 		
 		private Item[] itemList;

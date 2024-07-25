@@ -6,7 +6,6 @@ import net.minecraft.client.gui.GuiButtonText;
 import net.minecraft.client.render.RenderEngine;
 import net.minecraft.client.render.entity.RenderManager;
 import net.minecraft.game.IInventory;
-import net.minecraft.game.item.Item;
 
 import java.util.ArrayList;
 import java.util.List;

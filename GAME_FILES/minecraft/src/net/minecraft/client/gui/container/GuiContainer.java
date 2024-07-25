@@ -158,145 +158,39 @@ public abstract class GuiContainer extends GuiScreen {
 		int cornerY = (this.height - this.ySize) / 2;
 		super.drawSlotInventory(mouseX - cornerX, mouseY - cornerY, mouseClick);
 		
-		// item slot stuff
+		// mouse click events
 		if (mouseClick == 0 || mouseClick == 1) {
+			
 			int var4 = mouseX;
 			int var6 = mouseY;
 			GuiContainer var5 = this;
 			int var7 = 0;
 
 			// find clicked slot, if any
-			Slot clicked;
+			Slot clickedSlot;
 			while (true) {
 				if(var7 >= var5.inventorySlots.size()) {
-					clicked = null;
+					clickedSlot = null;
 					break;
 				}
 
 				Slot var8 = var5.inventorySlots.get(var7);
 				if(var8.isAtCursorPos(var4, var6)) {
-					clicked = var8;
+					clickedSlot = var8;
 					break;
 				}
 
 				++var7;
 			}
 
-			Slot var11 = clicked;
-			if (var11 != null) {
-				ItemStack var12 = var11.inventory.getStackInSlot(var11.slotIndex);
-				if(var12 == null && this.heldItem == null) {
-					return;
-				}
-
-				if(var12 != null && this.heldItem == null) {
-					var6 = mouseClick == 0 ? var12.stackSize : (var12.stackSize + 1) / 2;
-					this.heldItem = var11.inventory.decrStackSize(var11.slotIndex, var6);
-					if(var12.stackSize == 0) {
-						var11.putStack((ItemStack)null);
-					}
-
-					var11.onPickupFromSlot();
-				} else if(var12 == null && this.heldItem != null && var11.isItemValid(this.heldItem)) {
-					var6 = mouseClick == 0 ? this.heldItem.stackSize : 1;
-					if(var6 > var11.inventory.getInventoryStackLimit()) {
-						var6 = var11.inventory.getInventoryStackLimit();
-					}
-
-					var11.putStack(this.heldItem.splitStack(var6));
-					if(this.heldItem.stackSize == 0) {
-						this.heldItem = null;
-					}
-				} else {
-					if(var12 == null || this.heldItem == null) {
-						return;
-					}
-
-					ItemStack var9;
-					if(!var11.isItemValid(this.heldItem)) {
-						if(var12.itemID == this.heldItem.itemID) {
-							var9 = this.heldItem;
-							if(var9.getItem().getItemStackLimit() > 1) {
-								var6 = var12.stackSize;
-								if(var6 > 0) {
-									int var14 = var6 + this.heldItem.stackSize;
-									var9 = this.heldItem;
-									if(var14 <= var9.getItem().getItemStackLimit()) {
-										this.heldItem.stackSize += var6;
-										var12.splitStack(var6);
-										if(var12.stackSize == 0) {
-											var11.putStack((ItemStack)null);
-										}
-
-										var11.onPickupFromSlot();
-										return;
-									}
-								}
-
-								return;
-							}
-						}
-
-						return;
-					}
-
-					if(var12.itemID != this.heldItem.itemID) {
-						if(this.heldItem.stackSize > var11.inventory.getInventoryStackLimit()) {
-							return;
-						}
-
-						var11.putStack(this.heldItem);
-						this.heldItem = var12;
-					} else {
-						if(var12.itemID != this.heldItem.itemID) {
-							return;
-						}
-
-						if (mouseClick == 0) {
-							var6 = this.heldItem.stackSize;
-							if(var6 > var11.inventory.getInventoryStackLimit() - var12.stackSize) {
-								var6 = var11.inventory.getInventoryStackLimit() - var12.stackSize;
-							}
-
-							var9 = this.heldItem;
-							if(var6 > var9.getItem().getItemStackLimit() - var12.stackSize) {
-								var9 = this.heldItem;
-								var6 = var9.getItem().getItemStackLimit() - var12.stackSize;
-							}
-
-							this.heldItem.splitStack(var6);
-							if(this.heldItem.stackSize == 0) {
-								this.heldItem = null;
-							}
-
-							var12.stackSize += var6;
-						} else {
-							if (mouseClick != 1) {
-								return;
-							}
-
-							var6 = 1;
-							if(1 > var11.inventory.getInventoryStackLimit() - var12.stackSize) {
-								var6 = var11.inventory.getInventoryStackLimit() - var12.stackSize;
-							}
-
-							var9 = this.heldItem;
-							if(var6 > var9.getItem().getItemStackLimit() - var12.stackSize) {
-								var9 = this.heldItem;
-								var6 = var9.getItem().getItemStackLimit() - var12.stackSize;
-							}
-
-							this.heldItem.splitStack(var6);
-							if(this.heldItem.stackSize == 0) {
-								this.heldItem = null;
-							}
-
-							var12.stackSize += var6;
-						}
-					}
-				}
+			// interacting with a slot
+			if (clickedSlot != null) {
 				
+				this.heldItem = clickedSlot.onClickedWithHeldStack(this.heldItem, mouseClick);
+				
+			// dropping
 			} else if (this.heldItem != null) {
+				
 				int var13 = (this.width - this.xSize) / 2;
 				var6 = (this.height - this.ySize) / 2;
 				if(mouseX < var13 || mouseY < var6 || mouseX >= var13 + this.xSize || mouseY >= var6 + this.xSize) {

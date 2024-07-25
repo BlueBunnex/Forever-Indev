@@ -34,12 +34,38 @@ public class Slot {
 
 	public void onPickupFromSlot() {}
 
-	public boolean isItemValid(ItemStack var1) {
+	public boolean isItemValid(ItemStack stack) {
 		return true;
 	}
 
-	public final void putStack(ItemStack stack) {
-		this.inventory.setInventorySlotContents(this.slotIndex, stack);
+	/**
+	 * 
+	 * @param heldStack
+	 * @return stack that should become the next heldStack, or null
+	 */
+	public ItemStack onClickedWithHeldStack(ItemStack heldStack, int mouseClick) {
+		
+		// mouseClick == 0 ? var12.stackSize : (var12.stackSize + 1) / 2
+		
+		if (!this.isItemValid(heldStack))
+			return heldStack;
+		
+		ItemStack currContained = this.inventory.getStackInSlot(slotIndex);
+		
+		// don't do anything if nothing is in either position
+		if (currContained == null && heldStack == null)
+			return null;
+		
+		// merging stacks
+		if (currContained != null && heldStack != null && currContained.itemID == heldStack.itemID) {
+			currContained.stackSize += heldStack.stackSize;
+			return null;
+		}
+		
+		this.inventory.setInventorySlotContents(this.slotIndex, heldStack);
+		this.onPickupFromSlot();
+		
+		return currContained;
 	}
 
 	public int getBackgroundIconIndex() {
