@@ -18,19 +18,22 @@ public class SlotCreative extends Slot {
 		return ALL_ITEMS.getSizeInventory();
 	}
 	
-	public void putStack(ItemStack stack) {
+	public ItemStack onClickedWithHeldStack(ItemStack heldStack, int mouseClick) {
 		
-		System.out.println("test");
-		
-		// if the stack is the same as the one in this slot, increase its size by one
-		if (stack.itemID == this.inventory.getStackInSlot(this.slotIndex).itemID) {
+		if (heldStack == null) {
+			return ALL_ITEMS.getStackInSlot(this.slotIndex);
 			
-			if (stack.stackSize < stack.getItem().getItemStackLimit())
-				stack.stackSize++;
+		// if the heldStack is the same as the one in this slot, increase its size by one
+		} else if (heldStack.itemID == this.inventory.getStackInSlot(this.slotIndex).itemID) {
 			
-		// otherwise clear the stack
+			if (heldStack.stackSize < heldStack.getItem().getItemStackLimit())
+				heldStack.stackSize++;
+			
+			return heldStack;
+			
+		// otherwise clear the heldStack
 		} else {
-			stack.stackSize = 0;
+			return null;
 		}
 	}
 	
