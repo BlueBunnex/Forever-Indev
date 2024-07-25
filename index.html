@@ -19,6 +19,8 @@
         #download { color: white; background: #384; }
 
         img { width: 100%; }
+
+        small { font-weight: 400; color: lightgrey; font-size: small; text-align: center; display: block; }
     </style>
     <script type="module">
         const page = new URLSearchParams(window.location.search).get('page');
@@ -30,32 +32,40 @@
             document.getElementById('main').innerHTML = `
                 <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1em;">
                     <div>
+                        <img src="screenshots/recipe_mudbrick.png">
+                        <small>Mud Brick</small>
+                    </div>
+                    <div>
+                        <img src="screenshots/recipe_cobbledbrick.png">
+                        <small>Cobbled Brick</small>
+                    </div>
+                    <div>
                         <img src="screenshots/recipe_polishedblock.png">
-                        <strong>Polished Block</strong> (recipe 1)
+                        <small>Polished Block</small>
                     </div>
                     <div>
                         <img src="screenshots/recipe_polishedslab.png">
-                        <strong>Polished Slab</strong>
+                        <small>Polished Slab</small>
                     </div>
                     <div>
                         <img src="screenshots/recipe_polishedtiles.png">
-                        <strong>Polished Tiles</strong>
+                        <small>Polished Tiles</small>
                     </div>
                     <div>
                         <img src="screenshots/recipe_coallamp.png">
-                        <strong>Coal Lamp</strong>
+                        <small>Coal Lamp</small>
                     </div>
                     <div>
                         <img src="screenshots/recipe_sugarbeet.png">
-                        <strong>Sugar Beet</strong> (not crafted; found by hoeing grass)
+                        <small>Sugar Beet (not crafted; found by hoeing grass)</small>
                     </div>
                     <div>
                         <img src="screenshots/recipe_sugar.png">
-                        <strong>Sugar</strong>
+                        <small>Sugar</small>
                     </div>
                     <div>
                         <img src="screenshots/recipe_applepie.png">
-                        <strong>Apple Pie</strong> (order is important)
+                        <small>Apple Pie (order is important)</small>
                     </div>
                 </div>
             `;
