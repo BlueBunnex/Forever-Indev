@@ -15,8 +15,6 @@ import org.lwjgl.opengl.GL11;
 
 public final class GuiInventoryCreative extends GuiContainer {
 	
-	private static IInventory infinite;
-	
 	private float mouseX;
 	private float mouseY;
 	private List<Slot> creativeSlots = new ArrayList<Slot>();
@@ -28,7 +26,7 @@ public final class GuiInventoryCreative extends GuiContainer {
 	public GuiInventoryCreative(IInventory inventory) {
 		
 		this.page = 1;
-		this.numPages = (int) Math.ceil(infinite.getSizeInventory() / 36.0);
+		this.numPages = (int) Math.ceil(SlotCreative.getSizeInventory() / 36.0);
 		
 		this.xSize = 247;
 		this.ySize = 144;
@@ -57,7 +55,7 @@ public final class GuiInventoryCreative extends GuiContainer {
 		// creative inventory
 		for (int i=0; i<36; i++) {
 			
-			Slot slot = new Slot(this, infinite, i, 9 + i % 12 * 18, 6 + i / 12 * 18);
+			Slot slot = new SlotCreative(this, i, 9 + i % 12 * 18, 6 + i / 12 * 18);
 			this.inventorySlots.add(slot);
 			this.creativeSlots.add(slot);
 		}
@@ -145,17 +143,5 @@ public final class GuiInventoryCreative extends GuiContainer {
 		RenderHelper.disableStandardItemLighting();
 		
 		GL11.glDisable(GL11.GL_NORMALIZE);
-	}
-	
-	static {
-		ArrayList<Item> allItems = new ArrayList<Item>();
-		
-		for (Item item : Item.itemsList) {
-			
-			if (item != null)
-				allItems.add(item);
-		}
-		
-		infinite = new InventoryInfinite(allItems.toArray(new Item[0]));
 	}
 }
