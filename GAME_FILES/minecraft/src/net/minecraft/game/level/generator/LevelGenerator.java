@@ -474,33 +474,38 @@ public final class LevelGenerator {
 		}
 	}
 
-	private static void generateHouse(World var0) {
-		int var1 = var0.xSpawn;
-		int var2 = var0.ySpawn;
-		int var3 = var0.zSpawn;
+	private static void generateHouse(World world) {
+		int x = world.xSpawn;
+		int y = world.ySpawn;
+		int z = world.zSpawn;
 
-		for(int var4 = var1 - 3; var4 <= var1 + 3; ++var4) {
-			for(int var5 = var2 - 2; var5 <= var2 + 2; ++var5) {
-				for(int var6 = var3 - 3; var6 <= var3 + 3; ++var6) {
-					int var7 = var5 < var2 - 1 ? Block.obsidian.blockID : 0;
-					if(var4 == var1 - 3 || var6 == var3 - 3 || var4 == var1 + 3 || var6 == var3 + 3 || var5 == var2 - 2 || var5 == var2 + 2) {
-						var7 = Block.stone.blockID;
-						if(var5 >= var2 - 1) {
-							var7 = Block.planks.blockID;
+		// construct main house
+		for (int dx = x - 3; dx <= x + 3; dx++) {
+			for (int dy = y - 2; dy <= y + 2; dy++) {
+				for (int dz = z - 3; dz <= z + 3; dz++) {
+					
+					int var7 = dy < y - 1 ? Block.obsidian.blockID : 0;
+					if (dx == x - 3 || dz == z - 3 || dx == x + 3 || dz == z + 3 || dy == y - 2 || dy == y + 2) {
+						
+						var7 = Math.random() < 0.7 ? Block.cobblestone.blockID : Block.cobblestoneMossy.blockID;
+						
+						if (dy >= y - 1) {
+							var7 = Block.cobbledBrick.blockID;
 						}
 					}
 
-					if(var6 == var3 - 3 && var4 == var1 && var5 >= var2 - 1 && var5 <= var2) {
+					if (dz == z - 3 && dx == x && dy >= y - 1 && dy <= y) {
 						var7 = 0;
 					}
 
-					var0.setBlockWithNotify(var4, var5, var6, var7);
+					world.setBlockWithNotify(dx, dy, dz, var7);
 				}
 			}
 		}
 
-		var0.setBlockWithNotify(var1 - 3 + 1, var2, var3, Block.torch.blockID);
-		var0.setBlockWithNotify(var1 + 3 - 1, var2, var3, Block.torch.blockID);
+		// add torches
+		world.setBlockWithNotify(x - 3 + 1, y, z, Block.torch.blockID);
+		world.setBlockWithNotify(x + 3 - 1, y, z, Block.torch.blockID);
 	}
 
 	private void growGrassOnDirt(World var1) {
