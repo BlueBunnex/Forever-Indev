@@ -23,22 +23,25 @@ public final class GuiMainMenu extends GuiScreen {
 		// disable load level for some reason
 		if (this.mc.session == null)
 			this.controlList.get(1).enabled = false;
-
 	}
 
 	protected final void actionPerformed(GuiButton button) {
 		
 		switch (button.id) {
+		
 			case 0:
 				this.mc.displayGuiScreen(new GuiOptions(this, this.mc.options));
 				break;
+				
 			case 1:
 				this.mc.displayGuiScreen(new GuiNewLevel(this));
 				break;
+				
 			case 2:
 				if (this.mc.session != null)
 					this.mc.displayGuiScreen(new GuiLoadLevel(this));
 				break;
+				
 			case 3:
 				this.mc.shutdownMinecraftApplet();
 				break;
@@ -54,18 +57,6 @@ public final class GuiMainMenu extends GuiScreen {
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		Tessellator.instance.setColorOpaque_I(16777215);
 		this.drawTexturedModalRect((this.width - 256) / 2, 30, 0, 0, 256, 64);
-		
-		// draw splash text
-		GL11.glPushMatrix();
-		GL11.glTranslatef((float) (this.width / 2 + 110), 85.0F, 0.0F);
-		GL11.glRotatef(-20.0F, 0.0F, 0.0F, 1.0F);
-		
-		float scale = 1.8F - MathHelper.abs(MathHelper.sin((float)(System.currentTimeMillis() % 1000L) / 1000.0F * (float)Math.PI * 2.0F) * 0.1F);
-		scale = scale * 100.0F / (float)(this.fontRenderer.getStringWidth(CURRENT_SPLASH) + 32);
-		GL11.glScalef(scale, scale, 1);
-		drawCenteredString(this.fontRenderer, CURRENT_SPLASH, 0, -8, 16776960);
-		
-		GL11.glPopMatrix();
 		
 		// yeah fuck Mojang
 		String text = "Made by Blue. Distribute!";
@@ -85,6 +76,19 @@ public final class GuiMainMenu extends GuiScreen {
 		text = "Allocated memory: " + totalMem * 100L / maxMem + "% (" + totalMem / 1024L / 1024L + "MB)";
 		drawString(this.fontRenderer, text, this.width - this.fontRenderer.getStringWidth(text) - 2, 12, 8421504);
 		
+		// draw buttons and stuff
 		super.drawScreen(mouseX, mouseY);
+		
+		// draw splash text over everything
+		GL11.glPushMatrix();
+		GL11.glTranslatef((float) (this.width / 2 + 110), 85.0F, 0.0F);
+		GL11.glRotatef(-20.0F, 0.0F, 0.0F, 1.0F);
+		
+		float scale = 1.8F - MathHelper.abs(MathHelper.sin((float)(System.currentTimeMillis() % 1000L) / 1000.0F * (float)Math.PI * 2.0F) * 0.1F);
+		scale = scale * 100.0F / (float)(this.fontRenderer.getStringWidth(CURRENT_SPLASH) + 32);
+		GL11.glScalef(scale, scale, 1);
+		drawCenteredString(this.fontRenderer, CURRENT_SPLASH, 0, -8, 16776960);
+		
+		GL11.glPopMatrix();
 	}
 }
