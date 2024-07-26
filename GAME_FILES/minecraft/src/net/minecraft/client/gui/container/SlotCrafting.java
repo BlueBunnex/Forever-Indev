@@ -24,4 +24,16 @@ final class SlotCrafting extends Slot {
 			}
 		}
 	}
+	
+	public final ItemStack onClickedWithHeldStack(ItemStack heldStack, int mouseClick) {
+		
+		if (heldStack != null)
+			return heldStack;
+		
+		ItemStack toReturn = this.inventory.getStackInSlot(this.slotIndex);
+		
+		this.onPickupFromSlot();
+		
+		return toReturn;
+	}
 }

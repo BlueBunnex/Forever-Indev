@@ -61,31 +61,51 @@ public class Slot {
 			if (currContained != null && heldStack != null && currContained.itemID == heldStack.itemID) {
 				
 				int stackLimit = currContained.getItem().getItemStackLimit();
+				int stackSplit = Math.min(stackLimit - currContained.stackSize, heldStack.stackSize);
 				
-				// both stacks add to more than stack limit?
-				if (currContained.stackSize + heldStack.stackSize > stackLimit) {
-					heldStack.stackSize = currContained.stackSize + heldStack.stackSize - stackLimit;
-					currContained.stackSize = stackLimit;
-					return heldStack;
-					
-				// both stacks can merge without exceeding stack limit?
-				} else {
-					currContained.stackSize += heldStack.stackSize;
-					return null;
-				}
+				heldStack.stackSize     -= stackSplit;
+				currContained.stackSize += stackSplit;
+				
+				return heldStack.stackSize == 0 ? null : heldStack;
 			}
 			
 			// picking up, placing in, or swapping
 			this.inventory.setInventorySlotContents(this.slotIndex, heldStack);
-			this.onPickupFromSlot();
 			
+			this.onPickupFromSlot();
 			return currContained;
 			
 		} else {
-			// TODO item splitting (held=null) and single-placing (slot=null)
-			//(var12.stackSize + 1) / 2
 			
-			return heldStack;
+			// split stack
+			if (heldStack == null && currContained != null) {
+				
+				if (currContained.stackSize == 1) {
+					this.inventory.setInventorySlotContents(slotIndex, null);
+					
+					this.onPickupFromSlot();
+					return currContained;
+				
+				} else {
+					this.onPickupFromSlot();
+					return currContained.splitStack((currContained.stackSize + 1) / 2);
+				}
+			
+			// depositing one
+			} else {
+				
+				if (currContained == null) {
+					
+					this.inventory.setInventorySlotContents(slotIndex, heldStack.splitStack(1));
+					
+				} else if (currContained.itemID == heldStack.itemID && currContained.stackSize < currContained.getItem().getItemStackLimit()) {
+					
+					heldStack.stackSize--;
+					currContained.stackSize++;
+				}
+				
+				return heldStack.stackSize == 0 ? null : heldStack;
+			}
 		}
 	}
 

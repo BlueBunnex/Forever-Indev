@@ -50,8 +50,18 @@ public final class ItemStack {
 	public String getName() {
 		return Item.itemsList[itemID].name;
 	}
-
+	
+	/**
+	 * Splits off the amount from this stack, and returns a new stack with that amount, or null if amount is <= 0.
+	 * Note: You need to check if this stack's size is == 0 and, if so, nullify it. Size 0 stacks should not exist.
+	 * @param amount for the new stack to be
+	 * @return the new stack
+	 */
 	public final ItemStack splitStack(int amount) {
+		
+		if (amount <= 0)
+			return null;
+		
 		this.stackSize -= amount;
 		return new ItemStack(this.itemID, amount, this.itemDamage);
 	}
