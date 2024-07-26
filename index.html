@@ -7,7 +7,6 @@
         @import url('https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;700&display=swap');
 
         body { background: #202020; font-family: "PT Sans", sans-serif; color: lightgrey; margin: auto; max-width: 70em; }
-        header { background-size: cover; padding: 4em 1em; background-position: center; background-image: url('https://external-preview.redd.it/4-z_vm21RRr-CzesEnIvAMn8pY-g3G4yDbNWWzU-dUk.jpg?auto=webp&s=de8f295e717301b35cfca24ed1571aacdbb4d196'); }
 
         h1 { background: #0008; padding: 4px; margin: 0; text-align: center; }
         h2 { font-size: 1.2em; margin-top: 2em; border-bottom: 1px solid #555; padding-bottom: 4px; }
@@ -15,7 +14,7 @@
         a { text-decoration: none; color: #5b7; }
         a:hover { text-decoration: underline; }
 
-        #download { display: block; margin: 0.5em 0; color: white; background: #384; padding: 0.5em 1em; font-weight: 700; box-sizing: border-box; text-align: center; }
+        #download { display: block; margin: 0.5em 0; color: #eee; background: #384; padding: 0.5em 1em; font-weight: 700; box-sizing: border-box; text-align: center; }
 
         img { display: block; width: 100%; }
 
@@ -25,7 +24,7 @@
         const page = new URLSearchParams(window.location.search).get('page');
 
         if (page === "gallery") {
-            document.getElementById('content').innerHTML = "<div></div><img src='screenshots/indev_house.png'>";
+            document.getElementById('content').innerHTML = "<img src='screenshots/indev_house.png'>";
         } else
         if (page === "crafting") {
             document.getElementById('content').innerHTML = `
@@ -73,19 +72,19 @@
 </head>
 <body>
 
-    <header>
-        <h1>Forever Indev</h1>
+    <header style="margin: 2em 0;">
+        <img style="width: auto; margin: auto;" src="screenshots/logo.png">
+
+        <nav style="background: #181818; color: grey; display: flex; align-items: center; justify-content: center; gap: 1em; padding: 1em; margin-top: 1em;">
+            <a href="?">Home</a>
+            |
+            <a href="?page=gallery">Gallery</a>
+            |
+            <a href="?page=crafting">Crafting Recipes</a>
+        </nav>
     </header>
 
-    <div style="display: flex; align-items: center; margin-bottom: 1em; justify-content: center; gap: 1em; margin: 1em;">
-        <a href="?">Home</a>
-        |
-        <a href="?page=gallery">Gallery</a>
-        |
-        <a href="?page=crafting">Crafting Recipes</a>
-    </div>
-
-    <div id="content" style="display: flex; gap: 1em; margin-top: 1em;">
+    <div id="content" style="display: flex; gap: 1em;">
 
         <main>
             <h2 style="margin-top: 0;">What is it</h2>
