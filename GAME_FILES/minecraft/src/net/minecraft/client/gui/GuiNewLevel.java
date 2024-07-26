@@ -18,9 +18,9 @@ public final class GuiNewLevel extends GuiScreen {
 
 	public final void initGui() {
 		this.controlList.clear();
-		this.controlList.add(new GuiButtonText(0, this.width / 2 - 100, this.height / 4, "Type: "));
-		this.controlList.add(new GuiButtonText(1, this.width / 2 - 100, this.height / 4 + 24, "Shape:"));
-		this.controlList.add(new GuiButtonText(2, this.width / 2 - 100, this.height / 4 + 48, "Size: "));
+		this.controlList.add(new GuiButtonText(2, this.width / 2 - 100, this.height / 4, 98, 20, "Size: "));
+		this.controlList.add(new GuiButtonText(1, this.width / 2 + 2, this.height / 4, 98, 20, "Shape:"));
+		this.controlList.add(new GuiButtonText(0, this.width / 2 - 100, this.height / 4 + 48, "Type: "));
 		this.controlList.add(new GuiButtonText(3, this.width / 2 - 100, this.height / 4 + 72, "Theme: "));
 		this.controlList.add(new GuiButtonText(4, this.width / 2 - 100, this.height / 4 + 96 + 12, "Create"));
 		this.controlList.add(new GuiButtonText(5, this.width / 2 - 100, this.height / 4 + 120 + 12, "Cancel"));
@@ -29,9 +29,9 @@ public final class GuiNewLevel extends GuiScreen {
 	}
 
 	private void refreshWorldOptionsDisplay() {
-		((GuiButtonText) this.controlList.get(0)).displayString = "Type: " + this.worldType[this.selectedWorldType];
+		((GuiButtonText) this.controlList.get(0)).displayString = "Size: " + this.worldSize[this.selectedWorldSize];
 		((GuiButtonText) this.controlList.get(1)).displayString = "Shape: " + this.worldShape[this.selectedWorldShape];
-		((GuiButtonText) this.controlList.get(2)).displayString = "Size: " + this.worldSize[this.selectedWorldSize];
+		((GuiButtonText) this.controlList.get(2)).displayString = "Type: " + this.worldType[this.selectedWorldType];
 		((GuiButtonText) this.controlList.get(3)).displayString = "Theme: " + this.worldTheme[this.selectedWorldTheme];
 	}
 
@@ -69,8 +69,13 @@ public final class GuiNewLevel extends GuiScreen {
 	}
 
 	public final void drawScreen(int mouseX, int mouseY) {
+		
 		this.drawDefaultBackground();
 		drawCenteredString(this.fontRenderer, "Generate new level", this.width / 2, 40, 16777215);
+		
+		// show level dimensions
+		short[] dim = this.mc.getLevelDimensions(this.selectedWorldSize, this.selectedWorldShape);
+		drawCenteredString(this.fontRenderer, dim[0] + "x" + dim[2] + " (" + dim[1] + " tall)", this.width / 2, this.height / 4 + 24, 8421504);
 		
 		super.drawScreen(mouseX, mouseY);
 	}

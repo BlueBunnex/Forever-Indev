@@ -824,30 +824,45 @@ public final class Minecraft implements Runnable {
 		}
 
 	}
-
-	public final void generateLevel(int var1, int var2, int var3, int var4) {
-		this.setLevel((World)null);
-		System.gc();
-		String var5 = this.session != null ? this.session.username : "anonymous";
-		LevelGenerator var6 = new LevelGenerator(this.loadingScreen);
-		var6.islandGen = var3 == 1;
-		var6.floatingGen = var3 == 2;
-		var6.flatGen = var3 == 3;
-		var6.levelType = var4;
-		var1 = 128 << var1;
-		var3 = var1;
-		short var8 = 64;
-		if(var2 == 1) {
-			var1 /= 2;
-			var3 <<= 1;
-		} else if(var2 == 2) {
-			var1 /= 2;
-			var3 = var1;
-			var8 = 256;
+	
+	public final short[] getLevelDimensions(int worldSize, int worldShape) {
+		
+		short xSize = (short) (128 << worldSize);
+		short ySize = 64;
+		short zSize = xSize;
+		
+		if (worldShape == 1) { // long
+			
+			xSize /= 2;
+			zSize <<= 1;
+			
+		} else if (worldShape == 2) { // deep
+			
+			xSize /= 2;
+			ySize = 256;
+			zSize = xSize;
 		}
+		
+		return new short[] { xSize, ySize, zSize };
+	}
 
-		World var7 = var6.generate(var5, var1, var3, var8);
-		this.setLevel(var7);
+	public final void generateLevel(int worldSize, int worldShape, int worldType, int worldTheme) {
+		
+		this.setLevel(null);
+		System.gc();
+		
+		LevelGenerator generator = new LevelGenerator(this.loadingScreen);
+		generator.islandGen   = worldType == 1;
+		generator.floatingGen = worldType == 2;
+		generator.flatGen     = worldType == 3;
+		generator.levelType   = worldTheme;
+		
+		short[] dim = getLevelDimensions(worldSize, worldShape);
+
+		String username = this.session != null ? this.session.username : "anonymous";
+		World world = generator.generate(username, dim[0], dim[2], dim[1]); // for some reason goes [x, z, y]
+		
+		this.setLevel(world);
 	}
 
 	public final void setLevel(World var1) {
