@@ -6,15 +6,24 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;700&display=swap');
 
-        body { background: #202020; font-family: "PT Sans", sans-serif; color: lightgrey; margin: auto; max-width: 70em; }
+        :root {
+            --background:        #202020;
+            --background-darker: #181818;
+            --text:              lightgrey; /* #333 */
+            --border:            #555;
+            --accent-text:       #5b7;
+            --accent-background: #384;
+            --accent-contrast:   #eee;
+        }
+        
+        body { background: var(--background); font-family: "PT Sans", sans-serif; margin: auto; max-width: 70em; }
 
-        h1 { background: #0008; padding: 4px; margin: 0; text-align: center; }
-        h2 { font-size: 1.2em; margin-top: 2em; border-bottom: 1px solid #555; padding-bottom: 4px; }
+        h2 { font-size: 1.2em; margin-top: 2em; border-bottom: 1px solid var(--border); padding-bottom: 4px; }
 
-        a { text-decoration: none; color: #5b7; }
+        a { text-decoration: none; color: var(--accent-text); }
         a:hover { text-decoration: underline; }
 
-        #download { display: block; margin: 0.5em 0; color: #eee; background: #384; padding: 0.5em 1em; font-weight: 700; box-sizing: border-box; text-align: center; }
+        #download { display: block; margin: 0.5em 0; color: var(--accent-contrast); background: var(--accent-background); padding: 0.5em 1em; font-weight: 700; box-sizing: border-box; text-align: center; }
 
         img { display: block; width: 100%; }
 
@@ -75,7 +84,7 @@
     <header style="margin: 2em 0;">
         <img style="width: auto; margin: auto;" src="screenshots/logo.png">
 
-        <nav style="background: #181818; color: grey; display: flex; align-items: center; justify-content: center; gap: 1em; padding: 1em; margin-top: 1em;">
+        <nav style="background: var(--background-darker); display: flex; align-items: center; justify-content: center; gap: 1em; padding: 1em; margin-top: 1em;">
             <a href="?">Home</a>
             |
             <a href="?page=gallery">Gallery</a>
