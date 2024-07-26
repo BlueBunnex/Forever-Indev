@@ -79,6 +79,19 @@ public abstract class GuiContainer extends GuiScreen {
 		RenderHelper.disableStandardItemLighting();
 		super.drawScreen(mouseX - cornerX, mouseY - cornerY);
 		
+		// render foreground layer
+		//GL11.glDisable(GL11.GL_NORMALIZE);
+		
+		RenderHelper.disableStandardItemLighting();
+		GL11.glDisable(GL11.GL_LIGHTING);
+		GL11.glDisable(GL11.GL_DEPTH_TEST);
+		
+		this.drawGuiContainerForegroundLayer(); // I suspect this function can call enableStandardItemLighting
+		
+		RenderHelper.enableStandardItemLighting();
+		GL11.glEnable(GL11.GL_LIGHTING);
+		GL11.glEnable(GL11.GL_DEPTH_TEST);
+		
 		// render hovered slot glow and tooltip
 		if (hovered != null) {
 			
@@ -111,18 +124,10 @@ public abstract class GuiContainer extends GuiScreen {
 			GL11.glEnable(GL11.GL_DEPTH_TEST);
 		}
 		
-		// render foreground layer
-		GL11.glDisable(GL11.GL_NORMALIZE);
-		RenderHelper.disableStandardItemLighting();
-		GL11.glDisable(GL11.GL_LIGHTING);
-		GL11.glDisable(GL11.GL_DEPTH_TEST);
-		this.drawGuiContainerForegroundLayer(); // I suspect this function can call enableStandardItemLighting
-		GL11.glEnable(GL11.GL_LIGHTING);
-		GL11.glEnable(GL11.GL_DEPTH_TEST);
-		GL11.glPopMatrix();
-		
 		// render held item on top of everything
 		if (this.heldItem != null) {
+			
+			GL11.glPopMatrix();
 			
 			GL11.glPushMatrix();
 			GL11.glRotatef(180.0F, 1.0F, 0.0F, 0.0F); // so block item light comes from above
@@ -132,6 +137,7 @@ public abstract class GuiContainer extends GuiScreen {
 			GL11.glPopMatrix();
 			
 			GL11.glPushMatrix();
+			GL11.glDisable(GL11.GL_DEPTH_TEST);
 			GL11.glTranslatef(0.0F, 0.0F, 32.0F); // so blocks don't clip into other block items
 			
 			int x = mouseX - 8,
@@ -140,6 +146,7 @@ public abstract class GuiContainer extends GuiScreen {
 			itemRenderer.renderItemIntoGUI(this.mc.renderEngine, this.heldItem, x, y);
 			itemRenderer.renderItemOverlayIntoGUI(this.fontRenderer, this.heldItem, x, y);
 			
+			GL11.glEnable(GL11.GL_DEPTH_TEST);
 			GL11.glPopMatrix();
 		}
 		
