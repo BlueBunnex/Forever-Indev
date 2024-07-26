@@ -80,7 +80,7 @@ public abstract class GuiContainer extends GuiScreen {
 		super.drawScreen(mouseX - cornerX, mouseY - cornerY);
 		
 		// render foreground layer
-		//GL11.glDisable(GL11.GL_NORMALIZE);
+		//GL11.glDisable(GL11.GL_NORMALIZE); // no idea what this call does
 		
 		RenderHelper.disableStandardItemLighting();
 		GL11.glDisable(GL11.GL_LIGHTING);
@@ -124,21 +124,21 @@ public abstract class GuiContainer extends GuiScreen {
 			GL11.glEnable(GL11.GL_DEPTH_TEST);
 		}
 		
+		GL11.glPopMatrix();
+		
 		// render held item on top of everything
 		if (this.heldItem != null) {
 			
-			GL11.glPopMatrix();
-			
 			GL11.glPushMatrix();
-			GL11.glRotatef(180.0F, 1.0F, 0.0F, 0.0F); // so block item light comes from above
+			GL11.glRotatef(180.0F, 1.0F, 0.0F, 0.0F);  // so block item light comes from above
 			GL11.glEnable(GL11.GL_NORMALIZE);
-			GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F); // so item items don't render dark
+			GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);    // so item items don't render dark
 			RenderHelper.enableStandardItemLighting(); // so block items don't render dark...?
 			GL11.glPopMatrix();
 			
 			GL11.glPushMatrix();
-			GL11.glDisable(GL11.GL_DEPTH_TEST);
-			GL11.glTranslatef(0.0F, 0.0F, 32.0F); // so blocks don't clip into other block items
+			GL11.glDisable(GL11.GL_DEPTH_TEST);        // so held item items don't render underneath block items
+			GL11.glTranslatef(0.0F, 0.0F, 32.0F);      // so blocks don't clip into other block items
 			
 			int x = mouseX - 8,
 				y = mouseY - 8;
