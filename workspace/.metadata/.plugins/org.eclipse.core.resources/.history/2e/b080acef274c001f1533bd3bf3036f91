@@ -1,0 +1,71 @@
+package net.minecraft.client;
+
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
+import org.lwjgl.opengl.Display;
+import org.lwjgl.opengl.DisplayMode;
+
+public class EnhancedMinecraft {
+    private Minecraft mc;
+    private boolean borderlessWindow = false;
+    private GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+
+    // Enum for screen modes
+    public enum ScreenMode {
+        FULLSCREEN, BORDERLESS
+    }
+    
+    private ScreenMode currentMode = ScreenMode.FULLSCREEN;
+
+    public EnhancedMinecraft(Minecraft mc) {
+        this.mc = mc;
+    }
+    
+    public void toggleFullscreen() {
+        try {
+            if (currentMode != ScreenMode.FULLSCREEN) {
+                Display.setDisplayMode(Display.getDesktopDisplayMode());
+                Display.setFullscreen(true);
+                currentMode = ScreenMode.FULLSCREEN;
+            } else {
+                Display.setFullscreen(false);
+                Display.setDisplayMode(new DisplayMode(mc.tempDisplayWidth, mc.tempDisplayHeight));
+                currentMode = ScreenMode.BORDERLESS;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void toggleBorderlessWindow() {
+        try {
+            if (currentMode != ScreenMode.BORDERLESS) {
+                Display.setDisplayMode(Display.getDesktopDisplayMode());
+                Display.setFullscreen(false);
+                Display.setResizable(false);
+                Display.setUndecorated(true);
+                Display.setResizable(true);
+                currentMode = ScreenMode.BORDERLESS;
+            } else {
+                Display.setFullscreen(false);
+                Display.setUndecorated(false);
+                Display.setDisplayMode(new DisplayMode(mc.tempDisplayWidth, mc.tempDisplayHeight));
+                currentMode = ScreenMode.FULLSCREEN;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void changeWindowMode(ScreenMode mode) {
+        try {
+            if (mode == ScreenMode.FULLSCREEN) {
+                toggleFullscreen();
+            } else if (mode == ScreenMode.BORDERLESS) {
+                toggleBorderlessWindow();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}

@@ -1,0 +1,38 @@
+package net.minecraft.client.gui;
+
+import java.util.List;
+
+public class GuiFormatSelection extends GuiScreen {
+
+    private List<String> formats;
+    private int selectedFormatIndex;
+
+    public GuiFormatSelection(GuiScreen previousScreen) {
+        this.formats = Arrays.asList("yyyy-MM-dd HH:mm:ss", "MM/dd/yyyy HH:mm:ss", "dd MMM yyyy HH:mm:ss");
+        this.selectedFormatIndex = GuiMainMenu.selectedFormatIndex;
+    }
+
+    @Override
+    public void initGui() {
+        int yOffset = 10;
+        for (int i = 0; i < formats.size(); i++) {
+            this.controlList.add(new GuiButtonText(i, this.width / 2 - 100, this.height / 2 - formats.size() * 20 / 2 + yOffset, formats.get(i)));
+            yOffset += 20;
+        }
+    }
+
+    @Override
+    protected void actionPerformed(GuiButton button) {
+        if (button.id >= 0 && button.id < formats.size()) {
+            GuiMainMenu.selectedFormatIndex = button.id;
+            this.mc.displayGuiScreen(new GuiMainMenu());
+        }
+    }
+
+    @Override
+    public void drawScreen(int mouseX, int mouseY) {
+        this.drawDefaultBackground();
+        drawCenteredString(this.fontRenderer, "Select Date/Time Format", this.width / 2, 20, 16777215);
+        super.drawScreen(mouseX, mouseY);
+    }
+}

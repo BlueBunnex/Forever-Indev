@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="net.minecraft.client.gui.FontRenderer"/>
+<fullyQualifiedTypeName name="net.minecraft.game.item.Item"/>
+<fullyQualifiedTypeName name="net.minecraft.client.EnhancedMinecraft"/>
+<fullyQualifiedTypeName name="java.io.File"/>
+<fullyQualifiedTypeName name="org.lwjgl.opengl.GL11"/>
+<fullyQualifiedTypeName name="net.minecraft.client.render.Tessellator"/>
+<fullyQualifiedTypeName name="java.util.Arrays"/>
+<fullyQualifiedTypeName name="net.minecraft.client.GameSettings"/>
+</qualifiedTypeNameHistroy>

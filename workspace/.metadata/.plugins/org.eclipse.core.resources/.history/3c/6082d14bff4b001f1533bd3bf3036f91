@@ -1,0 +1,82 @@
+package net.minecraft.client.gui;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Scanner;
+
+public class GuiConfirmationScreen extends GuiScreen {
+
+    private final GuiIngameMenu parentScreen;
+    private boolean isRememberChecked = false; // Track if the checkbox is checked
+    private GuiButton rememberButton;
+
+    public GuiConfirmationScreen(GuiIngameMenu parentScreen) {
+        this.parentScreen = parentScreen;
+    }
+
+    @Override
+    public void initGui() {
+        this.controlList.clear();
+        this.controlList.add(new GuiButton(0, this.width / 2 - 100, this.height / 4 + 24, 200, 20, "Save and Exit"));
+        this.controlList.add(new GuiButton(1, this.width / 2 - 100, this.height / 4 + 48, 200, 20, "Exit Without Saving"));
+        this.controlList.add(new GuiButton(2, this.width / 2 - 100, this.height / 4 + 72, 200, 20, "Cancel"));
+
+        // Add a button for the remember choice
+        rememberButton = new GuiButton(3, this.width / 2 - 100, this.height / 4 + 96, 200, 20, "Remember this choice: OFF");
+        this.controlList.add(rememberButton);
+    }
+
+    @Override
+    protected void actionPerformed(GuiButton button) {
+        switch (button.id) {
+            case 0:
+                // Save level and then exit
+                if (this.mc.session != null) {
+                    this.mc.displayGuiScreen(new GuiSaveLevel(this.parentScreen));
+                }
+                exit();
+                break;
+
+            case 1:
+                // Exit without saving
+                exit();
+                break;
+
+            case 2:
+                // Cancel and return to the game
+                this.mc.displayGuiScreen(this.parentScreen);
+                break;
+
+            case 3:
+                // Toggle the remember choice
+                isRememberChecked = !isRememberChecked;
+                rememberButton.displayString = "Remember this choice: " + (isRememberChecked ? "ON" : "OFF");
+                break;
+        }
+    }
+
+    private void exit() {
+        if (isRememberChecked) {
+            saveRememberChoice();
+        }
+        this.mc.theWorld = null;
+        this.mc.displayGuiScreen(null);
+    }
+
+    private void saveRememberChoice() {
+        File optionsFile = new File(this.mc.mcDataDir, "options.txt");
+        try (FileWriter writer = new FileWriter(optionsFile, true)) {
+            writer.write("remember_exit_choice=true\n");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+        this.drawDefaultBackground();
+        drawCenteredString(this.fontRenderer, "You have unsaved changes. Do you want to save them before exiting?", this.width / 2, this.height / 4 - 40, 16777215);
+        super.drawScreen(mouseX, mouseY, partialTicks);
+    }
+}

@@ -1,0 +1,96 @@
+package net.minecraft.client.gui;
+
+import net.minecraft.client.GameSettings;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Scanner;
+
+public final class GuiOptions extends GuiScreen {
+    
+    private GuiScreen parentScreen;
+    private String screenTitle = "Options";
+    private GameSettings options;
+    private boolean rememberExitChoice;
+
+    public GuiOptions(GuiScreen parentScreen, GameSettings options) {
+        this.parentScreen = parentScreen;
+        this.options = options;
+    }
+
+    @Override
+    public final void initGui() {
+        this.controlList.clear();
+
+        for (int i = 0; i < this.options.numberOfOptions; i++) {
+            this.controlList.add(new GuiButtonText(i, this.width / 2 - 155 + i % 2 * 160, this.height / 6 + 24 * (i >> 1), 150, 20, this.options.setOptionString(i)));
+        }
+
+        this.controlList.add(new GuiButtonText(100, this.width / 2 - 100, this.height / 6 + 120 + 12, "Controls..."));
+        this.controlList.add(new GuiButtonText(200, this.width / 2 - 100, this.height / 6 + 168, "Done"));
+
+        // Add the "Remember Exit Choice" option
+        this.controlList.add(new GuiButtonText(300, this.width / 2 - 100, this.height / 6 + 96, "Remember Exit Choice: " + (rememberExitChoice ? "ON" : "OFF")));
+
+        // Load the current setting from the options file
+        loadRememberExitChoice();
+    }
+
+    @Override
+    protected final void actionPerformed(GuiButton button) {
+        if (!button.enabled) {
+            return;
+        }
+
+        if (button.id < 100) {
+            this.options.setOptionValue(button.id, 1);
+            ((GuiButtonText) button).displayString = this.options.setOptionString(button.id);
+        } else if (button.id == 100) {
+            this.mc.displayGuiScreen(new GuiControls(this, this.options));
+        } else if (button.id == 200) {
+            // Save settings before going back to the previous screen
+            saveRememberExitChoice();
+            this.mc.displayGuiScreen(this.parentScreen);
+        } else if (button.id == 300) {
+            // Toggle the "Remember Exit Choice" setting
+            rememberExitChoice = !rememberExitChoice;
+            ((GuiButtonText) button).displayString = "Remember Exit Choice: " + (rememberExitChoice ? "ON" : "OFF");
+        }
+    }
+
+    private void loadRememberExitChoice() {
+        File optionsFile = new File(this.mc.mcDataDir, "options.txt");
+
+        try (Scanner scanner = new Scanner(optionsFile)) {
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                if (line.equals("remember_exit_choice=true")) {
+                    rememberExitChoice = true;
+                    return;
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void saveRememberExitChoice() {
+        File optionsFile = new File(this.mc.mcDataDir, "options.txt");
+        
+        try (PrintWriter writer = new PrintWriter(new FileWriter(optionsFile, true))) {
+            writer.println("remember_exit_choice=" + (rememberExitChoice ? "true" : "false"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public final void drawScreen(int mouseX, int mouseY) {
+        this.drawDefaultBackground();
+        drawCenteredString(this.fontRenderer, this.screenTitle, this.width / 2, 20, 16777215);
+        
+        super.drawScreen(mouseX, mouseY);
+    }
+}

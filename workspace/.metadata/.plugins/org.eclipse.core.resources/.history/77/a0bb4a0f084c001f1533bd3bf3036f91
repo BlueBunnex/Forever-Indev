@@ -1,0 +1,99 @@
+package net.minecraft.client.gui;
+
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.GuiTextField;
+import net.minecraft.world.World;
+import java.io.IOException;
+
+public final class GuiNewLevel extends GuiScreen {
+
+    private GuiScreen prevGui;
+    private String[] worldTypes = {"Inland", "Island", "Floating", "Flat"};
+    private String[] worldShapes = {"Square", "Long", "Deep"};
+    private String[] worldSizes = {"Small", "Normal", "Huge"};
+    private String[] worldThemes = {"Normal", "Hell", "Paradise", "Woods"};
+    private int selectedWorldType = 1;
+    private int selectedWorldShape = 0;
+    private int selectedWorldSize = 1;
+    private int selectedWorldTheme = 0;
+    private GuiTextField worldNameField;
+
+    public GuiNewLevel(GuiScreen prevGui) {
+        this.prevGui = prevGui;
+    }
+
+    @Override
+    public void initGui() {
+        this.buttonList.clear();
+        this.buttonList.add(new GuiButton(0, this.width / 2 - 100, this.height / 4 + 20, "Type: " + this.worldTypes[this.selectedWorldType]));
+        this.buttonList.add(new GuiButton(1, this.width / 2 - 100, this.height / 4 + 50, "Shape: " + this.worldShapes[this.selectedWorldShape]));
+        this.buttonList.add(new GuiButton(2, this.width / 2 - 100, this.height / 4 + 80, "Size: " + this.worldSizes[this.selectedWorldSize]));
+        this.buttonList.add(new GuiButton(3, this.width / 2 - 100, this.height / 4 + 110, "Theme: " + this.worldThemes[this.selectedWorldTheme]));
+        this.buttonList.add(new GuiButton(4, this.width / 2 - 100, this.height / 4 + 150, "Create"));
+        this.buttonList.add(new GuiButton(5, this.width / 2 - 100, this.height / 4 + 180, "Cancel"));
+
+        this.worldNameField = new GuiTextField(6, this.fontRenderer, this.width / 2 - 100, this.height / 4 - 20, 200, 20);
+        this.worldNameField.setFocused(true);
+        this.worldNameField.setText("New World");
+    }
+
+    private void refreshWorldOptionsDisplay() {
+        ((GuiButton) this.buttonList.get(0)).displayString = "Type: " + this.worldTypes[this.selectedWorldType];
+        ((GuiButton) this.buttonList.get(1)).displayString = "Shape: " + this.worldShapes[this.selectedWorldShape];
+        ((GuiButton) this.buttonList.get(2)).displayString = "Size: " + this.worldSizes[this.selectedWorldSize];
+        ((GuiButton) this.buttonList.get(3)).displayString = "Theme: " + this.worldThemes[this.selectedWorldTheme];
+    }
+
+    @Override
+    protected void actionPerformed(GuiButton button) {
+        switch (button.id) {
+            case 0:
+                this.selectedWorldType = (this.selectedWorldType + 1) % this.worldTypes.length;
+                break;
+            case 1:
+                this.selectedWorldShape = (this.selectedWorldShape + 1) % this.worldShapes.length;
+                break;
+            case 2:
+                this.selectedWorldSize = (this.selectedWorldSize + 1) % this.worldSizes.length;
+                break;
+            case 3:
+                this.selectedWorldTheme = (this.selectedWorldTheme + 1) % this.worldThemes.length;
+                break;
+            case 4:
+                String worldName = this.worldNameField.getText();
+                this.mc.generateLevel(worldName, this.selectedWorldSize, this.selectedWorldShape, this.selectedWorldType, this.selectedWorldTheme);
+                this.mc.displayGuiScreen(null);
+                break;
+            case 5:
+                this.mc.displayGuiScreen(this.prevGui);
+                break;
+        }
+        this.refreshWorldOptionsDisplay();
+    }
+
+    @Override
+    public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+        this.drawDefaultBackground();
+        drawCenteredString(this.fontRenderer, "Generate New Level", this.width / 2, 40, 0xFFFFFF);
+        this.worldNameField.drawTextBox();
+
+        short[] dim = this.mc.getLevelDimensions(this.selectedWorldSize, this.selectedWorldShape);
+        drawCenteredString(this.fontRenderer, dim[0] + "x" + dim[2] + " (" + dim[1] + " tall)", this.width / 2, this.height / 4 + 24, 0xCCCCCC);
+
+        super.drawScreen(mouseX, mouseY, partialTicks);
+    }
+
+    @Override
+    protected void keyTyped(char typedChar, int keyCode) throws IOException {
+        this.worldNameField.textboxKeyTyped(typedChar, keyCode);
+        super.keyTyped(typedChar, keyCode);
+    }
+
+    @Override
+    protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
+        this.worldNameField.mouseClicked(mouseX, mouseY, mouseButton);
+        super.mouseClicked(mouseX, mouseY, mouseButton);
+    }
+}

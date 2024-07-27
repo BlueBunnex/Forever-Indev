@@ -1,0 +1,193 @@
+package net.minecraft.client.gui;
+
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.nio.IntBuffer;
+import javax.imageio.ImageIO;
+import net.minecraft.client.GameSettings;
+import net.minecraft.client.render.RenderEngine;
+import net.minecraft.client.render.Tessellator;
+import org.lwjgl.BufferUtils;
+import org.lwjgl.opengl.GL11;
+
+public final class FontRenderer {
+    private int[] charWidth = new int[256];
+    private int fontTextureName = 0;
+    private int fontDisplayLists;
+    private IntBuffer buffer = BufferUtils.createIntBuffer(1024);
+
+    // Assume a fixed font height (adjust based on actual font texture)
+    static final int FONT_HEIGHT = 8;
+
+    public FontRenderer(GameSettings settings, String texturePath, RenderEngine renderEngine) {
+        BufferedImage image;
+        try {
+            image = ImageIO.read(RenderEngine.class.getResourceAsStream(texturePath));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        int width = image.getWidth();
+        int height = image.getHeight();
+        int[] pixels = new int[width * height];
+        image.getRGB(0, 0, width, height, pixels, 0, width);
+
+        int charWidth;
+        int charHeight;
+        int i, j;
+
+        // Calculate character widths
+        for (int charIndex = 0; charIndex < 128; ++charIndex) {
+            int xOffset = charIndex % 16;
+            int yOffset = charIndex / 16;
+            charWidth = 0;
+
+            // Determine character width by scanning pixels
+            for (i = 0; i < 8 && charWidth == 0; ++i) {
+                int pixelPos = (xOffset << 3) + i;
+                boolean hasNonTransparentPixel = false;
+
+                for (j = 0; j < 8; ++j) {
+                    int pixel = pixels[pixelPos + ((yOffset << 3) + j) * width] & 255;
+                    if (pixel > 128) {
+                        hasNonTransparentPixel = true;
+                        break;
+                    }
+                }
+
+                if (hasNonTransparentPixel) {
+                    charWidth = i + 1;
+                }
+            }
+
+            if (charIndex == 32) { // Space character
+                charWidth = 4;
+            }
+
+            this.charWidth[charIndex] = charWidth;
+        }
+
+        this.fontTextureName = renderEngine.getTexture(texturePath);
+        this.fontDisplayLists = GL11.glGenLists(288);
+        Tessellator tessellator = Tessellator.instance;
+
+        // Generate display lists for characters
+        for (int index = 0; index < 256; ++index) {
+            GL11.glNewList(this.fontDisplayLists + index, GL11.GL_COMPILE);
+            tessellator.startDrawingQuads();
+            int x = index % 16 << 3;
+            int y = index / 16 << 3;
+            tessellator.addVertexWithUV(0.0F, 7.99F, 0.0F, (float) x / 128.0F, ((float) y + 7.99F) / 128.0F);
+            tessellator.addVertexWithUV(7.99F, 7.99F, 0.0F, ((float) x + 7.99F) / 128.0F, ((float) y + 7.99F) / 128.0F);
+            tessellator.addVertexWithUV(7.99F, 0.0F, 0.0F, ((float) x + 7.99F) / 128.0F, (float) y / 128.0F);
+            tessellator.addVertexWithUV(0.0F, 0.0F, 0.0F, (float) x / 128.0F, (float) y / 128.0F);
+            tessellator.draw();
+            GL11.glTranslatef((float) this.charWidth[index], 0.0F, 0.0F);
+            GL11.glEndList();
+        }
+
+        // Apply color modifications if needed
+        for (int colorIndex = 0; colorIndex < 32; ++colorIndex) {
+            int red = (colorIndex & 8) << 3;
+            int green = (colorIndex & 1) * 191 + red;
+            int blue = ((colorIndex & 2) >> 1) * 191 + red;
+            int alpha = ((colorIndex & 4) >> 2) * 191 + red;
+            boolean isBright = colorIndex >= 16;
+
+            if (settings.anaglyph) {
+                int r = (alpha * 30 + blue * 59 + green * 11) / 100;
+                int g = (alpha * 30 + blue * 70) / 100;
+                int b = (alpha * 30 + green * 70) / 100;
+                alpha = r;
+                blue = g;
+                green = b;
+            }
+
+            colorIndex += 2;
+            if (isBright) {
+                alpha /= 4;
+                green /= 4;
+                blue /= 4;
+            }
+
+            GL11.glColor4f((float) alpha / 255.0F, (float) green / 255.0F, (float) blue / 255.0F, 1.0F);
+        }
+    }
+
+    public final void drawStringWithShadow(String text, int x, int y, int color) {
+        this.renderString(text, x + 1, y + 1, color, true);
+        this.drawString(text, x, y, color);
+    }
+
+    public final void drawString(String text, int x, int y, int color) {
+        this.renderString(text, x, y, color, false);
+    }
+
+    private void renderString(String text, int x, int y, int color, boolean shadow) {
+        if (text != null) {
+            char[] chars = text.toCharArray();
+            if (shadow) {
+                color = (color & 16579836) >> 2;
+            }
+
+            GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.fontTextureName);
+            float r = (float) (color >> 16 & 255) / 255.0F;
+            float g = (float) (color >> 8 & 255) / 255.0F;
+            float b = (float) (color & 255) / 255.0F;
+            GL11.glColor4f(r, g, b, 1.0F);
+            this.buffer.clear();
+            GL11.glPushMatrix();
+            GL11.glTranslatef((float) x, (float) y, 0.0F);
+
+            for (int i = 0; i < chars.length; ++i) {
+                for (; chars[i] == 38 && chars.length > i + 1; i += 2) {
+                    int colorIndex = "0123456789abcdef".indexOf(chars[i + 1]);
+                    if (colorIndex < 0 || colorIndex > 15) {
+                        colorIndex = 15;
+                    }
+
+                    this.buffer.put(this.fontDisplayLists + 256 + colorIndex + (shadow ? 16 : 0));
+                    if (this.buffer.remaining() == 0) {
+                        this.buffer.flip();
+                        GL11.glCallLists(this.buffer);
+                        this.buffer.clear();
+                    }
+                }
+
+                this.buffer.put(this.fontDisplayLists + chars[i]);
+                if (this.buffer.remaining() == 0) {
+                    this.buffer.flip();
+                    GL11.glCallLists(this.buffer);
+                    this.buffer.clear();
+                }
+            }
+
+            this.buffer.flip();
+            GL11.glCallLists(this.buffer);
+            GL11.glPopMatrix();
+        }
+    }
+
+    public final int getStringWidth(String text) {
+        if (text == null) {
+            return 0;
+        } else {
+            char[] chars = text.toCharArray();
+            int width = 0;
+
+            for (int i = 0; i < chars.length; ++i) {
+                if (chars[i] == 38) { // '&' character
+                    ++i;
+                } else {
+                    width += this.charWidth[chars[i]];
+                }
+            }
+
+            return width;
+        }
+    }
+
+    public int getFontHeight() {
+        return FONT_HEIGHT;
+    }
+}

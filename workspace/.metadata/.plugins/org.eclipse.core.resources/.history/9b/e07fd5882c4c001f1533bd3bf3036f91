@@ -1,0 +1,99 @@
+package net.minecraft.client.gui;
+
+import net.minecraft.client.GameSettings;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.render.Tessellator;
+import org.lwjgl.input.Mouse;
+import org.lwjgl.opengl.GL11;
+
+public final class GuiOptions extends GuiScreen {
+
+    private GuiScreen parentScreen;
+    private String screenTitle = "General";
+    private GameSettings options;
+
+    public GuiOptions(GameSettings gameSettings) {
+        this.options = gameSettings;
+    }
+
+    @Override
+    public final void initGui() {
+        this.controlList.clear();
+        
+        // Adding sliders and buttons for various settings
+        this.controlList.add(new GuiSlider(101, this.width / 2 - 155, this.height / 6 + 24, "Sensitivity", 0));
+        this.controlList.add(new GuiSlider(102, this.width / 2 + 5, this.height / 6 + 24, "FOV", 1));
+        
+        // Adding toggle buttons for various settings
+        for (int i = 0; i < 6; ++i) {
+            this.controlList.add(new GuiButton(i, this.width / 2 - 65 + i % 2 * 160, this.height / 6 + 24 + 24 * (i >> 1), 150, 20, this.options.setOptionString(i)));
+        }
+
+        // Adding category buttons at the bottom
+        this.controlList.add(new GuiButton(106, this.width / 2 - 155, this.height - 50, 60, 20, "Audio"));
+        this.controlList.add(new GuiButton(105, this.width / 2 - 90, this.height - 50, 60, 20, "Graphics"));
+        this.controlList.add(new GuiButton(100, this.width / 2 - 25, this.height - 50, 60, 20, "Controls"));
+        this.controlList.add(new GuiButton(108, this.width / 2 + 40, this.height - 50, 60, 20, "Packs"));
+        this.controlList.add(new GuiButton(107, this.width / 2 + 105, this.height - 50, 60, 20, "General"));
+
+        // Adding "Done" button
+        this.controlList.add(new GuiButton(200, this.width / 2 - 75, this.height - 25, 150, 20, "Done"));
+    }
+
+    @Override
+    protected final void actionPerformed(GuiButton guiButton) {
+        if (guiButton.enabled) {
+            if (guiButton.id < 100) {
+                this.options.setOptionValue(guiButton.id, 1);
+                guiButton.displayString = this.options.setOptionString(guiButton.id);
+            } else if (guiButton.id == 100) {
+                this.mc.displayGuiScreen(new GuiControls(this, this.options));
+            } else if (guiButton.id == 105) {
+                this.mc.displayGuiScreen(new GuiVideoSettings(this, this.options));
+            } else if (guiButton.id == 106) {
+                this.mc.displayGuiScreen(new GuiAudioSettings(this, this.options));
+            } else if (guiButton.id == 108) {
+                this.mc.displayGuiScreen(new GuiResourcePack(this, this.options));
+            } else if (guiButton.id == 200) {
+                this.mc.displayGuiScreen(this.parentScreen);
+            }
+        }
+    }
+
+    public final void drawScreen(int mouseX, int mouseY, float partialTicks) {
+        this.drawDefaultBackground();
+        drawCenteredString(this.fontRenderer, this.screenTitle, this.width / 2, 20, 16777215);
+
+        super.drawScreen(mouseX, mouseY, partialTicks);
+    }
+
+    public void handleMouseInput() {
+        super.handleMouseInput();
+        int scrollAmount = Mouse.getEventDWheel();
+        if (scrollAmount != 0) {
+            if (scrollAmount > 0) {
+                scrollAmount = 1;
+            } else {
+                scrollAmount = -1;
+            }
+            this.amountScrolled -= scrollAmount * 10;
+        }
+    }
+
+    private void renderBackdrop(int startY, int endY, int color1, int color2) {
+        Tessellator tessellator = Tessellator.instance;
+        GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.mc.renderEngine.getTexture("/dirt.png"));
+        GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+        float textureScale = 32.0f;
+        tessellator.startDrawingQuads();
+        tessellator.setColorOpaque_I(4210752);
+        GL11.glColor4f(0.25f, 0.25f, 0.25f, color2 / 255.0f);
+        tessellator.addVertexWithUV(0.0f, endY, 0.0f, 0.0f, endY / textureScale);
+        tessellator.addVertexWithUV(this.width, endY, 0.0f, this.width / textureScale, endY / textureScale);
+        GL11.glColor4f(0.25f, 0.25f, 0.25f, color1 / 255.0f);
+        tessellator.addVertexWithUV(this.width, startY, 0.0f, this.width / textureScale, startY / textureScale);
+        tessellator.addVertexWithUV(0.0f, startY, 0.0f, 0.0f, startY / textureScale);
+        tessellator.draw();
+        GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+    }
+}

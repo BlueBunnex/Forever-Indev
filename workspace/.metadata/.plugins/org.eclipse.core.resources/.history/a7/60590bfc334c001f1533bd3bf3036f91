@@ -1,0 +1,136 @@
+package net.minecraft.client.gui;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.render.Tessellator;
+import org.lwjgl.input.Keyboard;
+import org.lwjgl.input.Mouse;
+import org.lwjgl.opengl.GL11;
+
+public class GuiScreen extends Gui {
+    protected Minecraft mc;
+    public int width;
+    public int height;
+    protected List<GuiButton> controlList = new ArrayList<GuiButton>();
+    public boolean allowUserInput = false;
+    protected FontRenderer fontRenderer;
+    private static final String[] DATE_FORMATS = {
+        "yyyy-MM-dd HH:mm:ss",       // Standard ISO format
+        "MM/dd/yyyy HH:mm:ss",       // US format
+        "dd MMM yyyy HH:mm:ss",      // European format
+        "MMMM d, yyyy",              // Full Month Day, Year format
+        "d MMM yyyy",                // Day Month Year format
+        "yyyy/MM/dd",                // Year/Month/Day format
+        "M/d/yyyy",                  // Short US format
+        "d/M/yyyy",                  // Short European format
+        "dd-MM-yyyy",                // Day-Month-Year with dashes
+        "MMMM d'th', yyyy"           // Month Day'th', Year format
+    };
+    private int currentFormatIndex = 0;
+
+    public void drawScreen(int mouseX, int mouseY) {
+        super.drawScreen(mouseX, mouseY);
+
+        // Draw the buttons
+        for (GuiButton button : this.controlList) {
+            button.drawButton(this.mc, mouseX, mouseY);
+        }
+
+        // Draw the selected date/time format
+        String currentDateFormat = DATE_FORMATS[currentFormatIndex];
+        SimpleDateFormat dateFormat = new SimpleDateFormat(currentDateFormat);
+        String dateStr = dateFormat.format(new Date());
+        drawString(this.fontRenderer, "Current Format: " + currentDateFormat, 10, 10);
+        drawString(this.fontRenderer, "Current Date/Time: " + dateStr, 10, 30);
+    }
+
+    protected void keyTyped(char character, int keycode) {
+        if (keycode == 1) {
+            this.mc.displayGuiScreen(null);
+            this.mc.setIngameFocus();
+        }
+    }
+
+    protected void drawSlotInventory(int mouseX, int mouseY, int mouseClick) {
+        if (mouseClick == 0) {
+            for (GuiButton button : this.controlList) {
+                if (button.mousePressed(mouseX, mouseY)) {
+                    this.mc.sndManager.playSoundFX("random.click", 1.0F, 1.0F);
+                    this.actionPerformed(button);
+                }
+            }
+        }
+    }
+
+    protected void actionPerformed(GuiButton button) {
+        if (button.id == 0) { // Up button
+            currentFormatIndex = (currentFormatIndex + 1) % DATE_FORMATS.length;
+        } else if (button.id == 1) { // Down button
+            currentFormatIndex = (currentFormatIndex - 1 + DATE_FORMATS.length) % DATE_FORMATS.length;
+        }
+    }
+
+    public final void setWorldAndResolution(Minecraft mc, int width, int height) {
+        this.mc = mc;
+        this.fontRenderer = mc.fontRenderer;
+        this.width = width;
+        this.height = height;
+        this.initGui();
+    }
+
+    public void initGui() {
+        this.controlList.clear();
+        this.controlList.add(new GuiButton(0, this.width / 2 - 50, this.height / 2 - 10, 20, 20, "Up"));
+        this.controlList.add(new GuiButton(1, this.width / 2 - 50, this.height / 2 + 10, 20, 20, "Down"));
+    }
+
+    public void handleMouseInput() {
+        if (Mouse.getEventButtonState()) {
+            int x = Mouse.getEventX() * this.width / this.mc.displayWidth;
+            int y = this.height - Mouse.getEventY() * this.height / this.mc.displayHeight - 1;
+            this.drawSlotInventory(x, y, Mouse.getEventButton());
+        }
+    }
+
+    public final void handleKeyboardInput() {
+        if (Keyboard.getEventKeyState()) {
+            if (Keyboard.getEventKey() == Keyboard.KEY_F11) {
+                this.mc.toggleFullscreen();
+                return;
+            }
+            this.keyTyped(Keyboard.getEventCharacter(), Keyboard.getEventKey());
+        }
+    }
+
+    public void updateScreen() {
+    }
+
+    public void onGuiClosed() {
+    }
+
+    public final void drawDefaultBackground() {
+        if (this.mc.theWorld != null) {
+            drawGradientRect(0, 0, this.width, this.height, 1610941696, -1607454624);
+        } else {
+            GL11.glDisable(GL11.GL_LIGHTING);
+            GL11.glDisable(GL11.GL_FOG);
+            Tessellator tessellator = Tessellator.instance;
+            GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.mc.renderEngine.getTexture("/dirt.png"));
+            GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+            tessellator.startDrawingQuads();
+            tessellator.setColorOpaque_I(4210752);
+            tessellator.addVertexWithUV(0.0F, (float) this.height, 0.0F, 0.0F, (float) this.height / 32.0F);
+            tessellator.addVertexWithUV((float) this.width, (float) this.height, 0.0F, (float) this.width / 32.0F, (float) this.height / 32.0F);
+            tessellator.addVertexWithUV((float) this.width, 0.0F, 0.0F, (float) this.width / 32.0F, 0.0F);
+            tessellator.addVertexWithUV(0.0F, 0.0F, 0.0F, 0.0F, 0.0F);
+            tessellator.draw();
+        }
+    }
+
+    public boolean doesGuiPauseGame() {
+        return true;
+    }
+}

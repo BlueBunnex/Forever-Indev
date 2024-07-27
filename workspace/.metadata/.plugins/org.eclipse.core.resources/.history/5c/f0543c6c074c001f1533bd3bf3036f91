@@ -1,0 +1,139 @@
+package net.minecraft.client.gui;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import net.minecraft.client.PlayerLoader;
+import net.minecraft.game.level.World;
+
+public class GuiLoadLevel extends GuiScreen {
+
+	private GuiScreen parent;
+	private boolean isFinished = false;
+	private boolean isLoaded = false;
+	private String[] levels = new String[5];
+	private String statusMessage = "Use OfflineDatSave addon to save locally";
+	protected String title = "Save/Load Level";
+	private boolean isFrozen = false;
+	private File selectedFile;
+
+	private static final int SLOT_COUNT = 5;
+
+	public GuiLoadLevel(GuiScreen parent) {
+		this.parent = parent;
+		for (int i = 0; i < SLOT_COUNT; i++) {
+			levels[i] = "Empty Slot";
+		}
+	}
+
+	@Override
+	public void updateScreen() {
+		if (this.selectedFile != null) {
+			this.saveToSlot(this.selectedFile);
+			this.selectedFile = null;
+			this.mc.displayGuiScreen(null);
+		}
+	}
+
+	protected void setLevels(String[] levels) {
+		for (int i = 0; i < SLOT_COUNT; i++) {
+			GuiButtonText button = (GuiButtonText) this.controlList.get(i);
+			button.enabled = !levels[i].equals("Empty Slot");
+			button.displayString = levels[i];
+			button.visible = true;
+		}
+		this.controlList.get(SLOT_COUNT).visible = true;
+	}
+
+	@Override
+	public void initGui() {
+		int buttonWidth = 200;
+		int buttonHeight = 20;
+		int verticalSpacing = 24;
+		int baseY = this.height / 6;
+
+		for (int i = 0; i < SLOT_COUNT; i++) {
+			this.controlList.add(new GuiButtonText(i, this.width / 2 - buttonWidth / 2, baseY + i * verticalSpacing, buttonWidth, buttonHeight, levels[i]));
+			this.controlList.get(i).visible = true;
+		}
+		this.controlList.add(new GuiButtonText(SLOT_COUNT, this.width / 2 - buttonWidth / 2, baseY + SLOT_COUNT * verticalSpacing, buttonWidth, buttonHeight, "Save to Slot"));
+		this.controlList.add(new GuiButtonText(SLOT_COUNT + 1, this.width / 2 - buttonWidth / 2, baseY + SLOT_COUNT * verticalSpacing + verticalSpacing, buttonWidth, buttonHeight, "Cancel"));
+
+		this.controlList.get(SLOT_COUNT).visible = true;
+	}
+
+	@Override
+	protected final void actionPerformed(GuiButton button) {
+		if (this.isFrozen || !button.enabled) return;
+
+		if (button.id < SLOT_COUNT) {
+			this.loadFromSlot(button.id);
+		} else if (button.id == SLOT_COUNT) {
+			FileDialog fileDialog = saveFileDialog();
+			fileDialog.setVisible(true);
+			String file = fileDialog.getFile();
+			if (file != null) {
+				this.selectedFile = new File(fileDialog.getDirectory(), file);
+				this.saveToSlot(this.selectedFile);
+			}
+		} else if (button.id == SLOT_COUNT + 1) {
+			this.mc.displayGuiScreen(this.parent);
+		}
+	}
+
+	protected FileDialog saveFileDialog() {
+		return new FileDialog((Dialog) null, "Save Level", FileDialog.SAVE);
+	}
+
+	protected void loadFromSlot(int slot) {
+		File slotFile = new File("slot" + slot + ".mclevel");
+		if (slotFile.exists()) {
+			try (FileInputStream in = new FileInputStream(slotFile)) {
+				World world = (new PlayerLoader(this.mc, this.mc.loadingScreen)).load(in);
+				this.mc.setLevel(world);
+				this.mc.displayGuiScreen(null);
+				this.mc.setIngameFocus();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		} else {
+			this.statusMessage = "Slot " + slot + " is empty!";
+		}
+	}
+
+	protected void saveToSlot(File file) {
+		for (int i = 0; i < SLOT_COUNT; i++) {
+			if (levels[i].equals("Empty Slot")) {
+				try (FileOutputStream out = new FileOutputStream("slot" + i + ".mclevel")) {
+					// Assuming we have a method saveWorld to save the current world to an output stream
+					PlayerLoader.saveWorld(this.mc.theWorld, out);
+					levels[i] = file.getName();
+					this.setLevels(levels);
+					this.statusMessage = "Saved to slot " + i;
+					break;
+				} catch (IOException e) {
+					e.printStackTrace();
+					this.statusMessage = "Failed to save!";
+				}
+			}
+		}
+	}
+
+	@Override
+	public final void drawScreen(int mouseX, int mouseY) {
+		this.drawDefaultBackground();
+		drawCenteredString(this.fontRenderer, this.title, this.width / 2, 20, 0xFFFFFF);
+		drawCenteredString(this.fontRenderer, this.statusMessage, this.width / 2, this.height / 2 - 4, 0xFFFFFF);
+		super.drawScreen(mouseX, mouseY);
+	}
+
+	// Static methods for external manipulation
+	static File setSelectedFile(GuiLoadLevel guiLoadLevel, File file) {
+		return guiLoadLevel.selectedFile = file;
+	}
+
+	static boolean setFrozen(GuiLoadLevel guiLoadLevel, boolean frozen) {
+		return guiLoadLevel.isFrozen = frozen;
+	}
+}

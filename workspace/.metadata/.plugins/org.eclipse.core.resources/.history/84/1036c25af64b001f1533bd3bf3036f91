@@ -1,0 +1,22 @@
+package net.minecraft.client.render;
+
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.awt.image.ImageObserver;
+import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.nio.IntBuffer;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import javax.imageio.ImageIO;
+import net.minecraft.client.GameSettings;
+import net.minecraft.client.render.texture.TextureFX;
+import org.lwjgl.BufferUtils;
+import org.lwjgl.opengl.GL11;
+
+public class RenderEngine {
+	private HashMap<String, Integer> textureMap = new HashMap<String, Integer>();
+	private HashMap<Integer, BufferedImage> textureContentsMap = new HashMap<Integer, BufferedImage

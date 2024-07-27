@@ -1,0 +1,189 @@
+package net.minecraft.client.render.entity;
+
+import java.util.Random;
+import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.render.RenderBlocks;
+import net.minecraft.client.render.RenderEngine;
+import net.minecraft.client.render.Tessellator;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.item.EntityItem;
+import net.minecraft.item.ItemStack;
+import net.minecraft.block.Block;
+import org.lwjgl.opengl.GL11;
+import net.minecraft.util.MathHelper;
+
+public final class RenderItem extends Render {
+    private RenderBlocks renderBlocks = new RenderBlocks();
+    private Random random = new Random();
+
+    public RenderItem() {
+        this.shadowSize = 0.15F;
+        this.shadowOpaque = 12.0F / 16.0F;
+    }
+
+    public final void renderItemIntoGUI(RenderEngine renderEngine, ItemStack itemStack, int x, int y) {
+        if (itemStack != null) {
+            if (itemStack.getItem().getIconIndex(itemStack) < 256 && Block.blocksList[itemStack.getItem().getIconIndex(itemStack)].getRenderType() == 0) {
+                int blockID = itemStack.getItem().getIconIndex(itemStack);
+                RenderEngine.bindTexture(renderEngine.getTexture("/terrain.png"));
+                Block block = Block.blocksList[blockID];
+                GL11.glPushMatrix();
+                GL11.glTranslatef((float) (x - 2), (float) (y + 3), 0.0F);
+                GL11.glScalef(10.0F, 10.0F, 10.0F);
+                GL11.glTranslatef(1.0F, 0.5F, 8.0F);
+                GL11.glRotatef(210.0F, 1.0F, 0.0F, 0.0F);
+                GL11.glRotatef(45.0F, 0.0F, 1.0F, 0.0F);
+                GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+                this.renderBlocks.renderBlockOnInventory(block);
+                GL11.glPopMatrix();
+            } else {
+                if (itemStack.getItem().getIconIndex(itemStack) >= 0) {
+                    GL11.glDisable(GL11.GL_LIGHTING);
+                    if (itemStack.getItem().getIconIndex(itemStack) < 256) {
+                        RenderEngine.bindTexture(renderEngine.getTexture("/terrain.png"));
+                    } else {
+                        RenderEngine.bindTexture(renderEngine.getTexture("/gui/items.png"));
+                    }
+
+                    int iconIndex = itemStack.getItem().getIconIndex(itemStack);
+                    int u = (iconIndex % 16) * 16;
+                    int v = (iconIndex / 16) * 16;
+                    Tessellator tessellator = Tessellator.instance;
+                    tessellator.startDrawingQuads();
+                    tessellator.addVertexWithUV(x, y + 16, 0.0F, (float) u * 0.00390625F, (float) (v + 16) * 0.00390625F);
+                    tessellator.addVertexWithUV(x + 16, y + 16, 0.0F, (float) (u + 16) * 0.00390625F, (float) (v + 16) * 0.00390625F);
+                    tessellator.addVertexWithUV(x + 16, y, 0.0F, (float) (u + 16) * 0.00390625F, (float) v * 0.00390625F);
+                    tessellator.addVertexWithUV(x, y, 0.0F, (float) u * 0.00390625F, (float) v * 0.00390625F);
+                    tessellator.draw();
+                    GL11.glEnable(GL11.GL_LIGHTING);
+                }
+            }
+        }
+    }
+
+    public final void renderItemOverlayIntoGUI(FontRenderer fontRenderer, ItemStack itemStack, int x, int y) {
+        if (itemStack != null) {
+            if (itemStack.stackSize > 1) {
+                String stackSize = "" + itemStack.stackSize;
+                GL11.glDisable(GL11.GL_LIGHTING);
+                GL11.glDisable(GL11.GL_DEPTH_TEST);
+                fontRenderer.drawStringWithShadow(stackSize, x + 19 - 2 - fontRenderer.getStringWidth(stackSize), y + 6 + 3, 16777215);
+                GL11.glEnable(GL11.GL_LIGHTING);
+                GL11.glEnable(GL11.GL_DEPTH_TEST);
+            }
+
+            if (itemStack.isItemDamaged()) {
+                int damage = 13 - itemStack.getItemDamage() * 13 / itemStack.getMaxDamage();
+                int color = 255 - itemStack.getItemDamage() * 255 / itemStack.getMaxDamage();
+                GL11.glDisable(GL11.GL_LIGHTING);
+                GL11.glDisable(GL11.GL_DEPTH_TEST);
+                GL11.glDisable(GL11.GL_TEXTURE_2D);
+                Tessellator tessellator = Tessellator.instance;
+                int rgb = 255 - color << 16 | color << 8;
+                int background = (255 - color) / 4 << 16 | 16128;
+                renderQuad(tessellator, x + 2, y + 13, 13, 2, 0);
+                renderQuad(tessellator, x + 2, y + 13, 12, 1, background);
+                renderQuad(tessellator, x + 2, y + 13, damage, 1, rgb);
+                GL11.glEnable(GL11.GL_TEXTURE_2D);
+                GL11.glEnable(GL11.GL_LIGHTING);
+                GL11.glEnable(GL11.GL_DEPTH_TEST);
+                GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+            }
+        }
+    }
+
+    private static void renderQuad(Tessellator tessellator, int x, int y, int width, int height, int color) {
+        tessellator.startDrawingQuads();
+        tessellator.setColorOpaque_I(color);
+        tessellator.addVertex((float) x, (float) y, 0.0F);
+        tessellator.addVertex((float) x, (float) (y + height), 0.0F);
+        tessellator.addVertex((float) (x + width), (float) (y + height), 0.0F);
+        tessellator.addVertex((float) (x + width), (float) y, 0.0F);
+        tessellator.draw();
+    }
+
+    @Override
+    public void doRender(Entity entity, double x, double y, double z, float entityYaw, float partialTicks) {
+        EntityItem entityItem = (EntityItem) entity;
+        this.random.setSeed(187L);
+        ItemStack itemStack = entityItem.getItem();
+        GL11.glPushMatrix();
+        float partialGround = -0.1F; // Partially into the ground
+        float rotationAngle = (((float) entityItem.age + partialTicks) / 20.0F + entityItem.hoverStart) * (180.0F / (float) Math.PI);
+        byte count = 1;
+        if (entityItem.getItem().stackSize > 1) {
+            count = 2;
+        }
+
+        if (entityItem.getItem().stackSize > 5) {
+            count = 3;
+        }
+
+        if (entityItem.getItem().stackSize > 20) {
+            count = 4;
+        }
+
+        GL11.glTranslatef((float) x, (float) y + partialGround, (float) z);
+        GL11.glEnable(GL11.GL_NORMALIZE);
+        if (itemStack.itemID < 256 && Block.blocksList[itemStack.itemID].getRenderType() == 0) {
+            this.loadTexture("/terrain.png");
+            float scale = 0.25F;
+            if (!Block.blocksList[itemStack.itemID].renderAsNormalBlock() && itemStack.itemID != Block.slabHalf.blockID) {
+                scale = 0.5F;
+            }
+
+            GL11.glScalef(scale, scale, scale);
+
+            for (int i = 0; i < count; ++i) {
+                GL11.glPushMatrix();
+                if (i > 0) {
+                    float offsetX = (this.random.nextFloat() * 2.0F - 1.0F) * 0.2F / scale;
+                    float offsetY = (this.random.nextFloat() * 2.0F - 1.0F) * 0.2F / scale;
+                    float offsetZ = (this.random.nextFloat() * 2.0F - 1.0F) * 0.2F / scale;
+                    GL11.glTranslatef(offsetX, offsetY, offsetZ);
+                }
+                GL11.glRotatef(rotationAngle, 0.0F, 1.0F, 0.0F); // Smooth rotation around y-axis
+                this.renderBlocks.renderBlockOnInventory(Block.blocksList[itemStack.itemID]);
+                GL11.glPopMatrix();
+            }
+        } else {
+            GL11.glScalef(0.5F, 0.5F, 0.5F);
+            int iconIndex = itemStack.getItem().getIconIndex();
+            if (itemStack.itemID < 256) {
+                this.loadTexture("/terrain.png");
+            } else {
+                this.loadTexture("/gui/items.png");
+            }
+
+            Tessellator tessellator = Tessellator.instance;
+            float minU = (float) (iconIndex % 16 << 4) / 256.0F;
+            float maxU = (float) ((iconIndex % 16 << 4) + 16) / 256.0F;
+            float minV = (float) (iconIndex / 16 << 4) / 256.0F;
+            float maxV = (float) ((iconIndex / 16 << 4) + 16) / 256.0F;
+
+            for (int i = 0; i < count; ++i) {
+                GL11.glPushMatrix();
+                if (i > 0) {
+                    float offsetX = (this.random.nextFloat() * 2.0F - 1.0F) * 0.3F;
+                    float offsetY = (this.random.nextFloat() * 2.0F - 1.0F) * 0.3F;
+                    float offsetZ = (this.random.nextFloat() * 2.0F - 1.0F) * 0.3F;
+                    GL11.glTranslatef(offsetX, offsetY, offsetZ);
+                }
+
+                GL11.glRotatef(180.0F - this.renderManager.playerViewY, 0.0F, 1.0F, 0.0F);
+                GL11.glRotatef(rotationAngle, 0.0F, 1.0F, 0.0F); // Smooth rotation around y-axis
+                tessellator.startDrawingQuads();
+                tessellator.setNormal(0.0F, 1.0F, 0.0F);
+                tessellator.addVertexWithUV(-0.5F, -0.25F, 0.0F, minU, maxV);
+                tessellator.addVertexWithUV(0.5F, -0.25F, 0.0F, maxU, maxV);
+                tessellator.addVertexWithUV(0.5F, 12.0F / 16.0F, 0.0F, maxU, minV);
+                tessellator.addVertexWithUV(-0.5F, 12.0F / 16.0F, 0.0F, minU, minV);
+                tessellator.draw();
+                GL11.glPopMatrix();
+            }
+        }
+
+        GL11.glDisable(GL11.GL_NORMALIZE);
+        GL11.glPopMatrix();
+    }
+}
