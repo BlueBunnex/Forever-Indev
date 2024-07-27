@@ -1,0 +1,2526 @@
+tiny	2	0	official	named
+c	net/minecraft/a/c/c/a	net/minecraft/game/entity/misc/EntityTNTPrimed
+	m	(Lnet/minecraft/a/a/g;FFF)V	<init>	<init>
+		p	4		prevPosZ
+		p	3		prevPosY
+		p	2		prevPosX
+		p	1		world
+	f	I	a	fuse
+c	net/minecraft/a/b/p	net/minecraft/game/item/ItemFood
+	f	I	as	healAmount
+	m	(II)V	<init>	<init>
+		p	2		healAmount
+		p	1		itemID
+c	net/minecraft/a/b/o	net/minecraft/game/item/ItemPainting
+c	net/minecraft/a/c/c/b	net/minecraft/game/entity/misc/EntityItem
+	f	I	O	delayBeforeCanPickup
+	f	I	Q	unknownEntityItemInt
+	m	(Lnet/minecraft/a/a/g;FFFLnet/minecraft/a/b/k;)V	<init>	<init>
+		p	1		world
+		p	5		item
+	f	I	b	age
+	f	I	R	health
+	f	F	P	hoverStart
+	f	Lnet/minecraft/a/b/k;	a	item
+c	net/minecraft/client/a/a/a	net/minecraft/client/render/entity/RenderEntity
+c	net/minecraft/client/a/a/c	net/minecraft/client/render/entity/RenderCreeper
+c	net/minecraft/client/a/a/b	net/minecraft/client/render/entity/RenderArrow
+c	net/minecraft/client/a/a/e	net/minecraft/client/render/entity/RenderItem
+	m	(Lnet/minecraft/client/a/k;Lnet/minecraft/a/b/k;II)V	a	renderItemIntoGUI
+		p	1		renderEngineClass
+		p	2		itemStackClass
+	m	(Lnet/minecraft/client/c/j;Lnet/minecraft/a/b/k;II)V	a	renderItemOverlayIntoGUI
+	m	(Lnet/minecraft/client/a/d;IIIII)V	a	renderQuad
+	f	Ljava/util/Random;	e	random
+	f	Lnet/minecraft/client/a/f;	d	renderBlocks
+c	net/minecraft/client/a/a/d	net/minecraft/client/render/entity/RenderTNTPrimed
+	f	Lnet/minecraft/client/a/f;	d	blockRenderer
+c	net/minecraft/client/a/a/g	net/minecraft/client/render/entity/RenderPlayer
+	f	[Ljava/lang/String;	h	armorFilenamePrefix
+	m	(Lnet/minecraft/a/c/e/a;FFFFF)V	a	renderPlayer
+		p	1		player
+	f	Lnet/minecraft/client/b/h;	g	modelArmor
+	m	()V	a	drawFirstPersonHand
+	f	Lnet/minecraft/client/b/h;	f	modelArmorChestplate
+	f	Lnet/minecraft/client/b/h;	e	modelBipedMain
+c	net/minecraft/client/a/a/f	net/minecraft/client/render/entity/Render
+	m	(Lnet/minecraft/client/a/a/i;)V	a	setRenderManager
+		p	1		renderManager
+	m	(Lnet/minecraft/a/c/b;FFFFF)V	a	doRender
+		p	1		entity
+	f	Lnet/minecraft/client/a/a/i;	a	renderManager
+	f	F	c	shadowOpaque
+	m	(Ljava/lang/String;Ljava/lang/String;)V	a	loadDownloadableImageTexture
+	f	F	b	shadowSize
+	m	(Ljava/lang/String;)V	a	loadTexture
+	m	(Lnet/minecraft/a/c/b;FFFF)V	a	renderShadow
+		p	1		entity
+	m	(Lnet/minecraft/a/d/b;)V	a	renderOffsetAABB
+		p	0		aabb
+c	net/minecraft/client/a/a/i	net/minecraft/client/render/entity/RenderManager
+	m	(Lnet/minecraft/a/a/g;)V	a	set
+		p	1		world
+	m	(FFF)F	a	getDistanceToCamera
+	m	(Lnet/minecraft/a/c/b;)Lnet/minecraft/client/a/a/f;	a	getEntityRenderObject
+		p	1		entity
+	f	Lnet/minecraft/client/a/k;	b	renderEngine
+	m	(Lnet/minecraft/a/a/g;Lnet/minecraft/client/a/k;Lnet/minecraft/a/c/e/a;F)V	a	cacheActiveRenderInfo
+		p	3		entityPlayer
+		p	2		renderEngine
+		p	1		world
+	f	F	h	viewerPosZ
+	f	Ljava/util/Map;	e	entityRenderMap
+	m	(Lnet/minecraft/a/c/b;FFFFF)V	a	renderEntityWithPosYaw
+		p	1		entity
+	f	F	g	viewerPosY
+	f	Lnet/minecraft/client/a/a/i;	a	instance
+	f	F	d	playerViewY
+	f	F	f	viewerPosX
+	f	Lnet/minecraft/a/a/g;	c	worldObj
+	m	(Lnet/minecraft/a/c/b;F)V	a	renderEntity
+		p	1		entity
+c	net/minecraft/client/a/a/h	net/minecraft/client/render/entity/RenderPainting
+	f	Ljava/util/Random;	d	rand
+c	net/minecraft/client/a/a/k	net/minecraft/client/render/entity/RenderSheep
+	m	(Lnet/minecraft/client/b/l;Lnet/minecraft/client/b/l;F)V	<init>	<init>
+		p	1		modelBase
+		p	2		modelBase2
+c	net/minecraft/client/a/a/j	net/minecraft/client/render/entity/RenderLiving
+	m	(Lnet/minecraft/a/c/e;FF)I	a	getColorMultiplier
+		p	1		entityLiving
+	m	(Lnet/minecraft/a/c/e;F)V	a	preRenderCallback
+		p	1		entityLiving
+	m	(Lnet/minecraft/a/c/e;I)Z	a	shouldRenderPass
+		p	1		entityLiving
+	m	(Lnet/minecraft/a/c/e;)F	a	getDeathMaxRotation
+		p	1		entityLiving
+	m	(Lnet/minecraft/client/b/l;F)V	<init>	<init>
+		p	1		modelBase
+	f	Lnet/minecraft/client/b/l;	e	renderPassModel
+	m	(Lnet/minecraft/client/b/l;)V	a	setRenderPassModel
+		p	1		modelBase
+	f	Lnet/minecraft/client/b/l;	d	mainModel
+c	net/minecraft/client/a/a/m	net/minecraft/client/render/entity/RenderSpider
+c	net/minecraft/client/a/a/l	net/minecraft/client/render/entity/RenderGiantZombie
+	m	(Lnet/minecraft/client/b/l;FF)V	<init>	<init>
+		p	1		modelBase
+	f	F	e	scale
+c	net/minecraft/client/e/a	net/minecraft/client/sound/SoundPoolEntry
+	m	(Ljava/lang/String;Ljava/net/URL;)V	<init>	<init>
+		p	2		url
+	f	Ljava/net/URL;	b	soundUrl
+	f	Ljava/lang/String;	a	soundName
+c	net/minecraft/client/e/c	net/minecraft/client/sound/SoundManager
+	m	()V	c	tryToSetLibraryAndCodecs
+	m	(Ljava/lang/String;Ljava/io/File;)V	a	addSound
+	m	()V	b	closeMinecraft
+	m	(Ljava/lang/String;FFFFF)V	a	playSound
+	f	Z	f	loaded
+	m	(Lnet/minecraft/client/q;)V	a	loadSoundSettings
+		p	1		gameSettings
+	m	()V	a	onSoundOptionsChanged
+	f	Lnet/minecraft/client/e/b;	c	soundPoolMusic
+	f	Lnet/minecraft/client/e/b;	b	soundPoolSounds
+	f	Lnet/minecraft/client/q;	e	options
+	m	(Lnet/minecraft/a/c/e;F)V	a	setListener
+		p	1		entityLiving
+	m	(FFF)V	a	playRandomMusicIfReady
+	m	(Ljava/lang/String;FF)V	a	playSoundFX
+	f	I	d	latestSoundID
+	f	Lpaulscode/sound/SoundSystem;	a	sndSystem
+	m	(Ljava/lang/String;Ljava/io/File;)V	b	addMusic
+c	net/minecraft/client/e/b	net/minecraft/client/sound/SoundPool
+	f	Ljava/util/Map;	b	nameToSoundPoolEntriesMapping
+	f	I	c	numberOfSoundPoolEntries
+	f	Ljava/util/Random;	a	rand
+	m	(Ljava/lang/String;Ljava/io/File;)Lnet/minecraft/client/e/a;	a	addSound
+	m	(Ljava/lang/String;)Lnet/minecraft/client/e/a;	a	getRandomSoundFromSoundPool
+c	net/minecraft/a/a/c/a/d	net/minecraft/game/level/generator/noise/NoiseGeneratorDistort
+	f	Lnet/minecraft/a/a/c/a/b;	a	source
+	f	Lnet/minecraft/a/a/c/a/b;	b	distort
+c	a/a	util/MathHelper
+	m	(F)F	e	abs
+	f	[F	a	SIN_TABLE
+	m	(D)I	a	floor_double
+	m	(F)F	b	cos
+	m	(F)I	d	floor_float
+	m	(F)F	a	sin
+	m	(F)F	c	sqrt_float
+c	net/minecraft/a/a/c/a/b	net/minecraft/game/level/generator/noise/NoiseGenerator
+	m	(DD)D	a	generateNoise
+c	net/minecraft/a/a/i	net/minecraft/game/level/EntityMap
+	m	()V	a	updateEntities
+	m	(Lnet/minecraft/a/c/b;FFFFFF)Ljava/util/List;	a	getEntities
+		p	1		entity
+	m	(III)V	<init>	<init>
+		p	1		width
+		p	2		depth
+		p	3		height
+	f	I	a	width
+	f	Ljava/util/List;	e	entities
+	f	Ljava/util/List;	h	entitiesExcludingEntity
+	f	[Ljava/util/List;	d	entityGrid
+	f	Lnet/minecraft/a/a/f;	g	slot2
+	f	Lnet/minecraft/a/a/f;	f	slot
+	f	I	b	depth
+	f	I	c	height
+	m	(Lnet/minecraft/a/c/b;)V	b	remove
+		p	1		entity
+	m	(Lnet/minecraft/a/c/b;Lnet/minecraft/a/d/b;)Ljava/util/List;	a	getEntitiesWithinAABB
+		p	2		aabb
+		p	1		entity
+	m	(Lnet/minecraft/a/c/b;FFFFFFLjava/util/List;)Ljava/util/List;	a	getEntities
+		p	1		entity
+	m	(Lnet/minecraft/a/c/b;)V	a	insert
+		p	1		entity
+c	net/minecraft/a/a/h	net/minecraft/game/level/Light
+	m	(IIIIII)V	a	updateBlockLight
+	f	I	r	skylightSubtracted
+	m	(IIII)V	a	updateSkylight
+	f	Ljava/util/List;	b	lightingUpdateList
+	m	(I)V	b	updateLight
+	f	Ljava/util/List;	k	blockLightList
+	f	I	f	worldHeight
+	f	Ljava/util/List;	m	lightingUpdateList2
+	f	I	d	worldWidth
+	f	[I	n	lightingUpdateList3
+	f	[B	h	data
+	m	(IIIIII)V	b	updateLists
+	m	()V	a	updateLight
+	m	(Lnet/minecraft/a/a/g;)V	<init>	<init>
+		p	1		world
+	f	I	q	lightValue
+	f	[B	o	chunks
+	m	()[I	c	getLightingUpdates
+	f	Lnet/minecraft/a/a/c;	p	metadataChunkBlock
+	m	(I)V	a	updateDaylightCycle
+	f	Ljava/util/List;	j	skyLightList
+	f	I	e	worldLength
+	f	Ljava/util/List;	l	lightingUpdateList1
+	f	Lnet/minecraft/a/a/g;	c	worldObj
+	f	[I	i	heightMap
+	f	I	a	lightingUpdateCounter
+	m	()Ljava/lang/String;	b	debugLightUpdates
+	f	[B	g	blocks
+c	net/minecraft/a/a/c/a/c	net/minecraft/game/level/generator/noise/NoiseGeneratorOctaves
+	m	(Ljava/util/Random;I)V	<init>	<init>
+		p	2		octaves
+	f	[Lnet/minecraft/a/a/c/a/a;	a	generatorCollection
+	f	I	b	octaves
+c	a/b	util/IProgressUpdate
+	m	(Ljava/lang/String;)V	b	displayLoadingString
+		p	1		text
+	m	(Ljava/lang/String;)V	a	displayProgressMessage
+		p	1		title
+	m	(I)V	a	setLoadingProgress
+		p	1		progress
+c	net/minecraft/a/a/c	net/minecraft/game/level/MetadataChunkBlock
+	f	I	b	y
+	f	I	c	z
+	m	(Lnet/minecraft/a/a/h;IIIIII)V	<init>	<init>
+		p	5		x2
+		p	4		z
+		p	7		z2
+		p	6		y2
+		p	1		skyBlock
+		p	3		y
+		p	2		x
+	f	I	a	x
+	f	I	f	maxZ
+	f	I	d	maxX
+	f	I	e	maxY
+c	net/minecraft/a/a/b	net/minecraft/game/level/MobSpawner
+	f	Lnet/minecraft/a/a/g;	a	worldObj
+	m	()V	a	performSpawning
+	m	(Lnet/minecraft/a/a/g;)V	<init>	<init>
+		p	1		world
+c	net/minecraft/a/a/a	net/minecraft/game/level/LevelLoader
+	m	(Lnet/minecraft/a/a/g;Ljava/lang/String;)Lnet/minecraft/a/c/b;	a	loadEntity
+		p	2		playerName
+		p	1		world
+	f	La/b;	a	guiLoading
+	m	(La/b;)V	<init>	<init>
+		p	1		guiLoading
+	m	(Lnet/minecraft/a/a/g;Ljava/io/OutputStream;)V	a	save
+		p	1		world
+	m	(Ljava/io/InputStream;)Lnet/minecraft/a/a/g;	a	load
+		p	1		writeLevelTags
+c	net/minecraft/a/a/g	net/minecraft/game/level/World
+	f	I	v	skyColor
+	m	(FFFLjava/lang/String;F)V	a	playSoundEffect
+	f	Ljava/util/Random;	q	random
+	m	(Lnet/minecraft/a/d/b;Lnet/minecraft/a/a/d/c;)Z	a	handleMaterialAcceleration
+		p	2		material
+		p	1		aabb
+	m	(IIII)V	c	notifyBlocksOfNeighborChange
+	m	(Ljava/lang/Class;)I	a	entitiesInLevelList
+	m	()V	f	tick
+	m	()I	g	getGroundLevel
+	f	I	E	difficultySetting
+	m	(Lnet/minecraft/a/c/b;Lnet/minecraft/a/d/b;)Ljava/util/List;	a	getEntitiesWithinAABBExcludingEntity
+		p	1		entity
+		p	2		aabb
+	m	(III)B	e	getBlockMetadata
+	f	Lnet/minecraft/a/c/e;	y	playerEntity
+	m	(Lnet/minecraft/a/d/a;Lnet/minecraft/a/d/b;)F	a	getBlockDensity
+		p	1		vec3D
+		p	2		aabb
+	m	(IIIII)I	b	floodFill
+	f	Lnet/minecraft/a/a/i;	r	entityMap
+	f	I	u	cloudHeight
+	m	(IIILnet/minecraft/a/a/b/a/a;)V	a	setBlockTileEntity
+		p	4		tileEntity
+	m	(Lnet/minecraft/a/d/b;)Ljava/util/ArrayList;	a	getCollidingBoundingBoxes
+		p	1		aabb
+	m	(IIII)Z	d	setTileNoUpdate
+	m	(I)V	a	updateChunkLight
+	m	(Lnet/minecraft/a/d/a;Lnet/minecraft/a/d/a;)Lnet/minecraft/a/d/c;	a	rayTraceBlocks
+		p	2		vec3D2
+		p	1		vec3D
+	f	[B	e	data
+	f	I	D	worldTime
+	m	()Ljava/lang/String;	j	debugSkylightUpdates
+	f	I	L	playTime
+	m	(Lnet/minecraft/a/c/b;)V	b	releaseEntitySkin
+		p	1		entity
+	f	I	m	defaultFluid
+	m	()V	d	updateLighting
+	f	I	t	groundLevel
+	f	Lnet/minecraft/a/a/h;	M	lightUpdates
+	m	(IIII)Z	a	setBlock
+	m	(FFFLjava/lang/String;FF)V	a	playSoundAtPlayer
+	f	Ljava/util/List;	G	tickList
+	f	[B	d	blocks
+	f	Ljava/util/List;	H	list
+	m	(Ljava/lang/String;FFFFFF)V	a	spawnParticle
+	m	()I	e	getSkyBrightness
+	f	F	l	rotSpawn
+	f	I	K	updateLCG
+	m	()V	c	updateEntities
+	f	I	s	waterLevel
+	m	()V	k	setLevel
+	m	(IIII)Z	b	setBlockWithNotify
+	f	Ljava/util/Random;	I	rand
+	m	(F)Lnet/minecraft/a/d/a;	b	getSkyColor
+	f	I	B	skylightSubtracted
+	f	I	c	height
+	m	(III[B[B)V	a	generate
+	m	(III)Z	g	isWater
+	m	(III)Lnet/minecraft/a/a/b/a/a;	j	getBlockTileEntity
+	m	(F)F	c	getCelestialAngle
+	m	(Lnet/minecraft/a/a/d;)V	a	addWorldAccess
+		p	1		iWorldAccess
+	f	I	J	randId
+	f	I	k	zSpawn
+	m	(IIII)V	g	extinguishFire
+	m	(IIIIII)V	a	swap
+	m	()V	b	findSpawn
+	f	Ljava/util/Map;	o	map
+	m	(III)V	i	removeBlockTileEntity
+	m	(Lnet/minecraft/a/d/b;)Z	c	isBoundingBoxBurning
+		p	1		aabb
+	m	(III)I	a	getBlockId
+	m	(F)Lnet/minecraft/a/d/a;	e	getCloudColor
+	f	I	b	length
+	f	I	A	skyBrightness
+	m	(Lnet/minecraft/a/c/b;FFFF)V	a	createExplosion
+		p	1		entity
+	f	[I	Q	floodedBlocks
+	m	(III)Z	h	growTrees
+	f	I	j	ySpawn
+	m	(Ljava/lang/Class;)Lnet/minecraft/a/c/b;	b	findSubclassOf
+	m	(Lnet/minecraft/a/a/d;)V	b	removeWorldAccess
+		p	1		iWorldAccess
+	f	Z	z	survivalWorld
+	f	Ljava/lang/String;	f	name
+	m	(IIII)V	h	notifyBlockOfNeighborChange
+	m	()V	a	load
+	m	(III)Lnet/minecraft/a/a/d/c;	f	getBlockMaterial
+	m	(Lnet/minecraft/a/d/b;)Z	b	getIsAnyLiquid
+		p	1		aabb
+	m	(F)Lnet/minecraft/a/d/a;	d	getFogColor
+	m	(II)I	a	getFirstUncoveredBlock
+	f	Ljava/util/List;	n	worldAccesses
+	f	I	a	width
+	f	[I	P	coords
+	m	(F)F	a	getStarBrightness
+	m	(Lnet/minecraft/a/c/b;Ljava/lang/String;FF)V	a	playSoundAtEntity
+		p	1		entity
+	f	I	i	xSpawn
+	m	(III)V	k	randomDisplayUpdates
+	m	(IIII)V	e	scheduleBlockUpdate
+	m	(III)F	c	getLightBrightness
+	m	(Lnet/minecraft/a/d/b;)Z	e	checkIfAABBIsClear
+		p	1		aabb
+	f	I	x	cloudColor
+	f	Lnet/minecraft/a/a/a/c;	C	pathFinder
+	f	J	h	createTime
+	m	(FFFF)Z	a	isSolid
+	f	[S	O	floodFillCounters
+	m	(Lnet/minecraft/a/c/b;)V	a	spawnEntityInWorld
+		p	1		entity
+	m	(III)Z	b	isBlockNormalCube
+	f	[I	p	heightMap
+	f	I	w	fogColor
+	m	(IIII)V	f	setBlockMetadata
+	m	(III)Z	l	canBlockSeeTheSky
+	m	(IIIF)V	a	setSpawnLocation
+	m	(Lnet/minecraft/a/d/b;)Z	d	checkIfAABBIsClear1
+		p	1		aabb
+	m	()Lnet/minecraft/a/c/b;	i	getPlayerEntity
+	f	S	N	floodFillCounter
+	f	[F	F	lightBrightnessTable
+	m	(FFF)Z	a	isSolid
+	m	(III)B	d	getBlockLightValue
+	f	Ljava/lang/String;	g	authorName
+	m	()I	h	getWaterLevel
+	m	(IIIII)I	a	fluidFlowCheck
+c	net/minecraft/a/a/c/a/a	net/minecraft/game/level/generator/noise/NoiseGeneratorPerlin
+	f	[I	a	permutations
+	m	(IDDD)D	a	grad
+	m	(D)D	a	generateNoise
+	m	(DDD)D	a	lerp
+c	net/minecraft/a/a/f	net/minecraft/game/level/EntityMapSlot
+	f	I	c	zSlot
+	m	(Lnet/minecraft/a/a/i;B)V	<init>	<init>
+		p	1		blockMap
+	f	I	a	xSlot
+	f	I	b	ySlot
+	m	(Lnet/minecraft/a/c/b;)V	b	remove
+		p	1		entity
+	m	(Lnet/minecraft/a/c/b;)V	a	add
+		p	1		entity
+	m	(FFF)Lnet/minecraft/a/a/f;	a	init
+	f	Lnet/minecraft/a/a/i;	d	entityMap
+c	net/minecraft/a/a/e	net/minecraft/game/level/NextTickListEntry
+	f	I	d	blockID
+	f	I	e	scheduledTime
+	f	I	b	yCoord
+	f	I	c	zCoord
+	f	I	a	xCoord
+	m	(IIII)V	<init>	<init>
+		p	3		z
+		p	4		block
+		p	1		x
+		p	2		y
+c	net/minecraft/a/a/d	net/minecraft/game/level/IWorldAccess
+	m	()V	a	loadRenderers
+	m	(Ljava/lang/String;FFFFFF)V	a	spawnParticle
+	m	(IIIIII)V	a	markBlockRangeNeedsUpdate
+	m	(Lnet/minecraft/a/c/b;)V	b	releaseEntitySkin
+		p	1		player
+	m	(Lnet/minecraft/a/c/b;)V	a	obtainEntitySkin
+		p	1		player
+	m	()V	h	updateAllRenderers
+	m	(III)V	a	markBlockAndNeighborsNeedsUpdate
+	m	(Ljava/lang/String;FFFF)V	a	playMusic
+	m	(Ljava/lang/String;FFFFF)V	a	playSound
+c	net/minecraft/a/c/b/b	net/minecraft/game/entity/animal/EntitySheep
+	f	Z	a	sheared
+c	net/minecraft/a/c/b/a	net/minecraft/game/entity/animal/EntityAnimal
+c	net/minecraft/a/c/b/c	net/minecraft/game/entity/animal/EntityPig
+c	net/minecraft/client/f/f	net/minecraft/client/effect/EntitySplashFX
+c	net/minecraft/client/f/e	net/minecraft/client/effect/EntityPickupFX
+	m	(Lnet/minecraft/a/a/g;Lnet/minecraft/a/c/b;Lnet/minecraft/a/c/e;F)V	<init>	<init>
+		p	1		world
+	f	Lnet/minecraft/a/c/b;	Z	entityToPickUp
+	f	F	ad	yOffs
+	f	I	ab	age
+	f	Lnet/minecraft/a/c/e;	aa	entityPickingUp
+	f	I	ac	maxAge
+c	net/minecraft/a/a/a/a	net/minecraft/game/level/path/PathPoint
+	f	I	a	xCoord
+	f	I	b	yCoord
+	f	I	c	zCoord
+	f	I	d	hash
+	f	I	e	index
+	f	F	f	totalPathDistance
+	f	F	g	distanceToNext
+	f	F	h	distanceToTarget
+	m	(Lnet/minecraft/a/a/a/a;)F	a	distanceTo
+		p	1		pathPoint
+	m	()Z	a	isAssigned
+	f	Z	j	isFirst
+	f	Lnet/minecraft/a/a/a/a;	i	previous
+	m	(III)V	<init>	<init>
+		p	3		zCoord
+		p	2		yCoord
+		p	1		xCoord
+c	net/minecraft/client/f/h	net/minecraft/client/effect/EntityExplodeFX
+c	net/minecraft/client/f/g	net/minecraft/client/effect/EntityLavaFX
+	f	F	Z	lavaParticleScale
+	m	(Lnet/minecraft/a/a/g;FFF)V	<init>	<init>
+		p	1		world
+c	net/minecraft/a/a/a/c	net/minecraft/game/level/path/Pathfinder
+	m	(Lnet/minecraft/a/a/a/a;)Lnet/minecraft/a/a/a/b;	a	createEntityPath
+		p	0		pathPoint
+	m	(III)Lnet/minecraft/a/a/a/a;	a	openPoint
+	m	(Lnet/minecraft/a/c/b;FFFF)Lnet/minecraft/a/a/a/b;	a	addToPath
+		p	1		entity
+	f	Lnet/minecraft/a/a/a/d;	b	path
+	f	Lnet/minecraft/a/a/g;	a	worldMap
+	m	(Lnet/minecraft/a/c/b;IIILnet/minecraft/a/a/a/a;I)Lnet/minecraft/a/a/a/a;	a	getSafePoint
+		p	1		entity
+		p	5		pathPoint
+	f	[Lnet/minecraft/a/a/a/a;	d	pathOptions
+	f	Ljava/util/Map;	c	pointMap
+	m	(Lnet/minecraft/a/c/b;IIIF)Lnet/minecraft/a/a/a/b;	a	createEntityPathTo
+		p	1		entity
+	m	(Lnet/minecraft/a/c/b;Lnet/minecraft/a/c/b;F)Lnet/minecraft/a/a/a/b;	a	createEntityPathTo
+		p	1		entity
+		p	2		entity2
+	m	(IIILnet/minecraft/a/a/a/a;)I	a	getVerticalOffset
+c	net/minecraft/client/f/b	net/minecraft/client/effect/EntityDiggingFX
+	m	(Lnet/minecraft/a/a/g;FFFFFFLnet/minecraft/a/a/b/x;)V	<init>	<init>
+		p	1		world
+c	net/minecraft/a/a/a/b	net/minecraft/game/level/path/PathEntity
+	m	([Lnet/minecraft/a/a/a/a;)V	<init>	<init>
+		p	1		points
+	m	()Z	b	isFinished
+	m	(Lnet/minecraft/a/c/b;)Lnet/minecraft/a/d/a;	a	getPosition
+		p	1		entity
+	f	I	b	pathIndex
+	f	[Lnet/minecraft/a/a/a/a;	a	points
+	m	()V	a	incrementPathIndex
+c	net/minecraft/client/f/a	net/minecraft/client/effect/EntityBubbleFX
+c	net/minecraft/client/f/d	net/minecraft/client/effect/EffectRenderer
+	m	(III)V	a	addBlockDestroyEffects
+	m	(F)V	a	renderLitParticles
+	f	Ljava/util/Random;	d	rand
+	f	[Ljava/util/List;	b	fxLayers
+	m	(Lnet/minecraft/client/f/k;)V	a	addEffect
+		p	1		entityFX
+	m	(Lnet/minecraft/a/a/g;)V	a	clearEffects
+		p	1		world
+	m	()Ljava/lang/String;	b	getStatistics
+	f	Lnet/minecraft/a/a/g;	a	worldObj
+	m	()V	a	updateEffects
+	m	(Lnet/minecraft/a/c/b;F)V	a	renderParticles
+		p	1		particle
+	f	Lnet/minecraft/client/a/k;	c	renderEngine
+	m	(IIII)V	a	addBlockHitEffects
+	m	(Lnet/minecraft/a/a/g;Lnet/minecraft/client/a/k;)V	<init>	<init>
+		p	1		world
+		p	2		renderEngine
+c	net/minecraft/a/a/a/d	net/minecraft/game/level/path/Path
+	m	()Z	c	isPathEmpty
+	m	(Lnet/minecraft/a/a/a/a;F)V	a	changeDistance
+		p	1		pathPoint
+	m	(Lnet/minecraft/a/a/a/a;)Lnet/minecraft/a/a/a/a;	a	addPoint
+		p	1		pathPoint
+	f	I	b	count
+	f	[Lnet/minecraft/a/a/a/a;	a	pathPoints
+	m	()V	a	clearPath
+	m	()Lnet/minecraft/a/a/a/a;	b	dequeue
+	m	(I)V	a	sortBack
+	m	(I)V	b	sortForward
+c	net/minecraft/client/f/c	net/minecraft/client/effect/EntityFlameFX
+	m	(Lnet/minecraft/a/a/g;FFF)V	<init>	<init>
+		p	1		world
+	f	F	Z	flameScale
+c	net/minecraft/client/f/j	net/minecraft/client/effect/EntitySmokeFX
+	m	(Lnet/minecraft/a/a/g;FFFF)V	<init>	<init>
+		p	1		world
+	f	F	Z	smokeParticleScale
+	m	(Lnet/minecraft/a/a/g;FFF)V	<init>	<init>
+		p	1		world
+c	net/minecraft/client/f/i	net/minecraft/client/effect/EntityRainFX
+	m	(Lnet/minecraft/a/a/g;FFF)V	<init>	<init>
+		p	1		world
+c	net/minecraft/client/f/k	net/minecraft/client/effect/EntityFX
+	f	F	O	motionZ1
+	f	I	P	particleTextureIndex
+	m	(Lnet/minecraft/client/a/d;FFFFFF)V	a	renderParticle
+		p	1		tessellator
+	f	F	W	particleRed
+	f	F	V	particleGravity
+	f	F	U	particleScale
+	f	F	R	particleTextureJitterY
+	f	I	T	particleMaxAge
+	f	F	Q	particleTextureJitterX
+	f	I	S	particleAge
+	m	(F)Lnet/minecraft/client/f/k;	c	multiplyVelocity
+	m	(F)Lnet/minecraft/client/f/k;	d	multipleParticleScaleBy
+	f	F	Y	particleBlue
+	f	F	X	particleGreen
+	f	F	b	motionY1
+	f	F	a	motionX1
+	m	()I	c	getFXLayer
+	m	(Lnet/minecraft/a/a/g;FFFFFF)V	<init>	<init>
+		p	1		world
+c	net/minecraft/a/a/b/a/c	net/minecraft/game/level/block/tileentity/TileEntityChest
+	f	[Lnet/minecraft/a/b/k;	e	chestContents
+c	net/minecraft/a/a/b/a/a	net/minecraft/game/level/block/tileentity/TileEntity
+	f	I	c	yCoord
+	f	I	d	zCoord
+	m	(Lcom/a/a/c;)V	a	readFromNBT
+		p	1		nbtTagCompound
+	f	Lnet/minecraft/a/a/g;	a	worldObj
+	m	(Lcom/a/a/c;)V	b	writeToNBT
+		p	1		nbtTagCompound
+	f	I	b	xCoord
+	m	()V	d	updateEntity
+c	net/minecraft/a/a/b/a/b	net/minecraft/game/level/block/tileentity/TileEntityFurnace
+	m	()Z	e	isBurning
+	m	()Z	f	canSmelt
+	f	I	f	furnaceBurnTime
+	m	(Lnet/minecraft/a/b/k;)I	a	getItemBurnTime
+		p	0		itemStack
+	f	I	g	currentItemBurnTime
+	f	I	h	furnaceCookTime
+	m	(I)I	b	getCookProgressScaled
+	f	[Lnet/minecraft/a/b/k;	e	furnaceItemStacks
+	m	(I)I	c	getBurnTimeRemainingScaled
+	m	(I)I	d	smeltItem
+c	net/minecraft/a/c/e/a	net/minecraft/game/entity/player/EntityPlayer
+	m	(Lnet/minecraft/a/c/b;)V	a	onItemPickup
+		p	1		entity
+	m	(Lnet/minecraft/a/a/b/x;)Z	a	canHarvestBlock
+		p	1		block1
+	m	(Lnet/minecraft/a/b/k;Z)V	a	dropPlayerItemWithRandomChoice
+		p	1		itemStack
+	m	(Lnet/minecraft/a/b;)V	a	displayGUIChest
+		p	1		iInventory
+	f	Lnet/minecraft/a/c/e/b;	b	inventory
+	f	I	P	getScore
+	m	()V	g_	displayWorkbenchGUI
+	f	I	a	damageRemainder
+	f	B	O	unusedByte
+	m	(Lnet/minecraft/a/b/k;)V	a	dropPlayerItem
+		p	1		itemStack
+	m	(Lnet/minecraft/a/a/b/a/b;)V	a	displayGUIFurnace
+		p	1		furnace
+	f	F	Q	prevCameraYaw
+	f	F	R	cameraYaw
+c	net/minecraft/a/c/e/b	net/minecraft/game/entity/player/InventoryPlayer
+	m	(Lnet/minecraft/a/c/e/a;)V	<init>	<init>
+		p	1		entityPlayer
+	f	Lnet/minecraft/a/c/e/a;	d	player
+	f	[Lnet/minecraft/a/b/k;	b	armorInventory
+	m	(I)I	d	getInventorySlotContainItem
+	m	(I)V	b	getFirstEmptyStack
+	m	(Lnet/minecraft/a/b/k;)Z	a	storePartialItemStack
+		p	1		itemStack
+	m	(I)Z	c	consumeInventoryItem
+	m	()Lnet/minecraft/a/b/k;	d	getCurrentItem
+	f	I	c	currentItem
+	f	[Lnet/minecraft/a/b/k;	a	mainInventory
+	m	()I	e	getPlayerArmorValue
+	m	()I	f	storeItemStack
+c	net/minecraft/client/g/a	net/minecraft/client/player/EntityPlayerSP
+	m	()V	h_	destroyCurrentEquippedItem
+	m	(Lnet/minecraft/client/d;Lnet/minecraft/a/a/g;Lnet/minecraft/client/l;)V	<init>	<init>
+		p	1		minecraft
+		p	2		world
+		p	3		sessionData
+	f	Lnet/minecraft/client/d;	an	mc
+	f	Lnet/minecraft/client/g/b;	a	movementInput
+c	net/minecraft/client/g/c	net/minecraft/client/player/MovementInputFromOptions
+	f	[Z	d	movementKeyStates
+	m	(Lnet/minecraft/client/q;)V	<init>	<init>
+		p	1		gameSettings
+	f	Lnet/minecraft/client/q;	e	gameSettings
+c	net/minecraft/client/g/b	net/minecraft/client/player/MovementInput
+	f	Z	c	jump
+	m	()V	a	updatePlayerMoveState
+	f	F	a	moveStrafe
+	m	(IZ)V	a	checkKeyForMovementInput
+	m	()V	b	resetKeyState
+	f	F	b	moveForward
+c	net/minecraft/a/c/d/a	net/minecraft/game/entity/projectile/EntityArrow
+	m	(FFFFF)V	a	setArrowHeading
+	f	I	O	yTile
+	f	I	P	zTile
+	f	I	T	ticksInGround
+	f	Lnet/minecraft/a/c/e;	S	owner
+	f	I	a	arrowShake
+	f	Z	R	inGround
+	f	I	Q	inTile
+	f	I	b	xTile
+	m	(Lnet/minecraft/a/a/g;Lnet/minecraft/a/c/e;)V	<init>	<init>
+		p	1		world
+		p	2		entityLiving
+	f	I	U	ticksInAir
+c	net/minecraft/client/q	net/minecraft/client/GameSettings
+	f	Lnet/minecraft/client/h;	o	keyBindDrop
+	f	I	e	renderDistance
+	m	(I)Ljava/lang/String;	b	setOptionString
+		p	1		optionMenuValue
+	f	Lnet/minecraft/client/h;	m	keyBindJump
+	f	Lnet/minecraft/client/h;	k	keyBindBack
+	f	Lnet/minecraft/client/h;	i	keyBindForward
+	f	Lnet/minecraft/client/h;	q	keyBindSave
+	f	Z	c	invertMouse
+	m	()V	b	loadOptions
+	m	(II)V	a	setKeyBinding
+		p	1		keyBindingNumber
+		p	2		keyCode
+	f	I	t	numberOfOptions
+	f	Z	g	anaglyph
+	m	(Lnet/minecraft/client/d;Ljava/io/File;)V	<init>	<init>
+		p	1		minecraft
+		p	2		file
+	f	[Ljava/lang/String;	w	RENDER_DISTANCES
+	f	Z	a	music
+	m	(I)Ljava/lang/String;	a	setKeyBindingString
+		p	1		keyBindingNumber
+	f	Lnet/minecraft/client/h;	n	keyBindInventory
+	f	Z	v	thirdPersonView
+	f	Lnet/minecraft/client/h;	l	keyBindRight
+	f	Lnet/minecraft/client/h;	j	keyBindLeft
+	f	Lnet/minecraft/client/d;	z	mc
+	f	[Lnet/minecraft/client/h;	s	keyBindings
+	f	Lnet/minecraft/client/h;	r	keyBindLoad
+	f	Lnet/minecraft/client/h;	p	keyBindToggleFog
+	f	Z	d	showFPS
+	f	I	u	difficulty
+	f	Z	f	fancyGraphics
+	m	(II)V	b	setOptionValue
+		p	2		optionSubValue
+		p	1		optionMenuValue
+	m	()V	a	saveOptions
+	f	Z	h	limitFramerate
+	f	Lnet/minecraft/client/h;	y	keyBindChat
+	f	Ljava/io/File;	A	optionsFile
+	f	Z	b	sound
+	f	[Ljava/lang/String;	x	DIFFICULTIES
+c	net/minecraft/client/p	net/minecraft/client/MinecraftError
+c	net/minecraft/client/r	net/minecraft/client/GuiMainMenu
+	f	F	a	updateCounter
+	f	Ljava/lang/String;	j	currentSplash
+	f	[Ljava/lang/String;	i	splashes
+c	net/minecraft/client/m	net/minecraft/client/MouseHelper
+	m	(Ljava/awt/Component;)V	<init>	<init>
+		p	1		component
+	f	I	a	deltaX
+	f	I	b	deltaY
+	m	()V	b	ungrabMouseCursor
+	f	I	e	mouseX
+	m	()V	a	grabMouseCursor
+	f	I	f	mouseY
+	f	Ljava/awt/Robot;	d	robot
+	f	I	h	mouseInt
+	f	Ljava/awt/Component;	c	windowComponent
+	f	Lorg/lwjgl/input/Cursor;	g	cursor
+c	net/minecraft/client/c/a/g	net/minecraft/client/gui/container/Slot
+	f	Lnet/minecraft/client/c/a/j;	e	guiHandler
+	f	I	a	slotIndex
+	m	()I	b	getBackgroundIconIndex
+	f	I	b	xPos
+	f	I	c	yPos
+	m	(Lnet/minecraft/a/b/k;)V	b	putStack
+	m	()V	a	onPickupFromSlot
+	m	(Lnet/minecraft/client/c/a/j;Lnet/minecraft/a/b;III)V	<init>	<init>
+		p	3		slotIndex
+		p	5		yPos
+		p	4		xPos
+	m	(Lnet/minecraft/a/b/k;)Z	a	isItemValid
+	m	(II)Z	a	isAtCursorPos
+	f	Lnet/minecraft/a/b;	d	inventory
+c	net/minecraft/client/l	net/minecraft/client/Session
+	f	Ljava/lang/String;	b	username
+	f	Ljava/lang/String;	c	sessionId
+	f	Ljava/util/List;	a	registeredBlocksList
+	m	(Ljava/lang/String;Ljava/lang/String;)V	<init>	<init>
+		p	1		username
+		p	2		sessionId
+c	net/minecraft/client/c/a/f	net/minecraft/client/gui/container/GuiInventory
+	f	F	m	xSize_lo
+	f	F	n	ySize_lo
+	f	Lnet/minecraft/a/b;	l	iInventory
+	f	Lnet/minecraft/client/c/a/a;	k	inventoryCrafting
+c	net/minecraft/client/c/a/i	net/minecraft/client/gui/container/GuiChest
+	f	Lnet/minecraft/a/b;	l	lowerChestInventory
+	m	(Lnet/minecraft/a/b;Lnet/minecraft/a/b;)V	<init>	<init>
+		p	2		lowerChestInventory
+		p	1		upperChestInventory
+	f	Lnet/minecraft/a/b;	k	upperChestInventory
+	f	I	m	inventoryRows
+c	net/minecraft/client/o	net/minecraft/client/EnumOSMappingHelper
+	f	[I	a	osValues
+c	net/minecraft/client/n	net/minecraft/client/ThreadSleepForever
+	m	(Lnet/minecraft/client/d;Ljava/lang/String;)V	<init>	<init>
+		p	1		minecraft
+c	net/minecraft/client/c/a/h	net/minecraft/client/gui/container/InventoryCraftResult
+	f	[Lnet/minecraft/a/b/k;	a	stackResult
+c	net/minecraft/client/i	net/minecraft/client/OpenGlCapsChecker
+c	net/minecraft/client/c/a/c	net/minecraft/client/gui/container/GuiFurnace
+	m	(Lnet/minecraft/a/c/e/b;Lnet/minecraft/a/a/b/a/b;)V	<init>	<init>
+		p	2		furnace
+		p	1		playerInventory
+	f	Lnet/minecraft/a/a/b/a/b;	k	furnaceInventory
+c	net/minecraft/client/h	net/minecraft/client/KeyBinding
+	f	Ljava/lang/String;	a	keyDescription
+	m	(Ljava/lang/String;I)V	<init>	<init>
+		p	1		keyDescription
+		p	2		keyCode
+	f	I	b	keyCode
+c	net/minecraft/client/c/a/b	net/minecraft/client/gui/container/GuiCrafting
+	f	Lnet/minecraft/client/c/a/a;	k	inventoryCrafting
+	f	Lnet/minecraft/a/b;	l	iInventory
+c	net/minecraft/client/c/a/e	net/minecraft/client/gui/container/SlotArmor
+	f	I	e	armorType
+	m	(Lnet/minecraft/client/c/a/f;Lnet/minecraft/client/c/a/j;Lnet/minecraft/a/b;IIII)V	<init>	<init>
+		p	7		armorType
+c	net/minecraft/client/k	net/minecraft/client/ChatLine
+	f	I	a	updateCounter
+c	net/minecraft/client/j	net/minecraft/client/ThreadDownloadResources
+	m	(Ljava/net/URL;Ljava/io/File;)V	a	downloadResource
+		p	1		url
+		p	2		file
+	f	Ljava/io/File;	a	resourcesFolder
+	m	(Ljava/io/File;Lnet/minecraft/client/d;)V	<init>	<init>
+		p	2		minecraft
+		p	1		file
+	f	Z	c	closing
+	f	Lnet/minecraft/client/d;	b	mc
+	m	()V	a	closeMinecraft
+c	net/minecraft/client/c/a/d	net/minecraft/client/gui/container/SlotCrafting
+	m	(Lnet/minecraft/client/c/a/j;Lnet/minecraft/a/b;Lnet/minecraft/a/b;III)V	<init>	<init>
+		p	2		craftMatrix
+	f	Lnet/minecraft/a/b;	e	craftMatrix
+c	net/minecraft/client/e	net/minecraft/client/EnumOS
+	f	Lnet/minecraft/client/e;	e	unknown
+	f	Lnet/minecraft/client/e;	d	macos
+	f	Lnet/minecraft/client/e;	c	windows
+	f	Lnet/minecraft/client/e;	b	solaris
+	f	Lnet/minecraft/client/e;	a	linux
+c	net/minecraft/client/d	net/minecraft/client/Minecraft
+	m	()V	b	setIngameFocus
+	f	Lnet/minecraft/client/a/c/d;	P	textureLavaFX
+	f	Lnet/minecraft/client/m;	y	mouseHelper
+	m	()V	f	runTick
+	f	Lnet/minecraft/client/a;	p	loadingScreen
+	f	Lnet/minecraft/client/a/b;	e	renderGlobal
+	f	Lnet/minecraft/client/d/a;	a	playerController
+	f	Ljava/lang/String;	r	loadMapUser
+	f	Z	D	inGameHasFocus
+	f	I	Q	prevFrameTime
+	m	(II)V	a	resize
+		p	2		scaledHeight
+		p	1		scaledWidth
+	f	Lnet/minecraft/client/e/c;	x	sndManager
+	f	I	I	ticksRan
+	f	Ljava/io/File;	z	mcDataDir
+	f	I	b	displayWidth
+	m	()V	e	inputLock
+	f	Lnet/minecraft/client/f/d;	g	effectRenderer
+	m	(I)V	a	clickMouse
+		p	1		clickState
+	f	Z	l	isGamePaused
+	f	Lnet/minecraft/client/a/c/f;	O	textureWaterFX
+	m	()V	a	shutdownMinecraftApplet
+	f	Z	C	inventoryScreen
+	f	Lnet/minecraft/a/a/g;	d	theWorld
+	f	Ljava/lang/String;	i	minecraftUri
+	f	I	L	tempDisplayHeight
+	f	Ljava/awt/Canvas;	j	mcCanvas
+	f	Lnet/minecraft/client/c/i;	o	currentScreen
+	f	Lnet/minecraft/client/c/j;	n	fontRenderer
+	m	(Lnet/minecraft/a/a/g;)V	a	setLevel
+		p	1		world
+	m	(Ljava/lang/String;I)V	a	setServer
+		p	1		string
+	f	Lnet/minecraft/client/a/e;	q	entityRenderer
+	f	Z	u	skipRenderWorld
+	m	(Ljava/awt/Canvas;Lnet/minecraft/client/MinecraftApplet;IIZ)V	<init>	<init>
+		p	5		fullscreen
+		p	1		canvas
+		p	2		minecraftApplet
+		p	3		tempDisplayWidth
+		p	4		tempDisplayHeight
+	m	()V	d	toggleFullscreen
+	f	Lnet/minecraft/a/d/c;	v	objectMouseOver
+	f	Lnet/minecraft/client/g/a;	f	thePlayer
+	f	Lnet/minecraft/client/q;	w	options
+	f	Z	k	appletMode
+	f	Lnet/minecraft/client/j;	H	downloadResourcesThread
+	m	(IIII)V	a	generateLevel
+		p	4		height
+		p	3		depth
+		p	2		worldShape
+		p	1		width
+	f	Lnet/minecraft/client/g;	G	timer
+	f	Lnet/minecraft/client/c/l;	t	ingameGUI
+	f	I	K	tempDisplayWidth
+	f	Lnet/minecraft/client/l;	h	session
+	m	()V	c	displayInGameMenu
+	f	Z	A	running
+	f	Lnet/minecraft/client/i;	F	glCapabilities
+	f	I	s	loadMapID
+	f	Z	E	fullscreen
+	f	Ljava/lang/String;	N	server
+	f	Lnet/minecraft/client/MinecraftApplet;	M	mcApplet
+	f	I	J	leftClickCounter
+	f	Lnet/minecraft/client/a/k;	m	renderEngine
+	f	Ljava/lang/String;	B	debug
+	m	(Lnet/minecraft/client/c/i;)V	a	displayGuiScreen
+		p	1		guiScreen
+	f	I	c	displayHeight
+c	net/minecraft/client/g	net/minecraft/client/Timer
+	f	F	e	timerSpeed
+	f	F	f	elapsedPartialTicks
+	f	D	d	lastHRTime
+	f	D	i	timeSyncAdjustment
+	f	I	b	elapsedTicks
+	f	J	g	lastSyncSysClock
+	f	F	c	renderPartialTicks
+	f	J	h	lastSyncHRClock
+	m	()V	a	updateTimer
+	f	F	a	ticksPerSecond
+c	net/minecraft/client/c/a/a	net/minecraft/client/gui/container/InventoryCrafting
+	f	[Lnet/minecraft/a/b/k;	a	stackList
+	f	Lnet/minecraft/client/c/a/j;	c	eventHandler
+	f	I	b	inventoryWidth
+	m	(Lnet/minecraft/client/c/a/j;II)V	<init>	<init>
+		p	1		guiContainer
+c	net/minecraft/client/f	net/minecraft/client/PlayerLoader
+	m	(Lnet/minecraft/client/d;La/b;)V	<init>	<init>
+		p	2		guiLoading
+		p	1		minecraft
+	f	Lnet/minecraft/client/d;	a	mc
+c	net/minecraft/client/a	net/minecraft/client/LoadingScreenRenderer
+	f	Lnet/minecraft/client/d;	b	mc
+	f	J	d	start
+	m	(Ljava/io/InputStream;)Lcom/a/a/c;	a	writeLevelTags
+		p	0		inputstream
+	f	Ljava/lang/String;	c	title
+	f	Ljava/lang/String;	a	text
+c	net/minecraft/client/c	net/minecraft/client/RenderHelper
+	m	()V	a	disableStandardItemLighting
+	m	()V	b	enableStandardItemLighting
+	m	(FFFF)Ljava/nio/FloatBuffer;	a	setColorBuffer
+	f	Ljava/nio/FloatBuffer;	a	colorBuffer
+c	net/minecraft/client/b	net/minecraft/client/CanvasMinecraftApplet
+	m	(Lnet/minecraft/client/MinecraftApplet;)V	<init>	<init>
+		p	1		minecraftApplet
+	f	Lnet/minecraft/client/MinecraftApplet;	a	mcApplet
+c	net/minecraft/client/MinecraftApplet	net/minecraft/client/MinecraftApplet
+	f	Ljava/awt/Canvas;	a	mcCanvas
+	m	()V	a	startMainThread
+	m	()V	b	shutdown
+	f	Ljava/lang/Thread;	c	mcThread
+	f	Lnet/minecraft/client/d;	b	mc
+c	net/minecraft/a/a/d/d	net/minecraft/game/level/material/MaterialTransparent
+c	net/minecraft/client/a/c	net/minecraft/client/render/ImageBufferDownload
+	f	[I	a	imageData
+	m	(IIII)V	a	setAreaTransparent
+	m	(IIII)V	b	setAreaOpaque
+	f	I	b	imageWidth
+	f	I	c	imageHeight
+	m	(Ljava/awt/image/BufferedImage;)Ljava/awt/image/BufferedImage;	a	parseUserSkin
+c	net/minecraft/a/a/d/c	net/minecraft/game/level/material/Material
+	m	()Z	d	getIsLiquid
+	m	()Z	e	liquidSolidCheck
+	m	()Z	b	getCanBlockGrass
+	m	()Z	c	getIsSolid
+	f	Lnet/minecraft/a/a/d/c;	b	ground
+	f	Lnet/minecraft/a/a/d/c;	a	air
+	f	Lnet/minecraft/a/a/d/c;	f	water
+	f	Lnet/minecraft/a/a/d/c;	e	iron
+	f	Lnet/minecraft/a/a/d/c;	d	rock
+	f	Lnet/minecraft/a/a/d/c;	c	wood
+	f	Lnet/minecraft/a/a/d/c;	j	sponge
+	f	Lnet/minecraft/a/a/d/c;	i	plants
+	f	Lnet/minecraft/a/a/d/c;	h	leaves
+	f	Lnet/minecraft/a/a/d/c;	g	lava
+	f	Lnet/minecraft/a/a/d/c;	n	circuits
+	f	Lnet/minecraft/a/a/d/c;	m	sand
+	f	Lnet/minecraft/a/a/d/c;	l	fire
+	f	Lnet/minecraft/a/a/d/c;	k	cloth
+	m	()Z	a	isSolid
+	f	Lnet/minecraft/a/a/d/c;	p	tnt
+	f	Lnet/minecraft/a/a/d/c;	o	glass
+c	net/minecraft/client/a/b	net/minecraft/client/render/RenderGlobal
+	f	I	l	glRenderListBase
+	f	[Lnet/minecraft/client/a/h;	g	sortedWorldRenderers
+	f	F	C	prevSortY
+	f	I	d	glGenList
+	m	(Lnet/minecraft/a/d/a;Lnet/minecraft/client/a/b/e;F)V	a	renderEntities
+		p	1		vec3D
+		p	2		iCamera
+	f	Z	p	occlusionEnabled
+	m	()V	i	oobGroundRenderHeight
+	f	I	y	renderersBeingClipped
+	m	(Lnet/minecraft/a/a/g;)V	a	changeWorld
+		p	1		world
+	m	()V	e	updateClouds
+	f	I	u	countEntitiesHidden
+	m	(Lnet/minecraft/a/c/e/a;)V	a	updateRenderers
+		p	1		entityPlayer
+	f	I	q	cloudOffsetX
+	f	I	i	renderChunksWide
+	f	F	D	prevSortZ
+	f	Ljava/nio/IntBuffer;	o	glOcclusionQueryBase
+	f	[Lnet/minecraft/client/a/h;	h	worldRenderers
+	f	Ljava/util/List;	f	worldRenderersToUpdate
+	f	F	a	damagePartialTime
+	f	Ljava/nio/IntBuffer;	w	occlusionResult
+	m	()V	j	oobWaterRenderHeight
+	f	Lnet/minecraft/client/a/k;	c	renderEngine
+	m	(III)I	b	renderSortedRenderers
+	m	()V	f	oobGroundRenderer
+	m	(Lnet/minecraft/a/c/e/a;I)I	a	sortAndRender
+		p	1		entityPlayer
+	f	I	z	renderersBeingOccluded
+	m	(Lnet/minecraft/a/d/c;ILnet/minecraft/a/b/k;)V	a	drawBlockBreaking
+		p	3		itemStack
+		p	1		movingObjectPosition
+	m	(F)V	a	renderSky
+	m	()Ljava/lang/String;	c	getDebugInfoEntities
+	f	[I	v	dummyBuf50k
+	m	(II)V	a	checkOcclusionQueryResult
+	f	I	r	glSkyList
+	f	I	j	renderChunksTall
+	f	I	A	renderersBeingRendered
+	f	Lnet/minecraft/client/a/f;	n	globalRenderBlocks
+	m	()V	g	oobWaterRenderer
+	m	(Lnet/minecraft/a/d/c;I)V	a	drawSelectionBox
+		p	1		movingObjectPosition
+	m	(IIIIII)V	b	markBlocksForUpdate
+	m	()Ljava/lang/String;	b	getDebugInfoRenders
+	f	I	s	countEntitiesTotal
+	f	Ljava/nio/IntBuffer;	e	renderIntBuffer
+	f	I	k	renderChunksDeep
+	m	(Lnet/minecraft/client/d;Lnet/minecraft/client/a/k;)V	<init>	<init>
+		p	2		renderEngine
+		p	1		minecraft
+	f	F	B	prevSortX
+	m	()V	d	renderAllRenderLists
+	m	(Lnet/minecraft/client/a/b/e;)V	a	clipRenderersByFrustrum
+		p	1		iCamera
+	f	I	x	renderersLoaded
+	f	Lnet/minecraft/client/d;	m	mc
+	f	I	t	countEntitiesRendered
+	f	Lnet/minecraft/a/a/g;	b	worldObj
+c	net/minecraft/client/a/e	net/minecraft/client/render/EntityRenderer
+	f	I	n	unusedInt1
+	f	I	h	entityRendererInt2
+	f	F	d	farPlaneDistance
+	f	Ljava/text/DecimalFormat;	i	entityDecimalFormat
+	m	(Lnet/minecraft/client/d;)V	<init>	<init>
+		p	1		minecraft
+	m	(F)V	f	updateFogColor
+	m	(F)V	d	setupViewBobbing
+	m	()V	c	setupOverlayRendering
+	f	F	s	prevFogColor
+	m	(F)Lnet/minecraft/a/d/a;	b	orientCamera
+	m	()V	a	updateRenderer
+	f	F	q	fogColorGreen
+	f	Lnet/minecraft/a/c/b;	f	pointedEntity
+	f	Lnet/minecraft/client/d;	b	mc
+	m	(Ljava/nio/ByteBuffer;II)Ljava/awt/image/BufferedImage;	a	screenshotBuffer
+	f	I	m	unusedInt0
+	f	Lnet/minecraft/client/a/g;	a	itemRenderer
+	f	Ljava/util/Random;	l	random
+	f	I	g	entityRendererInt1
+	f	I	e	rendererUpdateCount
+	m	(F)V	e	getMouseOver
+	f	Ljava/nio/ByteBuffer;	j	entityByteBuffer
+	m	(F)V	c	hurtCameraEffect
+	m	(F)V	a	updateCameraAndRender
+	m	()V	d	setupFog
+	f	F	t	fogColor
+	m	()V	b	grabLargeScreenshot
+	f	F	r	fogColorBlue
+	f	Ljava/nio/FloatBuffer;	k	entityFloatBuffer
+	f	Z	c	anaglyphEnable
+	f	F	p	fogColorRed
+	f	Ljava/nio/FloatBuffer;	o	fogColorBuffer
+c	net/minecraft/client/a/d	net/minecraft/client/render/Tessellator
+	m	(III)V	a	setColorOpaque
+	f	Lnet/minecraft/client/a/d;	a	instance
+	f	Ljava/nio/IntBuffer;	r	vertexBuffers
+	f	F	h	textureV
+	f	I	l	rawBufferIndex
+	m	(FFF)V	c	setNormal
+	m	(FFF)V	a	setColorOpaque_F
+	m	(IIII)V	a	setColorRGBA
+	f	I	f	vertexCount
+	f	Z	p	isDrawing
+	f	Z	n	isColorDisabled
+	m	(I)V	a	startDrawing
+	f	Z	j	hasColor
+	m	()V	c	disableColor
+	f	I	s	vboIndex
+	m	()V	a	draw
+	f	Z	b	convertQuadsToTriangles
+	f	I	o	drawMode
+	m	(FFFFF)V	a	addVertexWithUV
+	f	I	m	addedVertices
+	f	I	i	color
+	m	(FFF)V	b	addVertex
+	f	F	g	textureU
+	m	(FFFF)V	a	setColorRGBA_F
+	f	Z	q	useVBO
+	f	[I	e	rawBuffer
+	m	(I)V	b	setColorOpaque_I
+	f	Z	k	hasTexture
+	m	()V	d	reset
+	m	()V	b	startDrawingQuads
+	f	Ljava/nio/ByteBuffer;	d	byteBuffer
+	f	I	t	vboCount
+	f	Z	c	tryVBO
+c	net/minecraft/client/a/a	net/minecraft/client/render/RenderSorter
+	f	Lnet/minecraft/a/c/e/a;	a	baseEntity
+	m	(Lnet/minecraft/a/c/e/a;)V	<init>	<init>
+		p	1		entityPlayer
+c	net/minecraft/client/a/k	net/minecraft/client/render/RenderEngine
+	m	()V	a	updateDynamicTextures
+	m	()V	b	refreshTextures
+	m	(Ljava/lang/String;Lnet/minecraft/client/a/c;)Lnet/minecraft/client/a/i;	a	obtainImageData
+		p	2		imageBufferDownload
+	m	(Lnet/minecraft/client/q;)V	<init>	<init>
+		p	1		gameSettings
+	m	(Ljava/lang/String;Ljava/lang/String;)I	a	getTextureForDownloadableImage
+	m	(Ljava/awt/image/BufferedImage;I)V	a	setupTexture
+	f	Ljava/nio/IntBuffer;	c	singleIntBuffer
+	m	(Lnet/minecraft/client/a/c/b;)V	a	registerTextureFX
+		p	1		textureFX
+	m	(Ljava/lang/String;)I	a	getTexture
+	f	Ljava/util/List;	e	textureList
+	m	(Ljava/awt/image/BufferedImage;)Ljava/awt/image/BufferedImage;	a	unwrapImageByColumns
+	f	Lnet/minecraft/client/q;	g	options
+	f	Ljava/util/Map;	f	urlToImageDataMap
+	f	Ljava/util/HashMap;	b	textureContentsMap
+	m	(Ljava/lang/String;)V	b	releaseImageData
+	m	(I)V	a	bindTexture
+	f	Ljava/util/HashMap;	a	textureMap
+	f	Ljava/nio/ByteBuffer;	d	imageData
+	f	Z	h	clampTexture
+c	net/minecraft/client/a/j	net/minecraft/client/render/ThreadDownloadImage
+	f	Lnet/minecraft/client/a/i;	c	imageData
+	m	(Lnet/minecraft/client/a/i;Ljava/lang/String;Lnet/minecraft/client/a/c;)V	<init>	<init>
+		p	1		threadDownloadImageData
+		p	3		imageBufferDownload
+	f	Ljava/lang/String;	a	location
+	f	Lnet/minecraft/client/a/c;	b	buffer
+c	net/minecraft/client/a/l	net/minecraft/client/render/EntitySorter
+	f	Lnet/minecraft/a/c/e/a;	a	player
+	m	(Lnet/minecraft/a/c/e/a;)V	<init>	<init>
+		p	1		entityPlayer
+c	net/minecraft/client/a/g	net/minecraft/client/render/ItemRenderer
+	f	Lnet/minecraft/client/a/f;	g	renderBlocksInstance
+	f	Lnet/minecraft/client/d;	a	mc
+	f	F	c	equippedProgress
+	f	F	d	prevEquippedProgress
+	f	I	e	swingProgress
+	m	(Lnet/minecraft/client/d;)V	<init>	<init>
+		p	1		minecraft
+	m	(F)V	a	renderItemInFirstPerson
+	f	Lnet/minecraft/a/b/k;	b	itemToRender
+	m	(F)V	b	renderOverlays
+	m	()V	c	equippedItemRender
+	m	()V	d	resetEquippedProgress
+	m	()V	a	updateEquippedItem
+	m	()V	b	equipAnimationSpeed
+	f	Z	f	itemSwingState
+c	net/minecraft/client/a/f	net/minecraft/client/render/RenderBlocks
+	m	(Lnet/minecraft/a/a/b/x;IIII)V	d	renderBlockWest
+		p	1		block
+	m	(Lnet/minecraft/a/a/b/x;IIII)V	e	renderBlockEast
+		p	1		block
+	m	(Lnet/minecraft/a/a/b/x;)V	a	renderBlockOnInventory
+		p	1		block
+	m	(Lnet/minecraft/a/a/b/x;III)V	a	renderBlockAllFaces
+		p	1		block
+	f	I	b	overrideBlockTexture
+	m	(Lnet/minecraft/a/a/b/x;FFFI)V	a	renderBlockBottom
+		p	1		block
+	m	(Lnet/minecraft/a/a/b/x;FFFI)V	b	renderBlockTop
+		p	1		block
+	m	(Lnet/minecraft/a/a/b/x;III)Z	b	renderBlockByRenderType
+		p	1		block
+	m	(III)F	a	materialNotWater
+	m	(Lnet/minecraft/a/a/b/x;IIII)V	a	renderBlockUsingTexture
+		p	1		block
+	m	(Lnet/minecraft/a/a/b/x;IIII)V	b	renderBlockNorth
+		p	1		block
+	m	(Lnet/minecraft/a/a/b/x;FFFFF)V	a	renderBlockTorch
+		p	1		block
+	m	(Lnet/minecraft/a/a/b/x;IIII)V	c	renderBlockSouth
+		p	1		block
+	m	(Lnet/minecraft/a/a/b/x;IFFF)V	a	renderBlockPlant
+		p	1		block
+	m	(Lnet/minecraft/a/a/b/x;IFFF)V	b	renderBlockCrops
+		p	1		block
+	m	(Lnet/minecraft/a/a/g;)V	<init>	<init>
+		p	1		world
+	f	Lnet/minecraft/a/a/g;	a	blockAccess
+	f	Z	c	renderAllFaces
+c	net/minecraft/a/a/d/b	net/minecraft/game/level/material/MaterialLiquid
+c	net/minecraft/client/a/i	net/minecraft/client/render/ThreadDownloadImageData
+	f	I	b	referenceCount
+	f	Z	d	textureSetupComplete
+	f	I	c	textureName
+	m	(Ljava/lang/String;Lnet/minecraft/client/a/c;)V	<init>	<init>
+		p	2		imageBufferDownload
+	f	Ljava/awt/image/BufferedImage;	a	image
+c	net/minecraft/a/a/d/a	net/minecraft/game/level/material/MaterialLogic
+c	net/minecraft/client/a/h	net/minecraft/client/render/WorldRenderer
+	f	I	r	posYPlus
+	f	Z	c	needsUpdate
+	f	I	n	sizeHeight
+	f	Lnet/minecraft/client/a/d;	i	tessellator
+	f	I	l	posZ
+	f	I	j	posX
+	f	I	h	glRenderList
+	f	I	f	glOcclusionQuery
+	m	(Lnet/minecraft/a/a/g;IIIII)V	<init>	<init>
+		p	2		xCoord
+		p	1		world
+		p	4		zCoord
+		p	3		yCoord
+	f	[Z	p	skipRenderPass
+	f	Lnet/minecraft/a/a/g;	g	worldObj
+	m	()V	c	callOcclusionQueryList
+	f	I	s	posZPlus
+	f	Z	d	isVisible
+	m	()V	a	updateRenderer
+	f	I	q	posXPlus
+	f	Z	b	isInFrustrum
+	f	I	o	sizeDepth
+	f	I	m	sizeWidth
+	f	I	k	posY
+	f	Lnet/minecraft/a/d/b;	t	rendererBoundingBox
+	f	I	a	chunksUpdated
+	m	([III)I	a	getGLCallListForPass
+	f	Lnet/minecraft/client/a/f;	u	renderBlocks
+	m	()V	d	setDontDraw
+	m	(Lnet/minecraft/client/a/b/e;)V	a	updateInFrustrum
+	m	(Lnet/minecraft/a/c/e;)F	a	distanceToEntitySquared
+	m	()V	b	stopRendering
+	f	Z	e	isWaitingOnOcclusionQuery
+c	net/minecraft/client/c/a/j	net/minecraft/client/gui/container/GuiContainer
+	f	Lnet/minecraft/a/b/k;	l	itemStack
+	f	I	a	xSize
+	f	Lnet/minecraft/client/a/a/e;	k	itemRenderer
+	m	()V	d_	guiCraftingItemsCheck
+	m	()V	e_	drawGuiContainerForegroundLayer
+	m	()V	d	drawGuiContainerBackgroundLayer
+	f	I	i	ySize
+	f	Ljava/util/List;	j	inventorySlots
+c	com/a/a/l	com/mojang/nbt/NBTTagEnd
+c	com/a/a/j	com/mojang/nbt/NBTBase
+	m	()B	a	getType
+	m	(Ljava/io/DataOutput;)V	a	writeTagContents
+	f	Ljava/lang/String;	a	key
+	m	(Ljava/io/DataInput;)V	a	readTagContents
+	m	()Ljava/lang/String;	c	getKey
+	m	(Ljava/io/DataInput;)Lcom/a/a/j;	b	readTag
+	m	(Lcom/a/a/j;Ljava/io/DataOutput;)V	a	writeTag
+		p	0		nbtBase
+	m	(Ljava/lang/String;)Lcom/a/a/j;	l	setKey
+	m	(B)Lcom/a/a/j;	a	createTagOfType
+c	com/a/a/k	com/mojang/nbt/NBTTagString
+	f	Ljava/lang/String;	a	stringValue
+c	net/minecraft/client/b/b	net/minecraft/client/model/ModelQuadruped
+	f	Lnet/minecraft/client/b/c;	b	body
+	f	Lnet/minecraft/client/b/c;	c	leg1
+	f	Lnet/minecraft/client/b/c;	d	leg2
+	f	Lnet/minecraft/client/b/c;	e	leg3
+	f	Lnet/minecraft/client/b/c;	a	head
+	f	Lnet/minecraft/client/b/c;	f	leg4
+c	net/minecraft/client/b/a	net/minecraft/client/model/ModelSheep
+c	net/minecraft/client/b/d	net/minecraft/client/model/ModelSheepFur
+c	net/minecraft/client/b/c	net/minecraft/client/model/ModelRenderer
+	f	F	a	rotateAngleX
+	f	F	b	rotateAngleY
+	f	F	c	rotateAngleZ
+	m	(FFF)V	a	setRotationPoint
+	f	I	h	textureOffsetX
+	f	I	i	textureOffsetY
+	m	(FFFIIIF)V	a	addBox
+	f	F	j	rotationPointX
+	f	I	n	displayList
+	f	F	k	rotationPointY
+	f	F	l	rotationPointZ
+	f	[Lnet/minecraft/client/b/i;	g	faces
+	f	[Lnet/minecraft/client/b/j;	f	corners
+	f	Z	d	mirror
+	f	Z	e	showModel
+	m	(F)V	a	render
+	f	Z	m	compiled
+	f	Z	o	isHidden
+c	net/minecraft/client/b/j	net/minecraft/client/model/PositionTextureVertex
+	f	F	c	texturePositionY
+	m	(FF)Lnet/minecraft/client/b/j;	a	setTexturePosition
+	m	(Lnet/minecraft/a/d/a;FF)V	<init>	<init>
+		p	1		vec3D
+	f	Lnet/minecraft/a/d/a;	a	vector3D
+	m	(Lnet/minecraft/client/b/j;FF)V	<init>	<init>
+		p	1		positionTextureVertex
+	f	F	b	texturePositionX
+c	net/minecraft/client/b/i	net/minecraft/client/model/TexturedQuad
+	f	[Lnet/minecraft/client/b/j;	a	vertexPositions
+c	net/minecraft/client/b/l	net/minecraft/client/model/ModelBase
+	m	(FFFFFF)V	a	render
+		p	1		limbAngle
+		p	2		animationSpeed
+		p	5		headPitch
+		p	4		headYaw
+	m	(FFFFFF)V	b	setRotationAngles
+		p	2		animationSpeed
+		p	1		limbAngle
+		p	4		headYaw
+		p	5		headPitch
+c	net/minecraft/client/b/k	net/minecraft/client/model/ModelCreeper
+	f	Lnet/minecraft/client/b/c;	g	leg4
+	f	Lnet/minecraft/client/b/c;	c	body
+	f	Lnet/minecraft/client/b/c;	d	leg1
+	f	Lnet/minecraft/client/b/c;	e	leg2
+	f	Lnet/minecraft/client/b/c;	f	leg3
+	f	Lnet/minecraft/client/b/c;	a	head
+	f	Lnet/minecraft/client/b/c;	b	headwear
+c	net/minecraft/client/b/f	net/minecraft/client/model/ModelPig
+c	net/minecraft/client/b/e	net/minecraft/client/model/ModelSpider
+	f	Lnet/minecraft/client/b/c;	e	spiderLeg2
+	f	Lnet/minecraft/client/b/c;	f	spiderLeg3
+	f	Lnet/minecraft/client/b/c;	g	spiderLeg4
+	f	Lnet/minecraft/client/b/c;	h	spiderLeg5
+	f	Lnet/minecraft/client/b/c;	a	spiderHead
+	f	Lnet/minecraft/client/b/c;	b	spiderNeck
+	f	Lnet/minecraft/client/b/c;	c	spiderBody
+	f	Lnet/minecraft/client/b/c;	d	spiderLeg1
+	f	Lnet/minecraft/client/b/c;	i	spiderLeg6
+	f	Lnet/minecraft/client/b/c;	j	spiderLeg7
+	f	Lnet/minecraft/client/b/c;	k	spiderLeg8
+c	net/minecraft/client/b/h	net/minecraft/client/model/ModelBiped
+	f	Lnet/minecraft/client/b/c;	d	bipedRightArm
+	f	Lnet/minecraft/client/b/c;	e	bipedLeftArm
+	f	Lnet/minecraft/client/b/c;	f	bipedRightLeg
+	f	Lnet/minecraft/client/b/c;	g	bipedLeftLeg
+	m	(F)V	<init>	<init>
+		p	1		scale
+	f	Lnet/minecraft/client/b/c;	a	bipedHead
+	f	Lnet/minecraft/client/b/c;	b	bipedHeadwear
+	f	Lnet/minecraft/client/b/c;	c	bipedBody
+	m	(FF)V	<init>	<init>
+		p	1		scale
+c	net/minecraft/client/b/g	net/minecraft/client/model/ModelZombie
+c	net/minecraft/client/b/m	net/minecraft/client/model/ModelSkeleton
+c	net/minecraft/a/d/c	net/minecraft/game/physics/MovingObjectPosition
+	m	(IIIILnet/minecraft/a/d/a;)V	<init>	<init>
+		p	3		blockZ
+		p	4		sideHit
+		p	5		vec3D
+		p	1		blockX
+		p	2		blockY
+	m	(Lnet/minecraft/a/c/b;)V	<init>	<init>
+		p	1		entityHit
+	f	I	c	blockY
+	f	I	d	blockZ
+	f	Lnet/minecraft/a/c/b;	g	entityHit
+	f	I	e	sideHit
+	f	Lnet/minecraft/a/d/a;	f	hitVec
+	f	I	a	typeOfHit
+	f	I	b	blockX
+c	net/minecraft/a/d/b	net/minecraft/game/physics/AxisAlignedBB
+	m	(Lnet/minecraft/a/d/a;)Z	c	isVecInXY
+		p	1		vec3D
+	m	(Lnet/minecraft/a/d/b;F)F	a	calculateXOffset
+		p	1		aabb
+	f	F	g	epsilon
+	m	(FFF)V	c	offset
+	m	(Lnet/minecraft/a/d/b;F)F	b	calculateYOffset
+		p	1		aabb
+	m	(Lnet/minecraft/a/d/a;)Z	b	isVecInXZ
+		p	1		vec3D
+	m	(FFFFFF)V	<init>	<init>
+		p	4		maxX
+		p	3		minZ
+		p	6		maxZ
+		p	5		maxY
+		p	2		minY
+		p	1		minX
+	f	F	c	minZ
+	f	F	d	maxX
+	m	(Lnet/minecraft/a/d/b;F)F	c	calculateZOffset
+		p	1		aabb
+	m	(Lnet/minecraft/a/d/a;)Z	a	isVecInYZ
+		p	1		vev3D
+	f	F	e	maxY
+	m	(Lnet/minecraft/a/d/b;)Z	a	intersectsWith
+		p	1		aabb
+	f	F	f	maxZ
+	m	(FFF)Lnet/minecraft/a/d/b;	a	addCoord
+	f	F	a	minX
+	m	(FFF)Lnet/minecraft/a/d/b;	b	expand
+	f	F	b	minY
+	m	(Lnet/minecraft/a/d/a;Lnet/minecraft/a/d/a;)Lnet/minecraft/a/d/c;	a	calculateIntercept
+		p	2		vec3D2
+		p	1		vec3D
+	m	()Lnet/minecraft/a/d/b;	a	copy
+c	net/minecraft/a/d/a	net/minecraft/game/physics/Vec3D
+	f	F	b	yCoord
+	f	F	c	zCoord
+	m	(Lnet/minecraft/a/d/a;)Lnet/minecraft/a/d/a;	a	subtract
+		p	1		vec3D
+	m	()Lnet/minecraft/a/d/a;	a	normalize
+	m	(FFF)Lnet/minecraft/a/d/a;	a	addVector
+	f	F	a	xCoord
+	m	(Lnet/minecraft/a/d/a;F)Lnet/minecraft/a/d/a;	b	getIntermediateWithYValue
+		p	1		vec3D
+	m	(Lnet/minecraft/a/d/a;)F	b	distance
+		p	1		vec3D
+	m	(Lnet/minecraft/a/d/a;F)Lnet/minecraft/a/d/a;	c	getIntermediateWithZValue
+		p	1		vec3D
+	m	(Lnet/minecraft/a/d/a;)F	c	squareDistanceTo
+		p	1		vec3D
+	m	(Lnet/minecraft/a/d/a;F)Lnet/minecraft/a/d/a;	a	getIntermediateWithXValue
+		p	1		vec3D
+c	net/minecraft/a/c/a/a	net/minecraft/game/entity/monster/EntityGiantZombie
+c	net/minecraft/a/c/a/c	net/minecraft/game/entity/monster/EntitySkeleton
+c	net/minecraft/a/c/a/b	net/minecraft/game/entity/monster/EntitySpider
+c	net/minecraft/a/c/a/e	net/minecraft/game/entity/monster/EntityMob
+	f	I	a	attackStrength
+c	net/minecraft/a/c/a/d	net/minecraft/game/entity/monster/EntityCreeper
+	f	I	Q	lastActiveTime
+	f	I	R	fuseTime
+	f	I	P	timeSinceIgnited
+	f	I	an	creeperState
+c	net/minecraft/a/c/a/f	net/minecraft/game/entity/monster/EntityZombie
+c	net/minecraft/client/a/c/a	net/minecraft/client/render/texture/TextureWaterFlowFX
+	f	I	i	tickCounter
+	f	[F	e	red
+	f	[F	g	blue
+	f	[F	f	green
+	f	[F	h	alpha
+c	net/minecraft/a/a/b/ad	net/minecraft/game/level/block/BlockFlower
+	m	(Lnet/minecraft/a/a/g;III)V	h	checkFlowerChange
+		p	1		world
+		p	2		xCoord
+		p	3		yCoord
+		p	4		zCoord
+	m	(I)Z	b	canThisPlantGrowOnThisBlockID
+		p	1		blockID
+	m	(Lnet/minecraft/a/a/g;III)Z	e	canBlockStay
+		p	4		zCoord
+		p	2		xCoord
+		p	3		yCoord
+		p	1		world
+	m	(II)V	<init>	<init>
+		p	1		blockID
+		p	2		textureSlot
+c	net/minecraft/client/a/c/c	net/minecraft/client/render/texture/TextureGearsFX
+	f	[I	f	gearColor
+	f	[I	g	gearMiddleColor
+	f	I	e	gearRotation
+	f	I	h	gearRotationDir
+c	net/minecraft/a/a/b/ae	net/minecraft/game/level/block/BlockBreakable
+	f	Z	a	localFlag
+	m	(IILnet/minecraft/a/a/d/c;Z)V	<init>	<init>
+		p	2		textureSlot
+		p	3		material
+		p	1		blockID
+		p	4		localFlag
+c	net/minecraft/client/a/c/b	net/minecraft/client/render/texture/TextureFX
+	f	Z	c	anaglyphEnabled
+	f	I	b	iconIndex
+	m	()V	a	onTick
+	f	I	d	textureId
+	f	[B	a	imageData
+	m	(I)V	<init>	<init>
+		p	1		iconIndex
+c	net/minecraft/a/a/b/af	net/minecraft/game/level/block/BlockGrass
+	m	(I)V	<init>	<init>
+		p	1		blockID
+c	net/minecraft/client/a/c/e	net/minecraft/client/render/texture/TextureFlamesFX
+	f	[F	e	currentFireFrame
+	f	[F	f	lastFireFrame
+c	net/minecraft/a/a/b/ag	net/minecraft/game/level/block/BlockSponge
+	m	(I)V	<init>	<init>
+		p	1		blockID
+c	net/minecraft/client/a/c/d	net/minecraft/client/render/texture/TextureLavaFX
+	f	[F	f	green
+	f	[F	e	red
+	f	[F	h	alpha
+	f	[F	g	blue
+c	net/minecraft/a/a/b/ah	net/minecraft/game/level/block/BlockFire
+	m	(III)V	c	setBurnRate
+	f	[I	b	abilityToCatchFire
+	m	(Lnet/minecraft/a/a/g;III)Z	e	canBlockCatchFire
+		p	1		world
+	m	(II)V	<init>	<init>
+		p	1		blockID
+		p	2		textureSlot
+	m	(Lnet/minecraft/a/a/g;IIII)I	e	getChanceToEncourageFire
+		p	1		world
+	f	[I	a	chanceToEncourageFire
+	m	(Lnet/minecraft/a/a/g;III)Z	i	canNeighborCatchFire
+		p	1		world
+	m	(Lnet/minecraft/a/a/g;IIIILjava/util/Random;)V	a	tryToCatchBlockOnFire
+		p	1		world
+	m	(Lnet/minecraft/a/a/g;III)Z	j	fireCheck
+		p	0		world
+	m	(Lnet/minecraft/a/a/g;III)V	h	fireSpread
+		p	3		yCoord
+		p	4		zCoord
+		p	1		world
+		p	2		xCoord
+	m	(I)Z	b	getChanceOfNeighborsEncouragingFire
+c	net/minecraft/a/a/b/ai	net/minecraft/game/level/block/BlockSource
+	m	(II)V	<init>	<init>
+		p	1		blockID
+		p	2		fluidType
+	f	I	a	fluid
+c	net/minecraft/client/a/c/f	net/minecraft/client/render/texture/TextureWaterFX
+	f	[F	f	green
+	f	[F	e	red
+	f	[F	h	alpha
+	f	[F	g	blue
+	f	I	i	tickCounter
+c	net/minecraft/a/a/b/aj	net/minecraft/game/level/block/BlockStep
+	f	Z	a	blockType
+	m	(IZ)V	<init>	<init>
+		p	1		blockID
+c	net/minecraft/a/a/b/f	net/minecraft/game/level/block/BlockCrops
+c	net/minecraft/client/c/a	net/minecraft/client/gui/GuiSmallButton
+c	net/minecraft/a/a/b/e	net/minecraft/game/level/block/BlockGravel
+c	net/minecraft/a/a/b/h	net/minecraft/game/level/block/BlockTNT
+	m	(II)V	<init>	<init>
+		p	1		blockID
+		p	2		textureSlot
+c	net/minecraft/client/c/c	net/minecraft/client/gui/GuiErrorScreen
+	m	(Ljava/lang/String;Ljava/lang/String;)V	<init>	<init>
+		p	1		title
+		p	2		text
+	f	Ljava/lang/String;	a	title
+	f	Ljava/lang/String;	i	text
+c	net/minecraft/a/a/b/g	net/minecraft/game/level/block/BlockLeavesBase
+	m	(IILnet/minecraft/a/a/d/c;Z)V	<init>	<init>
+		p	1		blockID
+		p	2		textureSlot
+		p	3		material
+	f	Z	a	graphicsLevel
+c	net/minecraft/client/c/b	net/minecraft/client/gui/GuiIngameMenu
+c	net/minecraft/a/a/b/j	net/minecraft/game/level/block/StepSoundGlass
+c	net/minecraft/a/a/b/i	net/minecraft/game/level/block/StepSoundSand
+c	net/minecraft/a/a/b/aa	net/minecraft/game/level/block/BlockLog
+	m	(I)V	<init>	<init>
+		p	1		blockID
+c	net/minecraft/a/a/b/ab	net/minecraft/game/level/block/BlockFarmland
+	m	(I)V	<init>	<init>
+		p	1		blockID
+c	net/minecraft/a/a/b/l	net/minecraft/game/level/block/BlockDirt
+	m	(II)V	<init>	<init>
+		p	1		blockID
+		p	2		textureSlot
+c	net/minecraft/a/a/b/ac	net/minecraft/game/level/block/BlockTorch
+	m	(II)V	<init>	<init>
+		p	2		textureSlot
+		p	1		blockID
+	m	(Lnet/minecraft/a/a/g;III)Z	e	dropTorchIfCantStay
+c	net/minecraft/a/a/b/k	net/minecraft/game/level/block/BlockGears
+	m	(II)V	<init>	<init>
+		p	2		textureSlot
+		p	1		blockID
+c	net/minecraft/client/c/i	net/minecraft/client/gui/GuiScreen
+	m	()V	f	handleMouseInput
+	m	()V	h	drawDefaultBackground
+	m	(CI)V	a	keyTyped
+	m	()V	g	handleKeyboardInput
+	m	(Lnet/minecraft/client/d;II)V	a	setWorldAndResolution
+		p	2		width
+		p	3		height
+	f	Lnet/minecraft/client/d;	b	mc
+	m	(Lnet/minecraft/client/c/r;)V	a	actionPerformed
+	f	I	c	width
+	f	Lnet/minecraft/client/c/j;	g	fontRenderer
+	f	I	d	height
+	m	(IIF)V	a	drawScreen
+		p	2		ySize_lo
+		p	1		xSize_lo
+	m	(III)V	a	drawSlotInventory
+	m	()V	f_	updateScreen
+	f	Ljava/util/List;	e	controlList
+	m	()Z	c	doesGuiPauseGame
+	m	()V	b	initGui
+	f	Z	f	allowUserInput
+	m	()V	a	onGuiClosed
+c	net/minecraft/client/c/h	net/minecraft/client/gui/ScaledResolution
+	m	()I	b	getScaledHeight
+	f	I	b	scaledHeight
+	m	()I	a	getScaledWidth
+	f	I	a	scaledWidth
+	m	(II)V	<init>	<init>
+		p	1		scaledWidth
+		p	2		scaledHeight
+c	net/minecraft/client/c/k	net/minecraft/client/gui/Gui
+	m	(IIIII)V	a	drawRect
+		p	0		xCoordLeft
+		p	1		yCoordUp
+		p	2		xCoordRight
+		p	3		yCoordDown
+		p	4		color
+	f	F	h	zLevel
+	m	(IIIIII)V	b	drawTexturedModalRect
+	m	(IIIIII)V	a	drawGradientRect
+		p	1		yCoordUp
+		p	0		xCoordLeft
+		p	3		yCoordDown
+		p	2		xCoordRight
+		p	5		lowerGradient
+		p	4		upperGradient
+	m	(Lnet/minecraft/client/c/j;Ljava/lang/String;III)V	a	drawCenteredString
+	m	(Lnet/minecraft/client/c/j;Ljava/lang/String;III)V	b	drawString
+c	net/minecraft/client/c/j	net/minecraft/client/gui/FontRenderer
+	m	(Ljava/lang/String;III)V	b	drawString
+		p	2		xPosition
+		p	3		yPosition
+		p	4		fontColor
+	m	(Ljava/lang/String;)I	a	getStringWidth
+	m	(Ljava/lang/String;IIIZ)V	a	renderString
+		p	3		yPosition
+		p	2		xPosition
+		p	5		textShadow
+		p	4		fontColor
+	m	(Ljava/lang/String;III)V	a	drawStringWithShadow
+		p	2		xPosition
+		p	3		yPosition
+		p	4		fontColor
+	f	Ljava/nio/IntBuffer;	d	buffer
+	f	[I	a	charWidth
+	m	(Lnet/minecraft/client/q;Ljava/lang/String;Lnet/minecraft/client/a/k;)V	<init>	<init>
+		p	3		renderEngine
+		p	1		gameSettings
+	f	I	b	fontTextureName
+	f	I	c	fontDisplayLists
+c	net/minecraft/a/a/b/b	net/minecraft/game/level/block/BlockStationary
+c	net/minecraft/client/c/e	net/minecraft/client/gui/GuiLoadLevel
+	m	(Ljava/io/File;)V	a	openLevel
+	m	(Lnet/minecraft/client/c/e;Z)Z	a	unknown
+	f	Ljava/io/File;	o	selectedFile
+	f	Z	j	finished
+	m	()Ljava/awt/FileDialog;	e	saveFileDialog
+	m	(I)V	a	openLevel
+	f	Lnet/minecraft/client/c/i;	i	parent
+	f	Ljava/lang/String;	a	title
+	f	Z	n	frozen
+	f	Z	k	loaded
+	f	[Ljava/lang/String;	l	levels
+	m	([Ljava/lang/String;)V	a	setLevels
+	f	Ljava/lang/String;	m	status
+c	net/minecraft/a/a/b/a	net/minecraft/game/level/block/BlockChest
+	f	Ljava/util/Random;	a	random
+	m	(Lnet/minecraft/a/a/g;III)Z	e	isThereANeighborChest
+		p	1		world
+		p	3		yCoord
+		p	2		xCoord
+		p	4		zCoord
+	m	(I)V	<init>	<init>
+		p	1		blockID
+c	net/minecraft/client/c/d	net/minecraft/client/gui/GuiGameOver
+c	net/minecraft/a/a/b/d	net/minecraft/game/level/block/BlockOreBlock
+	m	(II)V	<init>	<init>
+		p	1		blockID
+		p	2		oreSideTexture
+c	net/minecraft/client/c/g	net/minecraft/client/gui/GuiOptions
+	f	Ljava/lang/String;	i	screenTitle
+	f	Lnet/minecraft/client/c/i;	a	parentScreen
+	f	Lnet/minecraft/client/q;	j	options
+c	net/minecraft/a/a/b/c	net/minecraft/game/level/block/BlockOre
+	m	(II)V	<init>	<init>
+		p	2		textureSlot
+		p	1		blockID
+c	net/minecraft/client/c/f	net/minecraft/client/gui/GuiLevelDialog
+	f	Lnet/minecraft/client/c/e;	a	screen
+c	net/minecraft/a/a/b/v	net/minecraft/game/level/block/BlockMushroom
+c	net/minecraft/client/c/q	net/minecraft/client/gui/FilenameFilterLevel
+	m	(Ljava/io/File;Ljava/lang/String;)Z	accept	accept
+		p	2		worldName
+c	net/minecraft/a/a/b/u	net/minecraft/game/level/block/BlockGlass
+c	net/minecraft/client/c/p	net/minecraft/client/gui/GuiNameLevel
+	m	(Lnet/minecraft/client/c/i;Ljava/lang/String;I)V	<init>	<init>
+		p	3		id
+		p	2		name
+	f	Ljava/lang/String;	k	name
+	f	I	j	id
+	f	Lnet/minecraft/client/c/i;	a	parent
+	f	I	l	counter
+	f	Ljava/lang/String;	i	title
+c	net/minecraft/a/a/b/x	net/minecraft/game/level/block/Block
+	f	Lnet/minecraft/a/a/b/ad;	V	mushroomRed
+	m	(Lnet/minecraft/a/c/e/a;)F	a	blockStrength
+		p	1		player
+	f	Lnet/minecraft/a/a/b/x;	am	blockDiamond
+	f	Lnet/minecraft/a/a/b/x;	D	clothOrange
+	f	[Z	g	isBlockFluid
+	f	Lnet/minecraft/a/a/b/x;	ad	cobblestoneMossy
+	m	(I)Lnet/minecraft/a/a/b/x;	c	setLightOpacity
+	f	F	aw	minZ
+	m	(III)Lnet/minecraft/a/d/b;	b	getSelectedBoundingBoxFromPool
+		p	3		zCoord
+		p	2		yCoord
+		p	1		xCoord
+	f	Lnet/minecraft/a/a/b/x;	M	clothPurple
+	f	Lnet/minecraft/a/a/b/x;	n	sapling
+	m	(Lnet/minecraft/a/a/g;III)V	g	onEntityWalking
+		p	1		world
+	f	Lnet/minecraft/a/a/b/n;	aE	soundGrassFootstep
+	f	Lnet/minecraft/a/a/b/x;	v	oreGold
+	f	Lnet/minecraft/a/a/b/x;	w	oreIron
+	f	Lnet/minecraft/a/a/b/ad;	U	mushroomBrown
+	f	Lnet/minecraft/a/a/d/c;	aC	material
+	f	Lnet/minecraft/a/a/b/x;	an	workbench
+	m	(Lnet/minecraft/a/a/g;IIII)V	c	onBlockDestroyedByPlayer
+		p	3		yCoord
+		p	2		xCoord
+		p	4		zCoord
+		p	1		world
+	m	(ILjava/util/Random;)I	a	idDropped
+		p	2		random
+	f	Lnet/minecraft/a/a/b/x;	E	clothYellow
+	m	(Lnet/minecraft/a/a/g;IIILnet/minecraft/a/c/e/a;)Z	a	blockActivated
+		p	5		player
+		p	3		yCoord
+		p	4		zCoord
+		p	1		world
+		p	2		xCoord
+	f	Lnet/minecraft/a/a/b/x;	ae	obsidian
+	m	(Lnet/minecraft/a/a/g;IIII)V	b	onNeighborBlockChange
+		p	4		zCoord
+		p	3		yCoord
+		p	5		blockID
+		p	2		xCoord
+		p	1		world
+	f	F	ax	maxX
+	f	Lnet/minecraft/a/a/b/x;	N	clothMagenta
+	f	Lnet/minecraft/a/a/b/x;	o	bedrock
+	f	Lnet/minecraft/a/a/b/n;	aF	soundStoneFootstep
+	f	[I	h	lightValue
+	m	()I	a	getRenderType
+	m	()F	g	getExplosionResistance
+	m	(Lnet/minecraft/a/d/a;)Z	a	isVecInsideYZBounds
+		p	1		vec3D
+	m	(Lnet/minecraft/a/a/g;IIIIF)V	a	dropBlockAsItemWithChance
+		p	1		world
+	f	[Z	e	opaqueCubeLookup
+	f	F	aL	hardness
+	f	Lnet/minecraft/a/a/b/x;	B	glass
+	f	Lnet/minecraft/a/a/b/x;	ak	cog
+	m	(FFFFFF)V	a	setBlockBounds
+		p	6		maxZ
+		p	2		minY
+		p	3		minZ
+		p	4		maxX
+		p	5		maxY
+		p	1		minX
+	m	(Lnet/minecraft/a/a/g;IIILnet/minecraft/a/d/a;Lnet/minecraft/a/d/a;)Lnet/minecraft/a/d/c;	a	collisionRayTrace
+		p	6		vec3D2
+		p	5		vec3D
+		p	1		world
+	f	[Z	aK	canBlockGrass
+	f	F	au	minX
+	m	(Lnet/minecraft/a/a/g;IIILjava/util/Random;)V	b	randomDisplayTick
+		p	5		random
+		p	4		zCoord
+		p	3		yCoord
+		p	2		xCoord
+		p	1		world
+	f	Lnet/minecraft/a/a/b/x;	ab	tnt
+	f	Lnet/minecraft/a/a/b/x;	K	clothUltramarine
+	f	Lnet/minecraft/a/a/b/x;	l	cobblestone
+	f	Lnet/minecraft/a/a/b/x;	t	sand
+	m	(Lnet/minecraft/a/a/g;IIII)I	a	getBlockTexture
+		p	4		zCoord
+		p	3		yCoord
+		p	5		blockSide
+		p	2		xCoord
+		p	1		world
+	m	(Lnet/minecraft/a/a/g;III)F	f	getBlockBrightness
+		p	1		world
+	f	Lnet/minecraft/a/a/b/x;	al	oreDiamond
+	f	F	aM	resistance
+	f	Lnet/minecraft/a/a/b/x;	C	clothRed
+	m	(III)Lnet/minecraft/a/d/b;	a	getCollisionBoundingBoxFromPool
+		p	3		zCoord
+		p	2		yCoord
+		p	1		xCoord
+	f	F	av	minY
+	f	Lnet/minecraft/a/a/b/x;	ac	bookShelf
+	f	Lnet/minecraft/a/a/b/x;	L	clothViolet
+	f	Lnet/minecraft/a/a/b/x;	m	planks
+	m	(Lnet/minecraft/a/a/g;IIILjava/util/Random;)V	a	updateTick
+		p	5		random
+		p	4		zCoord
+		p	3		yCoord
+		p	2		xCoord
+		p	1		world
+	f	Lnet/minecraft/a/a/b/n;	aD	soundGravelFootstep
+	m	(IILnet/minecraft/a/a/d/c;)V	<init>	<init>
+		p	3		material
+		p	2		blockIndexInTexture
+		p	1		blockID
+	f	Lnet/minecraft/a/a/b/x;	u	gravel
+	f	[I	f	lightOpacity
+	f	F	aB	blockParticleGravity
+	f	Lnet/minecraft/a/a/b/n;	aA	stepSound
+	f	Lnet/minecraft/a/a/b/x;	Y	stairDouble
+	m	()I	e	tickRate
+	f	Lnet/minecraft/a/a/b/x;	z	leaves
+	m	(Lnet/minecraft/a/d/a;)Z	c	isVecInsideXYBounds
+		p	1		vec3D
+	m	(I)I	a	getBlockTextureFromSide
+		p	1		blockSide
+	f	Lnet/minecraft/a/a/b/x;	aq	stoneOvenIdle
+	m	(Ljava/util/Random;)I	a	quantityDropped
+		p	1		random
+	m	()Z	d	isCollidable
+	m	(F)Lnet/minecraft/a/a/b/x;	a	setResistance
+	f	I	as	blockIndexInTexture
+	f	Lnet/minecraft/a/a/b/x;	ai	lavaSource
+	f	Lnet/minecraft/a/a/b/x;	I	clothCyan
+	f	[Lnet/minecraft/a/a/b/x;	c	blocksList
+	f	Lnet/minecraft/a/a/b/n;	aI	soundClothFootstep
+	f	Lnet/minecraft/a/a/b/x;	Q	clothGray
+	f	Lnet/minecraft/a/a/b/x;	r	lavaMoving
+	m	(Lnet/minecraft/a/a/g;III)V	c	onBlockDestroyedByExplosion
+		p	1		world
+		p	2		xCoord
+		p	3		yCoord
+		p	4		zCoord
+	m	()I	f	getRenderBlockPass
+	f	Lnet/minecraft/a/a/b/x;	Z	stairSingle
+	f	Lnet/minecraft/a/a/b/x;	ar	stoneOvenActive
+	m	(Lnet/minecraft/a/d/a;)Z	b	isVecInsideXZBounds
+		p	1		vec3D
+	f	[Z	d	tickOnLoad
+	m	(Z)V	a	setTickOnLoad
+	f	Lnet/minecraft/a/a/b/x;	A	sponge
+	f	Lnet/minecraft/a/a/b/x;	aj	crate
+	m	(Lnet/minecraft/a/a/g;IIII)V	g	onBlockPlaced
+		p	1		world
+	f	I	at	blockID
+	m	(F)Lnet/minecraft/a/a/b/x;	b	setHardness
+	m	(F)Lnet/minecraft/a/a/b/x;	c	setLightValue
+	f	Lnet/minecraft/a/a/b/x;	J	clothCapri
+	f	Lnet/minecraft/a/a/b/x;	k	dirt
+	f	Lnet/minecraft/a/a/b/n;	aJ	soundSandFootstep
+	f	Lnet/minecraft/a/a/b/x;	aa	brick
+	m	(Lnet/minecraft/a/a/g;III)V	d	onBlockAdded
+		p	1		world
+		p	2		xCoord
+		p	3		yCoord
+		p	4		zCoord
+	f	Lnet/minecraft/a/a/b/x;	R	clothWhite
+	f	Lnet/minecraft/a/a/b/x;	s	lavaStill
+	f	Lnet/minecraft/a/a/b/n;	a	soundPowderFootstep
+	f	Lnet/minecraft/a/a/b/x;	W	blockGold
+	f	Lnet/minecraft/a/a/b/x;	x	oreCoal
+	f	Lnet/minecraft/a/a/b/ad;	T	plantRed
+	f	Lnet/minecraft/a/a/b/x;	ao	crops
+	m	(Lnet/minecraft/a/a/g;IIII)V	f	dropBlockAsItem
+		p	1		world
+	m	()Z	b	isOpaqueCube
+	f	Lnet/minecraft/a/a/b/x;	F	clothChartreuse
+	f	Lnet/minecraft/a/a/b/x;	af	torch
+	f	Lnet/minecraft/a/a/b/x;	G	clothGreen
+	m	(Lnet/minecraft/a/a/g;III)Z	a	canPlaceBlockAt
+		p	1		world
+		p	2		xCoord
+		p	3		yCoord
+		p	4		zCoord
+	f	F	ay	maxY
+	m	(ILnet/minecraft/a/a/d/c;)V	<init>	<init>
+		p	2		material
+		p	1		blockID
+	f	Lnet/minecraft/a/a/b/x;	O	clothRose
+	f	Lnet/minecraft/a/a/b/x;	p	waterMoving
+	f	Lnet/minecraft/a/a/b/n;	aG	soundMetalFootstep
+	m	(II)I	a	getBlockTextureFromSideAndMetadata
+	f	Lnet/minecraft/a/a/b/n;	b	soundWoodFootstep
+	f	Lnet/minecraft/a/a/b/x;	X	blockSteel
+	f	Lnet/minecraft/a/a/b/x;	y	wood
+	f	Lnet/minecraft/a/a/b/x;	ap	tilledField
+	f	Lnet/minecraft/a/a/b/ad;	S	plantYellow
+	m	()Z	c	renderAsNormalBlock
+	f	Lnet/minecraft/a/a/b/af;	j	grass
+	f	Lnet/minecraft/a/a/b/ah;	ag	fire
+	f	Lnet/minecraft/a/a/b/x;	ah	waterSource
+	f	Lnet/minecraft/a/a/b/x;	H	clothSpringGreen
+	f	Lnet/minecraft/a/a/b/x;	i	stone
+	m	(Lnet/minecraft/a/a/g;IIII)Z	d	shouldSideBeRendered
+		p	2		xCoord
+		p	1		world
+		p	4		zCoord
+		p	3		yCoord
+	f	Lnet/minecraft/a/a/b/n;	aH	soundGlassFootstep
+	f	F	az	maxZ
+	f	Lnet/minecraft/a/a/b/x;	P	clothDarkGray
+	f	Lnet/minecraft/a/a/b/x;	q	waterStill
+	m	(Lnet/minecraft/a/a/g;III)V	b	onBlockRemoval
+		p	1		world
+		p	2		xCoord
+		p	3		yCoord
+		p	4		zCoord
+c	net/minecraft/a/a/b/w	net/minecraft/game/level/block/BlockSand
+	m	(Lnet/minecraft/a/a/g;III)V	e	tryToFall
+		p	1		world
+	m	(II)V	<init>	<init>
+		p	1		blockID
+		p	2		textureSlot
+c	net/minecraft/client/c/r	net/minecraft/client/gui/GuiButton
+	m	(II)Z	a	mousePressed
+	f	Z	c	enabled
+	f	I	b	id
+	f	Ljava/lang/String;	a	displayString
+	f	Z	d	visible
+	f	I	f	height
+	f	I	e	width
+	f	I	g	xPosition
+	m	(IIIIILjava/lang/String;)V	<init>	<init>
+		p	2		xPosition
+		p	1		id
+		p	6		displayString
+		p	4		width
+		p	3		yPosition
+	f	I	i	yPosition
+	m	(Lnet/minecraft/client/d;II)V	a	drawButton
+		p	1		minecraft
+c	net/minecraft/a/a/b/z	net/minecraft/game/level/block/BlockSapling
+c	net/minecraft/client/c/m	net/minecraft/client/gui/GuiControls
+	f	I	k	buttonId
+	f	Lnet/minecraft/client/q;	j	options
+	f	Lnet/minecraft/client/c/i;	a	parentScreen
+	f	Ljava/lang/String;	i	screenTitle
+c	net/minecraft/a/a/b/y	net/minecraft/game/level/block/BlockBookshelf
+	m	(II)V	<init>	<init>
+		p	1		blockID
+		p	2		textureSlot
+c	net/minecraft/client/c/l	net/minecraft/client/gui/GuiIngame
+	f	Ljava/util/Random;	c	rand
+	f	Lnet/minecraft/client/a/a/e;	a	itemRenderer
+	f	Lnet/minecraft/client/d;	d	mc
+	m	()V	a	addChatMessage
+	f	Ljava/util/List;	b	chatMessageList
+	f	I	e	updateCounter
+	m	(F)V	a	renderGameOverlay
+c	com/a/a/a	com/mojang/nbt/NBTTagLong
+	f	J	a	longValue
+c	net/minecraft/client/c/o	net/minecraft/client/gui/GuiSaveLevel
+c	net/minecraft/client/c/n	net/minecraft/client/gui/GuiNewLevel
+	f	[Ljava/lang/String;	l	worldTheme
+	f	[Ljava/lang/String;	k	worldSize
+	f	I	n	selectedWorldShape
+	f	I	m	selectedWorldType
+	f	I	p	selectedWorldTheme
+	f	I	o	selectedWorldSize
+	f	[Ljava/lang/String;	j	worldShape
+	f	[Ljava/lang/String;	i	worldType
+	f	Lnet/minecraft/client/c/i;	a	prevGui
+	m	()V	e	worldOptions
+c	net/minecraft/a/a/b/n	net/minecraft/game/level/block/StepSound
+	m	()Ljava/lang/String;	a	stepSoundDir
+	m	()Ljava/lang/String;	b	stepSoundDir2
+	m	(Ljava/lang/String;FF)V	<init>	<init>
+		p	2		soundVolume
+		p	1		sound
+		p	3		soundPitch
+	f	F	a	soundVolume
+	f	F	b	soundPitch
+	f	Ljava/lang/String;	c	sound
+c	net/minecraft/a/c/a	net/minecraft/game/entity/EntityPainting
+	m	(Lnet/minecraft/a/a/g;IIII)V	<init>	<init>
+		p	2		xPosition
+		p	1		world
+		p	4		zPosition
+		p	3		yPosition
+	f	I	O	tickCounter1
+	m	(I)V	b	setDirection
+		p	1		direction
+	m	(I)F	c	getArtSize
+	m	()Z	c	onValidSurface
+	f	Lnet/minecraft/a/c/d;	b	art
+	f	I	R	zPosition
+	f	I	P	xPosition
+	f	I	a	direction
+	f	I	Q	yPosition
+c	com/a/a/d	com/mojang/nbt/NBTTagInt
+	f	I	a	intValue
+c	net/minecraft/a/a/b/m	net/minecraft/game/level/block/BlockFlowing
+	m	(Lnet/minecraft/a/a/g;III)Z	h	extinguishFireLava
+		p	0		world
+	m	(Lnet/minecraft/a/a/g;IIIIII)Z	b	liquidSpread2
+		p	1		world
+	m	(Lnet/minecraft/a/a/g;IIIIII)Z	a	liquidSpread
+		p	1		world
+	f	[I	aG	liquidIntArray
+	f	Ljava/util/Random;	aF	rand
+	f	I	aE	movingId1
+	f	I	aD	stillId1
+	m	(Lnet/minecraft/a/a/g;III)Z	i	flow
+c	com/a/a/e	com/mojang/nbt/NBTTagByte
+	f	B	a	byteValue
+c	net/minecraft/a/a/b/p	net/minecraft/game/level/block/BlockFluid
+	m	(Lnet/minecraft/a/a/g;III)Z	j	liquidAirCheck
+		p	0		world
+	m	(Lnet/minecraft/a/a/g;III)Z	h	extinguishFireLava
+		p	0		world
+	m	(Lnet/minecraft/a/a/g;III)Z	i	flow
+		p	1		world
+	f	I	b	movingId
+	m	(Lnet/minecraft/a/a/g;III)Z	e	canFlow
+	f	I	a	stillId
+	m	(Lnet/minecraft/a/a/g;IIII)Z	e	update
+		p	2		xCoord
+		p	3		yCoord
+		p	1		world
+		p	4		zCoord
+c	com/a/a/b	com/mojang/nbt/NBTTagFloat
+	f	F	a	floatValue
+c	net/minecraft/a/a/b/o	net/minecraft/game/level/block/BlockLeaves
+	m	(II)V	<init>	<init>
+		p	1		blockID
+		p	2		textureSlot
+c	com/a/a/c	com/mojang/nbt/NBTTagCompound
+	m	(Ljava/lang/String;[B)V	a	setByteArray
+	m	(Ljava/lang/String;I)V	a	setInteger
+	m	(Ljava/lang/String;J)V	a	setLong
+	m	(Ljava/lang/String;)S	c	getShort
+	m	(Ljava/lang/String;Lcom/a/a/c;)V	a	setCompoundTag
+	m	(Ljava/lang/String;)Z	a	hasKey
+	m	(Ljava/lang/String;S)V	a	setShort
+	f	Ljava/util/Map;	a	tagMap
+	m	(Ljava/lang/String;)[B	h	getByteArray
+	m	(Ljava/lang/String;)Ljava/lang/String;	g	getString
+	m	()Z	b	emptyNBTMap
+	m	(Ljava/lang/String;Z)V	a	setBoolean
+	m	(Ljava/lang/String;)F	f	getFloat
+	m	(Ljava/lang/String;)B	b	getByte
+	m	(Ljava/lang/String;)J	e	getLong
+	m	(Ljava/lang/String;)I	d	getInteger
+	m	(Ljava/lang/String;)Lcom/a/a/f;	j	getTagList
+	m	(Ljava/lang/String;B)V	a	setByte
+	m	(Ljava/lang/String;)Z	k	getBoolean
+	m	(Ljava/lang/String;)Lcom/a/a/c;	i	getCompoundTag
+	m	(Ljava/lang/String;Ljava/lang/String;)V	a	setString
+	m	(Ljava/lang/String;Lcom/a/a/j;)V	a	setTag
+	m	(Ljava/lang/String;F)V	a	setFloat
+c	net/minecraft/a/a/b/r	net/minecraft/game/level/block/BlockStone
+	m	(II)V	<init>	<init>
+		p	1		blockID
+		p	2		textureSlot
+c	net/minecraft/a/c/e	net/minecraft/game/entity/EntityLiving
+	f	I	Z	maxHurtTime
+	m	()V	e	updatePlayerActionState
+	f	I	X	prevHealth
+	f	I	P	livingSoundTime
+	f	Ljava/lang/String;	V	texture
+	f	F	T	renderYawOffset
+	f	F	R	defaultPitch
+	f	F	af	prevLimbYaw
+	f	F	ah	limbSwing
+	f	F	aj	moveStrafing
+	m	()Ljava/lang/String;	h	getHurtSound
+	f	I	ab	deathTime
+	f	F	ad	prevCameraPitch
+	f	F	a	rotationYawHead
+	m	(FFF)Z	a	getCanSpawnHere
+	f	Z	al	isJumping
+	f	F	U	prevRenderYawOffset
+	m	()V	f	onLivingUpdate
+	f	I	Y	hurtTime
+	m	(I)V	b	heal
+	m	(Lnet/minecraft/a/c/b;)V	d	onDeath
+		p	1		entity
+	f	I	S	heartsHalvesLife
+	f	I	W	health
+	f	F	Q	randomYawVelocity
+	f	I	ai	entityAge
+	f	F	ag	limbYaw
+	f	F	ak	moveForward
+	f	I	O	scoreValue
+	m	()Ljava/lang/String;	i	getDeathSound
+	f	F	am	moveSpeed
+	m	()Ljava/lang/String;	g	getLivingSound
+	m	()I	c	scoreValue
+	f	I	ac	attackTime
+	f	F	aa	attackedAtYaw
+	f	F	b	prevRotationYawHead
+	f	F	ae	cameraPitch
+c	com/a/a/h	com/mojang/nbt/NBTTagShort
+	f	S	a	shortValue
+c	net/minecraft/a/a/b/q	net/minecraft/game/level/block/BlockContainer
+	m	()Lnet/minecraft/a/a/b/a/a;	a_	getBlockEntity
+c	net/minecraft/a/c/d	net/minecraft/game/entity/EnumArt
+	f	Lnet/minecraft/a/c/d;	w	Fighters
+	f	Lnet/minecraft/a/c/d;	i	Aztec2
+	f	Lnet/minecraft/a/c/d;	g	Aztec
+	f	Lnet/minecraft/a/c/d;	m	Pool
+	f	Lnet/minecraft/a/c/d;	k	Plant
+	f	Lnet/minecraft/a/c/d;	q	Wanderer
+	f	Lnet/minecraft/a/c/d;	o	Sea
+	m	(Ljava/lang/String;ILjava/lang/String;IIII)V	<init>	<init>
+		p	7		offsetY
+		p	6		offsetX
+		p	5		sizeY
+		p	4		sizeX
+		p	3		title
+	f	Lnet/minecraft/a/c/d;	u	Void
+	f	I	e	offsetX
+	f	Lnet/minecraft/a/c/d;	s	Bust
+	f	I	c	sizeX
+	f	Lnet/minecraft/a/c/d;	x	Pointer
+	f	Lnet/minecraft/a/c/d;	a	Kebab
+	f	Lnet/minecraft/a/c/d;	j	Bomb
+	f	Lnet/minecraft/a/c/d;	h	Alban
+	f	Lnet/minecraft/a/c/d;	n	Courbet
+	f	Lnet/minecraft/a/c/d;	l	Wasteland
+	f	Lnet/minecraft/a/c/d;	r	Match
+	f	Lnet/minecraft/a/c/d;	p	Sunset
+	f	Ljava/lang/String;	b	title
+	f	Lnet/minecraft/a/c/d;	v	SkullAndRoses
+	f	I	f	offsetY
+	f	Lnet/minecraft/a/c/d;	t	Stage
+	f	I	d	sizeY
+c	com/a/a/i	com/mojang/nbt/NBTTagByteArray
+	f	[B	a	byteArray
+c	net/minecraft/a/a/b/t	net/minecraft/game/level/block/BlockWorkbench
+	m	(I)V	<init>	<init>
+		p	1		blockID
+c	net/minecraft/a/c/c	net/minecraft/game/entity/EntityCreature
+	f	Lnet/minecraft/a/a/a/b;	a	pathToEntity
+	m	(Lnet/minecraft/a/c/b;F)V	a	attackEntity
+		p	1		entity
+	m	(III)F	a	getBlockPathWeight
+	m	()Lnet/minecraft/a/c/b;	b	findPlayerToAttack
+	f	Lnet/minecraft/a/c/b;	b	playerToAttack
+	f	Z	O	hasAttacked
+c	com/a/a/f	com/mojang/nbt/NBTTagList
+	m	()I	b	tagCount
+	m	(I)Lcom/a/a/j;	a	tagAt
+	f	Ljava/util/List;	a	tagList
+	f	B	b	tagType
+	m	(Lcom/a/a/j;)V	a	setTag
+		p	1		nbtBase
+c	net/minecraft/a/a/b/s	net/minecraft/game/level/block/BlockFurnace
+	f	Z	a	isActive
+	m	(Lnet/minecraft/a/a/g;III)V	e	setDefaultDirection
+		p	2		yCoord
+		p	3		zCoord
+		p	0		world
+		p	1		xCoord
+	m	(IZ)V	<init>	<init>
+		p	2		status
+		p	1		blockID
+c	net/minecraft/a/c/b	net/minecraft/game/entity/Entity
+	m	(Lnet/minecraft/a/c/e/a;)V	a	onCollideWithPlayer
+		p	1		player
+	m	(I)V	a	dealFireDamage
+	m	()Z	m	isInsideOfWater
+	f	F	y	prevDistanceWalkedModified
+	f	F	m	motionZ
+	f	Ljava/util/Random;	G	rand
+	f	F	P	ySize
+	m	(Lnet/minecraft/a/a/g;)V	<init>	<init>
+		p	1		world
+	f	F	q	prevRotationPitch
+	m	()F	n	getEyeHeight
+	m	(FF)V	a	setSize
+		p	1		width
+		p	2		height
+	m	(FFF)V	a	addVelocity
+		p	3		motionZ
+		p	1		motionX
+	f	F	D	lastTickPosZ
+	m	(F)F	a	getEntityBrightness
+	f	F	e	prevPosX
+	f	I	H	ticksExisted
+	f	Lnet/minecraft/a/a/g;	d	worldObj
+	m	(FFF)V	e	moveFlying
+	f	F	i	posY
+	f	I	L	heartsLife
+	m	(FFFFF)V	b	setPositionAndRotation
+		p	3		posZ
+		p	5		rotationPitch
+		p	4		rotationYaw
+		p	1		posX
+	m	([F)Lcom/a/a/f;	a	newDoubleNBTList
+	m	()V	j	preparePlayerToSpawn
+	f	F	z	distanceWalkedModified
+	f	Z	u	isDead
+	m	()Z	r	isEntityAlive
+	m	(Lcom/a/a/c;)V	c	writeToNBT
+		p	1		nbtTagCompound
+	f	F	v	yOffset
+	f	Z	a	surfaceCollision
+	f	F	j	posZ
+	f	I	M	air
+	m	()V	b_	onEntityUpdate
+	f	F	Q	entityCollisionReduction
+	f	F	n	rotationYaw
+	f	F	E	stepHeight
+	m	(II)Lnet/minecraft/a/c/c/b;	a	dropItemWithOffset
+	f	F	b	fallDistance
+	m	(FFF)V	d	moveEntity
+	f	F	f	prevPosY
+	f	I	I	fireResistance
+	m	()Z	o	handleLavaMovement
+	m	()V	k	setEntityDead
+	m	(Lcom/a/a/c;)V	b	readEntityFromNBT
+		p	1		nbtTagCompound
+	m	(IIF)Lnet/minecraft/a/c/c/b;	a	entityDropItem
+	m	(F)V	b	fall
+	f	F	w	width
+	f	Z	A	canTriggerWalking
+	m	(Lnet/minecraft/a/c/b;)V	c	applyEntityCollision
+		p	1		entity
+	f	F	k	motionX
+	f	Ljava/lang/String;	N	skinUrl
+	f	F	o	rotationPitch
+	m	(FFF)Z	c	isOffsetPositionInLiquid
+	f	F	B	lastTickPosX
+	m	(Lnet/minecraft/a/c/b;I)Z	a	attackEntityFrom
+		p	1		entity
+	f	F	g	prevPosZ
+	f	I	J	fire
+	m	()Z	p	canBePushed
+	m	(Lnet/minecraft/a/a/g;)V	a	setWorld
+		p	1		world
+	m	(Lcom/a/a/c;)V	a	writeEntityToNBT
+		p	1		nbtTagCompound
+	m	()F	c_	getShadowSize
+	f	Lnet/minecraft/a/d/b;	r	boundingBox
+	f	Z	R	inWater
+	f	Z	s	onGround
+	f	Z	F	noClip
+	m	()Z	l	handleWaterMovement
+	f	F	x	height
+	f	F	l	motionY
+	f	I	O	nextStepDistance
+	m	()Z	d	canBeCollidedWith
+	f	F	p	prevRotationYaw
+	m	()Ljava/lang/String;	q	getTexture
+	f	Z	c	preventEntitySpawning
+	f	F	C	lastTickPosY
+	f	F	h	posX
+	f	I	K	maxAir
+	m	(FFF)V	b	setPosition
+		p	3		posZ
+		p	2		posY
+		p	1		posX
+	m	(Lnet/minecraft/a/c/b;)F	b	getDistanceSqToEntity
+		p	1		entity
+	f	Z	t	isCollidedHorizontally
+	m	(Lcom/a/a/c;)V	d	readFromNBT
+		p	1		nbtTagCompound
+	m	()Ljava/lang/String;	a	getEntityString
+	f	Z	S	isFirstUpdate
+c	com/a/a/g	com/mojang/nbt/NBTTagDouble
+	f	D	a	doubleValue
+c	net/minecraft/a/a	net/minecraft/game/InventoryLargeChest
+	f	Ljava/lang/String;	a	name
+	f	Lnet/minecraft/a/b;	c	lowerChest
+	f	Lnet/minecraft/a/b;	b	upperChest
+	m	(Ljava/lang/String;Lnet/minecraft/a/b;Lnet/minecraft/a/b;)V	<init>	<init>
+		p	2		upperChest
+		p	1		name
+		p	3		lowerChest
+c	net/minecraft/client/a/b/b	net/minecraft/client/render/camera/ClippingHelper
+	f	[[F	a	frustrum
+	f	[F	d	clippingMatrix
+	f	[F	c	modelviewMatrix
+	f	[F	b	projectionMatrix
+c	net/minecraft/client/a/b/a	net/minecraft/client/render/camera/ClippingHelperImplementation
+	m	()Lnet/minecraft/client/a/b/b;	a	init
+	m	([[FI)V	a	normalize
+	f	Lnet/minecraft/client/a/b/a;	e	instance
+	f	Ljava/nio/FloatBuffer;	h	ICamera
+	f	Ljava/nio/FloatBuffer;	g	modelviewMatrixBuffer
+	f	Ljava/nio/FloatBuffer;	f	projectionMatrixBuffer
+c	net/minecraft/client/a/b/d	net/minecraft/client/render/camera/IsomCamera
+c	net/minecraft/client/a/b/c	net/minecraft/client/render/camera/Frustrum
+	f	Lnet/minecraft/client/a/b/b;	a	clippingHelper
+c	net/minecraft/client/a/b/e	net/minecraft/client/render/camera/ICamera
+	m	(Lnet/minecraft/a/d/b;)Z	a	isBoundingBoxInFrustrum
+		p	1		aabb
+c	net/minecraft/client/d/b	net/minecraft/client/controller/PlayerControllerSP
+	f	I	c	curBlockX
+	f	Lnet/minecraft/a/a/b;	j	mobSpawner
+	f	I	e	curBlockZ
+	f	I	d	curBlockY
+	f	F	h	blockDestroySoundCounter
+	f	F	g	prevBlockDamage
+	f	I	i	blockHitWait
+	f	F	f	curBlockDamage
+c	net/minecraft/client/d/a	net/minecraft/client/controller/PlayerController
+	f	Lnet/minecraft/client/d;	a	mc
+	m	()V	c	onUpdate
+	m	(Lnet/minecraft/a/a/g;)V	a	onWorldChange
+		p	1		world
+	m	()F	b	getBlockReachDistance
+	m	()V	a	resetBlockRemoving
+	f	Z	b	isInTestMode
+	m	()Z	d	shouldDrawHUD
+	m	(III)Z	b	sendBlockRemoved
+	m	(F)V	a	setPartialTime
+	m	(Lnet/minecraft/client/d;)V	<init>	<init>
+		p	1		minecraft
+	m	(Lnet/minecraft/a/c/e/a;)V	a	onRespawn
+		p	1		entityPlayer
+	m	(IIII)V	a	sendBlockRemoving
+	m	(III)V	a	clickBlock
+c	net/minecraft/a/a/c/a	net/minecraft/game/level/generator/LevelGenerator
+	f	I	k	waterLevel
+	m	(IIII)I	a	populateOre
+	f	I	m	phaseBar
+	m	(Lnet/minecraft/a/a/g;)V	a	generateHouse
+		p	0		world
+	m	(IIIII)J	a	floodFill
+	f	I	g	depth
+	m	(Lnet/minecraft/a/a/g;)V	c	growTrees
+		p	1		world
+	m	(Ljava/lang/String;III)Lnet/minecraft/a/a/g;	a	generate
+		p	3		depth
+		p	4		height
+		p	1		authorName
+		p	2		width
+	f	Z	c	flatGen
+	m	()V	b	loadingBar
+	f	I	n	phases
+	f	Z	a	islandGen
+	m	(F)V	a	setNextPhase
+	m	(Lnet/minecraft/a/a/g;Lnet/minecraft/a/a/b/ad;I)V	a	populateFlowersAndMushrooms
+		p	2		flowers
+		p	1		world
+	f	I	d	levelType
+	f	[I	p	floodFillBlocks
+	f	I	l	groundLevel
+	f	[B	j	blocksByteArray
+	f	I	f	width
+	m	(Lnet/minecraft/a/a/g;)V	b	growGrassOnDirt
+		p	1		world
+	f	I	h	height
+	f	F	o	phaseBareLength
+	m	()V	a	liquidThemeSpawner
+	f	La/b;	e	guiLoading
+	f	Z	b	floatingGen
+	m	()V	c	lavaGen
+	m	(La/b;)V	<init>	<init>
+		p	1		guiLoading
+	f	Ljava/util/Random;	i	rand
+c	net/minecraft/client/d/c	net/minecraft/client/controller/PlayerControllerCreative
+	f	Lnet/minecraft/a/a/b;	c	mobSpawner
+c	net/minecraft/a/b/a/d	net/minecraft/game/item/recipe/RecipesIngots
+	f	[[Ljava/lang/Object;	a	recipeItems
+	m	(Lnet/minecraft/a/b/a/f;)V	a	addRecipes
+		p	1		craftingManager
+c	net/minecraft/a/b/j	net/minecraft/game/item/ItemArmor
+	f	I	au	renderIndex
+	f	I	as	armorType
+	f	I	at	damageReduceAmount
+	f	[I	av	damageReduceAmountArray
+	m	(IIII)V	<init>	<init>
+		p	2		armorLevel
+		p	1		itemID
+		p	4		armorType
+		p	3		armorTexture
+	f	[I	aw	maxDamageArray
+c	net/minecraft/a/b/a/c	net/minecraft/game/item/recipe/CraftingRecipe
+	f	Lnet/minecraft/a/b/k;	d	recipeOutput
+	m	()Lnet/minecraft/a/b/k;	a	createResult
+	m	([I)Z	a	matchRecipe
+	f	[I	c	ingredientMap
+	m	([IIIZ)Z	a	matches
+	f	I	a	width
+	f	I	b	height
+	m	(II[ILnet/minecraft/a/b/k;)V	<init>	<init>
+		p	2		height
+		p	1		width
+		p	4		recipeOutput
+		p	3		ingredientMap
+c	net/minecraft/a/b/i	net/minecraft/game/item/Item
+	f	Lnet/minecraft/a/b/i;	ag	bootsDiamond
+	f	Lnet/minecraft/a/b/i;	G	silk
+	m	(I)Lnet/minecraft/a/b/i;	a	setIconIndex
+	f	Lnet/minecraft/a/b/i;	h	arrow
+	f	Ljava/util/Random;	a	rand
+	m	(Lnet/minecraft/a/b/k;Lnet/minecraft/a/a/g;Lnet/minecraft/a/c/e/a;)Lnet/minecraft/a/b/k;	a	onItemRightClick
+		p	3		entityPlayer
+		p	1		itemStack
+		p	2		world
+	f	Lnet/minecraft/a/b/i;	ac	bootsSteel
+	f	Lnet/minecraft/a/b/i;	K	hoeStone
+	f	Lnet/minecraft/a/b/i;	l	ingotGold
+	m	()I	c	getItemStackLimit
+	f	Lnet/minecraft/a/b/i;	O	seeds
+	f	Lnet/minecraft/a/b/i;	p	pickaxeWood
+	f	I	aq	maxStackSize
+	m	(I)V	<init>	<init>
+		p	1		itemID
+	f	Lnet/minecraft/a/b/i;	S	plateLeather
+	f	Lnet/minecraft/a/b/i;	t	pickaxeStone
+	f	Lnet/minecraft/a/b/i;	W	plateChain
+	f	Lnet/minecraft/a/b/i;	x	pickaxeDiamond
+	m	()I	b	getIconIndex
+	f	Lnet/minecraft/a/b/i;	al	flint
+	f	Lnet/minecraft/a/b/i;	B	bowlSoup
+	f	Lnet/minecraft/a/b/i;	c	shovel
+	f	Lnet/minecraft/a/b/i;	ah	helmetGold
+	f	Lnet/minecraft/a/b/i;	F	axeGold
+	f	Lnet/minecraft/a/b/i;	g	bow
+	m	(Lnet/minecraft/a/a/b/x;)Z	a	canHarvestBlock
+		p	1		block
+	f	Lnet/minecraft/a/b/i;	ad	helmetDiamond
+	f	Lnet/minecraft/a/b/i;	J	hoeWood
+	f	Lnet/minecraft/a/b/i;	k	ingotIron
+	f	Lnet/minecraft/a/b/i;	N	hoeGold
+	f	Lnet/minecraft/a/b/i;	o	shovelWood
+	f	I	ap	shiftedIndex
+	f	Lnet/minecraft/a/b/i;	R	helmetLeather
+	f	Lnet/minecraft/a/b/i;	s	shovelStone
+	m	(Lnet/minecraft/a/b/k;Lnet/minecraft/a/a/g;IIII)Z	a	onItemUse
+		p	2		world
+		p	1		itemStack
+	f	Lnet/minecraft/a/b/i;	V	helmetChain
+	f	Lnet/minecraft/a/b/i;	w	shovelDiamond
+	f	Lnet/minecraft/a/b/i;	Z	helmetSteel
+	m	()I	a	getDamageVsEntity
+	m	(Lnet/minecraft/a/a/b/x;)F	b	getStrVsBlock
+		p	1		block
+	f	Lnet/minecraft/a/b/i;	am	porkRaw
+	f	Lnet/minecraft/a/b/i;	A	bowlEmpty
+	f	Lnet/minecraft/a/b/i;	ai	plateGold
+	f	Lnet/minecraft/a/b/i;	E	pickaxeGold
+	f	Lnet/minecraft/a/b/i;	f	striker
+	f	[Lnet/minecraft/a/b/i;	b	itemsList
+	f	Lnet/minecraft/a/b/i;	ae	plateDiamond
+	f	Lnet/minecraft/a/b/i;	I	gunpowder
+	f	Lnet/minecraft/a/b/i;	j	diamond
+	m	(Lnet/minecraft/a/b/k;)V	b	onBlockDestroyed
+		p	1		itemStack
+	f	Lnet/minecraft/a/b/i;	aa	plateSteel
+	f	Lnet/minecraft/a/b/i;	M	hoeDiamond
+	f	Lnet/minecraft/a/b/i;	n	swordWood
+	f	I	as	iconIndex
+	f	Lnet/minecraft/a/b/i;	Q	bread
+	f	Lnet/minecraft/a/b/i;	r	swordStone
+	f	Lnet/minecraft/a/b/i;	U	bootsLeather
+	f	Lnet/minecraft/a/b/i;	v	swordDiamond
+	f	Lnet/minecraft/a/b/i;	Y	bootsChain
+	f	Lnet/minecraft/a/b/i;	z	stick
+	f	Lnet/minecraft/a/b/i;	an	porkCooked
+	f	Lnet/minecraft/a/b/i;	aj	legsGold
+	f	Lnet/minecraft/a/b/i;	D	shovelGold
+	f	Lnet/minecraft/a/b/i;	e	axeSteel
+	f	Lnet/minecraft/a/b/i;	af	legsDiamond
+	f	Lnet/minecraft/a/b/i;	H	feather
+	f	Lnet/minecraft/a/b/i;	i	coal
+	f	Lnet/minecraft/a/b/i;	ab	legsSteel
+	f	Lnet/minecraft/a/b/i;	L	hoeSteel
+	f	Lnet/minecraft/a/b/i;	m	swordSteel
+	m	(Lnet/minecraft/a/b/k;)V	a	hitEntity
+		p	1		itemStack
+	f	I	ar	maxDamage
+	m	()I	d	getMaxDamage
+	f	Lnet/minecraft/a/b/i;	P	wheat
+	f	Lnet/minecraft/a/b/i;	q	axeWood
+	f	Lnet/minecraft/a/b/i;	T	legsLeather
+	f	Lnet/minecraft/a/b/i;	u	axeStone
+	f	Lnet/minecraft/a/b/i;	X	legsChain
+	f	Lnet/minecraft/a/b/i;	y	axeDiamond
+	f	Lnet/minecraft/a/b/i;	ao	painting
+	f	Lnet/minecraft/a/b/i;	ak	bootsGold
+	f	Lnet/minecraft/a/b/i;	C	swordGold
+	f	Lnet/minecraft/a/b/i;	d	pickaxeSteel
+c	net/minecraft/a/b/a/b	net/minecraft/game/item/recipe/RecipesFood
+c	net/minecraft/a/b/h	net/minecraft/game/item/ItemAxe
+	m	(II)V	<init>	<init>
+		p	2		harvestLevel
+		p	1		itemID
+	f	[Lnet/minecraft/a/a/b/x;	as	blocksEffectiveAgainst
+c	net/minecraft/a/b/a/a	net/minecraft/game/item/recipe/RecipesArmor
+	f	[[Ljava/lang/String;	a	recipePatterns
+	f	[[Ljava/lang/Object;	b	recipeItems
+	m	(Lnet/minecraft/a/b/a/f;)V	a	addRecipes
+		p	1		craftingManager
+c	net/minecraft/a/b/g	net/minecraft/game/item/ItemTool
+	f	F	at	efficiencyOnProperMaterial
+	f	I	au	damageVsEntity
+	m	(III[Lnet/minecraft/a/a/b/x;)V	<init>	<init>
+		p	1		itemID
+		p	4		blocksEffected
+		p	2		baseDamage
+		p	3		damage
+	f	[Lnet/minecraft/a/a/b/x;	as	blocksEffectiveAgainst
+c	net/minecraft/a/b/n	net/minecraft/game/item/ItemHoe
+	m	(II)V	<init>	<init>
+		p	1		itemID
+		p	2		damage
+c	net/minecraft/a/b	net/minecraft/game/IInventory
+	m	()Ljava/lang/String;	b	getInvName
+	m	(I)Lnet/minecraft/a/b/k;	a	getStackInSlot
+	m	(ILnet/minecraft/a/b/k;)V	a	setInventorySlotContents
+		p	2		itemStack
+	m	()I	a	getSizeInventory
+	m	(II)Lnet/minecraft/a/b/k;	a	decrStackSize
+	m	()I	c	getInventoryStackLimit
+c	net/minecraft/a/b/m	net/minecraft/game/item/ItemFlintAndSteel
+c	net/minecraft/a/b/l	net/minecraft/game/item/ItemSpade
+	f	[Lnet/minecraft/a/a/b/x;	as	blocksEffectiveAgainst
+	m	(II)V	<init>	<init>
+		p	2		harvestLevel
+		p	1		itemID
+c	net/minecraft/a/b/k	net/minecraft/game/item/ItemStack
+	m	(Lcom/a/a/c;)Lcom/a/a/c;	a	writeToNBT
+		p	1		nbtTagCompound
+	m	(I)Lnet/minecraft/a/b/k;	a	splitStack
+	m	(Lnet/minecraft/a/b/i;I)V	<init>	<init>
+		p	1		item
+	m	(Lcom/a/a/c;)V	<init>	<init>
+		p	1		nbtTagCompound
+	m	(Lnet/minecraft/a/b/i;)V	<init>	<init>
+		p	1		item
+	f	I	a	stackSize
+	m	()I	b	isItemStackDamageable
+	f	I	b	animationsToGo
+	f	I	c	itemID
+	m	(Lnet/minecraft/a/a/b/x;I)V	<init>	<init>
+		p	1		block
+	f	I	d	itemDamage
+	m	()Lnet/minecraft/a/b/i;	a	getItem
+	m	(Lnet/minecraft/a/a/b/x;)V	<init>	<init>
+		p	1		block
+	m	(I)V	b	damageItem
+c	net/minecraft/a/b/b	net/minecraft/game/item/ItemSoup
+c	net/minecraft/a/b/a	net/minecraft/game/item/ItemPickaxe
+	f	[Lnet/minecraft/a/a/b/x;	as	blocksEffectiveAgainst
+	m	(II)V	<init>	<init>
+		p	2		harvestLevel
+		p	1		itemID
+	f	I	at	harvestLevel
+c	net/minecraft/a/b/a/i	net/minecraft/game/item/recipe/RecipeSorter
+	m	(Lnet/minecraft/a/b/a/f;)V	<init>	<init>
+		p	1		craftingManager
+c	net/minecraft/a/b/a/h	net/minecraft/game/item/recipe/RecipesWeapons
+	f	[[Ljava/lang/Object;	b	recipeItems
+	m	(Lnet/minecraft/a/b/a/f;)V	a	addRecipes
+		p	1		craftingManager
+	f	[[Ljava/lang/String;	a	recipePatterns
+c	net/minecraft/a/b/f	net/minecraft/game/item/ItemSeeds
+	m	(II)V	<init>	<init>
+		p	1		itemID
+		p	2		blockID
+	f	I	as	blockType
+c	net/minecraft/a/b/a/g	net/minecraft/game/item/recipe/RecipesCrafting
+c	net/minecraft/a/b/e	net/minecraft/game/item/ItemBow
+c	net/minecraft/a/b/a/f	net/minecraft/game/item/recipe/CraftingManager
+	m	(Lnet/minecraft/a/b/k;[Ljava/lang/Object;)V	a	addRecipe
+		p	1		itemStack
+	m	([I)Lnet/minecraft/a/b/k;	a	findMatchingRecipe
+	f	Ljava/util/List;	b	recipes
+	m	()Lnet/minecraft/a/b/a/f;	a	getInstance
+	f	Lnet/minecraft/a/b/a/f;	a	instance
+c	net/minecraft/a/b/d	net/minecraft/game/item/ItemBlock
+	f	I	as	blockID
+c	net/minecraft/a/b/a/e	net/minecraft/game/item/recipe/RecipesTools
+	m	(Lnet/minecraft/a/b/a/f;)V	a	addRecipes
+		p	1		craftingManager
+	f	[[Ljava/lang/Object;	b	recipeItems
+	f	[[Ljava/lang/String;	a	recipePatterns
+c	net/minecraft/a/b/c	net/minecraft/game/item/ItemSword
+	f	I	as	weaponDamage
+	m	(II)V	<init>	<init>
+		p	1		itemID
+		p	2		damage

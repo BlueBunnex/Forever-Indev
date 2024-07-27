@@ -1,0 +1,20 @@
+--- a/net/minecraft/client/controller/PlayerControllerCreative.java
++++ b/net/minecraft/client/controller/PlayerControllerCreative.java
+@@ -1,5 +1,6 @@
+ package net.minecraft.client.controller;
+ 
++import net.minecraft.client.Minecraft;
+ import net.minecraft.client.Session;
+ import net.minecraft.game.entity.player.EntityPlayer;
+ import net.minecraft.game.item.ItemStack;
+@@ -8,6 +9,10 @@
+ import net.minecraft.game.level.block.Block;
+ 
+ public final class PlayerControllerCreative extends PlayerController {
++	public PlayerControllerCreative(Minecraft minecraft) {
++		super(minecraft);
++	}
++
+ 	private MobSpawner mobSpawner;
+ 
+ 	public final void onRespawn(EntityPlayer entityPlayer) {
