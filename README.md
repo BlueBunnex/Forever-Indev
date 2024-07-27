@@ -50,19 +50,9 @@ Forever Indev is a fork of the last version of Minecraft Indev that leans into R
 - **Sugar beets and sugar:** Grow and harvest new crops.
 - **Apple pie:** Craft delicious new food items.
 
-## Building the Mod
-
-To build the Forever Indev mod, follow these steps:
-
-1. **Run the Build Script:**
-   - Depending on your operating system, run the appropriate script to build the mod:
-     - For Linux: `linux/retromcp-build.sh`
-     - For macOS: `macos/retromcp-build.command`
-     - For Windows: `windows/retromcp-build.bat`
-
 ## GitHub Repo
 
-The source code for Forever Indev can be found on our [GitHub repository](#). A build will be available soon!
+The source code for Forever Indev can be found on our [GitHub repository](https://github.com/BlueBunnex/Forever-Indev). A build will be available soon!
 
 ## Updating Textures
 
@@ -86,6 +76,6 @@ To update the texture files in Forever Indev, follow these steps:
 **Notes:**
 
 - Ensure that the structure of the folder and files remains unchanged during the extraction and rezip process.
-- Any errors in the folder structure or file names can cause the game to fail to recognize the updated textures.
+- Any errors in the folder structure or file names can cause the game to fail to recognize the updated textures or even crash due to missing files.
 
-Enjoy exploring and enhancing your medieval fantasy world with Forever Indev!
+Enjoy exploring Forever Indev!
