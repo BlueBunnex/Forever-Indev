@@ -1,0 +1,13 @@
+package net.minecraft.game.item;
+
+public class ItemQuiver extends Item {
+    public ItemQuiver(int id) {
+        super(id);
+        this.maxStackSize = 1;
+    }
+
+    @Override
+    public String getItemName() {
+        return "Quiver";
+    }
+}

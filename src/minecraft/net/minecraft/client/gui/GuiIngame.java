@@ -171,37 +171,56 @@ public final class GuiIngame extends Gui {
 		
 		// showFPS (basically debug settings/F3 menu)
 		if (this.mc.options.showFPS) {
-			
-			fontRend.drawStringWithShadow("Minecraft Forever Indev (" + this.mc.debug + ")", 2, 2, 16777215);
-			
-			Minecraft var23 = this.mc;
-			fontRend.drawStringWithShadow(var23.renderGlobal.getDebugInfoRenders(), 2, 12, 16777215);
-			
-			var23 = this.mc;
-			fontRend.drawStringWithShadow(var23.renderGlobal.getDebugInfoEntities(), 2, 22, 16777215);
-			
-			var23 = this.mc;
-			fontRend.drawStringWithShadow("P: " + var23.effectRenderer.getStatistics() + ". T: " + var23.theWorld.debugSkylightUpdates(), 2, 32, 16777215);
-			
-			// draw held item ID
-			ItemStack currItem = this.mc.thePlayer.inventory.getCurrentItem();
-			fontRend.drawStringWithShadow("Held ID: " + (currItem == null ? "N/A" : currItem.itemID), 2, 42, 16777215);
-			
-			// memory calculations (scary)
-			long maxMem   = Runtime.getRuntime().maxMemory();
-			long totalMem = Runtime.getRuntime().totalMemory();
-			long freeMem  = Runtime.getRuntime().freeMemory();
-			long what     = maxMem - freeMem;
-			
-			String var18 = "Free memory: " + what * 100L / maxMem + "% of " + maxMem / 1024L / 1024L + "MB";
-			drawString(fontRend, var18, width - fontRend.getStringWidth(var18) - 2, 2, 16777215);
-			
-			var18 = "Allocated memory: " + totalMem * 100L / maxMem + "% (" + totalMem / 1024L / 1024L + "MB)";
-			drawString(fontRend, var18, width - fontRend.getStringWidth(var18) - 2, 12, 16777215);
-			
+		    
+		    String text1 = "Minecraft ";
+		    String text2 = "Forever Indev ";
+		    String text3 = " (" + this.mc.debug + ")";
+		    
+		    // Draw "Minecraft" in white
+		    fontRend.drawStringWithShadow(text1, 2, 2, 16777215);
+		    
+		    // Draw "Forever Indev" in cyan
+		    fontRend.drawStringWithShadow(text2, 2 + fontRend.getStringWidth(text1), 2, 0x00FFFF);
+		    
+		    // Draw the remaining text in white
+		    fontRend.drawStringWithShadow(text3, 2 + fontRend.getStringWidth(text1 + text2), 2, 16777215);
+		    
+		    Minecraft var23 = this.mc;
+		    fontRend.drawStringWithShadow(var23.renderGlobal.getDebugInfoRenders(), 2, 12, 16777215);
+		    
+		    var23 = this.mc;
+		    fontRend.drawStringWithShadow(var23.renderGlobal.getDebugInfoEntities(), 2, 22, 16777215);
+		    
+		    var23 = this.mc;
+		    fontRend.drawStringWithShadow("P: " + var23.effectRenderer.getStatistics() + ". T: " + var23.theWorld.debugSkylightUpdates(), 2, 32, 16777215);
+		    
+		    // draw held item ID
+		    ItemStack currItem = this.mc.thePlayer.inventory.getCurrentItem();
+		    fontRend.drawStringWithShadow("Held ID: " + (currItem == null ? "N/A" : currItem.itemID), 2, 42, 16777215);
+		    
+		    // memory calculations (scary)
+		    long maxMem   = Runtime.getRuntime().maxMemory();
+		    long totalMem = Runtime.getRuntime().totalMemory();
+		    long freeMem  = Runtime.getRuntime().freeMemory();
+		    long what     = maxMem - freeMem;
+		    
+		    String var18 = "Free memory: " + what * 100L / maxMem + "% of " + maxMem / 1024L / 1024L + "MB";
+		    drawString(fontRend, var18, width - fontRend.getStringWidth(var18) - 2, 2, 16777215);
+		    
+		    var18 = "Allocated memory: " + totalMem * 100L / maxMem + "% (" + totalMem / 1024L / 1024L + "MB)";
+		    drawString(fontRend, var18, width - fontRend.getStringWidth(var18) - 2, 12, 16777215);
+		    
 		} else {
-			fontRend.drawStringWithShadow("Minecraft Forever Indev", 2, 2, 16777215);
+		    String text1 = "Minecraft ";
+		    String text2 = "Forever Indev";
+		    
+		    // Draw "Minecraft" in white
+		    fontRend.drawStringWithShadow(text1, 2, 2, 16777215);
+		    
+		    // Draw "Forever Indev" in cyan
+		    fontRend.drawStringWithShadow(text2, 2 + fontRend.getStringWidth(text1), 2, 0x00FFFF);
 		}
+
 
 		// draw chat
 		for(int i = 0; i < this.chatMessageList.size() && i < 10; i++) {

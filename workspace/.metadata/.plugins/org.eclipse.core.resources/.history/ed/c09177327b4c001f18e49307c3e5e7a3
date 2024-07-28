@@ -1,0 +1,89 @@
+package net.minecraft.client.gui;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+import net.minecraft.client.ChatLine;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.RenderHelper;
+import net.minecraft.client.player.EntityPlayerSP;
+import net.minecraft.client.render.entity.RenderItem;
+import net.minecraft.game.entity.player.InventoryPlayer;
+import net.minecraft.game.item.ItemStack;
+import org.lwjgl.opengl.GL11;
+
+public final class GuiIngame extends Gui {
+
+    private static RenderItem itemRenderer = new RenderItem();
+    private List<ChatLine> chatMessageList = new ArrayList<ChatLine>();
+    private Random rand = new Random();
+    private Minecraft mc;
+    private int updateCounter = 0;
+
+    public GuiIngame(Minecraft mc) {
+        this.mc = mc;
+    }
+
+    public final void renderGameOverlay(float var1) {
+        ScaledResolution scaledResolution = new ScaledResolution(this.mc.displayWidth, this.mc.displayHeight);
+        int width = scaledResolution.getScaledWidth();
+        int height = scaledResolution.getScaledHeight();
+        InventoryPlayer inventory = this.mc.thePlayer.inventory;
+
+        this.mc.entityRenderer.setupOverlayRendering();
+        GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.mc.renderEngine.getTexture("/gui/gui.png"));
+        this.drawTexturedModalRect(width / 2 - 91, height - 22, 0, 0, 182, 22);
+        this.drawTexturedModalRect(width / 2 - 91 - 1 + inventory.currentItem * 20, height - 22 - 1, 0, 22, 24, 22);
+
+        // Render quiver indicator in the hot bar
+        if (inventory.hasQuiver()) {
+            GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.mc.renderEngine.getTexture("/gui/icons.png"));
+            this.drawTexturedModalRect(width / 2 - 91 + inventory.currentItem * 20, height - 32, 0, 0, 16, 16); // Simple quiver icon
+        }
+
+        for (int i = 0; i < 9; i++) {
+            int x = width / 2 - 90 + i * 20 + 2;
+            int y = height - 16 - 3;
+            ItemStack itemStack = inventory.mainInventory[i];
+            if (itemStack != null) {
+                itemRenderer.renderItemIntoGUI(this.mc.renderEngine, itemStack, x, y);
+                itemRenderer.renderItemOverlayIntoGUI(this.mc.fontRenderer, itemStack, x, y);
+            }
+        }
+
+        RenderHelper.disableStandardItemLighting();
+        GL11.glDisable(GL11.GL_NORMALIZE);
+
+        if (this.mc.options.showFPS) {
+            this.mc.fontRenderer.drawStringWithShadow("Minecraft Forever Indev (" + this.mc.debug + ")", 2, 2, 16777215);
+        } else {
+            this.mc.fontRenderer.drawStringWithShadow("Minecraft Forever Indev", 2, 2, 16777215);
+        }
+
+        for (int i = 0; i < this.chatMessageList.size() && i < 10; i++) {
+            ChatLine chatline = this.chatMessageList.get(i);
+            this.mc.fontRenderer.drawStringWithShadow(chatline.message, 2, height - 8 - i * 9 - 20, 16777215);
+        }
+
+        ItemStack currItem = this.mc.thePlayer.inventory.getCurrentItem();
+        if (currItem != null)
+            drawCenteredStringWithBackground(this.mc.fontRenderer, currItem.getName(), width / 2, height - 48, currItem.getItem().getRarity().color);
+    }
+
+    public final void updateChatMessages() {
+        this.updateCounter++;
+
+        for (int i = 0; i < this.chatMessageList.size(); i++) {
+            ChatLine chatline = this.chatMessageList.get(i);
+            if (chatline.updateCounter > 200) {
+                this.chatMessageList.remove(this.chatMessageList.size() - 1);
+            } else {
+                chatline.updateCounter++;
+            }
+        }
+    }
+
+    public final void addChatMessage(String message) {
+        chatMessageList.add(0, new ChatLine(message));
+    }
+}

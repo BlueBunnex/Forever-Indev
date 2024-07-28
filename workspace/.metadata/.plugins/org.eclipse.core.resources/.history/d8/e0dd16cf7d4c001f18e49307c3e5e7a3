@@ -1,0 +1,60 @@
+public class ScreenshotHelper {
+    private Minecraft mc;
+
+    public ScreenshotHelper(Minecraft mc) {
+        this.mc = mc;
+    }
+
+    public void takeNormalScreenshot() {
+        try {
+            // Minecraft's built-in screenshot functionality
+            mc.takeScreenshot(mc.displayWidth, mc.displayHeight);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void takeIsometricScreenshot() {
+        try {
+            // Setup for isometric view
+            setupIsometricView();
+
+            // Capture screenshot
+            int width = mc.displayWidth;
+            int height = mc.displayHeight;
+            int[] pixels = new int[width * height];
+            GL11.glReadPixels(0, 0, width, height, GL11.GL_RGB, GL11.GL_UNSIGNED_BYTE, org.lwjgl.BufferUtils.createIntBuffer(pixels));
+            
+            BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+            image.setRGB(0, 0, width, height, pixels, 0, width);
+            File file = new File(mc.mcDataDir, "screenshots/isometric_screenshot.png");
+            ImageIO.write(image, "PNG", file);
+
+            // Restore the original view
+            restoreOriginalView();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void setupIsometricView() {
+        // Adjust the camera for isometric view
+        GL11.glMatrixMode(GL11.GL_PROJECTION);
+        GL11.glPushMatrix();
+        GL11.glLoadIdentity();
+        GL11.glOrtho(-100, 100, -100, 100, 0.1, 1000); // Adjust the orthographic projection parameters as needed
+        GL11.glRotatef(45, 1.0F, 0.0F, 0.0F);
+        GL11.glRotatef(-45, 0.0F, 0.0F, 1.0F);
+        GL11.glMatrixMode(GL11.GL_MODELVIEW);
+        GL11.glPushMatrix();
+        GL11.glLoadIdentity();
+    }
+
+    private void restoreOriginalView() {
+        // Restore original projection and model view matrices
+        GL11.glMatrixMode(GL11.GL_PROJECTION);
+        GL11.glPopMatrix();
+        GL11.glMatrixMode(GL11.GL_MODELVIEW);
+        GL11.glPopMatrix();
+    }
+}

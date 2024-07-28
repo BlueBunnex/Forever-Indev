@@ -1,0 +1,5 @@
+package net.minecraft.game.item;
+
+public class ItemQuiver {
+
+}
