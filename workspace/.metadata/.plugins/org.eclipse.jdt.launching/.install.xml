@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <dirs>
-<entry loc="C:\Program Files\Zulu\zulu-8" stamp="1720819100312"/>
+    <entry loc="/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home" stamp="1713397505000"/>
+    <entry loc="/Library/Java/JavaVirtualMachines/openlogic-openjdk-8.jdk/Contents/Home" stamp="1596299175000"/>
+    <entry loc="/Library/Java/JavaVirtualMachines/jdk1.8.0_51.jdk/Contents/Home" stamp="1433812835000"/>
+    <entry loc="/Library/Java/JavaVirtualMachines/zulu-8.jdk/Contents/Home" stamp="1704815865000"/>
+    <entry loc="/Library/Java/JavaVirtualMachines/jdk-17.jdk/Contents/Home" stamp="1691609542057"/>
 </dirs>

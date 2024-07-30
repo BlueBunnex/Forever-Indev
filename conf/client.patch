@@ -1,0 +1,122 @@
+--- net/minecraft/client/gui/GuiIngame.java
++++ net/minecraft/client/gui/GuiIngame.java
+@@ -126,26 +126,25 @@
+ 		GL11.glPopMatrix();
+ 
+ 		for(var10 = 0; var10 < 9; ++var10) {
+-			float var25 = (float)(var3 / 2 - 90 + var10 * 20 + 2);
+-			var12 = var19 - 16 - 3;
+-			float var21 = var25;
++			int var25 = var3 / 2 - 90 + var10 * 20 + 2;
++			int var21 = var19 - 16 - 3;
+ 			ItemStack var22 = this.mc.thePlayer.inventory.mainInventory[var10];
+ 			if(var22 != null) {
+ 				float var9 = (float)var22.animationsToGo - var1;
+ 				if(var9 > 0.0F) {
+ 					GL11.glPushMatrix();
+-					var25 = 1.0F + var9 / 5.0F;
+-					GL11.glTranslatef((float)(var21 + 8), (float)(var12 + 12), 0.0F);
+-					GL11.glScalef(1.0F / var25, (var25 + 1.0F) / 2.0F, 1.0F);
+-					GL11.glTranslatef((float)(-(var21 + 8)), (float)(-(var12 + 12)), 0.0F);
++					float var26 = 1.0F + var9 / 5.0F;
++					GL11.glTranslatef((float)(var25 + 8), (float)(var21 + 12), 0.0F);
++					GL11.glScalef(1.0F / var26, (var26 + 1.0F) / 2.0F, 1.0F);
++					GL11.glTranslatef((float)(-(var25 + 8)), (float)(-(var21 + 12)), 0.0F);
+ 				}
+ 
+-				itemRenderer.renderItemIntoGUI(this.mc.renderEngine, var22, (int)var25, var12);
++				itemRenderer.renderItemIntoGUI(this.mc.renderEngine, var22, var25, var21);
+ 				if(var9 > 0.0F) {
+ 					GL11.glPopMatrix();
+ 				}
+ 
+-				itemRenderer.renderItemOverlayIntoGUI(this.mc.fontRenderer, var22, (int)var25, var12);
++				itemRenderer.renderItemOverlayIntoGUI(this.mc.fontRenderer, var22, var25, var21);
+ 			}
+ 		}
+ 
+--- net/minecraft/client/ThreadDownloadResources.java
++++ net/minecraft/client/ThreadDownloadResources.java
+@@ -1,11 +1,14 @@
+ package net.minecraft.client;
+ 
++import java.io.BufferedReader;
+ import java.io.DataInputStream;
+ import java.io.DataOutputStream;
+ import java.io.File;
+ import java.io.FileOutputStream;
+ import java.io.IOException;
++import java.io.InputStreamReader;
+ import java.net.URL;
++import java.util.ArrayList;
+ 
+ public final class ThreadDownloadResources extends Thread {
+ 	private File resourcesFolder;
+@@ -23,7 +26,66 @@
+ 	}
+ 
+ 	public final void run() {
+-		// $FF: Couldn't be decompiled
++        try {
++            ArrayList<String> list = new ArrayList<String>();
++            URL url = new URL("http://www.minecraft.net/resources/");
++            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(url.openStream()));
++            while (true) {
++                final String line = bufferedReader.readLine();
++                if (line == null) {
++                    break;
++                }
++                list.add(line);
++            }
++            bufferedReader.close();
++            for (int i = 0; i < list.size(); ++i) {
++                URL url2 = url;
++                String s = (String)list.get(i);
++                URL url3 = url2;
++                Label_0338: {
++                    try {
++                        String[] split = s.split(",");
++                        String s2 = split[0];
++                        int int1 = Integer.parseInt(split[1]);
++                        Long.parseLong(split[2]);
++                        final File file = new File(this.resourcesFolder, s2);
++                        if (!file.exists() || file.length() != int1) {
++                            file.getParentFile().mkdirs();
++                            this.downloadResource(new URL(url3, s2.replaceAll(" ", "%20")), file);
++                            if (this.closing) {
++                                break Label_0338;
++                            }
++                        }
++                        Minecraft mc = this.mc;
++                        String s3 = s2;
++                        File file2 = file;
++                        String s4 = s3;
++                        Minecraft minecraft = mc;
++                        int index = s4.indexOf("/");
++                        String substring = s4.substring(0, index);
++                        String substring2 = s4.substring(index + 1);
++                        if (substring.equalsIgnoreCase("sound")) {
++                            minecraft.sndManager.addSound(substring2, file2);
++                        }
++                        else if (substring.equalsIgnoreCase("newsound")) {
++                            minecraft.sndManager.addSound(substring2, file2);
++                        }
++                        else if (substring.equalsIgnoreCase("music")) {
++                            minecraft.sndManager.addMusic(substring2, file2);
++                        }
++                    }
++                    catch (Exception ex) {
++                        ex.printStackTrace();
++                    }
++                }
++                if (this.closing) {
++                    return;
++                }
++            }
++        }
++        catch (IOException ex) {
++            ex.printStackTrace();
++        }
+ 	}
+ 
+ 	private void downloadResource(URL var1, File var2) throws IOException {
