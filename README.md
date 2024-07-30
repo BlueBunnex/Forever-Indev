@@ -1,60 +1,18 @@
-# README
+# Forever Indev
 
-## Home
-
-Welcome to the Forever Indev project!
-
-## Downloads
-
-Check back soon for downloadable builds of Forever Indev.
-
-## Changelogs
-
-Stay updated with the latest changes and improvements.
-
-## Wiki
-
-Visit our Wiki for detailed information, guides, and more, including recipes.
-
-## Extras
-
-Additional resources and tools related to Forever Indev.
-
-## Gallery
-
-Explore screenshots and media showcasing Forever Indev.
+Visit our [dedicated website](https://bluebunnex.github.io/Forever-Indev-Website/) for more details on what the mod adds.
 
 ## What is Forever Indev?
 
 Forever Indev is a fork of the last version of Minecraft Indev that leans into RPG elements and an overall 'medieval fantasy' theme. Made with the help of RetroMCP-Java, Forever Indev is in active development. There may be bugs!
 
-## Features
+## Download
 
-### Quality of Life
+A build is not available just yet, but will be soon!
 
-- **Chat and commands:** Communicate with other players and use commands.
-- **Ability to return to main menu from game:** Easily navigate back to the main menu.
-- **Item tooltips on inventory hover:** See detailed information about items by hovering over them in your inventory.
-- **Creative mode and creative inventory:** Enjoy unlimited resources and creative freedom.
-- **Separate durability icons for armor above hotbar:** Easily monitor armor durability.
-- **Sort button in chest GUI:** Quickly organize items in your chests.
+## Modding
 
-### New Decoration Blocks
-
-- **Coal lamp:** A new light source for your builds.
-- **Polished block, slab, and tiles:** New building materials for aesthetic improvements.
-- **Mud and cobbled brick:** Add rustic charm to your structures.
-
-### New Crops & Cooking Recipes
-
-- **Sugar beets and sugar:** Grow and harvest new crops.
-- **Apple pie:** Craft delicious new food items.
-
-## GitHub Repo
-
-The source code for Forever Indev can be found on our [GitHub repository](https://github.com/BlueBunnex/Forever-Indev). A build will be available soon!
-
-## Updating Textures
+### Updating Textures
 
 To update the texture files in Forever Indev, follow these steps:
 
