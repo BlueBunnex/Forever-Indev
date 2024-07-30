@@ -2,6 +2,7 @@ package net.minecraft.client.commands;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.game.item.ItemStack;
+import net.minecraft.game.item.enchant.Enchant;
 import net.minecraft.game.item.enchant.EnchantType;
 
 public class CommandEnchant extends Command {
@@ -61,11 +62,9 @@ public class CommandEnchant extends Command {
 			}
 		}
 		
-		// enchant
-		EnchantType type = EnchantType.values()[enchantID];
-		
-		held.addEnchant(type, enchantLevel);
-		mc.ingameGUI.addChatMessage("Enchanted " + held.getItem().getName() + " with " + type.name + " " + enchantLevel);
+		// add enchant
+		Enchant enchant = held.addEnchant(EnchantType.values()[enchantID], enchantLevel);
+		mc.ingameGUI.addChatMessage("Enchanted " + held.getItem().getName() + " with " + enchant);
 	}
 
 	public void showHelpMessage(Minecraft mc) {

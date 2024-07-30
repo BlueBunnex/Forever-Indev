@@ -121,7 +121,7 @@ public abstract class GuiContainer extends GuiScreen {
 					);
 				
 				for (Enchant enchant : itemStack.getEnchants()) {
-					tooltip.addLine(enchant.getType().name + " " + enchant.getLevel(), Gui.COLOR_WHITE);
+					tooltip.addLine(enchant.toString(), -3355444);
 				}
 				
 				tooltip.drawStringBox(mc);

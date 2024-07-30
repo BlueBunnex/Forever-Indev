@@ -73,14 +73,16 @@ public final class ItemStack {
 		return 0;
 	}
 	
-	public void addEnchant(EnchantType type, int level) {
-		this.addEnchant(new Enchant(type, level));
+	public Enchant addEnchant(EnchantType type, int level) {
+		return this.addEnchant(new Enchant(type, level));
 	}
 	
-	public void addEnchant(Enchant enchant) {
+	public Enchant addEnchant(Enchant enchant) {
 		
 		if (enchant.getLevel() > 0)
 			enchants.add(enchant);
+		
+		return enchant;
 	}
 	
 	public Iterable<Enchant> getEnchants() {
