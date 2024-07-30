@@ -22,7 +22,6 @@ public class CommandGamemode extends Command {
 		}
 	}
 
-	@Override
 	public void showHelpMessage(Minecraft mc) {
 		mc.ingameGUI.addChatMessage("/gamemode [0=survival/1=creative]");
 		mc.ingameGUI.addChatMessage("    Changes the player's gamemode.");
