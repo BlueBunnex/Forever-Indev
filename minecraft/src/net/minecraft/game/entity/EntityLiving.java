@@ -2,12 +2,15 @@ package net.minecraft.game.entity;
 
 import com.mojang.nbt.NBTTagCompound;
 import java.util.List;
+
+import net.minecraft.game.item.Item;
 import net.minecraft.game.level.World;
 import net.minecraft.game.level.block.Block;
 import net.minecraft.game.level.block.StepSound;
 import util.MathHelper;
 
 public class EntityLiving extends Entity {
+	
 	public int heartsHalvesLife = 20;
 	public float renderYawOffset = 0.0F;
 	public float prevRenderYawOffset = 0.0F;
@@ -280,16 +283,26 @@ public class EntityLiving extends Entity {
 		return "random.hurt";
 	}
 
+	/**
+	 * Handles mob drops, including rupees
+	 * @param attacker
+	 */
 	public void onDeath(Entity attacker) {
 		
+		// item
 		int itemID = this.getDroppedItemID();
 		
 		if (itemID > 0) {
 			int count = getDroppedItemCount();
 
-			for(int i = 0; i < count; i++) {
+			for (int i = 0; i < count; i++) {
 				this.dropItemWithOffset(itemID, 1);
 			}
+		}
+		
+		// rupees
+		for (int i = 0; i < this.getDroppedRupeeCount(); i++) {
+			this.dropItemWithOffset(Item.rupeePlain.shiftedIndex, 1);
 		}
 	}
 
@@ -307,6 +320,10 @@ public class EntityLiving extends Entity {
 	 */
 	protected int getDroppedItemCount() {
 		return this.rand.nextInt(3);
+	}
+	
+	protected int getDroppedRupeeCount() {
+		return 0;
 	}
 
 	protected final void fall(float var1) {

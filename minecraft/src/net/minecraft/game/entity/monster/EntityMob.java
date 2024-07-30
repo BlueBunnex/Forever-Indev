@@ -5,7 +5,9 @@ import net.minecraft.game.entity.Entity;
 import net.minecraft.game.entity.EntityCreature;
 import net.minecraft.game.level.World;
 
+// TODO change to EntityMonster?
 public class EntityMob extends EntityCreature {
+	
 	protected int attackStrength = 2;
 
 	public EntityMob(World var1) {
@@ -74,5 +76,9 @@ public class EntityMob extends EntityCreature {
 	public final boolean getCanSpawnHere(float var1, float var2, float var3) {
 		byte var4 = this.worldObj.getBlockLightValue((int)var1, (int)var2, (int)var3);
 		return var4 <= this.rand.nextInt(8) && super.getCanSpawnHere(var1, var2, var3);
+	}
+	
+	protected int getDroppedRupeeCount() {
+		return (int) (Math.random() * 3) + 1;
 	}
 }

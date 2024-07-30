@@ -6,6 +6,7 @@ import net.minecraft.game.physics.Vec3D;
 import util.MathHelper;
 
 public class EntityCreature extends EntityLiving {
+	
 	private PathEntity pathToEntity;
 	protected Entity playerToAttack;
 	protected boolean hasAttacked = false;
@@ -121,8 +122,7 @@ public class EntityCreature extends EntityLiving {
 		}
 	}
 
-	protected void attackEntity(Entity var1, float var2) {
-	}
+	protected void attackEntity(Entity var1, float var2) {}
 
 	protected float getBlockPathWeight(int var1, int var2, int var3) {
 		return 0.0F;

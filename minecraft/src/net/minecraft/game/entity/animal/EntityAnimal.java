@@ -6,8 +6,9 @@ import net.minecraft.game.level.World;
 import net.minecraft.game.level.block.Block;
 
 public abstract class EntityAnimal extends EntityCreature {
-	public EntityAnimal(World var1) {
-		super(var1);
+	
+	public EntityAnimal(World world) {
+		super(world);
 	}
 
 	protected final float getBlockPathWeight(int var1, int var2, int var3) {
@@ -24,5 +25,9 @@ public abstract class EntityAnimal extends EntityCreature {
 
 	public final boolean getCanSpawnHere(float var1, float var2, float var3) {
 		return this.worldObj.getBlockLightValue((int)var1, (int)var2, (int)var3) > 8 && super.getCanSpawnHere(var1, var2, var3);
+	}
+	
+	protected int getDroppedRupeeCount() {
+		return (int) (Math.random() * 2);
 	}
 }

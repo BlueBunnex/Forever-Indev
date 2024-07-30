@@ -80,6 +80,8 @@ public class Item {
 	public static Item sugarBeet;
 	public static Item sugar;
 	public static Item applePie;
+	public static Item rupeePlain;
+	public static Item rupeeDark;
 	
 	public final int shiftedIndex;
 	protected int maxStackSize = 64;
@@ -354,5 +356,12 @@ public class Item {
 		
 		painting = new ItemPainting("Painting", 68);
 		painting.iconIndex = 26;
+		
+		// rupees
+		rupeePlain = new Item("Rupee", 69);
+		rupeePlain.iconIndex = 144;
+		
+		rupeeDark = new Item("Dark Rupee", 70);
+		rupeeDark.iconIndex = 146;
 	}
 }
