@@ -4,6 +4,10 @@ import net.minecraft.client.render.Tessellator;
 import org.lwjgl.opengl.GL11;
 
 public class Gui {
+	
+	public static final int COLOR_WHITE = 16777215;
+	public static final int COLOR_GREY = 8421504;
+	
 	protected float zLevel = 0.0F;
 
 	protected static void drawRect(int x1, int y1, int x2, int y2, int color) {

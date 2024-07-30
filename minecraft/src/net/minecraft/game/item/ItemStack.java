@@ -1,13 +1,22 @@
 package net.minecraft.game.item;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+
 import com.mojang.nbt.NBTTagCompound;
+
+import net.minecraft.game.item.enchant.Enchant;
+import net.minecraft.game.item.enchant.EnchantType;
 import net.minecraft.game.level.block.Block;
 
 public final class ItemStack {
+	
 	public int stackSize;
 	public int animationsToGo;
 	public int itemID;
 	public int itemDamage;
+	
+	private ArrayList<Enchant> enchants;
 
 	public ItemStack(Block block) {
 		this(block, 1);
@@ -32,12 +41,16 @@ public final class ItemStack {
 	public ItemStack(int itemID, int stackSize) {
 		this.itemID = itemID;
 		this.stackSize = stackSize;
+		
+		this.enchants = new ArrayList<Enchant>();
 	}
 
 	public ItemStack(int itemID, int stackSize, int itemDamage) {
 		this.itemID = itemID;
 		this.stackSize = stackSize;
 		this.itemDamage = itemDamage;
+		
+		this.enchants = new ArrayList<Enchant>();
 	}
 
 	public ItemStack(NBTTagCompound nbt) {
@@ -49,6 +62,36 @@ public final class ItemStack {
 	
 	public String getName() {
 		return Item.itemsList[itemID].name;
+	}
+	
+	/**
+	 * [NOT YET IMPLEMENTED] Gets the enchant level of the specified enchant type, or 0 if not enchanted with that enchant.
+	 * @param type the type of enchant to check for
+	 */
+	public int enchantLevelOf(EnchantType type) {
+		// TODO implement
+		return 0;
+	}
+	
+	public void addEnchant(EnchantType type, int level) {
+		this.addEnchant(new Enchant(type, level));
+	}
+	
+	public void addEnchant(Enchant enchant) {
+		
+		if (enchant.getLevel() > 0)
+			enchants.add(enchant);
+	}
+	
+	public Iterable<Enchant> getEnchants() {
+		
+		return new Iterable<Enchant>() {
+
+			public Iterator<Enchant> iterator() {
+				return enchants.iterator();
+			}
+			
+		};
 	}
 	
 	/**

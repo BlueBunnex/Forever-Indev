@@ -87,7 +87,7 @@ public final class GuiMainMenu extends GuiScreen {
         // Draw the logo
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.mc.renderEngine.getTexture("/gui/logo.png"));
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        Tessellator.instance.setColorOpaque_I(16777215);
+        Tessellator.instance.setColorOpaque_I(Gui.COLOR_WHITE);
         this.drawTexturedModalRect((this.width - 256) / 2, 30, 0, 0, 256, 64);
 
         // Draw "Forever Indev" text in cyan under the logo, moved up and larger
@@ -101,7 +101,7 @@ public final class GuiMainMenu extends GuiScreen {
 
         // Draw other elements
         String text = "Made by Blue. Distribute!";
-        drawString(this.fontRenderer, text, this.width - this.fontRenderer.getStringWidth(text) - 2, this.height - 10, 16777215);
+        drawString(this.fontRenderer, text, this.width - this.fontRenderer.getStringWidth(text) - 2, this.height - 10, Gui.COLOR_WHITE);
 
         // Memory info
         long maxMem = Runtime.getRuntime().maxMemory();
@@ -110,15 +110,15 @@ public final class GuiMainMenu extends GuiScreen {
         long usedMem = totalMem - freeMem;
 
         text = "Free memory: " + usedMem * 100L / maxMem + "% of " + maxMem / 1024L / 1024L + "MB";
-        drawString(this.fontRenderer, text, this.width - this.fontRenderer.getStringWidth(text) - 2, 2, 8421504);
+        drawString(this.fontRenderer, text, this.width - this.fontRenderer.getStringWidth(text) - 2, 2, Gui.COLOR_GREY);
 
         text = "Allocated memory: " + totalMem * 100L / maxMem + "% (" + totalMem / 1024L / 1024L + "MB)";
-        drawString(this.fontRenderer, text, this.width - this.fontRenderer.getStringWidth(text) - 2, 12, 8421504);
+        drawString(this.fontRenderer, text, this.width - this.fontRenderer.getStringWidth(text) - 2, 12, Gui.COLOR_GREY);
 
         // Draw current date and time in "Month day, Year @ time" format
         SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM d, yyyy @ h:mm a");
         String dateTime = dateFormat.format(new Date());
-        drawString(this.fontRenderer, "Current time: " + dateTime, 2, 2, 16777215);
+        drawString(this.fontRenderer, "Current time: " + dateTime, 2, 2, Gui.COLOR_WHITE);
 
         // Draw buttons and splash text
         super.drawScreen(mouseX, mouseY);

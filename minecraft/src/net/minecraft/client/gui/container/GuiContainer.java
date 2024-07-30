@@ -3,12 +3,16 @@ package net.minecraft.client.gui.container;
 import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.client.RenderHelper;
+import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.GuiStringBox;
 import net.minecraft.client.player.EntityPlayerSP;
 import net.minecraft.client.render.RenderEngine;
 import net.minecraft.client.render.entity.RenderItem;
 import net.minecraft.game.IInventory;
 import net.minecraft.game.item.ItemStack;
+import net.minecraft.game.item.enchant.Enchant;
+
 import org.lwjgl.opengl.GL11;
 
 public abstract class GuiContainer extends GuiScreen {
@@ -109,14 +113,21 @@ public abstract class GuiContainer extends GuiScreen {
 			// show tooltip for hovered item
 			if (itemStack != null && this.heldItem == null) {
 
-				//GL11.glTranslatef(0.0F, 0.0F, 16.0F);
-				drawStringWithBackground(
-						this.fontRenderer,
+				GuiStringBox tooltip = new GuiStringBox(mc.fontRenderer, mouseX - cornerX + 6, mouseY - cornerY - 6);
+				
+				tooltip.addLine(
 						itemStack.getName() + " (#" + itemStack.getItem().shiftedIndex + ")",
-						mouseX - cornerX + 6,
-						mouseY - cornerY - 6,
 						itemStack.getItem().getRarity().color
-				);
+					);
+				
+				for (Enchant enchant : itemStack.getEnchants()) {
+					tooltip.addLine(enchant.getType().name + " " + enchant.getLevel(), Gui.COLOR_WHITE);
+				}
+				
+				tooltip.drawStringBox(mc);
+				
+				// should probably put this into the actual draw functions so we don't
+				// have to 'repair' for it
 				GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 			}
 			
