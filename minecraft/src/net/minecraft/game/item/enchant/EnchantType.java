@@ -5,7 +5,7 @@ public enum EnchantType {
 	// Enchants are just enums since they don't have any internal
 	// logic (basically just flags for other functions to use)
 	
-	earthBreaker("Earth Breaker");
+	fiery("Fiery");
 	
 	public final String name;
 

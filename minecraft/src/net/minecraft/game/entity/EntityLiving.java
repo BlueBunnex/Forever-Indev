@@ -3,7 +3,9 @@ package net.minecraft.game.entity;
 import com.mojang.nbt.NBTTagCompound;
 import java.util.List;
 
+import net.minecraft.game.entity.player.EntityPlayer;
 import net.minecraft.game.item.Item;
+import net.minecraft.game.item.enchant.EnchantType;
 import net.minecraft.game.level.World;
 import net.minecraft.game.level.block.Block;
 import net.minecraft.game.level.block.StepSound;
@@ -39,9 +41,10 @@ public class EntityLiving extends Entity {
 	//private float defaultPitch;
 	protected float moveSpeed;
 
-	public EntityLiving(World var1) {
-		super(var1);
-		Math.random();
+	public EntityLiving(World world) {
+		super(world);
+		
+		Math.random(); // why is this here
 		this.entityAge = 0;
 		this.isJumping = false;
 		//this.defaultPitch = 0.0F;
@@ -73,6 +76,7 @@ public class EntityLiving extends Entity {
 
 	public void onEntityUpdate() {
 		super.onEntityUpdate();
+		
 		if(this.rand.nextInt(1000) < this.livingSoundTime++) {
 			this.livingSoundTime = -80;
 			String var1 = this.getLivingSound();
@@ -221,6 +225,18 @@ public class EntityLiving extends Entity {
 
 	public boolean attackThisEntity(Entity attacker, int damage) {
 		
+		// if attacker is the player, check if their attacking item is enchanted
+		if (attacker instanceof EntityPlayer) {
+			
+			EntityPlayer player = (EntityPlayer) attacker;
+			
+			int fieryLevel = player.inventory.getCurrentItem().enchantLevelOf(EnchantType.fiery);
+			
+			if (fieryLevel > 0)
+				this.fire = 50 * fieryLevel; 
+		}
+		
+		//
 		this.entityAge = 0;
 		
 		if(this.health <= 0) {

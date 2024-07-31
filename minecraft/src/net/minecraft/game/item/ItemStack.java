@@ -70,11 +70,17 @@ public final class ItemStack {
 	}
 	
 	/**
-	 * [NOT YET IMPLEMENTED] Gets the enchant level of the specified enchant type, or 0 if not enchanted with that enchant.
+	 * Gets the enchant level of the specified enchant type, or 0 if not enchanted with that enchant.
 	 * @param type the type of enchant to check for
 	 */
 	public int enchantLevelOf(EnchantType type) {
-		// TODO implement
+		
+		for (Enchant enchant : enchants) {
+			
+			if (enchant.getType() == type)
+				return enchant.getLevel();
+		}
+		
 		return 0;
 	}
 	
