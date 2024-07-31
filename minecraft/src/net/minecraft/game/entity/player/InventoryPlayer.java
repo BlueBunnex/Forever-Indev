@@ -5,6 +5,7 @@ import net.minecraft.game.item.ItemArmor;
 import net.minecraft.game.item.ItemStack;
 
 public final class InventoryPlayer implements IInventory {
+	
 	public ItemStack[] mainInventory = new ItemStack[36];
 	public ItemStack[] armorInventory = new ItemStack[4];
 	public int currentItem = 0;
@@ -28,11 +29,12 @@ public final class InventoryPlayer implements IInventory {
 		return -1;
 	}
 
-	private int storeItemStack() {
-		for(int var1 = 0; var1 < this.mainInventory.length; ++var1) {
-			if(this.mainInventory[var1] == null) {
-				return var1;
-			}
+	private int getAvailableSlot() {
+		
+		for (int i = 0; i < this.mainInventory.length; i++) {
+			
+			if (this.mainInventory[i] == null)
+				return i;
 		}
 
 		return -1;
@@ -58,10 +60,26 @@ public final class InventoryPlayer implements IInventory {
 		}
 	}
 
-	public final boolean storePartialItemStack(ItemStack var1) {
-		if(var1.itemDamage == 0) {
-			int var4 = var1.stackSize;
-			int var3 = var1.itemID;
+	public final boolean storePartialItemStack(ItemStack itemstack) {
+		
+		// add non-stackable item into first available slot
+		if (itemstack.getItem().getItemStackLimit() == 1) {
+			
+			int i = this.getAvailableSlot();
+			
+			if(i >= 0) {
+				this.mainInventory[i] = itemstack;
+				this.mainInventory[i].animationsToGo = 5;
+				return true;
+			} else {
+				return false;
+			}
+			
+		} else {
+			
+			// crumby notch-code here
+			int var4 = itemstack.stackSize;
+			int var3 = itemstack.itemID;
 			int var6 = var3;
 			InventoryPlayer var5 = this;
 			int var7 = 0;
@@ -87,7 +105,7 @@ public final class InventoryPlayer implements IInventory {
 
 			int var9 = var10001;
 			if(var9 < 0) {
-				var9 = this.storeItemStack();
+				var9 = this.getAvailableSlot();
 			}
 
 			if(var9 < 0) {
@@ -118,20 +136,14 @@ public final class InventoryPlayer implements IInventory {
 				}
 			}
 
-			var1.stackSize = var10001;
-			if(var1.stackSize == 0) {
+			itemstack.stackSize = var10001;
+			if(itemstack.stackSize == 0) {
 				return true;
 			}
+			
 		}
-
-		int var2 = this.storeItemStack();
-		if(var2 >= 0) {
-			this.mainInventory[var2] = var1;
-			this.mainInventory[var2].animationsToGo = 5;
-			return true;
-		} else {
-			return false;
-		}
+		
+		return false;
 	}
 
 	public final ItemStack decrStackSize(int var1, int var2) {

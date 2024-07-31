@@ -9,31 +9,37 @@ import net.minecraft.game.level.block.Block;
 import net.minecraft.game.level.material.Material;
 
 public class EntityItem extends Entity {
+	
 	public ItemStack item;
-	private int unknownEntityItemInt;
 	public int age = 0;
 	public int delayBeforeCanPickup;
 	private int health = 5;
-	public float hoverStart = (float)(Math.random() * Math.PI * 2.0D);
+	public float hoverStart = (float) (Math.random() * Math.PI * 2.0D);
 
-	public EntityItem(World var1, float var2, float var3, float var4, ItemStack var5) {
-		super(var1);
+	public EntityItem(World world, float x, float y, float z, ItemStack item) {
+		super(world);
+		
 		this.setSize(0.25F, 0.25F);
+		this.setPosition(x, y, z);
+		
 		this.yOffset = this.height / 2.0F;
-		this.setPosition(var2, var3, var4);
-		this.item = var5;
-		this.rotationYaw = (float)(Math.random() * 360.0D);
-		this.motionX = (float)(Math.random() * (double)0.2F - (double)0.1F);
+		this.rotationYaw = (float) (Math.random() * 360.0D);
+		
+		this.motionX = (float) (Math.random() * 0.2 - 0.1);
 		this.motionY = 0.2F;
-		this.motionZ = (float)(Math.random() * (double)0.2F - (double)0.1F);
+		this.motionZ = (float) (Math.random() * 0.2 - 0.1);
+		
 		this.canTriggerWalking = false;
+		
+		this.item = item;
 	}
 
-	public EntityItem(World var1) {
-		super(var1);
+	public EntityItem(World world) {
+		super(world);
 	}
 
 	public final void onEntityUpdate() {
+		
 		super.onEntityUpdate();
 		if(this.delayBeforeCanPickup > 0) {
 			--this.delayBeforeCanPickup;
@@ -134,23 +140,22 @@ public class EntityItem extends Entity {
 			this.motionY *= -0.5F;
 		}
 
-		++this.unknownEntityItemInt;
-		++this.age;
-		if(this.age >= 6000) {
+		this.age++;
+		
+		if(this.age >= 6000)
 			this.setEntityDead();
-		}
 
 	}
 
 	protected final void dealFireDamage(int var1) {
-		this.attackEntityFrom((Entity)null, 1);
+		this.attackEntityFrom(null, 1);
 	}
 
-	public final boolean attackEntityFrom(Entity var1, int var2) {
-		this.health -= var2;
-		if(this.health <= 0) {
+	public final boolean attackEntityFrom(Entity attacker, int damage) {
+		this.health -= damage;
+		
+		if(this.health <= 0)
 			this.setEntityDead();
-		}
 
 		return false;
 	}
@@ -172,12 +177,13 @@ public class EntityItem extends Entity {
 		return "Item";
 	}
 
-	public final void onCollideWithPlayer(EntityPlayer var1) {
-		if(this.delayBeforeCanPickup == 0 && var1.inventory.storePartialItemStack(this.item)) {
+	public final void onCollideWithPlayer(EntityPlayer player) {
+		
+		if (this.delayBeforeCanPickup == 0 && player.inventory.storePartialItemStack(this.item)) {
+			
 			this.worldObj.playSoundAtEntity(this, "random.pop", 0.2F, ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.7F + 1.0F) * 2.0F);
-			var1.onItemPickup(this);
+			player.onItemPickup(this);
 			this.setEntityDead();
 		}
-
 	}
 }

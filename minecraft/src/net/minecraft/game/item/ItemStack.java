@@ -11,6 +11,11 @@ import net.minecraft.game.level.block.Block;
 
 public final class ItemStack {
 	
+	/*
+	 * Note: Only non-stackable items (item.getItemStackLimit() == 1) should
+	 * be able to be enchanted or have durability
+	 */
+	
 	public int stackSize;
 	public int animationsToGo;
 	public int itemID;

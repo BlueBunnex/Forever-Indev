@@ -21,6 +21,7 @@ import net.minecraft.game.physics.Vec3D;
 import util.MathHelper;
 
 public final class World {
+	
 	private static float[] lightBrightnessTable = new float[16];
 	public int width;
 	public int length;
@@ -1464,15 +1465,18 @@ public final class World {
 		}
 	}
 
-	public final void playSoundAtEntity(Entity var1, String var2, float var3, float var4) {
-		for(int var5 = 0; var5 < this.worldAccesses.size(); ++var5) {
-			float var6 = 16.0F;
-			if(var3 > 1.0F) {
-				var6 = 16.0F * var3;
+	public final void playSoundAtEntity(Entity entity, String soundPath, float volume, float pitch) {
+		
+		for (int i = 0; i < this.worldAccesses.size(); i++) {
+			
+			float attenuation = 16.0F;
+			
+			if (volume > 1.0F) {
+				attenuation = 16.0F * volume;
 			}
 
-			if(this.playerEntity.getDistanceSqToEntity(var1) < var6 * var6) {
-				((IWorldAccess)this.worldAccesses.get(var5)).playSound(var2, var1.posX, var1.posY - var1.yOffset, var1.posZ, var3, var4);
+			if (this.playerEntity.getDistanceSqToEntity(entity) < attenuation * attenuation) {
+				((IWorldAccess) this.worldAccesses.get(i)).playSound(soundPath, entity.posX, entity.posY - entity.yOffset, entity.posZ, volume, pitch);
 			}
 		}
 

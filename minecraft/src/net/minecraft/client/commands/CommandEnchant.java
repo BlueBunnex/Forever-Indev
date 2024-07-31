@@ -35,11 +35,16 @@ public class CommandEnchant extends Command {
 			return;
 		}
 		
-		// check if there's a held item to enchant
+		// check if there's a valid held item to enchant
 		ItemStack held = mc.thePlayer.inventory.getCurrentItem();
 		
 		if (held == null) {
 			mc.ingameGUI.addChatMessage("No item held to enchant.");
+			return;
+		}
+		
+		if (held.getItem().getItemStackLimit() != 1) {
+			mc.ingameGUI.addChatMessage("Can only enchant non-stackable items.");
 			return;
 		}
 		
