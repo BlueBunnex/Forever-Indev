@@ -310,58 +310,58 @@ public class Item {
 		bread = new ItemFood("Bread", 54, 5);
 		bread.iconIndex = 41;
 		
-		sweetBread = new ItemFood("Sweet Bread", 69, 7);
+		sweetBread = new ItemFood("Sweet Bread", 55, 7);
 		sweetBread.iconIndex = 57;
 		
-		porkRaw = new ItemFood("Raw Porkchop", 55, 3);
+		porkRaw = new ItemFood("Raw Porkchop", 56, 3);
 		porkRaw.iconIndex = 87;
 		
-		porkCooked = new ItemFood("Cooked Porkchop", 56, 8);
+		porkCooked = new ItemFood("Cooked Porkchop", 57, 8);
 		porkCooked.iconIndex = 88;
 		
-		sugarBeet = new Item("Sugar Beet", 57);
+		sugarBeet = new Item("Sugar Beet", 58);
 		sugarBeet.iconIndex = 103;
 		
-		sugar = new Item("Sugar", 58);
+		sugar = new Item("Sugar", 59);
 		sugar.iconIndex = 104;
 		
 		// misc I guess
-		coal = new Item("Coal", 59);
+		coal = new Item("Coal", 60);
 		coal.iconIndex = 7;
 		
-		ingotIron = new Item("Iron Ingot", 60);
+		ingotIron = new Item("Iron Ingot", 61);
 		ingotIron.iconIndex = 23;
 		
-		ingotGold = new Item("Gold Ingot", 61);
+		ingotGold = new Item("Gold Ingot", 62);
 		ingotGold.iconIndex = 39;
 		
-		diamond = new Item("Diamond", 62);
+		diamond = new Item("Diamond", 63);
 		diamond.iconIndex = 55;
 		diamond.rarity = Rarity.RARE;
 		
-		stick = new Item("Stick", 63);
+		stick = new Item("Stick", 64);
 		stick.iconIndex = 53;
 		
-		silk = new Item("Silk", 64);
+		silk = new Item("Silk", 65);
 		silk.iconIndex = 8;
 		
-		feather = new Item("Feather", 65);
+		feather = new Item("Feather", 66);
 		feather.iconIndex = 24;
 		
-		gunpowder = new Item("Sulphur", 66);
+		gunpowder = new Item("Sulphur", 67);
 		gunpowder.iconIndex = 40;
 		
-		flint = new Item("Flint", 67);
+		flint = new Item("Flint", 68);
 		flint.iconIndex = 6;
 		
-		painting = new ItemPainting("Painting", 68);
+		painting = new ItemPainting("Painting", 69);
 		painting.iconIndex = 26;
 		
 		// rupees
-		rupeePlain = new Item("Rupee", 69);
+		rupeePlain = new Item("Rupee", 70);
 		rupeePlain.iconIndex = 144;
 		
-		rupeeDark = new Item("Dark Rupee", 70);
+		rupeeDark = new Item("Dark Rupee", 71);
 		rupeeDark.iconIndex = 146;
 	}
 }
