@@ -465,7 +465,7 @@ public final class Minecraft implements Runnable {
 						var9 = var11.getStackInSlot(var11.currentItem);
 						int var17 = var9 != null ? Item.itemsList[var9.itemID].getDamageVsEntity() : 1;
 						if(var17 > 0) {
-							var14.attackEntityFrom(var12, var17);
+							var14.attackThisEntity(var12, var17);
 							var2 = var12.inventory.getCurrentItem();
 							if(var2 != null && var14 instanceof EntityLiving) {
 								EntityLiving var8 = (EntityLiving)var14;
