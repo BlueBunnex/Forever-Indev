@@ -14,6 +14,7 @@ import net.minecraft.game.physics.Vec3D;
 import util.MathHelper;
 
 public class EntityArrow extends Entity {
+	
 	private int xTile = -1;
 	private int yTile = -1;
 	private int zTile = -1;
@@ -122,7 +123,7 @@ public class EntityArrow extends Entity {
 		float var11;
 		if(var3 != null) {
 			if(var3.entityHit != null) {
-				if(var3.entityHit.attackEntityFrom(this, 4)) {
+				if(var3.entityHit.attackThisEntity(this, 4)) {
 					this.worldObj.playSoundAtEntity(this, "random.drr", 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
 					this.setEntityDead();
 				} else {

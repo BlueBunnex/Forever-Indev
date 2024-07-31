@@ -5,7 +5,7 @@ import net.minecraft.game.entity.Entity;
 import net.minecraft.game.item.Item;
 import net.minecraft.game.level.World;
 
-public class EntityCreeper extends EntityMob {
+public class EntityCreeper extends EntityMonster {
 	
 	private int timeSinceIgnited;
 	private int lastActiveTime;

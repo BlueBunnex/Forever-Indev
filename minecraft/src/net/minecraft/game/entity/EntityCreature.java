@@ -11,11 +11,12 @@ public class EntityCreature extends EntityLiving {
 	protected Entity playerToAttack;
 	protected boolean hasAttacked = false;
 
-	public EntityCreature(World var1) {
-		super(var1);
+	public EntityCreature(World world) {
+		super(world);
 	}
 
 	protected void updatePlayerActionState() {
+		
 		this.hasAttacked = false;
 		float var6;
 		float var7;
@@ -122,7 +123,8 @@ public class EntityCreature extends EntityLiving {
 		}
 	}
 
-	protected void attackEntity(Entity var1, float var2) {}
+	// maybe call this "attackOtherEntity"
+	protected void attackEntity(Entity toAttack, float damage) {}
 
 	protected float getBlockPathWeight(int var1, int var2, int var3) {
 		return 0.0F;

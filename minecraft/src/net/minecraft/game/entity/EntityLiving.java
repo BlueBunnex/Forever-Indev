@@ -96,7 +96,7 @@ public class EntityLiving extends Entity {
 					this.worldObj.spawnParticle("bubble", this.posX + var2, this.posY + var3, this.posZ + var4, this.motionX, this.motionY, this.motionZ);
 				}
 
-				this.attackEntityFrom((Entity)null, 2);
+				this.attackThisEntity(null, 2);
 			}
 
 			this.fire = 0;
@@ -219,7 +219,7 @@ public class EntityLiving extends Entity {
 		}
 	}
 
-	public boolean attackEntityFrom(Entity attacker, int damage) {
+	public boolean attackThisEntity(Entity attacker, int damage) {
 		
 		this.entityAge = 0;
 		
@@ -329,7 +329,7 @@ public class EntityLiving extends Entity {
 	protected final void fall(float var1) {
 		int var3 = (int)Math.ceil((double)(var1 - 3.0F));
 		if(var3 > 0) {
-			this.attackEntityFrom((Entity)null, var3);
+			this.attackThisEntity(null, var3);
 			var3 = this.worldObj.getBlockId((int)this.posX, (int)(this.posY - 0.2F - this.yOffset), (int)this.posZ);
 			if(var3 > 0) {
 				StepSound var4 = Block.blocksList[var3].stepSound;

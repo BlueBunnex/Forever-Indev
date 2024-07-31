@@ -189,7 +189,7 @@ public class EntityPainting extends Entity {
 		return true;
 	}
 
-	public final boolean attackEntityFrom(Entity var1, int var2) {
+	public final boolean attackThisEntity(Entity attacker, int damage) {
 		this.setEntityDead();
 		this.worldObj.spawnEntityInWorld(new EntityItem(this.worldObj, this.posX, this.posY, this.posZ, new ItemStack(Item.painting)));
 		return true;

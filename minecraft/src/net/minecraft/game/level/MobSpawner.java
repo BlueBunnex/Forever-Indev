@@ -6,12 +6,13 @@ import net.minecraft.game.entity.animal.EntityAnimal;
 import net.minecraft.game.entity.animal.EntityPig;
 import net.minecraft.game.entity.animal.EntitySheep;
 import net.minecraft.game.entity.monster.EntityCreeper;
-import net.minecraft.game.entity.monster.EntityMob;
+import net.minecraft.game.entity.monster.EntityMonster;
 import net.minecraft.game.entity.monster.EntitySkeleton;
 import net.minecraft.game.entity.monster.EntitySpider;
 import net.minecraft.game.entity.monster.EntityZombie;
 
 public class MobSpawner {
+	
 	private World worldObj;
 
 	public MobSpawner(World var1) {
@@ -38,7 +39,7 @@ public class MobSpawner {
 		}
 
 		int var2 = this.worldObj.width * this.worldObj.length / 4000;
-		int var3 = this.worldObj.entitiesInLevelList(EntityMob.class);
+		int var3 = this.worldObj.entitiesInLevelList(EntityMonster.class);
 
 		int var4;
 		EntityLiving var5;
@@ -118,7 +119,7 @@ public class MobSpawner {
 								var23 = new EntityZombie(var22.worldObj);
 							}
 
-							if(var23 instanceof EntityMob && var22.worldObj.difficultySetting == 0) {
+							if(var23 instanceof EntityMonster && var22.worldObj.difficultySetting == 0) {
 								var23 = null;
 							}
 

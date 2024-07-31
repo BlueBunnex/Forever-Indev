@@ -145,15 +145,16 @@ public abstract class Entity {
 		}
 
 		if(this.fire > 0) {
-			if(this.fire % 20 == 0) {
-				this.attackEntityFrom((Entity)null, 1);
+			
+			if (this.fire % 20 == 0) {
+				this.attackThisEntity(null, 1);
 			}
 
 			--this.fire;
 		}
 
 		if(this.handleLavaMovement()) {
-			this.attackEntityFrom((Entity)null, 10);
+			this.attackThisEntity(null, 10);
 			this.fire = 600;
 		}
 
@@ -367,11 +368,10 @@ public abstract class Entity {
 	}
 
 	protected void dealFireDamage(int var1) {
-		this.attackEntityFrom((Entity)null, 1);
+		this.attackThisEntity(null, 1);
 	}
 
-	protected void fall(float var1) {
-	}
+	protected void fall(float var1) {}
 
 	public final boolean handleWaterMovement() {
 		return this.worldObj.handleMaterialAcceleration(this.boundingBox.expand(0.0F, -0.4F, 0.0F), Material.water);
@@ -461,7 +461,7 @@ public abstract class Entity {
 		this.motionZ += motionZ;
 	}
 
-	public boolean attackEntityFrom(Entity attacker, int damage) {
+	public boolean attackThisEntity(Entity attacker, int damage) {
 		return false;
 	}
 

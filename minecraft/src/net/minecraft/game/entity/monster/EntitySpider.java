@@ -6,7 +6,7 @@ import net.minecraft.game.item.Item;
 import net.minecraft.game.level.World;
 import util.MathHelper;
 
-public class EntitySpider extends EntityMob {
+public class EntitySpider extends EntityMonster {
 	
 	public EntitySpider(World world) {
 		super(world);

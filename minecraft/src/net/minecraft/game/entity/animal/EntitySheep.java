@@ -17,7 +17,7 @@ public class EntitySheep extends EntityAnimal {
 		this.setSize(0.9F, 1.3F);
 	}
 
-	public final boolean attackEntityFrom(Entity attacker, int damage) {
+	public final boolean attackThisEntity(Entity attacker, int damage) {
 		
 		if (!this.sheared && attacker instanceof EntityLiving) {
 			this.sheared = true;
@@ -33,7 +33,7 @@ public class EntitySheep extends EntityAnimal {
 			return false;
 		}
 
-		return super.attackEntityFrom(attacker, damage);
+		return super.attackThisEntity(attacker, damage);
 	}
 
 	protected final void writeEntityToNBT(NBTTagCompound var1) {

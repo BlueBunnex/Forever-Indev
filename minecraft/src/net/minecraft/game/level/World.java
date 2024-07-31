@@ -1167,7 +1167,7 @@ public final class World {
 				var40 /= var41;
 				float var42 = this.getBlockDensity(var33, var36.boundingBox);
 				var43 = (1.0F - var18) * var42;
-				var36.attackEntityFrom(var1, (int)((var43 * var43 + var43) / 2.0F * 8.0F * var5 + 1.0F));
+				var36.attackThisEntity(var1, (int)((var43 * var43 + var43) / 2.0F * 8.0F * var5 + 1.0F));
 				var36.motionX += var26 * var43;
 				var36.motionY += var39 * var43;
 				var36.motionZ += var40 * var43;

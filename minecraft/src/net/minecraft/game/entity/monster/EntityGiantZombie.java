@@ -2,7 +2,7 @@ package net.minecraft.game.entity.monster;
 
 import net.minecraft.game.level.World;
 
-public class EntityGiantZombie extends EntityMob {
+public class EntityGiantZombie extends EntityMonster {
 	
 	public EntityGiantZombie(World world) {
 		super(world);

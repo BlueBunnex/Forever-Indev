@@ -6,7 +6,7 @@ import net.minecraft.game.IInventory;
 import net.minecraft.game.entity.Entity;
 import net.minecraft.game.entity.EntityLiving;
 import net.minecraft.game.entity.misc.EntityItem;
-import net.minecraft.game.entity.monster.EntityMob;
+import net.minecraft.game.entity.monster.EntityMonster;
 import net.minecraft.game.entity.projectile.EntityArrow;
 import net.minecraft.game.item.Item;
 import net.minecraft.game.item.ItemArmor;
@@ -179,7 +179,7 @@ public class EntityPlayer extends EntityLiving {
 			return false;
 		} else {
 			
-			if (attacker instanceof EntityMob || attacker instanceof EntityArrow) {
+			if (attacker instanceof EntityMonster || attacker instanceof EntityArrow) {
 				if (this.worldObj.difficultySetting == 0) {
 					damage = 0;
 				}
@@ -213,7 +213,7 @@ public class EntityPlayer extends EntityLiving {
 			if(damage == 0) {
 				return false;
 			} else {
-				return super.attackEntityFrom(attacker, damage);
+				return super.attackThisEntity(attacker, damage);
 			}
 		}
 	}

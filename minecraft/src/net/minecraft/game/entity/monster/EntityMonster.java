@@ -5,13 +5,12 @@ import net.minecraft.game.entity.Entity;
 import net.minecraft.game.entity.EntityCreature;
 import net.minecraft.game.level.World;
 
-// TODO change to EntityMonster?
-public class EntityMob extends EntityCreature {
+public class EntityMonster extends EntityCreature {
 	
 	protected int attackStrength = 2;
 
-	public EntityMob(World var1) {
-		super(var1);
+	public EntityMonster(World world) {
+		super(world);
 		this.health = 20;
 	}
 
@@ -37,11 +36,13 @@ public class EntityMob extends EntityCreature {
 		return var1 < 256.0F ? this.worldObj.playerEntity : null;
 	}
 
-	public final boolean attackEntityFrom(Entity var1, int var2) {
-		if(super.attackEntityFrom(var1, var2)) {
-			if(var1 != this) {
-				this.playerToAttack = var1;
-			}
+	public final boolean attackThisEntity(Entity attacker, int damage) {
+		
+		if (super.attackThisEntity(attacker, damage)) {
+			
+			// target entity that attacked this entity
+			if (attacker != this)
+				this.playerToAttack = attacker;
 
 			return true;
 		} else {
@@ -49,12 +50,16 @@ public class EntityMob extends EntityCreature {
 		}
 	}
 
-	protected void attackEntity(Entity var1, float var2) {
-		if((double)var2 < 2.5D && var1.boundingBox.maxY > this.boundingBox.minY && var1.boundingBox.minY < this.boundingBox.maxY) {
+	protected void attackEntity(Entity toAttack, float damage) {
+		
+		if (
+				(double) damage < 2.5D
+				&& toAttack.boundingBox.maxY > this.boundingBox.minY
+				&& toAttack.boundingBox.minY < this.boundingBox.maxY
+			) {
 			this.attackTime = 20;
-			var1.attackEntityFrom(this, this.attackStrength);
+			toAttack.attackThisEntity(this, this.attackStrength);
 		}
-
 	}
 
 	protected float getBlockPathWeight(int var1, int var2, int var3) {

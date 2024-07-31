@@ -7,7 +7,7 @@ import net.minecraft.game.item.Item;
 import net.minecraft.game.level.World;
 import util.MathHelper;
 
-public class EntitySkeleton extends EntityMob {
+public class EntitySkeleton extends EntityMonster {
 	
 	public EntitySkeleton(World world) {
 		super(world);
