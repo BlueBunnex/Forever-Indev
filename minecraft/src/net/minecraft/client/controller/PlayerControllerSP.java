@@ -21,8 +21,8 @@ public final class PlayerControllerSP extends PlayerController {
 	private int blockHitWait = 0;
 	private MobSpawner mobSpawner;
 
-	public PlayerControllerSP(Minecraft var1) {
-		super(var1);
+	public PlayerControllerSP(Minecraft mc) {
+		super(mc);
 	}
 
 	public final boolean sendBlockRemoved(int x, int y, int z) {
@@ -30,22 +30,28 @@ public final class PlayerControllerSP extends PlayerController {
 		ItemStack heldItem = this.mc.thePlayer.inventory.getCurrentItem();
 		
 		if(heldItem != null) {
+			
 			Item.itemsList[heldItem.itemID].onBlockDestroyed(heldItem);
-			if(heldItem.stackSize == 0) {
+			
+			if(heldItem.stackSize == 0)
 				this.mc.thePlayer.destroyCurrentEquippedItem();
-			}
 		}
 		
-		byte var5 = this.mc.theWorld.getBlockMetadata(x, y, z);
+		byte blockMeta = this.mc.theWorld.getBlockMetadata(x, y, z);
 		int blockID = this.mc.theWorld.getBlockId(x, y, z);
 		
-		boolean var6 = super.sendBlockRemoved(x, y, z);
+		boolean didRemove = super.sendBlockRemoved(x, y, z);
 
-		if(var6 && this.mc.thePlayer.canHarvestBlock(Block.blocksList[blockID])) {
-			Block.blocksList[blockID].dropBlockAsItem(this.mc.theWorld, x, y, z, var5);
+		// drop block, unless can't harvest or in creative
+		if(
+				didRemove
+				&& this.mc.thePlayer.canHarvestBlock(Block.blocksList[blockID])
+				&& !this.mc.thePlayer.isCreativeMode
+			) {
+			Block.blocksList[blockID].dropBlockAsItem(this.mc.theWorld, x, y, z, blockMeta);
 		}
 
-		return var6;
+		return didRemove;
 	}
 
 	public final void clickBlock(int x, int y, int z) {
