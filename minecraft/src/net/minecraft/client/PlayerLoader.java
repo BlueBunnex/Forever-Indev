@@ -1,7 +1,7 @@
 package net.minecraft.client;
 
-import net.minecraft.client.player.EntityPlayerSP;
 import net.minecraft.game.entity.Entity;
+import net.minecraft.game.entity.player.EntityPlayerSP;
 import net.minecraft.game.level.LevelLoader;
 import net.minecraft.game.level.World;
 import util.IProgressUpdate;

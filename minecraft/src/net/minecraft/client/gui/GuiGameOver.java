@@ -1,7 +1,8 @@
 package net.minecraft.client.gui;
 
-import net.minecraft.client.player.EntityPlayerSP;
 import org.lwjgl.opengl.GL11;
+
+import net.minecraft.game.entity.player.EntityPlayerSP;
 
 public final class GuiGameOver extends GuiScreen {
 	

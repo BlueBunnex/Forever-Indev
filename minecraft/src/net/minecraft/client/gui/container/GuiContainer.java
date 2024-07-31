@@ -6,10 +6,10 @@ import net.minecraft.client.RenderHelper;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiStringBox;
-import net.minecraft.client.player.EntityPlayerSP;
 import net.minecraft.client.render.RenderEngine;
 import net.minecraft.client.render.entity.RenderItem;
 import net.minecraft.game.IInventory;
+import net.minecraft.game.entity.player.EntityPlayerSP;
 import net.minecraft.game.item.ItemStack;
 import net.minecraft.game.item.enchant.Enchant;
 

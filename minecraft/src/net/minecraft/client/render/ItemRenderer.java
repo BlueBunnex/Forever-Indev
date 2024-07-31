@@ -2,10 +2,10 @@ package net.minecraft.client.render;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.RenderHelper;
-import net.minecraft.client.player.EntityPlayerSP;
 import net.minecraft.client.render.entity.Render;
 import net.minecraft.client.render.entity.RenderManager;
 import net.minecraft.client.render.entity.RenderPlayer;
+import net.minecraft.game.entity.player.EntityPlayerSP;
 import net.minecraft.game.item.ItemStack;
 import net.minecraft.game.level.block.Block;
 import org.lwjgl.opengl.GL11;

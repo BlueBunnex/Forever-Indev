@@ -1,8 +1,8 @@
 package net.minecraft.client.controller;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.player.EntityPlayerSP;
 import net.minecraft.client.sound.SoundManager;
+import net.minecraft.game.entity.player.EntityPlayerSP;
 import net.minecraft.game.item.Item;
 import net.minecraft.game.item.ItemStack;
 import net.minecraft.game.level.MobSpawner;

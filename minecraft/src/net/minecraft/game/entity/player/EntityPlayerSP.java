@@ -1,4 +1,4 @@
-package net.minecraft.client.player;
+package net.minecraft.game.entity.player;
 
 import com.mojang.nbt.NBTTagCompound;
 import com.mojang.nbt.NBTTagList;
@@ -8,14 +8,14 @@ import net.minecraft.client.effect.EntityPickupFX;
 import net.minecraft.client.gui.container.GuiChest;
 import net.minecraft.client.gui.container.GuiCrafting;
 import net.minecraft.client.gui.container.GuiFurnace;
+import net.minecraft.client.player.MovementInput;
 import net.minecraft.game.IInventory;
 import net.minecraft.game.entity.Entity;
-import net.minecraft.game.entity.player.EntityPlayer;
-import net.minecraft.game.entity.player.InventoryPlayer;
 import net.minecraft.game.item.ItemStack;
 import net.minecraft.game.level.World;
 import net.minecraft.game.level.block.tileentity.TileEntityFurnace;
 
+// TODO since there's no multiplayer, we should merge this class with the EntityPlayer class
 public class EntityPlayerSP extends EntityPlayer {
 	
 	public boolean isCreativeMode = false;
@@ -31,10 +31,10 @@ public class EntityPlayerSP extends EntityPlayer {
 			this.skinUrl = "http://www.minecraft.net/skin/" + session.username + ".png";
 	}
 	
-	public boolean attackEntityFrom(Entity attacker, int damage) {
+	public boolean attackThisEntity(Entity attacker, int damage) {
 		
 		if (!isCreativeMode)
-			return super.attackEntityFrom(attacker, damage);
+			return super.attackThisEntity(attacker, damage);
 		
 		return false;
 	}

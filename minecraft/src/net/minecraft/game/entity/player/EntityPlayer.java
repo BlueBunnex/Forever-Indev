@@ -169,7 +169,7 @@ public class EntityPlayer extends EntityLiving {
 		return 0.12F;
 	}
 
-	public boolean attackEntityFrom(Entity attacker, int damage) {
+	public boolean attackThisEntity(Entity attacker, int damage) {
 	
 		this.entityAge = 0;
 		
