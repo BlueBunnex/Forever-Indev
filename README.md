@@ -16,24 +16,14 @@ A build is not available just yet, but will be soon!
 
 To update the texture files in Forever Indev, follow these steps:
 
-1. **Locate Texture Files:**
-   - Texture files are found in `lib/client/minecraft.jar`.
-
-2. **Extract the Texture Files:**
-   - Extract the contents of `minecraft.jar` to the directory `/lib/client/minecraft`.
-
-3. **Update the Textures:**
-   - Make the necessary changes to the texture files in the `/lib/client/minecraft` directory.
-
-4. **Rezip the Contents:**
-   - After updating the textures, rezip the contents of the `/lib/client/minecraft` folder.
-
-5. **Rename the Zipped File:**
-   - Rename the newly created zipped file to `minecraft.jar`.
+1. Navigate to `minecraft/jars/deobfuscated.jar` within the project.
+2. Extract the contents of `deobfuscated.jar`.
+   - Within the newly extracted folder, you will find all the texture files that you can edit.
+   - **Unzip jar on Mac**: `unzip deobfuscated.jar -d FOLDERNAME`
+3. After updating the textures, rezip the extracted folder back into `minecraft/jars/deobfuscated.jar`.
+   - **Rezip jar on Mac**: `jar cvf deobfuscated.jar -C FOLDERNAME/ .`
 
 **Notes:**
 
 - Ensure that the structure of the folder and files remains unchanged during the extraction and rezip process.
 - Any errors in the folder structure or file names can cause the game to fail to recognize the updated textures or even crash due to missing files.
-
-Enjoy exploring Forever Indev!
