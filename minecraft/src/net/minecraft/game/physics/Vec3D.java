@@ -6,12 +6,15 @@ public final class Vec3D {
 	public float xCoord;
 	public float yCoord;
 	public float zCoord;
+	public int x;
+	public int z;
+	public int y;
 
-	public Vec3D(float var1, float var2, float var3) {
-		this.xCoord = var1;
-		this.yCoord = var2;
-		this.zCoord = var3;
-	}
+		public Vec3D(float var1, float var2, float var3) {
+			this.xCoord = var1;
+			this.yCoord = var2;
+			this.zCoord = var3;
+		}
 
 	public final Vec3D subtract(Vec3D var1) {
 		return new Vec3D(this.xCoord - var1.xCoord, this.yCoord - var1.yCoord, this.zCoord - var1.zCoord);

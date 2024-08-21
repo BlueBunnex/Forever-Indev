@@ -1,13 +1,13 @@
-music:true
-sound:true
 invertYMouse:false
 showFrameRate:false
 viewDistance:0
-bobView:true
+bobView:false
 anaglyph3d:false
 limitFramerate:false
 difficulty:2
-showExitConfirmation:false
+showExitConfirmation:true
+music:false
+sound:true
 key_Forward:17
 key_Left:30
 key_Back:31
@@ -19,3 +19,4 @@ key_Chat:20
 key_Toggle fog:33
 key_Save location:28
 key_Load location:19
+key_Sprint:29

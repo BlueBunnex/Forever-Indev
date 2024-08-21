@@ -10,13 +10,12 @@ import net.minecraft.client.gui.container.GuiCrafting;
 import net.minecraft.client.gui.container.GuiFurnace;
 import net.minecraft.game.IInventory;
 import net.minecraft.game.entity.Entity;
-import net.minecraft.game.entity.player.EntityPlayer;
 import net.minecraft.game.entity.player.InventoryPlayer;
 import net.minecraft.game.item.ItemStack;
 import net.minecraft.game.level.World;
 import net.minecraft.game.level.block.tileentity.TileEntityFurnace;
 
-public class EntityPlayerSP extends EntityPlayer {
+public class EntityPlayerSP {
 	public MovementInput movementInput;
 	private Minecraft mc;
 

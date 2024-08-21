@@ -474,54 +474,115 @@ public final class LevelGenerator {
 		}
 	}
 
-	private static void generateHouse(World world) {
-		int x = world.xSpawn;
-		int y = world.ySpawn;
-		int z = world.zSpawn;
+    public int getHeightFromDepth(int worldDepth) {
+        switch (worldDepth) {
+            case 0:
+                return 64; // Normal
+            case 1:
+                return 256; // Deep
+            case 2:
+                return 1024; // Infinite
+            default:
+                return 64;
+        }
+    }
 
-		// construct main house
-		for (int dx = x - 3; dx <= x + 3; dx++) {
-			for (int dy = y - 2; dy <= y + 2; dy++) {
-				for (int dz = z - 3; dz <= z + 3; dz++) {
-					
-					int var7 = dy < y - 1 ? Block.obsidian.blockID : 0;
-					if (dx == x - 3 || dz == z - 3 || dx == x + 3 || dz == z + 3 || dy == y - 2 || dy == y + 2) {
-						
-						var7 = Math.random() < 0.7 ? Block.cobblestone.blockID : Block.cobblestoneMossy.blockID;
-						
-						if (dy >= y - 1) {
-							var7 = Block.cobbledBrick.blockID;
-						}
-					}
+    private static void generateHouse(World world) {
+        int x = world.xSpawn;
+        int y = world.ySpawn;
+        int z = world.zSpawn;
 
-					if (dz == z - 3 && dx == x && dy >= y - 1 && dy <= y) {
-						var7 = 0;
-					}
+        // Determine preset
+        double presetChance = Math.random();
+        int wallBlockID;
+        int floorBlockID1, floorBlockID2;
 
-					world.setBlockWithNotify(dx, dy, dz, var7);
-				}
-			}
-		}
+        if (presetChance < 0.10) {
+            // Preset 1: Normal Bricks with Polished Blocks or Polished Tiles
+            wallBlockID = Block.brick.blockID;
+            double floorChance = Math.random();
+            if (floorChance < 0.50) {
+                floorBlockID1 = Block.polishedBlock.blockID;
+                floorBlockID2 = Block.polishedBlock.blockID; // same for consistency
+            } else {
+                floorBlockID1 = Block.polishedTiles.blockID;
+                floorBlockID2 = Block.polishedTiles.blockID; // same for consistency
+            }
+        } else if (presetChance < 0.30) {
+            // Preset 2: Mud Brick and Compressed Dirt
+            wallBlockID = Block.mudBrick.blockID;
+            floorBlockID1 = Block.compressedDirt.blockID;
+            floorBlockID2 = Block.compressedDirt.blockID; // same for consistency
+        } else {
+            // Preset 3: Cobbled Brick with Mixed Floors
+            wallBlockID = Block.cobbledBrick.blockID;
+            double floorChance = Math.random();
+            if (floorChance < 0.25) {
+                floorBlockID1 = Block.mossyCobbledStone.blockID;
+                floorBlockID2 = Block.cobbledStone.blockID;
+            } else if (floorChance < 0.5) {
+                floorBlockID1 = Block.mossyStone.blockID;
+                floorBlockID2 = Block.stone.blockID;
+            } else if (floorChance < 0.75) {
+                floorBlockID1 = Block.cobblestoneMossy.blockID;
+                floorBlockID2 = Block.cobblestone.blockID;
+            } else {
+                floorBlockID1 = Block.polishedTiles.blockID;
+                floorBlockID2 = Block.polishedTiles.blockID;
+            }
+        }
 
-		// add torches
-		world.setBlockWithNotify(x - 3 + 1, y, z, Block.torch.blockID);
-		world.setBlockWithNotify(x + 3 - 1, y, z, Block.torch.blockID);
-	}
+        // Construct main house
+        for (int dx = x - 3; dx <= x + 3; dx++) {
+            for (int dy = y - 3; dy <= y + 2; dy++) { // Adjusted height to be one block shorter
+                for (int dz = z - 3; dz <= z + 3; dz++) {
 
-	private void growGrassOnDirt(World var1) {
-		for(int var2 = 0; var2 < this.width; ++var2) {
-			this.setNextPhase((float)var2 * 100.0F / (float)(this.width - 1));
+                    int var7 = dy < y - 2 ? Block.obsidian.blockID : 0; // Floor is now one block lower
+                    if (dx == x - 3 || dz == z - 3 || dx == x + 3 || dz == z + 3 || dy == y - 3 || dy == y + 2) {
+                        var7 = Math.random() < 0.7 ? Block.cobblestone.blockID : Block.cobblestoneMossy.blockID;
 
-			for(int var3 = 0; var3 < this.height; ++var3) {
-				for(int var4 = 0; var4 < this.depth; ++var4) {
-					if(var1.getBlockId(var2, var3, var4) == Block.dirt.blockID && var1.getBlockLightValue(var2, var3 + 1, var4) >= 4 && !var1.getBlockMaterial(var2, var3 + 1, var4).getCanBlockGrass()) {
-						var1.setBlock(var2, var3, var4, Block.grass.blockID);
-					}
-				}
-			}
-		}
+                        if (dy >= y - 2) {
+                            var7 = wallBlockID;
+                        }
+                    }
 
-	}
+                    // Leave space for a two-block tall door
+                    if (dz == z - 3 && dx == x && dy >= y - 1 && dy <= y) {
+                        var7 = 0;
+                    }
+
+                    world.setBlockWithNotify(dx, dy, dz, var7);
+                }
+            }
+        }
+
+        // Add non-mixed floor
+        for (int dx = x - 3; dx <= x + 3; dx++) {
+            for (int dz = z - 3; dz <= z + 3; dz++) {
+                int floorBlockID = Math.random() < 0.5 ? floorBlockID1 : floorBlockID2;
+                world.setBlockWithNotify(dx, y - 2, dz, floorBlockID); // Floor is now one block lower
+            }
+        }
+
+        // Add torches
+        world.setBlockWithNotify(x - 3 + 1, y, z, Block.torch.blockID);
+        world.setBlockWithNotify(x + 3 - 1, y, z, Block.torch.blockID);
+    }
+
+    private void growGrassOnDirt(World var1) {
+        for (int var2 = 0; var2 < this.width; ++var2) {
+            this.setNextPhase((float) var2 * 100.0F / (float) (this.width - 1));
+
+            for (int var3 = 0; var3 < this.height; ++var3) {
+                for (int var4 = 0; var4 < this.depth; ++var4) {
+                    if (var1.getBlockId(var2, var3, var4) == Block.dirt.blockID && var1.getBlockLightValue(var2, var3 + 1, var4) >= 4 && !var1.getBlockMaterial(var2, var3 + 1, var4).getCanBlockGrass()) {
+                        var1.setBlock(var2, var3, var4, Block.grass.blockID);
+                    }
+                }
+            }
+        }
+
+    }
 
 	private void growTrees(World var1) {
 		int var2 = this.width * this.depth * this.height / 80000;

@@ -7,6 +7,8 @@ import java.io.FileWriter;
 import java.io.PrintWriter;
 import org.lwjgl.input.Keyboard;
 
+import net.minecraft.client.gui.GuiSoundSettings;
+
 public final class GameSettings {
     private static final String[] RENDER_DISTANCES = { "Far", "Normal", "Short", "Tiny" };
     private static final String[] DIFFICULTIES = { "Peaceful", "Easy", "Normal", "Hard" };
@@ -14,7 +16,7 @@ public final class GameSettings {
     private Minecraft mc;
     private File optionsFile;
 
-    public int numberOfOptions = 10; // Updated number of options
+    public int numberOfOptions = 9;
     public int difficulty = 2;
     public boolean thirdPersonView = false;
     public boolean music = true;
@@ -25,8 +27,9 @@ public final class GameSettings {
     public boolean fancyGraphics = true;
     public boolean anaglyph = false;
     public boolean limitFramerate = false;
-    public boolean showExitConfirmation = true; // New setting for confirmation screen
-
+    public boolean showExitConfirmation = true;
+    public float fovSetting = 70.0F; // Default FOV
+    
     public KeyBinding keyBindForward = new KeyBinding("Forward", 17);
     public KeyBinding keyBindLeft = new KeyBinding("Left", 30);
     public KeyBinding keyBindBack = new KeyBinding("Back", 31);
@@ -38,8 +41,12 @@ public final class GameSettings {
     public KeyBinding keyBindToggleFog = new KeyBinding("Toggle fog", 33);
     public KeyBinding keyBindSave = new KeyBinding("Save location", 28);
     public KeyBinding keyBindLoad = new KeyBinding("Load location", 19);
+    public KeyBinding keyBindSprint = new KeyBinding("Sprint", 29); // Left Control key
 
-    public KeyBinding[] keyBindings = new KeyBinding[]{keyBindForward, keyBindLeft, keyBindBack, keyBindRight, keyBindJump, keyBindDrop, keyBindInventory, keyBindChat, keyBindToggleFog, keyBindSave, keyBindLoad};
+    public KeyBinding[] keyBindings = new KeyBinding[]{
+        keyBindForward, keyBindLeft, keyBindBack, keyBindRight, keyBindJump, keyBindDrop,
+        keyBindInventory, keyBindChat, keyBindToggleFog, keyBindSave, keyBindLoad, keyBindSprint
+    };
 
     public GameSettings(Minecraft mc, File fileRoot) {
         this.mc = mc;
@@ -59,45 +66,39 @@ public final class GameSettings {
     public final void setOptionValue(int optionID, int value) {
         switch (optionID) {
             case 0:
-                this.music = !this.music;
-                this.mc.sndManager.onSoundOptionsChanged();
+                this.openSoundSettings(); // Open sound settings GUI
                 break;
 
             case 1:
-                this.sound = !this.sound;
-                this.mc.sndManager.onSoundOptionsChanged();
-                break;
-
-            case 2:
                 this.invertMouse = !this.invertMouse;
                 break;
 
-            case 3:
+            case 2:
                 this.showFPS = !this.showFPS;
                 break;
 
-            case 4:
+            case 3:
                 this.renderDistance = (this.renderDistance + value) & 3;
                 break;
 
-            case 5:
+            case 4:
                 this.fancyGraphics = !this.fancyGraphics;
                 break;
 
-            case 6:
+            case 5:
                 this.anaglyph = !this.anaglyph;
                 this.mc.renderEngine.refreshTextures();
                 break;
 
-            case 7:
+            case 6:
                 this.limitFramerate = !this.limitFramerate;
                 break;
 
-            case 8:
+            case 7:
                 this.difficulty = (this.difficulty + value) & 3;
                 break;
 
-            case 9: // New option ID for confirmation setting
+            case 8:
                 this.showExitConfirmation = !this.showExitConfirmation;
                 break;
         }
@@ -105,18 +106,21 @@ public final class GameSettings {
         this.saveOptions();
     }
 
+    private void openSoundSettings() {
+        this.mc.displayGuiScreen(new GuiSoundSettings(this.mc.currentScreen, this));
+    }
+
     public final String setOptionString(int optionID) {
         switch (optionID) {
-            case 0: return "Music: " + (this.music ? "ON" : "OFF");
-            case 1: return "Sound: " + (this.sound ? "ON" : "OFF");
-            case 2: return "Invert mouse: " + (this.invertMouse ? "ON" : "OFF");
-            case 3: return "Show debug: " + (this.showFPS ? "ON" : "OFF");
-            case 4: return "Render distance: " + RENDER_DISTANCES[this.renderDistance];
-            case 5: return "View bobbing: " + (this.fancyGraphics ? "ON" : "OFF");
-            case 6: return "3d anaglyph: " + (this.anaglyph ? "ON" : "OFF");
-            case 7: return "Limit framerate: " + (this.limitFramerate ? "ON" : "OFF");
-            case 8: return "Difficulty: " + DIFFICULTIES[this.difficulty];
-            case 9: return "Show exit confirmation: " + (this.showExitConfirmation ? "ON" : "OFF");
+            case 0: return "Sound settings...";
+            case 1: return "Invert mouse: " + (this.invertMouse ? "ON" : "OFF");
+            case 2: return "Show debug: " + (this.showFPS ? "ON" : "OFF");
+            case 3: return "Render distance: " + RENDER_DISTANCES[this.renderDistance];
+            case 4: return "View bobbing: " + (this.fancyGraphics ? "ON" : "OFF");
+            case 5: return "3d anaglyph: " + (this.anaglyph ? "ON" : "OFF");
+            case 6: return "Limit framerate: " + (this.limitFramerate ? "ON" : "OFF");
+            case 7: return "Difficulty: " + DIFFICULTIES[this.difficulty];
+            case 8: return "Show exit confirmation: " + (this.showExitConfirmation ? "ON" : "OFF");
             default: return "";
         }
     }
@@ -134,12 +138,6 @@ public final class GameSettings {
                 if (parts.length < 2) continue;
 
                 switch (parts[0]) {
-                    case "music":
-                        this.music = parts[1].equals("true");
-                        break;
-                    case "sound":
-                        this.sound = parts[1].equals("true");
-                        break;
                     case "invertYMouse":
                         this.invertMouse = parts[1].equals("true");
                         break;
@@ -164,6 +162,15 @@ public final class GameSettings {
                     case "showExitConfirmation":
                         this.showExitConfirmation = parts[1].equals("true");
                         break;
+                    case "music":
+                        this.music = parts[1].equals("true");
+                        if (!this.music) {
+                            this.mc.sndManager.stopBackgroundMusic(); // Stop background music if music is disabled
+                        }
+                        break;
+                    case "sound":
+                        this.sound = parts[1].equals("true");
+                        break;
                     default:
                         for (KeyBinding keyBinding : this.keyBindings) {
                             if (parts[0].equals("key_" + keyBinding.keyDescription)) {
@@ -186,8 +193,6 @@ public final class GameSettings {
         }
 
         try (PrintWriter writer = new PrintWriter(new FileWriter(this.optionsFile))) {
-            writer.println("music:" + this.music);
-            writer.println("sound:" + this.sound);
             writer.println("invertYMouse:" + this.invertMouse);
             writer.println("showFrameRate:" + this.showFPS);
             writer.println("viewDistance:" + this.renderDistance);
@@ -196,6 +201,8 @@ public final class GameSettings {
             writer.println("limitFramerate:" + this.limitFramerate);
             writer.println("difficulty:" + this.difficulty);
             writer.println("showExitConfirmation:" + this.showExitConfirmation);
+            writer.println("music:" + this.music);
+            writer.println("sound:" + this.sound);
 
             for (KeyBinding keyBinding : this.keyBindings) {
                 writer.println("key_" + keyBinding.keyDescription + ":" + keyBinding.keyCode);
@@ -205,4 +212,4 @@ public final class GameSettings {
             e.printStackTrace();
         }
     }
-}
+}	

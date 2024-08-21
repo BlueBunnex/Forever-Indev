@@ -220,4 +220,14 @@ public class EntityPlayer extends EntityLiving {
 
 	public void displayGUIFurnace(TileEntityFurnace var1) {
 	}
+
+	public ItemStack getAccessoryItem(int accessoryType) {
+	    InventoryPlayer inventory = this.inventory;
+	    return inventory.getStackInSlot(accessoryType);
+	}
+
+	public void setAccessoryItem(int accessoryType, ItemStack stack) {
+	    InventoryPlayer inventory = this.inventory;
+	    inventory.setInventorySlotContents(accessoryType, stack);
+	}
 }

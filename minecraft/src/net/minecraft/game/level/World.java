@@ -10,6 +10,8 @@ import java.util.Random;
 import java.util.TreeSet;
 import net.minecraft.game.entity.Entity;
 import net.minecraft.game.entity.EntityLiving;
+import net.minecraft.game.entity.player.EntityPlayer;
+import net.minecraft.game.entity.projectile.EntityArrow;
 import net.minecraft.game.level.block.Block;
 import net.minecraft.game.level.block.BlockContainer;
 import net.minecraft.game.level.block.tileentity.TileEntity;
@@ -1086,136 +1088,153 @@ public final class World {
 
 	}
 
-	public final void createExplosion(Entity var1, float var2, float var3, float var4, float var5) {
-		this.playSoundAtPlayer(var2, var3, var4, "random.explode", 4.0F, (1.0F + (this.random.nextFloat() - this.random.nextFloat()) * 0.2F) * 0.7F);
-		TreeSet var6 = new TreeSet();
-		float var7 = var5;
+	public final void createExplosion(Entity source, float var2, float var3, float var4, float var5) {
+	    boolean isArrowExplosion = source instanceof EntityArrow; // Check if the explosion is from an arrow.
+	    EntityLiving owner = isArrowExplosion ? ((EntityArrow) source).owner : null; // Get the owner if it's an arrow.
+	    boolean hasBoostedPlayer = false; // Prevent boost stacking
 
-		int var8;
-		int var9;
-		int var10;
-		float var11;
-		float var18;
-		int var19;
-		int var20;
-		int var21;
-		int var22;
-		for(var8 = 0; var8 < 16; ++var8) {
-			for(var9 = 0; var9 < 16; ++var9) {
-				for(var10 = 0; var10 < 16; ++var10) {
-					if(var8 == 0 || var8 == 15 || var9 == 0 || var9 == 15 || var10 == 0 || var10 == 15) {
-						var11 = (float)var8 / 15.0F * 2.0F - 1.0F;
-						float var12 = (float)var9 / 15.0F * 2.0F - 1.0F;
-						float var13 = (float)var10 / 15.0F * 2.0F - 1.0F;
-						float var14 = (float)Math.sqrt((double)(var11 * var11 + var12 * var12 + var13 * var13));
-						var11 /= var14;
-						var12 /= var14;
-						var13 /= var14;
-						float var15 = var5 * (0.7F + this.random.nextFloat() * 0.6F);
-						float var16 = var2;
-						float var17 = var3;
+	    this.playSoundAtPlayer(var2, var3, var4, "random.explode", 4.0F, (1.0F + (this.random.nextFloat() - this.random.nextFloat()) * 0.2F) * 0.7F);
 
-						for(var18 = var4; var15 > 0.0F; var15 -= 0.22500001F) {
-							var19 = (int)var16;
-							var20 = (int)var17;
-							var21 = (int)var18;
-							var22 = this.getBlockId(var19, var20, var21);
-							if(var22 > 0) {
-								var15 -= (Block.blocksList[var22].getExplosionResistance() + 0.3F) * 0.3F;
-							}
+	    TreeSet<Integer> affectedBlocks = new TreeSet<>();
+	    float originalRadius = var5;
 
-							if(var15 > 0.0F) {
-								int var23 = var19 + (var20 << 10) + (var21 << 10 << 10);
-								var6.add(Integer.valueOf(var23));
-							}
+	    // Iterate to determine the blocks affected by the explosion
+	    for (int x = 0; x < 16; ++x) {
+	        for (int y = 0; y < 16; ++y) {
+	            for (int z = 0; z < 16; ++z) {
+	                if (x == 0 || x == 15 || y == 0 || y == 15 || z == 0 || z == 15) {
+	                    float offsetX = (float) x / 15.0F * 2.0F - 1.0F;
+	                    float offsetY = (float) y / 15.0F * 2.0F - 1.0F;
+	                    float offsetZ = (float) z / 15.0F * 2.0F - 1.0F;
+	                    float distance = (float) Math.sqrt(offsetX * offsetX + offsetY * offsetY + offsetZ * offsetZ);
+	                    offsetX /= distance;
+	                    offsetY /= distance;
+	                    offsetZ /= distance;
+	                    float currentRadius = var5 * (0.7F + this.random.nextFloat() * 0.6F);
+	                    float posX = var2;
+	                    float posY = var3;
+	                    float posZ = var4;
 
-							var16 += var11 * 0.3F;
-							var17 += var12 * 0.3F;
-							var18 += var13 * 0.3F;
-						}
-					}
-				}
-			}
-		}
+	                    while (currentRadius > 0.0F) {
+	                        int blockX = (int) posX;
+	                        int blockY = (int) posY;
+	                        int blockZ = (int) posZ;
+	                        int blockId = this.getBlockId(blockX, blockY, blockZ);
 
-		var5 *= 2.0F;
-		var8 = (int)(var2 - var5 - 1.0F);
-		var9 = (int)(var2 + var5 + 1.0F);
-		var10 = (int)(var3 - var5 - 1.0F);
-		int var29 = (int)(var3 + var5 + 1.0F);
-		int var30 = (int)(var4 - var5 - 1.0F);
-		int var31 = (int)(var4 + var5 + 1.0F);
-		List var32 = this.entityMap.getEntities(var1, (float)var8, (float)var10, (float)var30, (float)var9, (float)var29, (float)var31);
-		Vec3D var33 = new Vec3D(var2, var3, var4);
+	                        if (blockId > 0) {
+	                            currentRadius -= (Block.blocksList[blockId].getExplosionResistance() + 0.3F) * 0.3F;
+	                        }
 
-		float var27;
-		float var28;
-		float var43;
-		for(int var34 = 0; var34 < var32.size(); ++var34) {
-			Entity var36 = (Entity)var32.get(var34);
-			var27 = var36.posX - var2;
-			var28 = var36.posY - var3;
-			float var26 = var36.posZ - var4;
-			var18 = MathHelper.sqrt_float(var27 * var27 + var28 * var28 + var26 * var26) / var5;
-			if(var18 <= 1.0F) {
-				var26 = var36.posX - var2;
-				float var39 = var36.posY - var3;
-				float var40 = var36.posZ - var4;
-				float var41 = MathHelper.sqrt_float(var26 * var26 + var39 * var39 + var40 * var40);
-				var26 /= var41;
-				var39 /= var41;
-				var40 /= var41;
-				float var42 = this.getBlockDensity(var33, var36.boundingBox);
-				var43 = (1.0F - var18) * var42;
-				var36.attackThisEntity(var1, (int)((var43 * var43 + var43) / 2.0F * 8.0F * var5 + 1.0F));
-				var36.motionX += var26 * var43;
-				var36.motionY += var39 * var43;
-				var36.motionZ += var40 * var43;
-			}
-		}
+	                        if (currentRadius > 0.0F) {
+	                            int blockPosKey = blockX + (blockY << 10) + (blockZ << 10 << 10);
+	                            affectedBlocks.add(blockPosKey);
+	                        }
 
-		var5 = var7;
-		ArrayList var35 = new ArrayList();
-		var35.addAll(var6);
+	                        posX += offsetX * 0.3F;
+	                        posY += offsetY * 0.3F;
+	                        posZ += offsetZ * 0.3F;
+	                        currentRadius -= 0.22500001F;
+	                    }
+	                }
+	            }
+	        }
+	    }
 
-		for(int var37 = var35.size() - 1; var37 >= 0; --var37) {
-			int var38 = ((Integer)var35.get(var37)).intValue();
-			var8 = var38 & 1023;
-			var19 = var38 >> 10 & 1023;
-			var20 = var38 >> 20 & 1023;
-			if(var8 >= 0 && var19 >= 0 && var20 >= 0 && var8 < this.width && var19 < this.height && var20 < this.length) {
-				var21 = this.getBlockId(var8, var19, var20);
+	 // Handle entities within explosion range
+	    var5 *= 2.0F;
+	    int minX = (int) (var2 - var5 - 1.0F);
+	    int maxX = (int) (var2 + var5 + 1.0F);
+	    int minY = (int) (var3 - var5 - 1.0F);
+	    int maxY = (int) (var3 + var5 + 1.0F);
+	    int minZ = (int) (var4 - var5 - 1.0F);
+	    int maxZ = (int) (var4 + var5 + 1.0F);
+	    List<Entity> entities = this.entityMap.getEntities(source, (float) minX, (float) minY, (float) minZ, (float) maxX, (float) maxY, (float) maxZ);
+	    Vec3D explosionOrigin = new Vec3D(var2, var3, var4);
 
-				for(var22 = 0; var22 <= 0; ++var22) {
-					var43 = (float)var8 + this.random.nextFloat();
-					var27 = (float)var19 + this.random.nextFloat();
-					float var24 = (float)var20 + this.random.nextFloat();
-					float var25 = var43 - var2;
-					var7 = var27 - var3;
-					var28 = var24 - var4;
-					var11 = MathHelper.sqrt_float(var25 * var25 + var7 * var7 + var28 * var28);
-					var25 /= var11;
-					var7 /= var11;
-					var28 /= var11;
-					var11 = 0.5F / (var11 / var5 + 0.1F);
-					var11 *= this.random.nextFloat() * this.random.nextFloat() + 0.3F;
-					var25 *= var11;
-					var7 *= var11;
-					var28 *= var11;
-					this.spawnParticle("explode", (var43 + var2) / 2.0F, (var27 + var3) / 2.0F, (var24 + var4) / 2.0F, var25, var7, var28);
-					this.spawnParticle("smoke", var43, var27, var24, var25, var7, var28);
-				}
+	    // Check if the arrow is stuck in a wall or if it hit a wall
+	    boolean arrowHitWall = this.getBlockId((int) var2, (int) var3, (int) var4) != 0;
 
-				if(var21 > 0) {
-					Block.blocksList[var21].dropBlockAsItemWithChance(this, var8, var19, var20, this.getBlockMetadata(var8, var19, var20), 0.3F);
-					this.setBlockWithNotify(var8, var19, var20, 0);
-					Block.blocksList[var21].onBlockDestroyedByExplosion(this, var8, var19, var20);
-				}
-			}
-		}
+	    for (Entity entity : entities) {
+	        if (isArrowExplosion && entity instanceof EntityPlayer && entity == owner) {
+	            if (!hasBoostedPlayer) {
+	                // Check if the player is against a wall or obstacle, or if the arrow hit a wall
+	                boolean isAgainstWall = entity.isCollidedHorizontally || arrowHitWall;
 
+	                if (isAgainstWall) {
+	                    // Push the player back away from the wall without any upward boost
+	                    float pushBackStrength = 0.5f; // Adjust the strength of the pushback
+	                    entity.motionX = -entity.motionX * pushBackStrength;
+	                    entity.motionZ = -entity.motionZ * pushBackStrength;
+	                } else {
+	                    // Calculate forward boost based on player's current motion
+	                    float forwardBoost = (float) Math.sqrt(entity.motionX * entity.motionX + entity.motionZ * entity.motionZ) * 0.3f; // Forward boost
+
+	                    // Adjust vertical boost based on whether the player is jumping
+	                    float verticalBoost = entity.onGround ? 0.75f : 0.6f; // Higher boost if the player is on the ground, less if jumping
+
+	                    // Apply the boost
+	                    entity.motionY += verticalBoost;
+	                    entity.motionX += entity.motionX * forwardBoost;
+	                    entity.motionZ += entity.motionZ * forwardBoost;
+	                }
+
+	                // Mark the player as boosted to prevent stacking until they land
+	                hasBoostedPlayer = true;
+	            }
+	            continue;
+	        }
+
+	        // Regular explosion behavior for other entities (damage and knockback)
+	        float deltaX = entity.posX - var2;
+	        float deltaY = entity.posY - var3;
+	        float deltaZ = entity.posZ - var4;
+	        float distanceToExplosion = MathHelper.sqrt_float(deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ) / var5;
+
+	        if (distanceToExplosion <= 1.0F) {
+	            float normalizedDistance = 1.0F - distanceToExplosion;
+	            float blockDensity = this.getBlockDensity(explosionOrigin, entity.boundingBox);
+	            float impact = normalizedDistance * blockDensity;
+	            entity.attackThisEntity(source, (int) ((impact * impact + impact) / 2.0F * 8.0F * var5 + 1.0F));
+	            entity.motionX += deltaX * impact;
+	            entity.motionY += deltaY * impact;
+	            entity.motionZ += deltaZ * impact;
+	        }
+	    }
+
+
+	    // Show particles even if the explosion is from an arrow (without block destruction)
+	    ArrayList<Integer> affectedBlockList = new ArrayList<>(affectedBlocks);
+
+	    for (int i = affectedBlockList.size() - 1; i >= 0; --i) {
+	        int blockPosKey = affectedBlockList.get(i);
+	        int blockX = blockPosKey & 1023;
+	        int blockY = blockPosKey >> 10 & 1023;
+	        int blockZ = blockPosKey >> 20 & 1023;
+
+	        if (blockX >= 0 && blockY >= 0 && blockZ >= 0 && blockX < this.width && blockY < this.height && blockZ < this.length) {
+	            for (int j = 0; j <= 0; ++j) {
+	                float particleX = (float) blockX + this.random.nextFloat();
+	                float particleY = (float) blockY + this.random.nextFloat();
+	                float particleZ = (float) blockZ + this.random.nextFloat();
+	                float offsetX = particleX - var2;
+	                float offsetY = particleY - var3;
+	                float offsetZ = particleZ - var4;
+	                float distance = MathHelper.sqrt_float(offsetX * offsetX + offsetY * offsetY + offsetZ * offsetZ);
+	                offsetX /= distance;
+	                offsetY /= distance;
+	                offsetZ /= distance;
+	                float particleSpeed = 0.5F / (distance / originalRadius + 0.1F);
+	                particleSpeed *= this.random.nextFloat() * this.random.nextFloat() + 0.3F;
+	                offsetX *= particleSpeed;
+	                offsetY *= particleSpeed;
+	                offsetZ *= particleSpeed;
+	                this.spawnParticle("explode", (particleX + var2) / 2.0F, (particleY + var3) / 2.0F, (particleZ + var4) / 2.0F, offsetX, offsetY, offsetZ);
+	                this.spawnParticle("smoke", particleX, particleY, particleZ, offsetX, offsetY, offsetZ);
+	            }
+	        }
+	    }
 	}
-
+	
 	private float getBlockDensity(Vec3D var1, AxisAlignedBB var2) {
 		float var3 = 1.0F / ((var2.maxX - var2.minX) * 2.0F + 1.0F);
 		float var4 = 1.0F / ((var2.maxY - var2.minY) * 2.0F + 1.0F);

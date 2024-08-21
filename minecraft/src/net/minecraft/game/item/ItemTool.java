@@ -18,7 +18,7 @@ public class ItemTool extends Item {
 		this.damageVsEntity = var2 + var3;
 	}
 
-	public final float getStrVsBlock(Block block) {
+	public float getStrVsBlock(Block block) {
 		
 		for (int i = 0; i < this.blocksEffectiveAgainst.length; i++) {
 			
@@ -34,11 +34,11 @@ public class ItemTool extends Item {
 		item.damageItem(2);
 	}
 
-	public final void onBlockDestroyed(ItemStack item) {
+	public void onBlockDestroyed(ItemStack item) {
 		item.damageItem(1);
 	}
 
-	public final int getDamageVsEntity() {
+	public int getDamageVsEntity() {
 		return this.damageVsEntity;
 	}
 }

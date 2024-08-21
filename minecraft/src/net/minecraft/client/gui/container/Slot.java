@@ -10,7 +10,7 @@ public class Slot {
 	public final int xPos;
 	public final int yPos;
 	public final IInventory inventory;
-	private final GuiContainer guiHandler;
+	protected final GuiContainer guiHandler;
 
 	public Slot(GuiContainer guiHandler, IInventory inventory, int slotIndex, int x, int y) {
 		this.guiHandler = guiHandler;

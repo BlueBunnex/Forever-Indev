@@ -2,7 +2,6 @@ package net.minecraft.game.entity.misc;
 
 import com.mojang.nbt.NBTTagCompound;
 import net.minecraft.game.entity.Entity;
-import net.minecraft.game.entity.player.EntityPlayer;
 import net.minecraft.game.item.ItemStack;
 import net.minecraft.game.level.World;
 import net.minecraft.game.level.block.Block;
@@ -172,7 +171,7 @@ public class EntityItem extends Entity {
 		return "Item";
 	}
 
-	public final void onCollideWithPlayer(EntityPlayer var1) {
+	public final void onCollideWithPlayer(var1) {
 		if(this.delayBeforeCanPickup == 0 && var1.inventory.storePartialItemStack(this.item)) {
 			this.worldObj.playSoundAtEntity(this, "random.pop", 0.2F, ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.7F + 1.0F) * 2.0F);
 			var1.onItemPickup(this);

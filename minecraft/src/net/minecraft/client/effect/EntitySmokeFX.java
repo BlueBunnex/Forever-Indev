@@ -5,6 +5,11 @@ import net.minecraft.game.level.World;
 
 public final class EntitySmokeFX extends EntityFX {
 	private float smokeParticleScale;
+	
+    // New fields for color
+    private float particleRed;
+    private float particleGreen;
+    private float particleBlue;
 
 	public EntitySmokeFX(World var1, float var2, float var3, float var4) {
 		this(var1, var2, var3, var4, 1.0F);
@@ -24,6 +29,13 @@ public final class EntitySmokeFX extends EntityFX {
 		this.noClip = false;
 	}
 
+    // New method to set color
+    public void setColor(float red, float green, float blue) {
+        this.particleRed = red;
+        this.particleGreen = green;
+        this.particleBlue = blue;
+    }
+	
 	public final void renderParticle(Tessellator var1, float var2, float var3, float var4, float var5, float var6, float var7) {
 		float var8 = ((float)this.particleAge + var2) / (float)this.particleMaxAge * 32.0F;
 		if(var8 < 0.0F) {

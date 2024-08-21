@@ -338,7 +338,7 @@ public final class Minecraft implements Runnable {
 
 					for(int var30 = 0; var30 < this.timer.elapsedTicks; ++var30) {
 						++this.ticksRan;
-						this.runTick();
+						this.runTick(null);
 					}
 
 					this.sndManager.setListener(this.thePlayer, this.timer.renderPartialTicks);
@@ -574,8 +574,43 @@ public final class Minecraft implements Runnable {
 
 	}
 
-	private void runTick() {
-		this.ingameGUI.updateChatMessages();
+	private void runTick(Item item) {
+	    this.ingameGUI.updateChatMessages();
+
+	    if (this.thePlayer != null) {
+	        InventoryPlayer inventory = this.thePlayer.inventory;
+
+	        // Get the item stacks in slots 36 (quiver slot) and 37 (arrow slot)
+	        ItemStack quiverSlot = inventory.getStackInSlot(36);
+	        ItemStack arrowSlot = inventory.getStackInSlot(37);
+
+	        // Check if the quiver is in slot 36
+	        if (quiverSlot != null && quiverSlot.getItem() == Item.quiver) {
+	            int arrowCount = getArrowCountInSlot(inventory, 37);
+
+	            // Set the custom icon index based on the arrow count
+	            if (arrowCount == 0) {
+	                quiverSlot.setCustomIconIndex(54); // Empty quiver icon
+	            } else if (arrowCount > 0 && arrowCount <= 32) {
+	                quiverSlot.setCustomIconIndex(38); // Partially filled quiver (1 to 32 arrows)
+	            } else if (arrowCount > 32 && arrowCount <= 64) {
+	                quiverSlot.setCustomIconIndex(22); // Fully filled quiver (33 to 64 arrows)
+	            }
+
+	            // Render the quiver using its custom icon index
+	            int iconIndex = quiverSlot.hasCustomIcon() ? quiverSlot.getCustomIconIndex() : quiverSlot.getItem().getIconIndex();
+	            // Use iconIndex in your rendering logic
+
+	        } else {
+	            // If there's no quiver in slot 36, drop the arrows in slot 37
+	            ItemStack slot37 = inventory.getStackInSlot(37);
+	            if (arrowSlot != null && arrowSlot.getItem() == Item.arrow) {
+	                // Drop the arrows in slot 37
+	            	this.thePlayer.dropPlayerItem(slot37);
+	                inventory.setInventorySlotContents(37, null); // Clear slot 37
+	            }
+	        }
+	    }
 		
 		if(!this.isGamePaused && this.theWorld != null) {
 			this.playerController.onUpdate();
@@ -590,6 +625,10 @@ public final class Minecraft implements Runnable {
 			this.displayGuiScreen(null);
 		}
 
+	    if (Keyboard.isKeyDown(Keyboard.KEY_F)) {
+	        this.toggleFullscreen();
+	    }
+		
 		if(this.currentScreen == null || this.currentScreen.allowUserInput) {
 			
 			jump:
@@ -633,24 +672,45 @@ public final class Minecraft implements Runnable {
 									this.prevFrameTime = this.ticksRan;
 								}
 
-								if(Mouse.getEventButton() == 2 && Mouse.getEventButtonState() && this.objectMouseOver != null) {
-									var2 = this.theWorld.getBlockId(this.objectMouseOver.blockX, this.objectMouseOver.blockY, this.objectMouseOver.blockZ);
-									if(var2 == Block.grass.blockID) {
-										var2 = Block.dirt.blockID;
-									}
+								if (Mouse.getEventButton() == 2 && Mouse.getEventButtonState() && this.objectMouseOver != null) {
+								    int blockId = this.theWorld.getBlockId(this.objectMouseOver.blockX, this.objectMouseOver.blockY, this.objectMouseOver.blockZ);
 
-									if(var2 == Block.slabFull.blockID) {
-										var2 = Block.slabHalf.blockID;
-									}
+								    if (!this.thePlayer.isCreativeMode) {
+								        // Map block IDs for non-creative mode
+								        if (blockId == Block.grass.blockID) {
+								            blockId = Block.dirt.blockID;
+								        }
 
-									if(var2 == Block.bedrock.blockID) {
-										var2 = Block.stone.blockID;
-									}
+								        if (blockId == Block.slabFull.blockID) {
+								            blockId = Block.slabHalf.blockID;
+								        }
 
-									this.thePlayer.inventory.getFirstEmptyStack(var2);
+								        if (blockId == Block.bedrock.blockID) {
+								            blockId = Block.stone.blockID;
+								        }
+
+								        this.thePlayer.inventory.getFirstEmptyStack(blockId);
+								    } else {
+								        // Handle creative mode, get exact block with metadata
+								        int metadata = this.theWorld.getBlockMetadata(this.objectMouseOver.blockX, this.objectMouseOver.blockY, this.objectMouseOver.blockZ);
+
+								        // Check if the player already has the item in their inventory
+								        int slot = this.thePlayer.inventory.getInventorySlotContainItem(blockId);
+
+								        if (slot == -1) {
+								            // If the player does not already have the item, add it to their inventory
+								            this.thePlayer.inventory.storePartialItemStack(new ItemStack(blockId, 1, metadata));
+								            slot = this.thePlayer.inventory.getInventorySlotContainItem(blockId);
+								        }
+
+								        // Switch to the slot containing the block
+								        if (slot >= 0) {
+								            this.thePlayer.inventory.currentItem = slot;
+								        }
+								    }
 								}
-							}
-						} else if(this.currentScreen != null) {
+
+						} } else if(this.currentScreen != null) {
 							this.currentScreen.handleMouseInput();
 						}
 					}
@@ -726,9 +786,20 @@ public final class Minecraft implements Runnable {
 										this.entityRenderer.grabLargeScreenshot();
 									}
 
-									else if (Keyboard.getEventKey() == Keyboard.KEY_F5) {
-										this.options.thirdPersonView = !this.options.thirdPersonView;
+									else if (Keyboard.getEventKey() == Keyboard.KEY_F5 && Keyboard.getEventKeyState()) {
+									    // Cycle through the camera modes
+										EntityRenderer.cameraMode = (EntityRenderer.cameraMode + 1) % 3;
+									    
+									    // Update the thirdPersonView option based on the camera mode
+									    this.options.thirdPersonView = (EntityRenderer.cameraMode != 0); // Enable third-person if not in first-person mode
+
+									    // You can add additional logic to handle UI updates, if needed
 									}
+									
+									else if (Keyboard.getEventKey() == Keyboard.KEY_F3) {
+										this.options.showFPS = !this.options.showFPS;
+									}
+
 
 									else if (Keyboard.getEventKey() == this.options.keyBindInventory.keyCode) {
 										
@@ -753,8 +824,9 @@ public final class Minecraft implements Runnable {
 										this.thePlayer.dropPlayerItemWithRandomChoice(this.thePlayer.inventory.decrStackSize(this.thePlayer.inventory.currentItem, 1), false);
 									}
 									
-									// no idea what this code does
-									if (this.playerController instanceof PlayerControllerCreative) {
+									// no idea what this code does (Below describes the functionality of this code
+									// NOTE: It handles loading or saving the player position based on key binds
+									if (this.thePlayer.isCreativeMode) { // Check if the player is in creative mode
 										if(Keyboard.getEventKey() == this.options.keyBindLoad.keyCode) {
 											this.thePlayer.preparePlayerToSpawn();
 										}
@@ -825,6 +897,15 @@ public final class Minecraft implements Runnable {
 
 	}
 	
+	private int getArrowCountInSlot(InventoryPlayer inventory, int slotIndex) {
+	    // Check for arrows in the specified slot (slot 37 in this case)
+	    ItemStack arrowSlot = inventory.getStackInSlot(slotIndex);
+	    if (arrowSlot != null && arrowSlot.getItem() == Item.arrow) {
+	        return arrowSlot.stackSize; // Return the number of arrows in the slot
+	    }
+	    return 0;
+	}
+
 	public final short[] getLevelDimensions(int worldSize, int worldShape) {
 		
 		short xSize = (short) (128 << worldSize);
@@ -846,24 +927,33 @@ public final class Minecraft implements Runnable {
 		return new short[] { xSize, ySize, zSize };
 	}
 
-	public final void generateLevel(int worldSize, int worldShape, int worldType, int worldTheme) {
-		
-		this.setLevel(null);
-		System.gc();
-		
-		LevelGenerator generator = new LevelGenerator(this.loadingScreen);
-		generator.islandGen   = worldType == 1;
-		generator.floatingGen = worldType == 2;
-		generator.flatGen     = worldType == 3;
-		generator.levelType   = worldTheme;
-		
-		short[] dim = getLevelDimensions(worldSize, worldShape);
+	public final void generateLevel(int var1, int var2, int var3, int var4, int var5) {
+	    this.setLevel((World) null);
+	    System.gc();
+	    String var6 = this.session != null ? this.session.username : "anonymous";
+	    LevelGenerator var7 = new LevelGenerator(this.loadingScreen);
+	    var7.islandGen = var3 == 1;
+	    var7.floatingGen = var3 == 2;
+	    var7.flatGen = var3 == 3;
+	    var7.levelType = var4;
+	    var1 = 128 << var1;
+	    var3 = var1;
+	    int height = var7.getHeightFromDepth(var5);
 
-		String username = this.session != null ? this.session.username : "anonymous";
-		World world = generator.generate(username, dim[0], dim[2], dim[1]); // for some reason goes [x, z, y]
-		
-		this.setLevel(world);
+	    short var9 = (short) height;
+	    if (var2 == 1) {
+	        var1 /= 2;
+	        var3 <<= 1;
+	    } else if (var2 == 2) {
+	        var1 /= 2;
+	        var3 = var1;
+	    }
+
+	    World var8 = var7.generate(var6, var1, var3, var9);
+	    this.setLevel(var8);
 	}
+
+
 
 	public final void setLevel(World var1) {
 		if(this.theWorld != null) {
@@ -894,9 +984,9 @@ public final class Minecraft implements Runnable {
 				}
 			}
 
-			if(this.thePlayer != null) {
-				this.thePlayer.movementInput = new MovementInputFromOptions(this.options);
-				this.playerController.onRespawn(this.thePlayer);
+			if (this.thePlayer != null) {
+			    this.thePlayer.movementInput = new MovementInputFromOptions(this.options, this);
+			    this.playerController.onRespawn(this.thePlayer);
 			}
 
 			if(this.renderGlobal != null) {
@@ -920,3 +1010,4 @@ public final class Minecraft implements Runnable {
 		System.gc();
 	}
 }
+

@@ -30,11 +30,7 @@ public final class CraftingManager {
 		
 		this.addRecipe(new ItemStack(Item.sweetBread, 1), new Object[]{"X", "#", Character.valueOf('X'), Item.sugar, Character.valueOf('#'), Item.bread});
 		
-		// brick
-		this.addRecipe(new ItemStack(Block.cobbledBrick, 4), new Object[]{"##", "##", Character.valueOf('#'), Block.cobblestone});
-		this.addRecipe(new ItemStack(Block.mudBrick, 4), new Object[]{"##", "##", Character.valueOf('#'), Block.dirt});
-		
-		// polished blocks
+		// Polished blocks
 		this.addRecipe(new ItemStack(Block.polishedBlock, 4), new Object[]{"##", "##", Character.valueOf('#'), Block.stone});
 		this.addRecipe(new ItemStack(Block.slabHalf, 6), new Object[]{"###", Character.valueOf('#'), Block.polishedBlock});
 		this.addRecipe(new ItemStack(Block.polishedTiles, 4), new Object[]{"##", "##", Character.valueOf('#'), Block.polishedBlock});
@@ -57,6 +53,14 @@ public final class CraftingManager {
 		this.addRecipe(new ItemStack(Item.bread, 1), new Object[]{"###", Character.valueOf('#'), Item.wheat});
 		this.addRecipe(new ItemStack(Item.sugar, 1), new Object[]{"#", Character.valueOf('#'), Item.sugarBeet});
 		this.addRecipe(new ItemStack(Item.applePie, 1), new Object[]{"ABC", Character.valueOf('A'), Item.apple, Character.valueOf('B'), Item.wheat, Character.valueOf('C'), Item.sugar});
+		
+        // New block recipes (steve2024)
+        this.addRecipe(new ItemStack(Block.cobbledStone, 4), new Object[]{"##", "##", Character.valueOf('#'), Block.stone});
+        this.addRecipe(new ItemStack(Block.packedGravel, 4), new Object[]{"##", "##", Character.valueOf('#'), Block.gravel});
+        this.addRecipe(new ItemStack(Block.compressedDirt, 4), new Object[]{"##", "##", Character.valueOf('#'), Block.dirt});
+        this.addRecipe(new ItemStack(Block.mudBrick, 4), new Object[]{"##", "##", Character.valueOf('#'), Block.compressedDirt});
+        this.addRecipe(new ItemStack(Block.cobbledBrick, 4), new Object[]{"##", "##", Character.valueOf('#'), Block.cobbledStone});
+        this.addRecipe(new ItemStack(Block.tintedGlass, 1), new Object[]{" # ", "#X#", " # ", Character.valueOf('#'), Item.rupeeDark, Character.valueOf('X'), Block.glass});
 		
 		Collections.sort(this.recipes, new RecipeSorter());
 		System.out.println(this.recipes.size() + " recipes");

@@ -5,6 +5,7 @@ import java.util.List;
 
 import net.minecraft.game.entity.player.EntityPlayer;
 import net.minecraft.game.item.Item;
+import net.minecraft.game.item.ItemStack;
 import net.minecraft.game.item.enchant.EnchantType;
 import net.minecraft.game.level.World;
 import net.minecraft.game.level.block.Block;
@@ -48,7 +49,7 @@ public class EntityLiving extends Entity {
 		this.entityAge = 0;
 		this.isJumping = false;
 		//this.defaultPitch = 0.0F;
-		this.moveSpeed = 0.7F;
+		this.moveSpeed = 10.7F;
 		this.health = 10;
 		this.preventEntitySpawning = true;
 		Math.random();
@@ -224,17 +225,18 @@ public class EntityLiving extends Entity {
 	}
 
 	public boolean attackThisEntity(Entity attacker, int damage) {
-		
-		// if attacker is the player, check if their attacking item is enchanted
-		if (attacker instanceof EntityPlayer) {
-			
-			EntityPlayer player = (EntityPlayer) attacker;
-			
-			int fieryLevel = player.inventory.getCurrentItem().enchantLevelOf(EnchantType.fiery);
-			
-			if (fieryLevel > 0)
-				this.fire = 50 * fieryLevel; 
-		}
+	    // if attacker is the player, check if their attacking item is enchanted
+	    if (attacker instanceof EntityPlayer) {
+	        EntityPlayer player = (EntityPlayer) attacker;
+	        ItemStack currentItem = player.inventory.getCurrentItem();
+	        
+	        if (currentItem != null) {  // Check if currentItem is not null
+	            int fieryLevel = currentItem.enchantLevelOf(EnchantType.fiery);
+	            
+	            if (fieryLevel > 0)
+	                this.fire = 50 * fieryLevel; 
+	        }
+	    }
 		
 		//
 		this.entityAge = 0;
@@ -427,40 +429,32 @@ public class EntityLiving extends Entity {
 		var3 = this.moveForward;
 		var2 = this.moveStrafing;
 		float var4;
-		if(this.handleWaterMovement()) {
-			var4 = this.posY;
-			this.moveFlying(var2, var3, 0.02F);
-			this.moveEntity(this.motionX, this.motionY, this.motionZ);
-			this.motionX *= 0.8F;
-			this.motionY *= 0.8F;
-			this.motionZ *= 0.8F;
-			this.motionY = (float)((double)this.motionY - 0.02D);
-			if(this.isCollidedHorizontally && this.isOffsetPositionInLiquid(this.motionX, this.motionY + 0.6F - this.posY + var4, this.motionZ)) {
-				this.motionY = 0.3F;
-			}
-		} else if(this.handleLavaMovement()) {
-			var4 = this.posY;
-			this.moveFlying(var2, var3, 0.02F);
-			this.moveEntity(this.motionX, this.motionY, this.motionZ);
-			this.motionX *= 0.5F;
-			this.motionY *= 0.5F;
-			this.motionZ *= 0.5F;
-			this.motionY = (float)((double)this.motionY - 0.02D);
-			if(this.isCollidedHorizontally && this.isOffsetPositionInLiquid(this.motionX, this.motionY + 0.6F - this.posY + var4, this.motionZ)) {
-				this.motionY = 0.3F;
-			}
+		if (this.handleWaterMovement()) {
+		    this.moveFlying(this.moveStrafing, this.moveForward, 0.02F);
+		    this.moveEntity(this.motionX, this.motionY, this.motionZ);
+		    this.motionX *= 0.8F;
+		    this.motionY *= 0.8F;
+		    this.motionZ *= 0.8F;
+		} else if (this.handleLavaMovement()) {
+		    this.moveFlying(this.moveStrafing, this.moveForward, 0.02F);
+		    this.moveEntity(this.motionX, this.motionY, this.motionZ);
+		    this.motionX *= 0.5F;
+		    this.motionY *= 0.5F;
+		    this.motionZ *= 0.5F;
 		} else {
-			this.moveFlying(var2, var3, this.onGround ? 0.1F : 0.02F);
-			this.moveEntity(this.motionX, this.motionY, this.motionZ);
-			this.motionX *= 0.91F;
-			this.motionY *= 0.98F;
-			this.motionZ *= 0.91F;
-			this.motionY = (float)((double)this.motionY - 0.08D);
-			if(this.onGround) {
-				this.motionX *= 0.6F;
-				this.motionZ *= 0.6F;
-			}
+		    this.moveFlying(this.moveStrafing, this.moveForward, this.onGround ? 0.1F : 0.02F);
+		    this.moveEntity(this.motionX, this.motionY, this.motionZ);
+		    this.motionX *= 0.91F;
+		    this.motionY *= 0.98F;
+		    this.motionZ *= 0.91F;
+		    this.motionY -= 0.08D; // Gravity effect
+
+		    if (this.onGround) {
+		        this.motionX *= 0.6F;
+		        this.motionZ *= 0.6F;
+		    }
 		}
+
 
 		this.prevLimbYaw = this.limbYaw;
 		var4 = this.posX - this.prevPosX;

@@ -56,6 +56,11 @@ public final class EntityRenderer {
 	private float fogColorBlue;
 	private float prevFogColor;
 	private float fogColor;
+	private int cameraMode = 0; // 0: First-person, 1: Back-facing third-person, 2: Front-facing third-person
+
+	public void setCameraMode(int cameraMode) {
+	    this.cameraMode = cameraMode;
+	}
 
 	public EntityRenderer(Minecraft var1) {
 		this.mc = var1;
@@ -121,7 +126,7 @@ public final class EntityRenderer {
 		int var5;
 		int var6;
 		if(this.mc.inventoryScreen) {
-			Mouse.getDX();
+			Mouse.getDX();`
 			byte var2 = 0;
 			Mouse.getDY();
 			byte var3 = 0;
@@ -459,32 +464,23 @@ public final class EntityRenderer {
 			var13 = var34.prevPosX + (var34.posX - var34.prevPosX) * var1;
 			var14 = var34.prevPosY + (var34.posY - var34.prevPosY) * var1;
 			var15 = var34.prevPosZ + (var34.posZ - var34.prevPosZ) * var1;
-			if(!this.mc.options.thirdPersonView) {
-				GL11.glTranslatef(0.0F, 0.0F, -0.1F);
+			if (!this.mc.options.thirdPersonView) {
+			    GL11.glTranslatef(0.0F, 0.0F, -0.1F);
 			} else {
-				var16 = 4.0F;
-				float var25 = -MathHelper.sin(var34.rotationYaw / 180.0F * (float)Math.PI) * MathHelper.cos(var34.rotationPitch / 180.0F * (float)Math.PI) * 4.0F;
-				var17 = MathHelper.cos(var34.rotationYaw / 180.0F * (float)Math.PI) * MathHelper.cos(var34.rotationPitch / 180.0F * (float)Math.PI) * 4.0F;
-				var18 = -MathHelper.sin(var34.rotationPitch / 180.0F * (float)Math.PI) * 4.0F;
+			    float distance = 4.0F;
+			    float yaw = -MathHelper.sin(var34.rotationYaw / 180.0F * (float)Math.PI) * MathHelper.cos(var34.rotationPitch / 180.0F * (float)Math.PI) * distance;
+			    float pitch = -MathHelper.sin(var34.rotationPitch / 180.0F * (float)Math.PI) * distance;
+			    float roll = MathHelper.cos(var34.rotationYaw / 180.0F * (float)Math.PI) * MathHelper.cos(var34.rotationPitch / 180.0F * (float)Math.PI) * distance;
 
-				for(int var39 = 0; var39 < 8; ++var39) {
-					var20 = (float)(((var39 & 1) << 1) - 1);
-					var27 = (float)(((var39 >> 1 & 1) << 1) - 1);
-					var28 = (float)(((var39 >> 2 & 1) << 1) - 1);
-					var20 *= 0.1F;
-					var27 *= 0.1F;
-					var28 *= 0.1F;
-					MovingObjectPosition var42 = var30.mc.theWorld.rayTraceBlocks(new Vec3D(var13 + var20, var14 + var27, var15 + var28), new Vec3D(var13 - var25 + var20 + var28, var14 - var18 + var27, var15 - var17 + var28));
-					if(var42 != null) {
-						float var40 = var42.hitVec.distance(new Vec3D(var13, var14, var15));
-						if(var40 < var16) {
-							var16 = var40;
-						}
-					}
-				}
-
-				GL11.glTranslatef(0.0F, 0.0F, -var16);
+			} else if (this.cameraMode == 1) {
+			        // Back-facing third-person
+			        GL11.glTranslatef(-yaw, -pitch, -roll);
+			} else if (this.cameraMode == 2) {
+			        // Front-facing third-person
+			        GL11.glTranslatef(yaw, pitch, roll);
+			    }
 			}
+
 
 			GL11.glRotatef(var34.prevRotationPitch + (var34.rotationPitch - var34.prevRotationPitch) * var27, 1.0F, 0.0F, 0.0F);
 			GL11.glRotatef(var34.prevRotationYaw + (var34.rotationYaw - var34.prevRotationYaw) * var27 + 180.0F, 0.0F, 1.0F, 0.0F);

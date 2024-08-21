@@ -8,9 +8,9 @@ public final class InventoryPlayer implements IInventory {
 	public ItemStack[] mainInventory = new ItemStack[36];
 	public ItemStack[] armorInventory = new ItemStack[4];
 	public int currentItem = 0;
-	private EntityPlayer player;
+	private player;
 
-	public InventoryPlayer(EntityPlayer var1) {
+	public InventoryPlayer(var1) {
 		this.player = var1;
 	}
 

@@ -1,7 +1,6 @@
 package net.minecraft.game.item;
 
 import java.util.Random;
-import net.minecraft.game.entity.player.EntityPlayer;
 import net.minecraft.game.level.World;
 import net.minecraft.game.level.block.Block;
 
@@ -104,7 +103,7 @@ public class Item {
 		return 1.0F;
 	}
 
-	public ItemStack onItemRightClick(ItemStack var1, World var2, EntityPlayer var3) {
+	public ItemStack onItemRightClick(ItemStack var1, World var2, var3) {
 		return var1;
 	}
 

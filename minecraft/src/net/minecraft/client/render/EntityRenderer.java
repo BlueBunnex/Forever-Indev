@@ -17,6 +17,7 @@ import net.minecraft.client.RenderHelper;
 import net.minecraft.client.controller.PlayerControllerCreative;
 import net.minecraft.client.effect.EffectRenderer;
 import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.player.MovementInputFromOptions;
 import net.minecraft.client.render.camera.ClippingHelperImplementation;
 import net.minecraft.client.render.camera.Frustrum;
 import net.minecraft.client.render.camera.IsomCamera;
@@ -36,9 +37,10 @@ import org.lwjgl.util.glu.GLU;
 import util.MathHelper;
 
 public final class EntityRenderer {
+	public static int cameraMode;
 	private Minecraft mc;
 	private boolean anaglyphEnable = false;
-	private float farPlaneDistance = 0.0F;
+	public float farPlaneDistance = 0.0F;
 	public ItemRenderer itemRenderer;
 	private int rendererUpdateCount;
 	private Entity pointedEntity = null;
@@ -446,7 +448,29 @@ public final class EntityRenderer {
 				var13 /= (1.0F - 500.0F / (var14 + 500.0F)) * 2.0F + 1.0F;
 			}
 
-			GLU.gluPerspective(var13, (float)this.mc.displayWidth / (float)this.mc.displayHeight, 0.05F, this.farPlaneDistance);
+			// Define constants for the FOV values and transition speed
+			float defaultFov = mc.options.fovSetting;
+			float sprintFov = defaultFov + 25.0F; // Default FOV + Increase for sprinting
+			float transitionSpeed = 0.05F; // Adjust this value to control the smoothness of the transition
+			float currentFov = defaultFov; // Initialize this with the default FOV
+
+			// This should be run every frame, and `currentFov` should be preserved between frames
+
+			// Determine the target FOV based on the sprinting state
+			float targetFov = MovementInputFromOptions.isSprinting ? sprintFov : defaultFov;
+
+			// Smoothly interpolate between the current FOV and the target FOV
+			if (currentFov < targetFov) {
+			    currentFov += (targetFov - currentFov) * transitionSpeed;
+			    if (currentFov > targetFov) currentFov = targetFov; // Clamp to targetFov
+			} else if (currentFov > targetFov) {
+			    currentFov -= (currentFov - targetFov) * transitionSpeed;
+			    if (currentFov < targetFov) currentFov = targetFov; // Clamp to targetFov
+			}
+
+			// Apply the perspective with the smoothly interpolated FOV
+			GLU.gluPerspective(currentFov, (float)this.mc.displayWidth / (float)this.mc.displayHeight, 0.05F, this.farPlaneDistance);
+
 			GL11.glMatrixMode(GL11.GL_MODELVIEW);
 			GL11.glLoadIdentity();
 			if(this.mc.options.anaglyph) {
@@ -463,32 +487,54 @@ public final class EntityRenderer {
 			var13 = var34.prevPosX + (var34.posX - var34.prevPosX) * var1;
 			var14 = var34.prevPosY + (var34.posY - var34.prevPosY) * var1;
 			var15 = var34.prevPosZ + (var34.posZ - var34.prevPosZ) * var1;
-			if(!this.mc.options.thirdPersonView) {
-				GL11.glTranslatef(0.0F, 0.0F, -0.1F);
+
+			if (!this.mc.options.thirdPersonView) {
+			    GL11.glTranslatef(0.0F, 0.0F, -0.1F);
 			} else {
-				var16 = 4.0F;
-				float var25 = -MathHelper.sin(var34.rotationYaw / 180.0F * (float)Math.PI) * MathHelper.cos(var34.rotationPitch / 180.0F * (float)Math.PI) * 4.0F;
-				var17 = MathHelper.cos(var34.rotationYaw / 180.0F * (float)Math.PI) * MathHelper.cos(var34.rotationPitch / 180.0F * (float)Math.PI) * 4.0F;
-				var18 = -MathHelper.sin(var34.rotationPitch / 180.0F * (float)Math.PI) * 4.0F;
+			    var16 = 4.0F;
+			    float var25 = -MathHelper.sin(var34.rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(var34.rotationPitch / 180.0F * (float) Math.PI) * 4.0F;
+			    var17 = MathHelper.cos(var34.rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(var34.rotationPitch / 180.0F * (float) Math.PI) * 4.0F;
+			    var18 = -MathHelper.sin(var34.rotationPitch / 180.0F * (float) Math.PI) * 4.0F;
 
-				for(int var39 = 0; var39 < 8; ++var39) {
-					var20 = (float)(((var39 & 1) << 1) - 1);
-					var27 = (float)(((var39 >> 1 & 1) << 1) - 1);
-					var28 = (float)(((var39 >> 2 & 1) << 1) - 1);
-					var20 *= 0.1F;
-					var27 *= 0.1F;
-					var28 *= 0.1F;
-					MovingObjectPosition var42 = var30.mc.theWorld.rayTraceBlocks(new Vec3D(var13 + var20, var14 + var27, var15 + var28), new Vec3D(var13 - var25 + var20 + var28, var14 - var18 + var27, var15 - var17 + var28));
-					if(var42 != null) {
-						float var40 = var42.hitVec.distance(new Vec3D(var13, var14, var15));
-						if(var40 < var16) {
-							var16 = var40;
-						}
-					}
-				}
+			    // Determine the camera mode
+			    int cameraMode = EntityRenderer.cameraMode;
 
-				GL11.glTranslatef(0.0F, 0.0F, -var16);
+			    // Adjust offsets for front-facing mode
+			    if (cameraMode == 2) {
+			        var25 = -var25; // Invert yaw offset
+			        var17 = -var17; // Invert pitch offset
+			    }
+
+			    // Clipping logic with adjustments for the front-facing mode
+			    for (int var39 = 0; var39 < 8; ++var39) {
+			        var20 = (float) (((var39 & 1) << 1) - 1);
+			        var27 = (float) (((var39 >> 1 & 1) << 1) - 1);
+			        var28 = (float) (((var39 >> 2 & 1) << 1) - 1);
+			        var20 *= 0.1F;
+			        var27 *= 0.1F;
+			        var28 *= 0.1F;
+			        Vec3D startVec = new Vec3D(var13 + var20, var14 + var27, var15 + var28);
+			        Vec3D endVec = new Vec3D(var13 - var25 + var20 + var28, var14 - var18 + var27, var15 - var17 + var28);
+
+			        MovingObjectPosition var42 = var30.mc.theWorld.rayTraceBlocks(startVec, endVec);
+			        if (var42 != null) {
+			            float var40 = var42.hitVec.distance(new Vec3D(var13, var14, var15));
+			            if (var40 < var16) {
+			                var16 = var40;
+			            }
+			        }
+			    }
+
+			    GL11.glTranslatef(0.0F, 0.0F, -var16);
+
+			    // Additional rotation for front-facing mode
+			    if (cameraMode == 2) {
+			        GL11.glRotatef(180.0F, 0.0F, 1.0F, 0.0F);
+			    }
 			}
+
+
+
 
 			GL11.glRotatef(var34.prevRotationPitch + (var34.rotationPitch - var34.prevRotationPitch) * var27, 1.0F, 0.0F, 0.0F);
 			GL11.glRotatef(var34.prevRotationYaw + (var34.rotationYaw - var34.prevRotationYaw) * var27 + 180.0F, 0.0F, 1.0F, 0.0F);

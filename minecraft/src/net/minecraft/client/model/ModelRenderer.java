@@ -6,11 +6,11 @@ import org.lwjgl.opengl.GL11;
 
 public final class ModelRenderer {
 	private PositionTextureVertex[] corners;
-	private TexturedQuad[] faces;
+	TexturedQuad[] faces;
 	private int textureOffsetX;
 	private int textureOffsetY;
 	private float rotationPointX;
-	private float rotationPointY;
+	float rotationPointY;
 	private float rotationPointZ;
 	public float rotateAngleX;
 	public float rotateAngleY;

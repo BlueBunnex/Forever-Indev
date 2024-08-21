@@ -4,7 +4,6 @@ import com.mojang.nbt.NBTTagCompound;
 import java.util.List;
 import net.minecraft.game.entity.Entity;
 import net.minecraft.game.entity.EntityLiving;
-import net.minecraft.game.entity.player.EntityPlayer;
 import net.minecraft.game.item.Item;
 import net.minecraft.game.item.ItemStack;
 import net.minecraft.game.level.World;
@@ -212,7 +211,7 @@ public class EntityArrow extends Entity {
 		return "Arrow";
 	}
 
-	public final void onCollideWithPlayer(EntityPlayer var1) {
+	public final void onCollideWithPlayer(var1) {
 		if(this.inGround && this.owner == var1 && this.arrowShake <= 0 && var1.inventory.storePartialItemStack(new ItemStack(Item.arrow.shiftedIndex, 1))) {
 			this.worldObj.playSoundAtEntity(this, "random.pop", 0.2F, ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.7F + 1.0F) * 2.0F);
 			var1.onItemPickup(this);

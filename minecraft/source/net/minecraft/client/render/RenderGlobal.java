@@ -16,7 +16,6 @@ import net.minecraft.client.effect.EntitySplashFX;
 import net.minecraft.client.render.camera.ICamera;
 import net.minecraft.client.render.entity.RenderManager;
 import net.minecraft.game.entity.Entity;
-import net.minecraft.game.entity.player.EntityPlayer;
 import net.minecraft.game.item.ItemStack;
 import net.minecraft.game.level.EntityMap;
 import net.minecraft.game.level.IWorldAccess;
@@ -237,7 +236,7 @@ public final class RenderGlobal implements IWorldAccess {
 		return "E: " + this.countEntitiesRendered + "/" + this.countEntitiesTotal + ". B: " + this.countEntitiesHidden + ", I: " + (this.countEntitiesTotal - this.countEntitiesHidden - this.countEntitiesRendered);
 	}
 
-	public final int sortAndRender(EntityPlayer var1, int var2) {
+	public final int sortAndRender(var1, int var2) {
 		if(var2 == 0) {
 			this.renderersLoaded = 0;
 			this.renderersBeingClipped = 0;
@@ -567,7 +566,7 @@ public final class RenderGlobal implements IWorldAccess {
 		GL11.glDisable(GL11.GL_BLEND);
 	}
 
-	public final void updateRenderers(EntityPlayer var1) {
+	public final void updateRenderers(var1) {
 		Collections.sort(this.worldRenderersToUpdate, new RenderSorter(var1));
 		int var2 = this.worldRenderersToUpdate.size() - 1;
 		int var3 = this.worldRenderersToUpdate.size();

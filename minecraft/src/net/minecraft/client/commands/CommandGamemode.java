@@ -9,22 +9,40 @@ public class CommandGamemode extends Command {
 	}
 
 	public void runCommand(Minecraft mc, String[] args) {
+		if (args.length < 2) {
+			mc.ingameGUI.addChatMessage("Invalid argument. Use /gamemode [0/s/survival=Survival, 1/c/creative=Creative].");
+			return;
+		}
 		
 		try {
-			int gamemode = Integer.parseInt(args[1]);
-			mc.thePlayer.isCreativeMode = gamemode == 1;
+			String gamemodeArg = args[1].toLowerCase();
+			boolean isCreative = false;
+
+			switch (gamemodeArg) {
+				case "1":
+				case "c":
+				case "creative":
+					isCreative = true;
+					break;
+				case "0":
+				case "s":
+				case "survival":
+					isCreative = false;
+					break;
+				default:
+					throw new IllegalArgumentException();
+			}
 			
-			mc.ingameGUI.addChatMessage("Set gamemode to " + (gamemode == 1 ? "creative." : "survival."));
+			mc.thePlayer.isCreativeMode = isCreative;
+			mc.ingameGUI.addChatMessage("Set gamemode to " + (isCreative ? "creative." : "survival."));
 			
 		} catch (Exception e) {
-			mc.ingameGUI.addChatMessage("Invalid argument. Use 0 for survival, 1 for creative.");
-			return;
+			mc.ingameGUI.addChatMessage("Invalid argument. Use /gamemode [0/s/survival=Survival, 1/c/creative=Creative].");
 		}
 	}
 
 	public void showHelpMessage(Minecraft mc) {
-		mc.ingameGUI.addChatMessage("/gamemode [0=survival/1=creative]");
+		mc.ingameGUI.addChatMessage("/gamemode [0/s/survival=Survival, 1/c/creative=Creative]");
 		mc.ingameGUI.addChatMessage("    Changes the player's gamemode.");
 	}
-
 }

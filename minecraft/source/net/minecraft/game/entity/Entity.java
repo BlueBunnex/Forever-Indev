@@ -6,7 +6,6 @@ import com.mojang.nbt.NBTTagList;
 import java.util.ArrayList;
 import java.util.Random;
 import net.minecraft.game.entity.misc.EntityItem;
-import net.minecraft.game.entity.player.EntityPlayer;
 import net.minecraft.game.item.ItemStack;
 import net.minecraft.game.level.World;
 import net.minecraft.game.level.block.Block;
@@ -434,7 +433,7 @@ public abstract class Entity {
 		return var2 * var2 + var3 * var3 + var4 * var4;
 	}
 
-	public void onCollideWithPlayer(EntityPlayer var1) {
+	public void onCollideWithPlayer(var1) {
 	}
 
 	public final void applyEntityCollision(Entity var1) {

@@ -1,7 +1,6 @@
 package net.minecraft.game.level.block;
 
 import java.util.Random;
-import net.minecraft.game.entity.player.EntityPlayer;
 import net.minecraft.game.level.World;
 import net.minecraft.game.level.block.tileentity.TileEntity;
 import net.minecraft.game.level.block.tileentity.TileEntityFurnace;
@@ -92,7 +91,7 @@ public final class BlockFurnace extends BlockContainer {
 		return var1 == 1 ? Block.stone.blockID : (var1 == 0 ? Block.stone.blockID : (var1 == 3 ? this.blockIndexInTexture - 1 : this.blockIndexInTexture));
 	}
 
-	public final boolean blockActivated(World var1, int var2, int var3, int var4, EntityPlayer var5) {
+	public final boolean blockActivated(World var1, int var2, int var3, int var4, var5) {
 		TileEntityFurnace var6 = (TileEntityFurnace)var1.getBlockTileEntity(var2, var3, var4);
 		var5.displayGUIFurnace(var6);
 		return true;
