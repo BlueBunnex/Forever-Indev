@@ -1,12 +1,11 @@
 package net.minecraft.client.render;
 
 import java.util.Comparator;
-import net.minecraft.game.entity.player.EntityPlayer;
 
 public final class RenderSorter implements Comparator {
-	private EntityPlayer baseEntity;
+	private baseEntity;
 
-	public RenderSorter(EntityPlayer var1) {
+	public RenderSorter(var1) {
 		this.baseEntity = var1;
 	}
 

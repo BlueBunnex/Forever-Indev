@@ -10,7 +10,7 @@ public class Gui {
 	
 	protected float zLevel = 0.0F;
 
-	protected static void drawRect(int x1, int y1, int x2, int y2, int color) {
+	public static void drawRect(int x1, int y1, int x2, int y2, int color) {
 		float a = (float) (color >>> 24)      / 255.0F;
 		float r = (float) (color >> 16 & 255) / 255.0F;
 		float g = (float) (color >> 8  & 255) / 255.0F;
@@ -67,7 +67,7 @@ public class Gui {
 		fontRend.drawStringWithShadow(string, x, y, color);
 	}
 	
-	public static void drawCenteredStringWithBackground(FontRenderer fontRend, String string, int x, int y, int color) {
+	public void drawCenteredStringWithBackground(FontRenderer fontRend, String string, int x, int y, int color) {
 		drawStringWithBackground(fontRend, string, x - fontRend.getStringWidth(string) / 2, y, color);
 	}
 	

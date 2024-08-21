@@ -19,29 +19,31 @@ public class SlotCreative extends Slot {
 	}
 	
 	public ItemStack onClickedWithHeldStack(ItemStack heldStack, int mouseClick) {
-		
-		if (heldStack == null) {
-			
-			ItemStack toReturn = ALL_ITEMS.getStackInSlot(this.slotIndex);
-			
-			if (mouseClick == 1)
-				toReturn.stackSize = 64;
-			
-			return toReturn;
-			
-		// if the heldStack is the same as the one in this slot, increase its size by one
-		} else if (heldStack.itemID == this.inventory.getStackInSlot(this.slotIndex).itemID) {
-			
-			if (heldStack.stackSize < heldStack.getItem().getItemStackLimit())
-				heldStack.stackSize++;
-			
-			return heldStack;
-			
-		// otherwise clear the heldStack
-		} else {
-			return null;
-		}
+
+	    if (heldStack == null) {
+
+	        ItemStack toReturn = ALL_ITEMS.getStackInSlot(this.slotIndex);
+
+	        if (mouseClick == 1)
+	            toReturn.stackSize = 64;
+
+	        return toReturn;
+
+	    } else {
+	        ItemStack slotStack = this.inventory.getStackInSlot(this.slotIndex);
+	        if (slotStack != null && heldStack.itemID == slotStack.itemID) {
+
+	            if (heldStack.stackSize < heldStack.getItem().getItemStackLimit())
+	                heldStack.stackSize++;
+
+	            return heldStack;
+
+	        } else {
+	            return null;
+	        }
+	    }
 	}
+
 	
 	private static class InventoryInfinite implements IInventory {
 		

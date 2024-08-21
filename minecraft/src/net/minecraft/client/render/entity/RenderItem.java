@@ -13,62 +13,57 @@ import org.lwjgl.opengl.GL11;
 import util.MathHelper;
 
 public final class RenderItem extends Render {
-	private RenderBlocks renderBlocks = new RenderBlocks();
-	private Random random = new Random();
+    private RenderBlocks renderBlocks = new RenderBlocks();
+    private Random random = new Random();
 
-	public RenderItem() {
-		this.shadowSize = 0.15F;
-		this.shadowOpaque = 12.0F / 16.0F;
-	}
+    public RenderItem() {
+        this.shadowSize = 0.15F;
+        this.shadowOpaque = 12.0F / 16.0F;
+    }
 
-	public final void renderItemIntoGUI(RenderEngine var1, ItemStack var2, int var3, int var4) {
-		if(var2 != null) {
-			int var9;
-			if(var2.itemID < 256 && Block.blocksList[var2.itemID].getRenderType() == 0) {
-				var9 = var2.itemID;
-				RenderEngine.bindTexture(var1.getTexture("/terrain.png"));
-				Block var8 = Block.blocksList[var9];
-				GL11.glPushMatrix();
-				GL11.glTranslatef((float)(var3 - 2), (float)(var4 + 3), 0.0F);
-				GL11.glScalef(10.0F, 10.0F, 10.0F);
-				GL11.glTranslatef(1.0F, 0.5F, 8.0F);
-				GL11.glRotatef(210.0F, 1.0F, 0.0F, 0.0F);
-				GL11.glRotatef(45.0F, 0.0F, 1.0F, 0.0F);
-				GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-				this.renderBlocks.renderBlockOnInventory(var8);
-				GL11.glPopMatrix();
-			} else {
-				if(var2.getItem().getIconIndex() >= 0) {
-					GL11.glDisable(GL11.GL_LIGHTING);
-					if(var2.itemID < 256) {
-						RenderEngine.bindTexture(var1.getTexture("/terrain.png"));
-					} else {
-						RenderEngine.bindTexture(var1.getTexture("/gui/items.png"));
-					}
+    public final void renderItemIntoGUI(RenderEngine renderEngine, ItemStack itemStack, int x, int y) {
+        if (itemStack != null) {
+            int itemID = itemStack.itemID;
 
-					int var10000 = var3;
-					int var10001 = var4;
-					int var10002 = var2.getItem().getIconIndex() % 16 << 4;
-					int var10003 = var2.getItem().getIconIndex() / 16 << 4;
-					boolean var6 = true;
-					var6 = true;
-					var4 = var10003;
-					var3 = var10002;
-					var9 = var10001;
-					int var7 = var10000;
-					Tessellator var5 = Tessellator.instance;
-					var5.startDrawingQuads();
-					var5.addVertexWithUV((float)var7, (float)(var9 + 16), 0.0F, (float)var3 * 0.00390625F, (float)(var4 + 16) * 0.00390625F);
-					var5.addVertexWithUV((float)(var7 + 16), (float)(var9 + 16), 0.0F, (float)(var3 + 16) * 0.00390625F, (float)(var4 + 16) * 0.00390625F);
-					var5.addVertexWithUV((float)(var7 + 16), (float)var9, 0.0F, (float)(var3 + 16) * 0.00390625F, (float)var4 * 0.00390625F);
-					var5.addVertexWithUV((float)var7, (float)var9, 0.0F, (float)var3 * 0.00390625F, (float)var4 * 0.00390625F);
-					var5.draw();
-					GL11.glEnable(GL11.GL_LIGHTING);
-				}
+            // Check if the item is a block and should be rendered differently
+            if (itemID < 256 && Block.blocksList[itemID].getRenderType() == 0) {
+                Block block = Block.blocksList[itemID];
+                RenderEngine.bindTexture(renderEngine.getTexture("/terrain.png"));
+                GL11.glPushMatrix();
+                GL11.glTranslatef((float) (x - 2), (float) (y + 3), 0.0F);
+                GL11.glScalef(10.0F, 10.0F, 10.0F);
+                GL11.glTranslatef(1.0F, 0.5F, 8.0F);
+                GL11.glRotatef(210.0F, 1.0F, 0.0F, 0.0F);
+                GL11.glRotatef(45.0F, 0.0F, 1.0F, 0.0F);
+                GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+                this.renderBlocks.renderBlockOnInventory(block);
+                GL11.glPopMatrix();
+            } else {
+                // Determine the correct icon index to use
+                int iconIndex = itemStack.hasCustomIcon() ? itemStack.getCustomIconIndex() : itemStack.getItem().getIconIndex();
 
-			}
-		}
-	}
+                if (iconIndex >= 0) {
+                    GL11.glDisable(GL11.GL_LIGHTING);
+                    if (itemID < 256) {
+                        RenderEngine.bindTexture(renderEngine.getTexture("/terrain.png"));
+                    } else {
+                        RenderEngine.bindTexture(renderEngine.getTexture("/gui/items.png"));
+                    }
+
+                    int textureX = iconIndex % 16 << 4;
+                    int textureY = iconIndex / 16 << 4;
+                    Tessellator tessellator = Tessellator.instance;
+                    tessellator.startDrawingQuads();
+                    tessellator.addVertexWithUV((float) x, (float) (y + 16), 0.0F, (float) textureX * 0.00390625F, (float) (textureY + 16) * 0.00390625F);
+                    tessellator.addVertexWithUV((float) (x + 16), (float) (y + 16), 0.0F, (float) (textureX + 16) * 0.00390625F, (float) (textureY + 16) * 0.00390625F);
+                    tessellator.addVertexWithUV((float) (x + 16), (float) y, 0.0F, (float) (textureX + 16) * 0.00390625F, (float) textureY * 0.00390625F);
+                    tessellator.addVertexWithUV((float) x, (float) y, 0.0F, (float) textureX * 0.00390625F, (float) textureY * 0.00390625F);
+                    tessellator.draw();
+                    GL11.glEnable(GL11.GL_LIGHTING);
+                }
+            }
+        }
+    }
 
 	public final void renderItemOverlayIntoGUI(FontRenderer var1, ItemStack var2, int var3, int var4) {
 		if(var2 != null) {

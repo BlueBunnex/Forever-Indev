@@ -6,84 +6,85 @@ import net.minecraft.game.entity.EntityCreature;
 import net.minecraft.game.level.World;
 
 public class EntityMonster extends EntityCreature {
-	
-	protected int attackStrength = 2;
+    
+    protected int attackStrength = 2;
 
-	public EntityMonster(World world) {
-		super(world);
-		this.health = 20;
-	}
+    public EntityMonster(World world) {
+        super(world);
+        this.health = 20;
+    }
 
-	public void onLivingUpdate() {
-		float var1 = this.getEntityBrightness(1.0F);
-		if(var1 > 0.5F) {
-			this.entityAge += 2;
-		}
+    @Override
+    public void onLivingUpdate() {
+        float brightness = this.getEntityBrightness(1.0F);
+        if (brightness > 0.5F) {
+            this.entityAge += 2;
+        }
 
-		super.onLivingUpdate();
-	}
+        super.onLivingUpdate();
+    }
 
-	public final void onEntityUpdate() {
-		super.onEntityUpdate();
-		if(this.worldObj.difficultySetting == 0) {
-			this.setEntityDead();
-		}
+    @Override
+    public void onEntityUpdate() {
+        super.onEntityUpdate();
+        if (this.worldObj.difficultySetting == 0) {
+            this.setEntityDead();
+        }
+    }
 
-	}
+    protected Entity findPlayerToAttack() {
+        Entity player = this.worldObj.playerEntity;
+        float distance = player.getDistanceSqToEntity(this);
+        return distance < 256.0F ? player : null;
+    }
 
-	protected Entity findPlayerToAttack() {
-		float var1 = this.worldObj.playerEntity.getDistanceSqToEntity(this);
-		return var1 < 256.0F ? this.worldObj.playerEntity : null;
-	}
+    public boolean attackThisEntity(Entity attacker, int damage) {
+        if (super.attackThisEntity(attacker, damage)) {
+            if (attacker != this) {
+                this.playerToAttack = attacker;
+            }
+            return true;
+        } else {
+            return false;
+        }
+    }
 
-	public final boolean attackThisEntity(Entity attacker, int damage) {
-		
-		if (super.attackThisEntity(attacker, damage)) {
-			
-			// target entity that attacked this entity
-			if (attacker != this)
-				this.playerToAttack = attacker;
+    protected void attackEntity(Entity toAttack, float distance) {
+        if (distance < 2.5D
+                && toAttack.boundingBox.maxY > this.boundingBox.minY
+                && toAttack.boundingBox.minY < this.boundingBox.maxY) {
+            this.attackTime = 20;
+            toAttack.attackThisEntity(this, this.attackStrength);
+        }
+    }
 
-			return true;
-		} else {
-			return false;
-		}
-	}
+    @Override
+    protected float getBlockPathWeight(int x, int y, int z) {
+        return 0.5F - this.worldObj.getLightBrightness(x, y, z);
+    }
 
-	protected void attackEntity(Entity toAttack, float damage) {
-		
-		if (
-				(double) damage < 2.5D
-				&& toAttack.boundingBox.maxY > this.boundingBox.minY
-				&& toAttack.boundingBox.minY < this.boundingBox.maxY
-			) {
-			this.attackTime = 20;
-			toAttack.attackThisEntity(this, this.attackStrength);
-		}
-	}
+    @Override
+    protected void writeEntityToNBT(NBTTagCompound tagCompound) {
+        super.writeEntityToNBT(tagCompound);
+    }
 
-	protected float getBlockPathWeight(int var1, int var2, int var3) {
-		return 0.5F - this.worldObj.getLightBrightness(var1, var2, var3);
-	}
+    @Override
+    protected void readEntityFromNBT(NBTTagCompound tagCompound) {
+        super.readEntityFromNBT(tagCompound);
+    }
 
-	protected void writeEntityToNBT(NBTTagCompound var1) {
-		super.writeEntityToNBT(var1);
-	}
+    @Override
+    protected String getEntityString() {
+        return "Monster";
+    }
 
-	protected void readEntityFromNBT(NBTTagCompound var1) {
-		super.readEntityFromNBT(var1);
-	}
+    @Override
+    public boolean getCanSpawnHere(float x, float y, float z) {
+        byte lightLevel = this.worldObj.getBlockLightValue((int)x, (int)y, (int)z);
+        return lightLevel <= this.rand.nextInt(8) && super.getCanSpawnHere(x, y, z);
+    }
 
-	protected String getEntityString() {
-		return "Monster";
-	}
-
-	public final boolean getCanSpawnHere(float var1, float var2, float var3) {
-		byte var4 = this.worldObj.getBlockLightValue((int)var1, (int)var2, (int)var3);
-		return var4 <= this.rand.nextInt(8) && super.getCanSpawnHere(var1, var2, var3);
-	}
-	
-	protected int getDroppedRupeeCount() {
-		return (int) (Math.random() * 3) + 1;
-	}
+    protected int getDroppedRupeeCount() {
+        return (int) (Math.random() * 3) + 1;
+    }
 }

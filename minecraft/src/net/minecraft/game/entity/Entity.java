@@ -5,6 +5,8 @@ import com.mojang.nbt.NBTTagFloat;
 import com.mojang.nbt.NBTTagList;
 import java.util.ArrayList;
 import java.util.Random;
+
+import net.minecraft.client.player.MovementInputFromOptions;
 import net.minecraft.game.entity.misc.EntityItem;
 import net.minecraft.game.entity.player.EntityPlayer;
 import net.minecraft.game.item.ItemStack;
@@ -61,6 +63,7 @@ public abstract class Entity {
 	public int air = 300;
 	private boolean isFirstUpdate = true;
 	public String skinUrl;
+	float walkingSpeedMultiplier = 32.5F; // This value can be set dynamically
 
 	public Entity(World var1) {
 		this.worldObj = var1;
@@ -193,157 +196,177 @@ public abstract class Entity {
 	}
 
 	public final void moveEntity(float var1, float var2, float var3) {
-		if(this.noClip) {
-			this.boundingBox.offset(var1, var2, var3);
-			this.posX = (this.boundingBox.minX + this.boundingBox.maxX) / 2.0F;
-			this.posY = this.boundingBox.minY + this.yOffset - this.ySize;
-			this.posZ = (this.boundingBox.minZ + this.boundingBox.maxZ) / 2.0F;
-		} else {
-			float var4 = this.posX;
-			float var5 = this.posZ;
-			float var6 = var1;
-			float var7 = var2;
-			float var8 = var3;
-			AxisAlignedBB var9 = this.boundingBox.copy();
-			ArrayList var10 = this.worldObj.getCollidingBoundingBoxes(this.boundingBox.addCoord(var1, var2, var3));
+	    if (this.noClip) {
+	        this.boundingBox.offset(var1, var2, var3);
+	        this.posX = (this.boundingBox.minX + this.boundingBox.maxX) / 2.0F;
+	        this.posY = this.boundingBox.minY + this.yOffset - this.ySize;
+	        this.posZ = (this.boundingBox.minZ + this.boundingBox.maxZ) / 2.0F;
+	    } else {
+	        float var4 = this.posX;
+	        float var5 = this.posZ;
+	        float var6 = var1;
+	        float var7 = var2;
+	        float var8 = var3;
+	        AxisAlignedBB var9 = this.boundingBox.copy();
+	        ArrayList var10 = this.worldObj.getCollidingBoundingBoxes(this.boundingBox.addCoord(var1, var2, var3));
 
-			for(int var11 = 0; var11 < var10.size(); ++var11) {
-				var2 = ((AxisAlignedBB)var10.get(var11)).calculateYOffset(this.boundingBox, var2);
-			}
+	        for (int var11 = 0; var11 < var10.size(); ++var11) {
+	            var2 = ((AxisAlignedBB)var10.get(var11)).calculateYOffset(this.boundingBox, var2);
+	        }
 
-			this.boundingBox.offset(0.0F, var2, 0.0F);
-			if(!this.surfaceCollision && var7 != var2) {
-				var3 = 0.0F;
-				var2 = var3;
-				var1 = var3;
-			}
+	        this.boundingBox.offset(0.0F, var2, 0.0F);
+	        if (!this.surfaceCollision && var7 != var2) {
+	            var3 = 0.0F;
+	            var2 = var3;
+	            var1 = var3;
+	        }
 
-			boolean var18 = this.onGround || var7 != var2 && var7 < 0.0F;
+	        boolean var18 = this.onGround || var7 != var2 && var7 < 0.0F;
 
-			int var12;
-			for(var12 = 0; var12 < var10.size(); ++var12) {
-				var1 = ((AxisAlignedBB)var10.get(var12)).calculateXOffset(this.boundingBox, var1);
-			}
+	        int var12;
+	        for (var12 = 0; var12 < var10.size(); ++var12) {
+	            var1 = ((AxisAlignedBB)var10.get(var12)).calculateXOffset(this.boundingBox, var1);
+	        }
 
-			this.boundingBox.offset(var1, 0.0F, 0.0F);
-			if(!this.surfaceCollision && var6 != var1) {
-				var3 = 0.0F;
-				var2 = var3;
-				var1 = var3;
-			}
+	        this.boundingBox.offset(var1, 0.0F, 0.0F);
+	        if (!this.surfaceCollision && var6 != var1) {
+	            var3 = 0.0F;
+	            var2 = var3;
+	            var1 = var3;
+	        }
 
-			for(var12 = 0; var12 < var10.size(); ++var12) {
-				var3 = ((AxisAlignedBB)var10.get(var12)).calculateZOffset(this.boundingBox, var3);
-			}
+	        for (var12 = 0; var12 < var10.size(); ++var12) {
+	            var3 = ((AxisAlignedBB)var10.get(var12)).calculateZOffset(this.boundingBox, var3);
+	        }
 
-			this.boundingBox.offset(0.0F, 0.0F, var3);
-			if(!this.surfaceCollision && var8 != var3) {
-				var3 = 0.0F;
-				var2 = var3;
-				var1 = var3;
-			}
+	        this.boundingBox.offset(0.0F, 0.0F, var3);
+	        if (!this.surfaceCollision && var8 != var3) {
+	            var3 = 0.0F;
+	            var2 = var3;
+	            var1 = var3;
+	        }
 
-			int var17;
-			float var19;
-			float var20;
-			if(this.stepHeight > 0.0F && var18 && this.ySize < 0.05F && (var6 != var1 || var8 != var3)) {
-				var20 = var1;
-				var19 = var2;
-				float var13 = var3;
-				var1 = var6;
-				var2 = this.stepHeight;
-				var3 = var8;
-				AxisAlignedBB var14 = this.boundingBox.copy();
-				this.boundingBox = var9.copy();
-				var10 = this.worldObj.getCollidingBoundingBoxes(this.boundingBox.addCoord(var6, var2, var8));
+	        int var17;
+	        float var19;
+	        float var20;
+	        if (this.stepHeight > 0.0F && var18 && this.ySize < 0.05F && (var6 != var1 || var8 != var3)) {
+	            var20 = var1;
+	            var19 = var2;
+	            float var13 = var3;
+	            var1 = var6;
+	            var2 = this.stepHeight;
+	            var3 = var8;
+	            AxisAlignedBB var14 = this.boundingBox.copy();
+	            this.boundingBox = var9.copy();
+	            var10 = this.worldObj.getCollidingBoundingBoxes(this.boundingBox.addCoord(var6, var2, var8));
 
-				for(var17 = 0; var17 < var10.size(); ++var17) {
-					var2 = ((AxisAlignedBB)var10.get(var17)).calculateYOffset(this.boundingBox, var2);
-				}
+	            for (var17 = 0; var17 < var10.size(); ++var17) {
+	                var2 = ((AxisAlignedBB)var10.get(var17)).calculateYOffset(this.boundingBox, var2);
+	            }
 
-				this.boundingBox.offset(0.0F, var2, 0.0F);
-				if(!this.surfaceCollision && var7 != var2) {
-					var3 = 0.0F;
-					var2 = var3;
-					var1 = var3;
-				}
+	            this.boundingBox.offset(0.0F, var2, 0.0F);
+	            if (!this.surfaceCollision && var7 != var2) {
+	                var3 = 0.0F;
+	                var2 = var3;
+	                var1 = var3;
+	            }
 
-				for(var17 = 0; var17 < var10.size(); ++var17) {
-					var1 = ((AxisAlignedBB)var10.get(var17)).calculateXOffset(this.boundingBox, var1);
-				}
+	            for (var17 = 0; var17 < var10.size(); ++var17) {
+	                var1 = ((AxisAlignedBB)var10.get(var17)).calculateXOffset(this.boundingBox, var1);
+	            }
 
-				this.boundingBox.offset(var1, 0.0F, 0.0F);
-				if(!this.surfaceCollision && var6 != var1) {
-					var3 = 0.0F;
-					var2 = var3;
-					var1 = var3;
-				}
+	            this.boundingBox.offset(var1, 0.0F, 0.0F);
+	            if (!this.surfaceCollision && var6 != var1) {
+	                var3 = 0.0F;
+	                var2 = var3;
+	                var1 = var3;
+	            }
 
-				for(var17 = 0; var17 < var10.size(); ++var17) {
-					var3 = ((AxisAlignedBB)var10.get(var17)).calculateZOffset(this.boundingBox, var3);
-				}
+	            for (var17 = 0; var17 < var10.size(); ++var17) {
+	                var3 = ((AxisAlignedBB)var10.get(var17)).calculateZOffset(this.boundingBox, var3);
+	            }
 
-				this.boundingBox.offset(0.0F, 0.0F, var3);
-				if(!this.surfaceCollision && var8 != var3) {
-					var3 = 0.0F;
-					var2 = var3;
-					var1 = var3;
-				}
+	            this.boundingBox.offset(0.0F, 0.0F, var3);
+	            if (!this.surfaceCollision && var8 != var3) {
+	                var3 = 0.0F;
+	                var2 = var3;
+	                var1 = var3;
+	            }
 
-				if(var20 * var20 + var13 * var13 >= var1 * var1 + var3 * var3) {
-					var1 = var20;
-					var2 = var19;
-					var3 = var13;
-					this.boundingBox = var14.copy();
-				} else {
-					this.ySize = (float)((double)this.ySize + 0.5D);
-				}
-			}
+	            if (var20 * var20 + var13 * var13 >= var1 * var1 + var3 * var3) {
+	                var1 = var20;
+	                var2 = var19;
+	                var3 = var13;
+	                this.boundingBox = var14.copy();
+	            } else {
+	                this.ySize = (float)((double)this.ySize + 0.5D);
+	            }
+	        }
 
-			this.posX = (this.boundingBox.minX + this.boundingBox.maxX) / 2.0F;
-			this.posY = this.boundingBox.minY + this.yOffset - this.ySize;
-			this.posZ = (this.boundingBox.minZ + this.boundingBox.maxZ) / 2.0F;
-			this.isCollidedHorizontally = var6 != var1 || var8 != var3;
-			this.onGround = var7 != var2 && var7 < 0.0F;
-			if(this.onGround) {
-				if(this.fallDistance > 0.0F) {
-					this.fall(this.fallDistance);
-					this.fallDistance = 0.0F;
-				}
-			} else if(var2 < 0.0F) {
-				this.fallDistance -= var2;
-			}
+	        this.posX = (this.boundingBox.minX + this.boundingBox.maxX) / 2.0F;
+	        this.posY = this.boundingBox.minY + this.yOffset - this.ySize;
+	        this.posZ = (this.boundingBox.minZ + this.boundingBox.maxZ) / 2.0F;
+	        this.isCollidedHorizontally = var6 != var1 || var8 != var3;
+	        this.onGround = var7 != var2 && var7 < 0.0F;
+	        if (this.onGround) {
+	            if (this.fallDistance > 0.0F) {
+	                this.fall(this.fallDistance);
+	                this.fallDistance = 0.0F;
+	            }
+	        } else if (var2 < 0.0F) {
+	            this.fallDistance -= var2;
+	        }
 
-			if(var6 != var1) {
-				this.motionX = 0.0F;
-			}
+	        if (var6 != var1) {
+	            this.motionX = 0.0F;
+	        }
 
-			if(var7 != var2) {
-				this.motionY = 0.0F;
-			}
+	        if (var7 != var2) {
+	            this.motionY = 0.0F;
+	        }
 
-			if(var8 != var3) {
-				this.motionZ = 0.0F;
-			}
+	        if (var8 != var3) {
+	            this.motionZ = 0.0F;
+	        }
 
-			var20 = this.posX - var4;
-			var19 = this.posZ - var5;
-			this.distanceWalkedModified = (float)((double)this.distanceWalkedModified + (double)MathHelper.sqrt_float(var20 * var20 + var19 * var19) * 0.6D);
-			if(this.canTriggerWalking) {
-				int var21 = (int)this.posX;
-				int var23 = (int)(this.posY - 0.2F - this.yOffset);
-				var17 = (int)this.posZ;
-				int var16 = this.worldObj.getBlockId(var21, var23, var17);
-				if(this.distanceWalkedModified > (float)this.nextStepDistance && var16 > 0) {
-					++this.nextStepDistance;
-					StepSound var15 = Block.blocksList[var16].stepSound;
-					if(!Block.blocksList[var16].material.getIsLiquid()) {
-						this.worldObj.playSoundAtEntity(this, var15.stepSoundDir2(), var15.soundVolume * 0.15F, var15.soundPitch);
-					}
+	        var20 = this.posX - var4;
+	        var19 = this.posZ - var5;
+	        if (this instanceof EntityPlayer) {
+	            float baseSpeedMultiplier = 1.0F; // Default speed multiplier
 
-					Block.blocksList[var16].onEntityWalking(this.worldObj, var21, var23, var17);
-				}
-			}
+	            // Disable sprinting when the player is not on the ground (jumping)
+	            if (MovementInputFromOptions.isSprinting && this.onGround) {
+	                baseSpeedMultiplier *= 1.15F; // Increase speed when sprinting, but only if on the ground
+	            }
+
+	            this.motionX *= baseSpeedMultiplier;
+	            this.motionZ *= baseSpeedMultiplier;
+
+	            // Now update the distance walked using the modified motion
+	            float deltaX = this.posX - this.prevPosX;
+	            float deltaZ = this.posZ - this.prevPosZ;
+	            this.distanceWalkedModified += MathHelper.sqrt_float(deltaX * deltaX + deltaZ * deltaZ) * 0.6F;
+
+	            // Step sound logic remains the same
+	            if (this.canTriggerWalking) {
+	                int blockX = MathHelper.floor_float(this.posX);
+	                int blockY = MathHelper.floor_float(this.posY - 0.2F - this.yOffset);
+	                int blockZ = MathHelper.floor_float(this.posZ);
+	                int blockId = this.worldObj.getBlockId(blockX, blockY, blockZ);
+
+	                if (this.distanceWalkedModified > (float) this.nextStepDistance && blockId > 0) {
+	                    ++this.nextStepDistance;
+	                    StepSound stepSound = Block.blocksList[blockId].stepSound;
+
+	                    if (!Block.blocksList[blockId].material.getIsLiquid()) {
+	                        this.worldObj.playSoundAtEntity(this, stepSound.stepSoundDir2(), stepSound.soundVolume * 0.15F, stepSound.soundPitch);
+	                    }
+
+	                    Block.blocksList[blockId].onEntityWalking(this.worldObj, blockX, blockY, blockZ);
+	                }
+	            }
+	        }
+	    }
 
 			this.ySize *= 0.4F;
 			boolean var22 = this.handleWaterMovement();
@@ -365,7 +388,6 @@ public abstract class Entity {
 			}
 
 		}
-	}
 
 	protected void dealFireDamage(int var1) {
 		this.attackThisEntity(null, 1);
@@ -549,5 +571,16 @@ public abstract class Entity {
 
 	public boolean isEntityAlive() {
 		return !this.isDead;
+	}
+
+	public void setFire(int duration) {
+	    // Sets the entity on fire for the specified duration in ticks.
+	    this.fire = duration;
+	}
+
+	// Based on the fiery level
+	public void applyFieryEffect(int fieryLevel) {
+	    // Multiply the fiery level by 50 to get the duration
+	    this.setFire(20 * fieryLevel);
 	}
 }

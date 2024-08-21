@@ -22,7 +22,6 @@ import net.minecraft.game.entity.monster.EntityGiantZombie;
 import net.minecraft.game.entity.monster.EntitySkeleton;
 import net.minecraft.game.entity.monster.EntitySpider;
 import net.minecraft.game.entity.monster.EntityZombie;
-import net.minecraft.game.entity.player.EntityPlayer;
 import net.minecraft.game.entity.projectile.EntityArrow;
 import net.minecraft.game.level.World;
 import org.lwjgl.opengl.GL11;
@@ -44,7 +43,7 @@ public final class RenderManager {
 		this.entityRenderMap.put(EntityCreeper.class, new RenderCreeper());
 		this.entityRenderMap.put(EntitySkeleton.class, new RenderLiving(new ModelSkeleton(), 0.5F));
 		this.entityRenderMap.put(EntityZombie.class, new RenderLiving(new ModelZombie(), 0.5F));
-		this.entityRenderMap.put(EntityPlayer.class, new RenderPlayer());
+		this.entityRenderMap.put(new RenderPlayer());
 		this.entityRenderMap.put(EntityGiantZombie.class, new RenderGiantZombie(new ModelZombie(), 0.5F, 6.0F));
 		this.entityRenderMap.put(EntityLiving.class, new RenderLiving(new ModelBiped(), 0.5F));
 		this.entityRenderMap.put(Entity.class, new RenderEntity());
@@ -72,7 +71,7 @@ public final class RenderManager {
 		return var3;
 	}
 
-	public final void cacheActiveRenderInfo(World var1, RenderEngine var2, EntityPlayer var3, float var4) {
+	public final void cacheActiveRenderInfo(World var1, RenderEngine var2, var3, float var4) {
 		this.worldObj = var1;
 		this.renderEngine = var2;
 		this.playerViewY = var3.prevRotationYaw + (var3.rotationYaw - var3.prevRotationYaw) * var4;

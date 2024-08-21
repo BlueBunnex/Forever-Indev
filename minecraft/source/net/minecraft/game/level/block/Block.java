@@ -2,7 +2,6 @@ package net.minecraft.game.level.block;
 
 import java.util.Random;
 import net.minecraft.game.entity.misc.EntityItem;
-import net.minecraft.game.entity.player.EntityPlayer;
 import net.minecraft.game.entity.player.InventoryPlayer;
 import net.minecraft.game.item.Item;
 import net.minecraft.game.item.ItemBlock;
@@ -239,7 +238,7 @@ public class Block {
 		return this.blockID;
 	}
 
-	public final float blockStrength(EntityPlayer var1) {
+	public final float blockStrength(var1) {
 		if(this.hardness < 0.0F) {
 			return 0.0F;
 		} else if(!var1.canHarvestBlock(this)) {
@@ -405,7 +404,7 @@ public class Block {
 		return true;
 	}
 
-	public boolean blockActivated(World var1, int var2, int var3, int var4, EntityPlayer var5) {
+	public boolean blockActivated(World var1, int var2, int var3, int var4, var5) {
 		return false;
 	}
 

@@ -33,6 +33,8 @@ import org.lwjgl.opengl.GLContext;
 import util.MathHelper;
 
 public final class RenderGlobal implements IWorldAccess {
+	// Declare CloudRenderer
+	private CloudRenderer cloudRenderer;
 	private World worldObj;
 	private RenderEngine renderEngine;
 	private int glGenList;
@@ -67,6 +69,9 @@ public final class RenderGlobal implements IWorldAccess {
 	public RenderGlobal(Minecraft var1, RenderEngine var2) {
 		this.mc = var1;
 		this.renderEngine = var2;
+		
+	    // Initialize the CloudRenderer
+	    this.cloudRenderer = new CloudRenderer(var2);
 		this.glGenList = GL11.glGenLists(2);
 		this.glRenderListBase = GL11.glGenLists(786432);
 		this.occlusionEnabled = GLContext.getCapabilities().GL_ARB_occlusion_query;
@@ -455,28 +460,8 @@ public final class RenderGlobal implements IWorldAccess {
 			var6 = var7;
 			var3 = var3;
 		}
-
-		var9 = (float)this.worldObj.cloudHeight;
-		var7 = ((float)this.cloudOffsetX + var1) * (0.5F / 1024.0F) * 0.03F;
-		var12.startDrawingQuads();
-		var12.setColorOpaque_F(var4, var6, var3);
-
-		for(int var8 = -2048; var8 < this.worldObj.width + 2048; var8 += 512) {
-			for(var10 = -2048; var10 < this.worldObj.length + 2048; var10 += 512) {
-				var12.addVertexWithUV((float)var8, var9, (float)(var10 + 512), (float)var8 * (0.5F / 1024.0F) + var7, (float)(var10 + 512) * (0.5F / 1024.0F));
-				var12.addVertexWithUV((float)(var8 + 512), var9, (float)(var10 + 512), (float)(var8 + 512) * (0.5F / 1024.0F) + var7, (float)(var10 + 512) * (0.5F / 1024.0F));
-				var12.addVertexWithUV((float)(var8 + 512), var9, (float)var10, (float)(var8 + 512) * (0.5F / 1024.0F) + var7, (float)var10 * (0.5F / 1024.0F));
-				var12.addVertexWithUV((float)var8, var9, (float)var10, (float)var8 * (0.5F / 1024.0F) + var7, (float)var10 * (0.5F / 1024.0F));
-				var12.addVertexWithUV((float)var8, var9, (float)var10, (float)var8 * (0.5F / 1024.0F) + var7, (float)var10 * (0.5F / 1024.0F));
-				var12.addVertexWithUV((float)(var8 + 512), var9, (float)var10, (float)(var8 + 512) * (0.5F / 1024.0F) + var7, (float)var10 * (0.5F / 1024.0F));
-				var12.addVertexWithUV((float)(var8 + 512), var9, (float)(var10 + 512), (float)(var8 + 512) * (0.5F / 1024.0F) + var7, (float)(var10 + 512) * (0.5F / 1024.0F));
-				var12.addVertexWithUV((float)var8, var9, (float)(var10 + 512), (float)var8 * (0.5F / 1024.0F) + var7, (float)(var10 + 512) * (0.5F / 1024.0F));
-			}
-		}
-
-		var12.draw();
 	}
-
+		
 	public final void oobGroundRenderer() {
 		float var1 = this.worldObj.getLightBrightness(0, this.worldObj.getGroundLevel(), 0);
 		GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.renderEngine.getTexture("/dirt.png"));
@@ -750,7 +735,7 @@ public final class RenderGlobal implements IWorldAccess {
 	}
 
 	public final void playMusic(String var1, float var2, float var3, float var4, float var5) {
-		this.mc.sndManager.playRandomMusicIfReady(var2, var3, var4);
+		this.mc.sndManager.playRandomMusicIfReady();
 	}
 
 	public final void obtainEntitySkin(Entity var1) {

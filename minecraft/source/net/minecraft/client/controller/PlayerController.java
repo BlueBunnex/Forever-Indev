@@ -2,7 +2,6 @@ package net.minecraft.client.controller;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.sound.SoundManager;
-import net.minecraft.game.entity.player.EntityPlayer;
 import net.minecraft.game.level.World;
 import net.minecraft.game.level.block.Block;
 import net.minecraft.game.level.block.StepSound;
@@ -64,6 +63,6 @@ public class PlayerController {
 		return true;
 	}
 
-	public void onRespawn(EntityPlayer var1) {
+	public void onRespawn(var1) {
 	}
 }

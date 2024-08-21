@@ -105,6 +105,16 @@ public class Block {
 	public static final Block mudBrick;
 	public static final Block cobbledBrick;
 	
+	// New Blocks (steve2024)
+	public static final Block cobbledStone;
+	public static final Block packedGravel;
+	public static final Block compressedDirt;
+	public static final Block clayBricks;
+	public static final Block tintedGlass;
+	public static final Block mossyCobbledStone;
+	public static final Block mossyStone;
+	public static final Block woodenPaver;
+	
 	protected String name;
 	protected Rarity rarity; 
 	public final int blockID;
@@ -693,8 +703,33 @@ public class Block {
 		
 		cobbledBrick = new Block("Cobbled Brick", 67, 100, Material.rock).setHardness(2.0F).setResistance(10.0F);
 		cobbledBrick.stepSound = soundStoneFootstep;
-		
 
+		// New blocks (steve2024)	
+		
+		cobbledStone = new Block("Cobbled Stone", 68, 101, Material.rock).setHardness(2.0F).setResistance(10.0F);
+		cobbledStone.stepSound = soundStoneFootstep;
+
+		packedGravel = new Block("Packed Gravel", 69, 102, Material.ground).setHardness(0.6F).setResistance(10.0F);
+		packedGravel.stepSound = soundGravelFootstep;
+
+		compressedDirt = new Block("Compressed Dirt", 70, 103, Material.ground).setHardness(0.5F).setResistance(5.0F);
+		compressedDirt.stepSound = soundGravelFootstep;
+
+		clayBricks = new Block("Clay Bricks", 71, 104, Material.rock).setHardness(2.0F).setResistance(10.0F);
+		clayBricks.stepSound = soundStoneFootstep;
+
+		tintedGlass = new BlockGlass("Tinted Glass", 72, 105, Material.glass).setHardness(0.5F);
+		tintedGlass.stepSound = soundGlassFootstep;
+
+		mossyCobbledStone = new Block("Mossy Cobbled Stone", 73, 106, Material.rock).setHardness(2.0F).setResistance(10.0F);
+		mossyCobbledStone.stepSound = soundStoneFootstep;
+
+		mossyStone = new Block("Mossy Stone", 74, 107, Material.rock).setHardness(1.5F).setResistance(10.0F);
+		mossyStone.stepSound = soundStoneFootstep;
+		
+		woodenPaver = new Block("Wooden Paver", 75, 108, Material.wood).setHardness(1.5F).setResistance(5.0F);
+		woodenPaver.stepSound = soundWoodFootstep;
+		
 		// make an item for every block
 		for(int i = 0; i < 256; i++) {
 			
@@ -703,5 +738,21 @@ public class Block {
 			}
 		}
 
+	}
+
+	public void distortTextureCoordinates(float uOffset, float vOffset) {
+	    // If the block uses a texture index, we might want to adjust its appearance by modifying its texture coordinates.
+	    // We can apply the offset to the block's texture index to distort its appearance slightly.
+	    
+	    // The blockIndexInTexture can be thought of as a reference to where in the texture atlas the block's texture starts.
+	    // We can simulate the effect of "distorting" the texture by modifying this index.
+	    this.blockIndexInTexture += (int) (uOffset + vOffset);
+	    
+	    // Ensure the block index remains within valid bounds (0 to 255 in a 256-texture atlas).
+	    if (this.blockIndexInTexture < 0) {
+	        this.blockIndexInTexture = 0;
+	    } else if (this.blockIndexInTexture >= 256) {
+	        this.blockIndexInTexture = 255;
+	    }
 	}
 }

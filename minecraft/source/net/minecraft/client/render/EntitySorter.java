@@ -1,12 +1,10 @@
 package net.minecraft.client.render;
 
 import java.util.Comparator;
-import net.minecraft.game.entity.player.EntityPlayer;
 
 public final class EntitySorter implements Comparator {
-	private EntityPlayer player;
 
-	public EntitySorter(EntityPlayer var1) {
+	public EntitySorter(var1) {
 		this.player = var1;
 	}
 

@@ -159,21 +159,28 @@ public final class FontRenderer {
 	}
 
 	public final int getStringWidth(String var1) {
-		if(var1 == null) {
-			return 0;
-		} else {
-			char[] var4 = var1.toCharArray();
-			int var2 = 0;
+	    if (var1 == null) {
+	        return 0;
+	    } else {
+	        char[] var4 = var1.toCharArray();
+	        int var2 = 0;
 
-			for(int var3 = 0; var3 < var4.length; ++var3) {
-				if(var4[var3] == 38) {
-					++var3;
-				} else {
-					var2 += this.charWidth[var4[var3]];
-				}
-			}
+	        for (int var3 = 0; var3 < var4.length; ++var3) {
+	            if (var4[var3] == 38) {
+	                ++var3; // Skip color code
+	            } else {
+	                // Ensure character code is within bounds
+	                int charCode = var4[var3];
+	                if (charCode >= 0 && charCode < this.charWidth.length) {
+	                    var2 += this.charWidth[charCode];
+	                } else {
+	                    // Handle characters outside the defined range
+	                    var2 += this.charWidth[0]; // Default to width of 0 or handle appropriately
+	                }
+	            }
+	        }
 
-			return var2;
-		}
+	        return var2;
+	    }
 	}
 }

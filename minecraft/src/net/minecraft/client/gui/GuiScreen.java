@@ -9,12 +9,12 @@ import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
 public class GuiScreen extends Gui {
-	protected Minecraft mc;
+	public Minecraft mc;
 	public int width;
 	public int height;
 	protected List<GuiButton> controlList = new ArrayList<GuiButton>();
 	public boolean allowUserInput = false;
-	protected FontRenderer fontRenderer;
+	public FontRenderer fontRenderer;
 
 	public void drawScreen(int mouseX, int mouseY) {
 		
@@ -92,25 +92,38 @@ public class GuiScreen extends Gui {
 	public void onGuiClosed() {
 	}
 
-	public final void drawDefaultBackground() {
-		boolean var1 = false;
-		if(this.mc.theWorld != null) {
-			drawGradientRect(0, 0, this.width, this.height, 1610941696, -1607454624);
-		} else {
-			GL11.glDisable(GL11.GL_LIGHTING);
-			GL11.glDisable(GL11.GL_FOG);
-			Tessellator var2 = Tessellator.instance;
-			GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.mc.renderEngine.getTexture("/dirt.png"));
-			GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-			var2.startDrawingQuads();
-			var2.setColorOpaque_I(4210752);
-			var2.addVertexWithUV(0.0F, (float)this.height, 0.0F, 0.0F, (float)this.height / 32.0F);
-			var2.addVertexWithUV((float)this.width, (float)this.height, 0.0F, (float)this.width / 32.0F, (float)this.height / 32.0F);
-			var2.addVertexWithUV((float)this.width, 0.0F, 0.0F, (float)this.width / 32.0F, 0.0F);
-			var2.addVertexWithUV(0.0F, 0.0F, 0.0F, 0.0F, 0.0F);
-			var2.draw();
-		}
+	public void drawDefaultBackground() {
+	    boolean var1 = false;
+	    if(this.mc.theWorld != null) {
+	        drawGradientRect(0, 0, this.width, this.height, 1610941696, -1607454624);
+	    } else {
+	        GL11.glDisable(GL11.GL_LIGHTING);
+	        GL11.glDisable(GL11.GL_FOG);
+	        Tessellator var2 = Tessellator.instance;
+
+	        // Bind the dirt texture
+	        GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.mc.renderEngine.getTexture("/dirt.png"));
+
+	        // Disable mipmapping and linear filtering
+	        GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_NEAREST);
+	        GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_NEAREST);
+
+	        // Set the color to white (full texture colors)
+	        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+
+	        var2.startDrawingQuads();
+	        var2.setColorOpaque_I(4210752);
+
+	        // Define the vertices with UV mapping
+	        var2.addVertexWithUV(0.0F, (float)this.height, 0.0F, 0.0F, (float)this.height / 32.0F);
+	        var2.addVertexWithUV((float)this.width, (float)this.height, 0.0F, (float)this.width / 32.0F, (float)this.height / 32.0F);
+	        var2.addVertexWithUV((float)this.width, 0.0F, 0.0F, (float)this.width / 32.0F, 0.0F);
+	        var2.addVertexWithUV(0.0F, 0.0F, 0.0F, 0.0F, 0.0F);
+
+	        var2.draw();
+	    }
 	}
+
 
 	public boolean doesGuiPauseGame() {
 		return true;

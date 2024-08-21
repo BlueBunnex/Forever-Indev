@@ -4,7 +4,6 @@ import java.util.Random;
 import net.minecraft.game.IInventory;
 import net.minecraft.game.InventoryLargeChest;
 import net.minecraft.game.entity.misc.EntityItem;
-import net.minecraft.game.entity.player.EntityPlayer;
 import net.minecraft.game.item.ItemStack;
 import net.minecraft.game.level.World;
 import net.minecraft.game.level.block.tileentity.TileEntity;
@@ -164,7 +163,7 @@ public final class BlockChest extends BlockContainer {
 		super.onBlockRemoval(var1, var2, var3, var4);
 	}
 
-	public final boolean blockActivated(World var1, int var2, int var3, int var4, EntityPlayer var5) {
+	public final boolean blockActivated(World var1, int var2, int var3, int var4, var5) {
 		Object var6 = (TileEntityChest)var1.getBlockTileEntity(var2, var3, var4);
 		if(var1.isBlockNormalCube(var2, var3 + 1, var4)) {
 			return true;

@@ -1,6 +1,5 @@
 package net.minecraft.game.item;
 
-import net.minecraft.game.entity.player.EntityPlayer;
 import net.minecraft.game.level.World;
 
 public class ItemFood extends Item {
@@ -12,7 +11,7 @@ public class ItemFood extends Item {
 		this.maxStackSize = 1;
 	}
 
-	public ItemStack onItemRightClick(ItemStack var1, World var2, EntityPlayer var3) {
+	public ItemStack onItemRightClick(ItemStack var1, World var2, var3) {
 		--var1.stackSize;
 		var3.heal(this.healAmount);
 		return var1;

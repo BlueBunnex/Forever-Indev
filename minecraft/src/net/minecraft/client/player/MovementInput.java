@@ -1,16 +1,17 @@
 package net.minecraft.client.player;
 
 public class MovementInput {
-	public float moveStrafe = 0.0F;
-	public float moveForward = 0.0F;
-	public boolean jump = false;
+    public static float moveStrafe = 0.0F;
+    public static float moveForward = 0.0F;
+    public boolean jump = false;
+    public boolean isSprinting;
 
-	public void updatePlayerMoveState() {
-	}
+    public void updatePlayerMoveState() {
+    }
 
-	public void resetKeyState() {
-	}
+    public void resetKeyState() {
+    }
 
-	public void checkKeyForMovementInput(int var1, boolean var2) {
-	}
+    public void checkKeyForMovementInput(int keyCode, boolean isPressed) {
+    }
 }

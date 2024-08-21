@@ -2,7 +2,6 @@ package net.minecraft.client.controller;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.Session;
-import net.minecraft.game.entity.player.EntityPlayer;
 import net.minecraft.game.item.ItemStack;
 import net.minecraft.game.level.MobSpawner;
 import net.minecraft.game.level.World;
@@ -15,7 +14,7 @@ public final class PlayerControllerCreative extends PlayerController {
 		super(var1);
 	}
 
-	public final void onRespawn(EntityPlayer var1) {
+	public final void onRespawn() {
 		for(int var2 = 0; var2 < 9; ++var2) {
 			if(var1.inventory.mainInventory[var2] == null) {
 				this.mc.thePlayer.inventory.mainInventory[var2] = new ItemStack(((Block)Session.registeredBlocksList.get(var2)).blockID);
