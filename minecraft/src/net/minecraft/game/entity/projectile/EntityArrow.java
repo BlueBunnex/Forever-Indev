@@ -25,7 +25,7 @@ public class EntityArrow extends Entity {
     private int ticksInGround;
     private int ticksInAir = 0;
     private int detonationLevel = 0; // Added for detonation effect
-    private boolean fiery = false; // Added for fiery effect
+    private int fireToGive = 0; // Added for fiery effect (corresponds to .fire)
 
     public EntityArrow(World world, EntityLiving owner) {
         super(world);
@@ -46,11 +46,22 @@ public class EntityArrow extends Entity {
     // New method to set detonation level
     public void setDetonationLevel(int level) {
         this.detonationLevel = level;
+        
+        // TODO some sort of smoking effect
     }
 
     // New method to enable the fiery effect
-    public void setFiery(boolean fiery) {
-        this.fiery = fiery;
+    public void setFiery(int level) {
+    	
+    	// amount of fire (time) given depends on the level of the enchant
+        this.fireToGive = level * 50;
+        
+        // make arrow appear on-fire
+        if (level > 0) {
+        	this.fire = 99999;
+        } else {
+        	this.fire = 0;
+        }
     }
 
     public final void setArrowHeading(float x, float y, float z, float velocity, float inaccuracy) {
@@ -137,9 +148,8 @@ public class EntityArrow extends Entity {
                     this.worldObj.playSoundAtEntity(this, "random.drr", 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
                     
                     // Apply fiery effect
-                    if (this.fiery) {
-                        hit.entityHit.setFire(5); // Sets the entity on fire for 5 seconds
-                    }
+                    if (this.fireToGive > 0)
+                        hit.entityHit.setFire(this.fireToGive); // set entity on fire
 
                     this.setEntityDead();
                 } else {
@@ -219,8 +229,9 @@ public class EntityArrow extends Entity {
         nbt.setByte("inTile", (byte) this.inTile);
         nbt.setByte("shake", (byte) this.arrowShake);
         nbt.setByte("inGround", (byte) (this.inGround ? 1 : 0));
+        
         nbt.setInteger("detonationLevel", this.detonationLevel); // Save detonation level
-        nbt.setBoolean("fiery", this.fiery); // Save fiery effect
+        nbt.setByte("fireToGive", (byte) this.fireToGive); // Save fiery effect
     }
 
     protected final void readEntityFromNBT(NBTTagCompound nbt) {
@@ -230,8 +241,9 @@ public class EntityArrow extends Entity {
         this.inTile = nbt.getByte("inTile") & 255;
         this.arrowShake = nbt.getByte("shake") & 255;
         this.inGround = nbt.getByte("inGround") == 1;
+        
         this.detonationLevel = nbt.getInteger("detonationLevel"); // Load detonation level
-        this.fiery = nbt.getBoolean("fiery"); // Load fiery effect
+        this.fireToGive = nbt.getByte("fireToGive"); // Load fiery effect
     }
 
     protected final String getEntityString() {
@@ -239,6 +251,7 @@ public class EntityArrow extends Entity {
     }
 
     public final void onCollideWithPlayer(EntityPlayer player) {
+    	
         if (this.inGround && this.owner == player && this.arrowShake <= 0 && player.inventory.storePartialItemStack(new ItemStack(Item.arrow.shiftedIndex, 1))) {
             this.worldObj.playSoundAtEntity(this, "random.pop", 0.2F, ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.7F + 1.0F) * 2.0F);
             player.onItemPickup(this);

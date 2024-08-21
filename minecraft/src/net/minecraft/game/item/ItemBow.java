@@ -44,9 +44,8 @@ public final class ItemBow extends Item {
                 }
 
                 // Apply fiery effect if present
-                if (fieryLevel > 0) {
-                    arrow.setFiery(true);
-                }
+                if (fieryLevel > 0)
+                    arrow.setFiery(fieryLevel);
 
                 world.spawnEntityInWorld(arrow);
 

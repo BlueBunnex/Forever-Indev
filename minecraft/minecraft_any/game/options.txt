@@ -1,7 +1,7 @@
 invertYMouse:false
 showFrameRate:false
 viewDistance:0
-bobView:false
+bobView:true
 anaglyph3d:false
 limitFramerate:false
 difficulty:2
@@ -19,4 +19,4 @@ key_Chat:20
 key_Toggle fog:33
 key_Save location:28
 key_Load location:19
-key_Sprint:29
+key_Sprint:19
